@@ -1,0 +1,78 @@
+name: portable-orchestration-native-evidence
+on:
+  push:
+    branches: [codex/tui-portability-linux-validation]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  native:
+    name: Linux native (${{ matrix.variant }})
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [baseline, repaired]
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Pin validation source
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp qa/run_portability_linux_matrix.py "$RUNNER_TEMP/run_matrix.py"
+          if [[ '${{ matrix.variant }}' == baseline ]]; then
+            git checkout --detach b3453330811432918d06909c6ad1c433e727fff4
+          else
+            git checkout --detach 7ec9586d0fe5d84fd3ea5a05b03d2b28754beec1
+          fi
+          test "$(git rev-parse HEAD:codex-rs)" = 846755e77c6d66f826033c6e42cea4a0b99ed428
+      - name: Install existing harness dependencies
+        run: sudo apt-get update && sudo apt-get install -y tmux jq ripgrep
+      - name: Fetch exact existing Linux runtime
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api repos/citadelculture/CorbanuTerminal/actions/artifacts/11095270180/zip > "$RUNNER_TEMP/runtime.zip"
+          echo "3e9c6cb0f060e0c4456b10ac989bc08d87eedc9113ca15299e35d149a87b3d80  $RUNNER_TEMP/runtime.zip" | sha256sum -c -
+          mkdir -p "$RUNNER_TEMP/runtime-archive" "$RUNNER_TEMP/runtime"
+          unzip -q "$RUNNER_TEMP/runtime.zip" -d "$RUNNER_TEMP/runtime-archive"
+          tar -xzf "$RUNNER_TEMP/runtime-archive/corbanu-terminal-package-x86_64-unknown-linux-gnu.tar.gz" -C "$RUNNER_TEMP/runtime"
+          "$RUNNER_TEMP/runtime/bin/corbanu" --version
+      - name: Record genuine old GNU controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          start=$(date +%s%3N)
+          sleep 0.05
+          elapsed=$(($(date +%s%3N) - start))
+          ((elapsed >= 0))
+          fixture=$(mktemp)
+          printf fixture > "$fixture"
+          chmod 0444 "$fixture"
+          mode=$(stat -c %a "$fixture")
+          test "$mode" = 444
+          printf 'GNU old controls PASS on Linux: elapsed=%s mode=%s\n' "$elapsed" "$mode" | tee evidence/old-gnu-controls.txt
+          rm "$fixture"
+      - name: Run repaired portability regressions
+        if: matrix.variant == 'repaired'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 qa/orchestrate_tui_platform_test.py 2>&1 | tee evidence/regression.log
+      - name: Run full default native matrix
+        shell: bash
+        run: python3 "$RUNNER_TEMP/run_matrix.py" "$RUNNER_TEMP/runtime/bin/corbanu" "$GITHUB_WORKSPACE/evidence"
+      - name: Upload bounded synthetic test evidence
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: portability-linux-${{ matrix.variant }}-${{ github.sha }}
+          path: evidence/
+          if-no-files-found: warn
