@@ -652,21 +652,21 @@ row_14() {
   local latency_file="$ARTIFACT_ROOT/$CURRENT_SESSION/popup-latency.tsv"
   : >"$latency_file"
   local started elapsed
-  started=$(date +%s%3N)
+  started=$(python3 "$ROOT/qa/orchestrate_tui_platform.py" now-ms) || return
   submit "/orchestrate attach"
   wait_screen "New Assignment - Worker"
-  elapsed=$(($(date +%s%3N) - started))
+  elapsed=$(python3 "$ROOT/qa/orchestrate_tui_platform.py" elapsed-ms "$started") || return
   printf 'worker\t%s\n' "$elapsed" >>"$latency_file"
   ((elapsed < 2000)) || fail 14 "Worker popup exceeded 2s"
-  started=$(date +%s%3N)
+  started=$(python3 "$ROOT/qa/orchestrate_tui_platform.py" now-ms) || return
   tmux send-keys -t "$CURRENT_SESSION":0.0 Down
   sleep 0.2
   tmux send-keys -t "$CURRENT_SESSION":0.0 Enter
   wait_screen "New Assignment - Duration"
-  elapsed=$(($(date +%s%3N) - started))
+  elapsed=$(python3 "$ROOT/qa/orchestrate_tui_platform.py" elapsed-ms "$started") || return
   printf 'duration\t%s\n' "$elapsed" >>"$latency_file"
   ((elapsed < 2500)) || fail 14 "Duration popup exceeded 2.5s"
-  started=$(date +%s%3N)
+  started=$(python3 "$ROOT/qa/orchestrate_tui_platform.py" now-ms) || return
   tmux send-keys -t "$CURRENT_SESSION":0.0 Down
   sleep 0.15
   tmux send-keys -t "$CURRENT_SESSION":0.0 Down
@@ -675,13 +675,13 @@ row_14() {
   sleep 0.2
   tmux send-keys -t "$CURRENT_SESSION":0.0 Enter
   wait_screen "New Assignment - Spec"
-  elapsed=$(($(date +%s%3N) - started))
+  elapsed=$(python3 "$ROOT/qa/orchestrate_tui_platform.py" elapsed-ms "$started") || return
   printf 'spec\t%s\n' "$elapsed" >>"$latency_file"
   ((elapsed < 2500)) || fail 14 "Spec popup exceeded 2.5s"
-  started=$(date +%s%3N)
+  started=$(python3 "$ROOT/qa/orchestrate_tui_platform.py" now-ms) || return
   tmux send-keys -t "$CURRENT_SESSION":0.0 Enter
   wait_screen "New Assignment - Manager"
-  elapsed=$(($(date +%s%3N) - started))
+  elapsed=$(python3 "$ROOT/qa/orchestrate_tui_platform.py" elapsed-ms "$started") || return
   printf 'manager\t%s\n' "$elapsed" >>"$latency_file"
   ((elapsed < 2500)) || fail 14 "Manager popup exceeded 2.5s"
   capture "responsive-manager-popup" >/dev/null
@@ -708,7 +708,8 @@ row_15() {
   {
     printf 'source=%s\n' "$source_layout"
     printf 'source_sha256=%s\n' "$source_hash"
-    stat -c 'source_mode=%a' "$evidence_dir/read-only-source/pane-layout.json"
+    python3 "$ROOT/qa/orchestrate_tui_platform.py" source-mode \
+      "$evidence_dir/read-only-source/pane-layout.json" || return
     printf 'normalized_root_thread_id=%s\n' "$root_thread_id"
   } >"$evidence_dir/source-record.txt"
 
