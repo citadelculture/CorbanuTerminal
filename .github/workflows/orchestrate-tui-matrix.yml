@@ -43,6 +43,8 @@ jobs:
           tool: just@1.55.1
       - name: Install TUI harness dependencies
         run: sudo apt-get update && sudo apt-get install -y jq ripgrep tmux
+      - name: Check Escape delivery and modal dismissal
+        run: python3 qa/orchestrate_tui_modal_test.py
       - name: Run orchestrate TUI matrix
         run: just orchestrate-tui-matrix
       - name: Upload matrix evidence

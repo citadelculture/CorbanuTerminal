@@ -16,6 +16,7 @@ CAPTURE_INDEX=0
 PANE_COUNT=0
 LAST_CAPTURE_PATH=""
 TERMINAL_LABEL=${PFTERMINAL_QA_PRODUCT_LABEL:-Corbanu Terminal}
+source "$ROOT/qa/orchestrate_tui_modal.sh"
 
 mkdir -p "$ARTIFACT_ROOT/server"
 : >"$CONTROL"
@@ -84,19 +85,22 @@ wait_screen() {
   return 1
 }
 
-wait_screen_absent() {
-  local pattern=$1
-  local attempts=${2:-80}
-  local output
+wait_modal_closed() {
+  local attempts=${1:-80}
+  local parent=${2:-none}
+  local attempt output
   for ((attempt = 0; attempt < attempts; attempt++)); do
     output=$(tmux capture-pane -p -t "$CURRENT_SESSION":0.0)
-    output=${output//$'\n'/ }
-    if ! grep -Fq -- "$pattern" <<<"$output"; then
+    if [[ "$parent" == orchestrate ]] && orchestrate_status_visible <<<"$output"; then
+      capture "details-returned-to-status" >/dev/null
+      orchestrate_send_escape "$CURRENT_SESSION":0.0
+      parent=none
+    elif [[ "$parent" == none ]] && orchestrate_modal_closed <<<"$output"; then
       return 0
     fi
     sleep 0.25
   done
-  capture "wait-absent-timeout" >/dev/null
+  capture "modal-close-timeout" >/dev/null
   return 1
 }
 
@@ -112,6 +116,13 @@ wait_composer_ready() {
   done
   capture "wait-timeout" >/dev/null
   return 1
+}
+
+dismiss_modal() {
+  local parent=${1:-none}
+  orchestrate_send_escape "$CURRENT_SESSION":0.0
+  # Nested details and parent-list dismissal share the original wait budget.
+  wait_modal_closed 80 "$parent"
 }
 
 wait_layout() {
@@ -254,13 +265,13 @@ switch_pane() {
     *) return 1 ;;
   esac
   select_down "$steps"
-  wait_screen_absent "Search panes and crew"
+  wait_modal_closed
 }
 
 switch_main() {
   submit_slash_wait "/panes" "Panes"
   select_down 0
-  wait_screen_absent "Search panes and crew"
+  wait_modal_closed
 }
 
 open_panes_capture() {
@@ -486,8 +497,7 @@ row_9() {
   grep -Fq "$TERMINAL_LABEL - Main" "$before" || fail 9 "Main pane missing"
   grep -Fq "$TERMINAL_LABEL - Worker" "$before" || fail 9 "Worker pane missing"
   grep -Fq "$TERMINAL_LABEL - Manager" "$before" || fail 9 "Manager pane missing"
-  tmux send-keys -t "$CURRENT_SESSION":0.0 Esc
-  wait_screen_absent "Search panes and crew"
+  dismiss_modal
   switch_pane "Worker"
   switch_pane "Manager"
   switch_main
@@ -617,7 +627,8 @@ row_13() {
   wait_screen "Assignment assignment-"
   capture "jargon-details" >/dev/null
   screens+=("$LAST_CAPTURE_PATH")
-  tmux send-keys -t "$CURRENT_SESSION":0.0 Esc
+  dismiss_modal orchestrate
+  capture "details-and-status-dismissed" >/dev/null
 
   local worker_node
   worker_node=$(jq -r '(.layout // .) | .orchestrate_whips | to_entries[0].value.target' "$(layout_file)")
