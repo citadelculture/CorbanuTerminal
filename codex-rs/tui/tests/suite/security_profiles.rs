@@ -77,6 +77,9 @@ fn tmux_security_profiles_are_observation_only_at_normal_and_narrow_widths() -> 
         command(pane, "/security")?;
         pane.wait_stable_contains("Security profiles", TIMEOUT)?;
         pane.send_key(TmuxKey::Escape)?;
+        pane.wait_stable_until("profile view closes before exit", TIMEOUT, |text| {
+            !text.contains("Security profiles — read only")
+        })?;
         command(pane, "/exit")?;
         session.wait_for_exit(TIMEOUT)?;
     }
