@@ -1,0 +1,56 @@
+name: issue865 focused Windows gnullvm Bazel diagnosis
+
+on:
+  push:
+    branches:
+      - probe/issue865-windows-bazel
+
+permissions:
+  contents: read
+
+jobs:
+  native-state:
+    if: github.repository == 'citadelculture/CorbanuTerminal'
+    runs-on: windows-2022
+    timeout-minutes: 90
+    env:
+      # The fork uses local native execution. Never obtain an upstream key.
+      BUILDBUDDY_API_KEY: ''
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - name: Record exact source and original-harness scope
+        shell: pwsh
+        run: |
+          git rev-parse HEAD
+          Write-Output 'Native Windows gnullvm Bazel state-unit-tests; local keyless runner, one attempt, no test cache.'
+          Write-Output 'All original assertions retained; reviewer seed controls added, no production fix claimed.'
+      - name: Prepare original native Windows Bazel toolchain
+        uses: ./.github/actions/prepare-bazel-ci
+        with:
+          target: x86_64-pc-windows-gnullvm
+          cache-scope: bazel-test-windows-native-main
+      - name: State target with original libtest concurrency and causal controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          ./.github/scripts/run-bazel-ci.sh \
+            --print-failed-action-summary \
+            --print-failed-test-logs \
+            -- \
+            test \
+            --build_tests_only \
+            --flaky_test_attempts=1 \
+            --nocache_test_results \
+            --test_output=all \
+            --test_summary=detailed \
+            -- \
+            //codex-rs/state:state-unit-tests
+      - name: Retain Bazel execution metadata
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: issue865-windows-gnullvm-state-execution
+          path: ${{ runner.temp }}/bazel-execution-logs
+          if-no-files-found: warn

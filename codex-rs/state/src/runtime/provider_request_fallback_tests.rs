@@ -3,6 +3,113 @@ use crate::runtime::test_support::unique_temp_dir;
 use pretty_assertions::assert_eq;
 use std::path::Path;
 
+/// Reviewer-only causal control: a best-effort legacy seed can remain local.
+/// This is expected fallback behavior, not proof of the original Windows cause.
+#[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+async fn reviewer_non_durable_legacy_seed_is_not_visible_to_a_fresh_process() -> anyhow::Result<()>
+{
+    let home = unique_temp_dir();
+    let runtime = StateRuntime::init_for_testing(home.clone(), "zai".into()).await?;
+    let legacy = ProviderRequestKey {
+        key_fingerprint: "env:ZAI_API_KEY:0123456789abcdef".to_string(),
+        ..key()
+    };
+    let salted = ProviderRequestKey {
+        key_fingerprint: "env-salted:ZAI_API_KEY:fedcba9876543210".to_string(),
+        ..key()
+    };
+    let lease = acquired(
+        runtime
+            .acquire_provider_request_throttle_lease(
+                &legacy,
+                &preflight(),
+                "old",
+                /*lease_ttl_ms*/ 600_000,
+                /*now_ms*/ 1_000,
+            )
+            .await,
+    );
+    assert!(lease.in_state_db);
+    let held = hold_write_lock(&runtime.sqlite().state_db_path()).await?;
+    let recorded = runtime
+        .record_provider_request_throttle_result(&lease, rate_limited(), /*now_ms*/ 2_000)
+        .await;
+    assert_eq!(
+        recorded,
+        ProviderRequestThrottled::new(/*decision*/ false, Some(StateDbFallback::Busy))
+    );
+    held.rollback().await?;
+
+    let process = StateRuntime::init_for_testing(home.clone(), "zai".into()).await?;
+    process
+        .adopt_legacy_provider_request_key(
+            &legacy.key_fingerprint,
+            &salted.key_fingerprint,
+            /*now_ms*/ 2_500,
+        )
+        .await;
+    assert_eq!(
+        check_reason(
+            &process
+                .check_provider_request_throttle(&salted, &preflight(), /*now_ms*/ 3_000)
+                .await
+        ),
+        None
+    );
+    assert_eq!(
+        check_reason(
+            &runtime
+                .check_provider_request_throttle(&legacy, &preflight(), /*now_ms*/ 3_000)
+                .await
+        ),
+        Some((ProviderRequestBlockReason::Cooldown, 62_000, Some(429)))
+    );
+    process.close().await;
+    runtime.close().await;
+    let _ = std::fs::remove_dir_all(home);
+    Ok(())
+}
+
+/// Reviewer-only positive control: a historical row seeded durably and with
+/// fixed timestamps must retain the exact cooldown through real migration.
+#[tokio::test]
+async fn reviewer_a_durable_historical_row_preserves_the_exact_cooldown() -> anyhow::Result<()> {
+    let home = unique_temp_dir();
+    let runtime = StateRuntime::init_for_testing(home.clone(), "zai".into()).await?;
+    let legacy = "env:ZAI_API_KEY:0123456789abcdef";
+    let salted = ProviderRequestKey {
+        key_fingerprint: "env-salted:ZAI_API_KEY:fedcba9876543210".to_string(),
+        ..key()
+    };
+    sqlx::query(
+        "INSERT INTO provider_request_state (provider_id, model, key_fingerprint, cooldown_until_ms, last_status, updated_at_ms) VALUES ('zai', 'glm-5.2', ?, 62000, 429, 2000)",
+    )
+    .bind(legacy)
+    .execute(runtime.pool.as_ref())
+    .await?;
+    let process = StateRuntime::init_for_testing(home.clone(), "zai".into()).await?;
+    process
+        .adopt_legacy_provider_request_key(legacy, &salted.key_fingerprint, /*now_ms*/ 2_500)
+        .await;
+    assert_eq!(
+        check_reason(
+            &process
+                .check_provider_request_throttle(&salted, &preflight(), /*now_ms*/ 3_000)
+                .await
+        ),
+        Some((ProviderRequestBlockReason::Cooldown, 62_000, Some(429)))
+    );
+    let keys: Vec<String> =
+        sqlx::query_scalar("SELECT key_fingerprint FROM provider_request_state")
+            .fetch_all(process.pool.as_ref())
+            .await?;
+    assert_eq!(keys, vec![salted.key_fingerprint.clone()]);
+    process.close().await;
+    runtime.close().await;
+    let _ = std::fs::remove_dir_all(home);
+    Ok(())
+}
+
 fn key() -> ProviderRequestKey {
     ProviderRequestKey {
         provider_id: "zai".to_string(),
