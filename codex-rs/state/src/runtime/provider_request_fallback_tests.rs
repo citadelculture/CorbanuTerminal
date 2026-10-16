@@ -80,6 +80,10 @@ fn blocked_reason(
 async fn a_lock_held_past_the_wait_falls_back_to_this_process() -> anyhow::Result<()> {
     let home = unique_temp_dir();
     let runtime = StateRuntime::init_for_testing(home.clone(), "zai".into()).await?;
+    eprintln!(
+        "issue865 lock fixture: quick_pool={}",
+        runtime.quick.is_some()
+    );
     // A cooldown recorded while the DB answers still applies once it doesn't.
     let first = acquired(acquire(&runtime, "worker-a", /*now_ms*/ 1_000).await);
     assert_eq!(first.in_state_db, true);
@@ -97,6 +101,11 @@ async fn a_lock_held_past_the_wait_falls_back_to_this_process() -> anyhow::Resul
         .check_provider_request_throttle(&key(), &preflight(), /*now_ms*/ 3_000)
         .await;
     let first_wait = started.elapsed();
+    eprintln!(
+        "issue865 first check: elapsed={first_wait:?}, fallback={:?}, quick_pool={}",
+        check.state_db_fallback,
+        runtime.quick.is_some()
+    );
     assert_eq!(check.state_db_fallback, Some(StateDbFallback::Busy));
     let block = check.decision.expect("the cooldown still holds");
     assert_eq!(
@@ -549,9 +558,19 @@ async fn a_legacy_row_moves_to_its_salted_key() -> anyhow::Result<()> {
             )
             .await,
     );
-    runtime
+    let recorded = runtime
         .record_provider_request_throttle_result(&lease, rate_limited(), /*now_ms*/ 2_000)
         .await;
+    let seeded: Vec<(String, i64, i64)> = sqlx::query_as(
+        "SELECT key_fingerprint, cooldown_until_ms, lease_until_ms FROM provider_request_state",
+    )
+    .fetch_all(runtime.pool.as_ref())
+    .await?;
+    eprintln!(
+        "issue865 legacy seed: quick_pool={}, lease_in_db={}, recorded={recorded:?}, rows={seeded:?}",
+        runtime.quick.is_some(),
+        lease.in_state_db
+    );
 
     // A fresh process (no memory of the legacy cooldown) adopts the row.
     let process = StateRuntime::init_for_testing(home.clone(), "zai".into()).await?;
@@ -562,6 +581,16 @@ async fn a_legacy_row_moves_to_its_salted_key() -> anyhow::Result<()> {
             /*now_ms*/ 2_500,
         )
         .await;
+    let migrated: Vec<(String, i64, i64)> = sqlx::query_as(
+        "SELECT key_fingerprint, cooldown_until_ms, lease_until_ms FROM provider_request_state",
+    )
+    .fetch_all(process.pool.as_ref())
+    .await?;
+    eprintln!(
+        "issue865 legacy adoption: quick_pool={}, paused={:?}, rows={migrated:?}",
+        process.quick.is_some(),
+        process.provider_request_memory.paused()
+    );
     assert_eq!(
         check_reason(
             &process

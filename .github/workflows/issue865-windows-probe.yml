@@ -1,0 +1,51 @@
+name: issue865 focused Windows state diagnosis
+
+on:
+  push:
+    branches:
+      - probe/issue865-windows-state
+
+permissions:
+  contents: read
+
+jobs:
+  native-state:
+    if: github.repository == 'citadelculture/CorbanuTerminal'
+    runs-on: windows-2022
+    timeout-minutes: 45
+    env:
+      CARGO_INCREMENTAL: '0'
+      CARGO_PROFILE_DEV_DEBUG: '0'
+      CARGO_PROFILE_TEST_DEBUG: '0'
+      CARGO_TERM_COLOR: never
+      CARGO_NET_GIT_FETCH_WITH_CLI: 'true'
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@e081816240890017053eacbb1bdf337761dc5582
+      - uses: taiki-e/install-action@44c6d64aa62cd779e873306675c7a58e86d6d532
+        with:
+          tool: just@1.58.0,cargo-nextest@0.9.146
+      - name: Record exact native candidate and tools
+        shell: pwsh
+        run: |
+          git rev-parse HEAD
+          rustc --version --verbose
+          cargo --version
+          python --version
+          just --version
+          cargo nextest --version
+          Write-Output "Runner: $env:RUNNER_OS / $env:RUNNER_ARCH; Windows MSVC Cargo, not gnullvm Bazel"
+      - name: Native provider fallback contracts without retries
+        shell: pwsh
+        run: |
+          just test -p codex-state --lib --locked --retries 0 --test-threads 4 --success-output immediate --failure-output immediate -E 'test(provider_request_fallback::tests::)' 2>&1 | Tee-Object -FilePath issue865-windows-state.log
+          exit $LASTEXITCODE
+      - name: Retain exact diagnostic transcript
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: issue865-windows-msvc-state-diagnostic
+          path: issue865-windows-state.log
+          if-no-files-found: warn
