@@ -19,7 +19,7 @@ PINS = {"base": "78dd811d6e3718140c938ad4839968d9995fd5ac",
         "head": "9f404feeb0f63347209ec5d97a277d86101921be"}
 RUST_TREE = "914d20b44d7f06abb02c640c257232150a27c81e"
 REPOSITORY = "citadelculture/CorbanuTerminal"
-REF = "refs/heads/codex/sdk958-hosted-recovery-20261020"
+REF = "refs/heads/codex/sdk958-hosted-recovery-v2-20261020"
 TARGET = "Codex throws ThreadRunError on turn failures"
 MAX_REPORT = 8 * 1024 * 1024
 MAX_BINARY = 512 * 1024 * 1024
@@ -32,11 +32,12 @@ def parse_jest(data):
     report = json.loads(data)
     if (report.get("success") is not True or report.get("numPassedTests") != 1
             or report.get("numFailedTests") != 0 or report.get("numFailedTestSuites") != 0
-            or report.get("numPassedTestSuites") != 1 or report.get("wasInterrupted") is True
+            or report.get("numPassedTestSuites") != 1 or report.get("numTotalTestSuites") != 1
+            or report.get("numRuntimeErrorTestSuites") != 0 or report.get("wasInterrupted") is True
             or len(report.get("testResults", [])) != 1):
         raise Hold("focused_jest_result_not_success")
     suite = report["testResults"][0]
-    if suite.get("status") != "passed" or not suite.get("name", "").endswith("/tests/run.test.ts"):
+    if suite.get("status") not in ("passed", "focused") or not suite.get("name", "").endswith("/tests/run.test.ts"):
         raise Hold("focused_suite_identity")
     selected = []
     excluded = 0
@@ -47,16 +48,21 @@ def parse_jest(data):
             excluded += 1
         else:
             raise Hold("unexpected_executed_case")
+    if (report.get("numTotalTests") != len(suite.get("assertionResults", []))
+            or report.get("numPendingTests") != excluded):
+        raise Hold("jest_case_accounting_mismatch")
     if len(selected) != 1:
         raise Hold("focused_case_missing_or_duplicate")
     case = selected[0]
     duration = case.get("duration")
     if (case.get("status") != "passed" or case.get("failureMessages")
             or type(duration) not in (int, float) or not 0 <= duration < 5000
-            or case.get("invocations", 1) != 1):
+            or case.get("invocations") != 1 or case.get("numPassingAsserts") != 2
+            or case.get("failureDetails") or case.get("retryReasons")):
         raise Hold("case_failed_skipped_retried_or_timeout")
     return {"name": TARGET, "status": "passed", "durationMilliseconds": duration,
             "ordinaryJestTimeoutMilliseconds": 5000, "executedCases": 1,
+            "suiteStatus": suite["status"], "passingAssertions": case["numPassingAsserts"],
             "filterExcludedCases": excluded, "sourceAssertionsPassed": [
                 "thread.run rejects with stream disconnected before completion:",
                 "recorded proxy request count equals one"],
@@ -204,6 +210,9 @@ def main():
               "toolsPinsSha256": sha(control / "tools-pins.json"), "commands": c.rows,
               "runs": [], "binaries": {}, "limits": manifest["limits"],
               "nativeMacOSIncidentResolved": False, "credentialsForwarded": False,
+              "priorObservedBasePassMilliseconds": 415,
+              "priorPassCountedInThisFreshSeries": False,
+              "measurementSequence": "Three sequential actual target cases per pin on this new host; no cross-host warm continuity claimed.",
               "rawLocalReceiptsUploaded": False, "ordinaryRunnerUnchanged": True}
     code = 1
     try:

@@ -1,7 +1,7 @@
 name: SDK958 exact native zero-retry qualification
 on:
   push:
-    branches: [codex/sdk958-hosted-recovery-20261020]
+    branches: [codex/sdk958-hosted-recovery-v2-20261020]
 permissions:
   contents: read
 concurrency:

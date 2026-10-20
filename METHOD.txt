@@ -1,4 +1,4 @@
-SDK958 hosted recovery — prepared, not executed
+SDK958 hosted recovery v2 — parser correction prepared, not executed
 
 Accepted task: task_eff3fbf2dc866231339b38d540e376e5.
 The exact existing two-file patch is retained unchanged. Current main
@@ -10,7 +10,7 @@ public search is not proof of exclusive contribution ownership.
 
 Method
 Run once on fresh GitHub-hosted Ubuntu24.04 x86_64, nonroot, exact branch
-codex/sdk958-hosted-recovery-20261020, first run attempt only. The workflow has
+codex/sdk958-hosted-recovery-v2-20261020, first run attempt only. The workflow has
 read-only contents permission, no secrets, no cache restoration, and a control
 checkout with persist-credentials:false. Source acquisition is anonymous HTTPS
 Git in the controller's explicit credential-free child environment.
@@ -78,7 +78,7 @@ No full SDK suite, macOS/keychain qualification, original incident resolution,
 exclusive ownership, public contribution, Tasknode delivery or reward is claimed.
 
 Current state and next executable action
-Local source/manifest/pure-control preparation is complete. Seven pure tests
+Local source/manifest/pure-control preparation is complete. Nine pure tests
 pass, with no product test body or native process execution. admission.json is
 false. Have the independent reviewer inspect the frozen hashes and method.
 After CLEAR and normal publication approval, root may set admission approved
@@ -87,3 +87,33 @@ sdk958-hosted.yml at .github/workflows/sdk958-hosted.yml, and push exactly that
 reviewed branch once. That push launches the bounded method. Any source or
 controller correction changes hashes and requires refreshed review/admission.
 Native host overrides and the unresolved old native incident remain held.
+
+Observed v1 result and correction
+Run39424887822/control39c1f5b87755bdf418a6b02566ef0906af713492 built the base
+CLI and helper successfully. Its actual ordinary Jest target passed in415 ms,
+with two passing assertions and one invocation. The JSON suite status was
+focused, while the controller accepted only passed; focused_suite_identity
+therefore stopped before warm/head work. The original failed overall run and
+its successful native case are both preserved. Parsing the existing report
+with this corrected parser succeeds without rerunning product work.
+
+V2 accepts the observed focused suite status only alongside the same actual
+passed selected case and successful global counts. It also requires exact
+two-assertion/invocation counts, no retry reasons/failure details, and consistent
+suite/case/filter-exclusion accounting. The source fixture and5000ms timeout
+are unchanged. This is an evidence-parser correction, not a relaxed test.
+
+The original VM is finished; its415ms case cannot create warm continuity with
+a different VM. The next reviewed campaign will build both required exact pins
+and collect its own complete first-process/warm-1/warm-2 sequence per pin on
+one fresh hosted machine. The earlier415ms case remains historical supporting
+evidence and is not counted in that six-run sequence. This fresh series is
+necessary to obtain the still-missing cold/warm evidence on a single host;
+re-parsing v1 itself did not require or execute a native rerun.
+
+The official evidence ZIP and all410 exported stream/session/command bindings
+were independently verified. The135MB binary artifact remains retained by
+GitHub; local download attempts timed out or failed strict range byte counts,
+so a full local binary ZIP digest was not verified. No partial bytes are used.
+The unverified-artifact-reuse draft is excluded from this public package. The
+simpler full-build method preserves the explicit two-build task requirement.
