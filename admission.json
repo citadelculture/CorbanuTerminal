@@ -1,0 +1,8 @@
+{
+  "approved": false,
+  "controllerSha256": "3f00f5d591c9cbadf57d73781194d046f8ad0adba01be05eb14d64063a3b9438",
+  "schema": "issue1132-shared-target-admission-v2",
+  "sourceManifestSha256": "f8baab063c6a5cd9d651054af60c1421f46d5733d6bd82741015dc7bea51dc49",
+  "toolsPinsSha256": "9e612a91c35aa3fdb1a6fa0081da2dec534b01a2ceb0e19bf76fcb51bcedde56",
+  "workflowSha256": "de2f72e2e4098b17ce13e122bd500dd423de294bd29b66f24bdd635457a3bd7a"
+}
