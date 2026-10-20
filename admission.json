@@ -1,6 +1,6 @@
 {
   "schema": "issue1132-shared-target-admission-v1",
-  "approved": false,
+  "approved": true,
   "controllerSha256": "93996afaf1ad015129826fb7d22a7385844d0fac93d7af76bb4e88b080b23d2a",
   "sourceManifestSha256": "5ff654e69164a1848e9068afad137fbc3691d3d966590d535e1794d669480bc4",
   "toolsPinsSha256": "9e612a91c35aa3fdb1a6fa0081da2dec534b01a2ceb0e19bf76fcb51bcedde56",
