@@ -2,7 +2,7 @@ name: Issue1056 sweep budget qualification
 
 on:
   push:
-    branches: [codex/issue1056-sweep-budget-ci-v1-20261020]
+    branches: [codex/issue1056-sweep-budget-ci-v2-20261020]
 
 permissions:
   contents: read

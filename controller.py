@@ -22,7 +22,7 @@ import xml.etree.ElementTree as ET
 
 BASE = "bec9e5fb774ab984ce0d53eb82cf13113eb6b181"
 REPO = "citadelculture/CorbanuTerminal"
-REF = "refs/heads/codex/issue1056-sweep-budget-ci-v1-20261020"
+REF = "refs/heads/codex/issue1056-sweep-budget-ci-v2-20261020"
 PRODUCTION = "codex-rs/linux-sandbox/src/placeholder_journal.rs"
 TESTS = "codex-rs/linux-sandbox/src/placeholder_journal_tests.rs"
 CASES = (
@@ -207,6 +207,55 @@ def children():
     return {pid: table[pid][1] for pid in owned}
 
 
+
+def descendant_states(owned):
+    """Only process identity/state, never argv, environment or command names."""
+    rows = []
+    for pid, birth in sorted(owned.items()):
+        try:
+            tail = (Path("/proc") / str(pid) / "stat").read_text().rsplit(")", 1)[1].split()
+            if int(tail[19]) == birth:
+                rows.append({"pid": pid, "parentPid": int(tail[1]),
+                             "birthTick": birth, "state": tail[0]})
+        except (OSError, ValueError, IndexError):
+            pass
+    return rows
+
+
+def reap_exited_descendants():
+    """Called only after the Popen leader is reaped. Live children still hold."""
+    before = descendant_states(children())
+    reaped = []
+    for _ in range(8):
+        progress = False
+        for row in descendant_states(children()):
+            # waitpid is restricted to actual adopted, already exited children.
+            # Recheck the birth identity so a reused numeric PID is never reaped.
+            if row["parentPid"] != os.getpid() or row["state"] not in ("Z", "X"):
+                continue
+            if proc_table().get(row["pid"], (None, None)) != (os.getpid(), row["birthTick"]):
+                continue
+            try:
+                pid, _status = os.waitpid(row["pid"], os.WNOHANG)
+            except (ChildProcessError, ProcessLookupError):
+                continue
+            if pid == row["pid"]:
+                reaped.append(row)
+                progress = True
+        if not progress:
+            break
+    remaining = children()
+    return {"before": before, "reapedExited": reaped,
+            "remaining": descendant_states(remaining), "remainingCount": len(remaining)}
+
+
+def orphan_reaping_fixture_argv():
+    # Synthetic process-only preflight; no repository/product code or networking.
+    return ["/usr/bin/python3", "-I", "-B", "-c",
+            "import os,time; child=os.fork(); "
+            "time.sleep(0.05) if child == 0 else None; os._exit(0)"]
+
+
 def cleanup(process):
     # Linux subreaper adopts orphaned command/test children, including new groups.
     process.poll()
@@ -259,6 +308,7 @@ class Campaign:
         states = {n: {"observedBytes": 0, "retainedBytes": 0, "truncated": False}
                   for n in ("stdout", "stderr")}
         complete = False
+        completion_descendants = None
         clean = {"ownedDescendantsGone": False, "leaderReaped": False}
         if children():
             raise Hold("unexpected_existing_child")
@@ -294,7 +344,8 @@ class Campaign:
                             raise Hold("output_bound")
                 p.wait()
                 complete = True
-                if children():
+                completion_descendants = reap_exited_descendants()
+                if completion_descendants["remainingCount"]:
                     raise Hold("child_survived_command")
             except BaseException as e:
                 reason = str(e) if isinstance(e, Hold) else "controller_" + type(e).__name__
@@ -310,6 +361,7 @@ class Campaign:
         row = {"stage": label, "exitCode": p.returncode if p else None,
                "seconds": round(time.monotonic() - started, 3), "captureComplete": complete,
                "stopReason": reason, "capture": states, "cleanup": clean,
+               "completionDescendants": completion_descendants,
                "argv": [normalized(a.encode(), self.replacements).decode() for a in argv]}
         pub = self.output / label
         pub.mkdir()
@@ -368,6 +420,8 @@ def environment(root):
          "CORBANU_TEST_NO_NATIVE_KEYRING": "1", "CARGO_NET_GIT_FETCH_WITH_CLI": "true",
          "CARGO_NET_RETRY": "0", "CARGO_TERM_COLOR": "never", "CARGO_HTTP_TIMEOUT": "60",
          "GIT_CONFIG_NOSYSTEM": "1", "GIT_CONFIG_SYSTEM": "/dev/null", "GIT_CONFIG_GLOBAL": "/dev/null",
+         "GIT_CONFIG_COUNT": "2", "GIT_CONFIG_KEY_0": "gc.auto", "GIT_CONFIG_VALUE_0": "0",
+         "GIT_CONFIG_KEY_1": "maintenance.auto", "GIT_CONFIG_VALUE_1": "false",
          "GIT_TERMINAL_PROMPT": "0", "GIT_ASKPASS": "/usr/bin/false", "SSH_ASKPASS": "/usr/bin/false",
          "GIT_SSH_COMMAND": "/usr/bin/false", "NETRC": str(root / "empty-netrc"),
          "XDG_CONFIG_HOME": str(root / "empty-config"), "CURL_HOME": str(root / "empty-config"),
@@ -499,6 +553,13 @@ def main():
                               "runningStopFloorBytes": 4 * GIB, "beforeStage": {}}
         if result["capacity"]["initialFreeBytes"] < 30 * GIB:
             raise Hold("initial_disk_floor")
+        _, fixture = c.run("owned-orphan-reaping-preflight", orphan_reaping_fixture_argv(), 10)
+        evidence = fixture["completionDescendants"]
+        if (fixture["exitCode"] != 0 or evidence["remainingCount"]
+                or len(evidence["reapedExited"]) != 1):
+            raise Hold("owned_orphan_reaping_preflight_failed")
+        result["ownedProcessPreflight"] = {"passed": True, "reapedExitedCount": 1,
+                                           "productTestBodiesExecuted": 0}
         if not (source / ".git").is_dir() or (source / ".git").is_symlink():
             raise Hold("fresh_real_checkout_required")
         if c.git("initial-head", "rev-parse", "HEAD").decode().strip() != BASE:
