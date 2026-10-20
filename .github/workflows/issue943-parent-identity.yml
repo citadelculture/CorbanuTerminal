@@ -1,0 +1,44 @@
+name: Issue943 parent identity observation
+
+on:
+  push:
+    branches: [codex/issue943-parent-identity-v1-20261020]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: issue943-parent-identity-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  observe:
+    if: github.repository == 'citadelculture/CorbanuTerminal' && github.run_attempt == 1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout only reviewed metadata control
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: ${{ github.sha }}
+          path: control
+          fetch-depth: 1
+          persist-credentials: false
+          submodules: false
+          lfs: false
+      - name: One metadata observation with no provisioning continuation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I -B control/controller.py --dispatch \
+            --control "$GITHUB_WORKSPACE/control" \
+            --output "$GITHUB_WORKSPACE/parent-evidence"
+      - name: Preserve selected fixed-label metadata
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: issue943-parent-identity-${{ github.run_id }}-${{ github.run_attempt }}
+          path: parent-evidence/
+          if-no-files-found: warn
+          include-hidden-files: false
+          retention-days: 14

@@ -1,0 +1,13 @@
+{
+  "approved": false,
+  "diagnosticOnly": true,
+  "files": {
+    ".github/workflows/issue943-parent-identity.yml": "c43d6218e68b12e242a0ccb7300b67d15a6a047d12d52f756b13eacd7be762b8",
+    "controller.py": "5a9c5e4fcc6db04c44bbe59ee6b40e57c469e9ad1fbb087c65691abfd2b9af54",
+    "observe_parents.py": "ec8a4d2305a68f1f4384e384ecedbc30bbe05c90032a21449a367d662505f6b9",
+    "supervisor.py": "00ea4fab6296108ed125914e3b87cfa0c5301a093c4153638a56da1cd502eaf9"
+  },
+  "provisioningApproved": false,
+  "qualified": false,
+  "schema": "issue943-parent-metadata-admission-v1"
+}
