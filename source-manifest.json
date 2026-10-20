@@ -1,0 +1,116 @@
+{
+  "baseCommit": "2e3e1212638d335e33f94a02d9c47ff949ced310",
+  "baselineExpected": [
+    6,
+    5,
+    1
+  ],
+  "baselineLimitation": "Original exact-base production with identical formatted final test fixture. No instrumentation or production adaptation.",
+  "baselinePatch": {
+    "path": "payload/baseline-fixture.patch",
+    "sha256": "6625e4db9e90ede17ab62454a4c10bd3eea38054631a7a1862711ba3450688b4"
+  },
+  "candidateCountsLimitation": "Successful growth assertions emit no numerical allocation counts; only satisfaction of existing two-size bounds is claimed.",
+  "candidateExpected": [
+    6,
+    6,
+    0
+  ],
+  "candidatePatchSha256": "02139834bd72cb59ede6bc6871b247bb3e2f9bc33a5d7074008c8b9221cd19b8",
+  "caseAdmissionSha256": "77e76aa84d55ab0bd3329f25dc7fe32e3a9b06339e8da317396b661655c4837b",
+  "files": [
+    {
+      "baselinePayload": "payload/nested.baseline.rs",
+      "baselineSha256": "d832a710e6881a45d7822a83b4db37c79272d7a6afd0f1109c229572c2a0e319",
+      "candidateSha256": "b680484d1c57b383c84002e1e0164871b1029d9f6cc10c19639453d21c37cd21",
+      "originalSha256": "d832a710e6881a45d7822a83b4db37c79272d7a6afd0f1109c229572c2a0e319",
+      "path": "codex-rs/core/src/security/tainted_action/nested.rs",
+      "payload": "payload/nested.rs"
+    },
+    {
+      "candidateSha256": "36c10ce6d07ea9ec65d3a76013cf2120c9aacfbca20e7d53079e287bbe651b11",
+      "originalSha256": "6165f0ad64a54b106358dbc1c597a5625c0deed0ff9e42e6ec7f5cdec8140d1d",
+      "path": "codex-rs/core/src/security/tainted_action_tests.rs",
+      "payload": "payload/tainted_action_tests.rs"
+    }
+  ],
+  "formatterReceiptSha256": "f8b3003a591d44b482f3a07b6ff68dfdeffd434e438715733f1e8d8bd5037f9a",
+  "fullPackageQualification": false,
+  "patch": {
+    "path": "payload/change.patch",
+    "sha256": "02139834bd72cb59ede6bc6871b247bb3e2f9bc33a5d7074008c8b9221cd19b8"
+  },
+  "productionTransitionPatch": {
+    "path": "payload/production-only.patch",
+    "sha256": "d6e764da194115b09cace0cfd57bf3c8077be0bc0de8227d6753ea429ea3f6d6"
+  },
+  "redCases": [
+    {
+      "maxGrowth": 6,
+      "messageRegex": "shared sed targets: ([0-9]+) bytes at 1x, ([0-9]+) at 4x \\(linear work grows at\\s+most 4x, quadratic about 16x\\)",
+      "name": "security::tainted_action::tests::issue_1132_shared_targets_are_not_copied_per_sed",
+      "panicLine": 129,
+      "siteRegex": "(?:^|[ /])(?:core/src/)?security/tainted_action/work\\.rs:129:[0-9]+"
+    }
+  ],
+  "schema": "issue1132-shared-target-hosted-source-v1",
+  "selectedCases": [
+    "security::tainted_action::tests::issue_1132_shared_targets_are_not_copied_per_sed",
+    "security::tainted_action::tests::issue_1132_shared_target_judgement_preserves_classification",
+    "security::tainted_action::tests::issue_885_sed_that_runs_commands_is_unseen_code",
+    "security::tainted_action::tests::issue_885_nested_shell_scripts_are_judged",
+    "security::tainted_action::tests::issue_885_sed_writing_a_file_the_line_runs_is_unseen_code",
+    "security::tainted_action::tests::issue_1065_review_1_limits"
+  ],
+  "sourceCaseCount": 46,
+  "sourceCases": [
+    "security::tainted_action::tests::pf_30_s03_vault_credential_and_policy_commands_are_protected",
+    "security::tainted_action::tests::pf_30_s03_ordinary_commands_are_not_protected",
+    "security::tainted_action::tests::pf_30_s03_patches_into_the_home_or_credential_files_are_protected",
+    "security::tainted_action::tests::pf_30_s03_a_custom_home_matches_as_a_whole_segment_run",
+    "security::tainted_action::tests::pf_30_s03_indirect_routes_are_protected",
+    "security::tainted_action::tests::pf_30_s03_indirect_checks_leave_ordinary_commands_alone",
+    "security::tainted_action::tests::pf_30_s03_symlinks_and_canonical_spellings_reach_the_home",
+    "security::tainted_action::tests::pf_30_s03_script_files_and_patched_scripts_are_read",
+    "security::tainted_action::tests::pf_30_s03_research_workflow_prompt_count_and_latency",
+    "security::tainted_action::tests::issue_239_protected_paths_apply_under_protected_level_before_taint",
+    "security::tainted_action::tests::issue_239_human_approval_lifts_rules_only_under_bound_moderate",
+    "security::tainted_action::tests::pf_30_s03_approval_is_bound_to_taint_and_policy",
+    "security::tainted_action::tests::pf_30_s03_review_bypasses_are_closed",
+    "security::tainted_action::tests::pf_30_s03_script_limits_fail_closed_and_patches_follow_symlinks",
+    "security::tainted_action::tests::pf_30_s03_review_2_bypasses_are_closed",
+    "security::tainted_action::tests::pf_30_s03_everyday_commands_stay_quiet",
+    "security::tainted_action::tests::pf_30_s03_review_3_bypasses_are_closed",
+    "security::tainted_action::tests::pf_23_s01_value_transfer_and_outbound_content_are_protected",
+    "security::tainted_action::tests::pf_23_s01_wrapper_positions_are_bounded",
+    "security::tainted_action::tests::pf_23_s02_persistence_writes_are_protected",
+    "security::tainted_action::tests::issue_442_corbanu_home_variables_name_the_home",
+    "security::tainted_action::tests::issue_442_aggressive_credential_reads_say_they_are_never_granted",
+    "security::tainted_action::tests::issue_841_sed_edits_are_not_unseen_code",
+    "security::tainted_action::tests::issue_841_text_only_sed_programs",
+    "security::tainted_action::tests::issue_885_sed_that_runs_commands_is_unseen_code",
+    "security::tainted_action::tests::issue_885_nested_shell_scripts_are_judged",
+    "security::tainted_action::tests::issue_885_sed_writing_a_file_the_line_runs_is_unseen_code",
+    "security::tainted_action::tests::issue_885_review_1_routes_and_limits",
+    "security::tainted_action::tests::issue_885_review_2_routes_and_limits",
+    "security::tainted_action::tests::issue_885_review_3_routes",
+    "security::tainted_action::tests::issue_937_arithmetic_on_filled_variables_is_unseen_code",
+    "security::tainted_action::tests::issue_937_counters_and_plain_uses_are_not_unseen_code",
+    "security::tainted_action::tests::issue_937_review_1_routes",
+    "security::tainted_action::tests::issue_937_review_1_everyday_lines_still_run",
+    "security::tainted_action::tests::issue_937_review_2_routes",
+    "security::tainted_action::tests::issue_937_review_2_everyday_lines_still_run",
+    "security::tainted_action::tests::issue_937_review_6_fallback_routes",
+    "security::tainted_action::tests::issue_1020_deep_substitutions_stay_fast_and_ask",
+    "security::tainted_action::tests::issue_1020_deep_nesting_is_classified_quickly",
+    "security::tainted_action::tests::issue_1012_prompt_transformation_is_unseen_code",
+    "security::tainted_action::tests::issue_1028_glob_qualifiers_that_run_code_are_unseen_code",
+    "security::tainted_action::tests::issue_1065_substituted_values_are_capped",
+    "security::tainted_action::tests::issue_1065_review_1_limits",
+    "security::tainted_action::tests::issue_1065_review_2_large_values_are_judged_once",
+    "security::tainted_action::tests::issue_1132_shared_targets_are_not_copied_per_sed",
+    "security::tainted_action::tests::issue_1132_shared_target_judgement_preserves_classification"
+  ],
+  "sourcePreparationSha256": "0ae459ed8135e3ba6c4304c165326717329cd5fa1caa8c58cf5f83bee1cf221f",
+  "sourceReviewSha256": "ec869eb5438c75d8f5e87baf0c0dc8da6a7424b33e52c9b4a832580b7770d059"
+}

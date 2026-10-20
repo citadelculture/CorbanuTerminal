@@ -1,0 +1,59 @@
+diff --git a/codex-rs/core/src/security/tainted_action/nested.rs b/codex-rs/core/src/security/tainted_action/nested.rs
+index 0cab5bdf..ced29874 100644
+--- a/codex-rs/core/src/security/tainted_action/nested.rs
++++ b/codex-rs/core/src/security/tainted_action/nested.rs
+@@ -216,9 +216,18 @@ impl Classifier {
+             }
+             self.script(&script, &cwd, depth + 1);
+         }
++        // Shared targets are the same for every sed in this reading. If
++        // present, they make `elsewhere` true, so judging a sed cannot reach
++        // `self.script` and add a new executed file. If absent, this is false
++        // regardless of later scripts. Judge them once, without copying their
++        // potentially large names for every sed (#1132).
++        let shared_may_run = found
++            .shared_targets
++            .iter()
++            .any(|target| self.may_run(target.as_deref()));
+         for sed in std::mem::take(&mut found.seds) {
+             work::step();
+-            self.judge_sed(sed, &found, depth);
++            self.judge_sed(sed, &found, depth, shared_may_run);
+         }
+         // A command the word lexer finds that this reading does not
+         // (spelled through a variable, braces or `$IFS`) fails closed.
+@@ -434,7 +443,7 @@ impl Classifier {
+     /// classifier cannot read, or that saves what it outputs to a file the
+     /// line runs is code the host cannot read; an in-place edit that only
+     /// keeps, drops or adds lines has the text it adds judged instead.
+-    fn judge_sed(&mut self, sed: Sed, line: &Found, depth: usize) {
++    fn judge_sed(&mut self, sed: Sed, line: &Found, depth: usize, shared_may_run: bool) {
+         let call = &sed.call;
+         let dynamic = call
+             .programs
+@@ -483,7 +492,6 @@ impl Classifier {
+             return;
+         }
+         let mut targets = sed.saved_to.clone();
+-        targets.extend(line.shared_targets.iter().cloned());
+         targets.extend(readings.iter().flat_map(|reading| {
+             reading
+                 .writes
+@@ -495,7 +503,7 @@ impl Classifier {
+         if sed.substituted && line.other_writes {
+             targets.push(None);
+         }
+-        let elsewhere = !targets.is_empty();
++        let elsewhere = !targets.is_empty() || !line.shared_targets.is_empty();
+         if !elsewhere && !call.in_place {
+             return;
+         }
+@@ -506,7 +514,7 @@ impl Classifier {
+         if call.in_place {
+             targets.extend(call.operands.iter().map(|word| target(known(word))));
+         }
+-        if !targets.iter().any(|target| self.may_run(target.as_deref())) {
++        if !shared_may_run && !targets.iter().any(|target| self.may_run(target.as_deref())) {
+             return;
+         }
+         if elsewhere || !readings.iter().all(|reading| reading.keeps_lines) {
