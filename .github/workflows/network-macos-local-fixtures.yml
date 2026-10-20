@@ -1,0 +1,51 @@
+name: Network canary hosted local fixture qualification
+on:
+  push:
+    branches: [codex/network-canary-macos-local-fixtures-v4-20261020]
+permissions:
+  contents: read
+concurrency:
+  group: codex/network-canary-macos-local-fixtures-v4-20261020
+  cancel-in-progress: false
+jobs:
+  preflight:
+    if: github.repository == 'citadelculture/CorbanuTerminal' && github.event_name == 'push'
+    runs-on: macos-15
+    timeout-minutes: 8
+    steps:
+      - name: Check out fixed control sources
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          path: control
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Check out exact public canary source without executing it
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: CorbanuCore/CorbanuTerminal
+          ref: 78dd811d6e3718140c938ad4839968d9995fd5ac
+          path: canary-source
+          persist-credentials: false
+          fetch-depth: 1
+          submodules: false
+          lfs: false
+      - name: Verify exact reviewed control inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '%s  %s\n' '8d8308a0e74d33cc686a3b9df862d74a161c386d08786a6ad118a012c2ef097e' 'control/hosted_macos_local_fixtures_v4.py' '669f09445dadac6ffc46e365f63520da875feebfd6234e3ccf2b2cda3223dcc9' 'control/helper-pins.json' | /usr/bin/shasum -a 256 -c -
+      - name: Execute bounded synthetic controls only
+        shell: bash
+        run: |
+          set -euo pipefail
+          /usr/bin/python3 -I control/hosted_macos_local_fixtures_v4.py --source "$GITHUB_WORKSPACE/canary-source" --output "$GITHUB_WORKSPACE/preflight-evidence"
+      - name: Retain bounded synthetic evidence
+        if: always() && !cancelled()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: network-local-fixtures-${{ github.run_id }}-${{ github.run_attempt }}
+          path: preflight-evidence/
+          if-no-files-found: warn
+          retention-days: 14
+          compression-level: 9
+          include-hidden-files: false
