@@ -1,0 +1,110 @@
+name: PR1122 bounded rehearsal diagnosis
+
+on:
+  push:
+    branches: [codex/pr1122-tmux-three-case-v3-20261020]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr1122-three-case-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  tmux-smoke:
+    name: Ubuntu three-case rehearsal diagnostic
+    # Root flips this one admission literal only after exact package review.
+    if: >-
+      ${{
+        false &&
+        github.ref == 'refs/heads/codex/pr1122-tmux-three-case-v3-20261020' &&
+        github.event_name == 'push' &&
+        github.repository == 'citadelculture/CorbanuTerminal' &&
+        github.run_attempt == 1
+      }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: codex-rs
+    env:
+      CORBANU_TMUX_ARTIFACT_DIR: ${{ github.workspace }}/tmux-artifacts
+      # Keep bounded progress even when Nextest terminates the rehearsal.
+      CORBANU_MEMORY_REHEARSAL_PROGRESS: ${{ github.workspace }}/tmux-artifacts/memory-rehearsal
+      CORBANU_TMUX_REQUIRED: "1"
+      # sccache cannot cache incremental compilations.
+      CARGO_INCREMENTAL: "0"
+      SCCACHE_CACHE_SIZE: 3G
+      # Keep the server (and its stats) alive through the long test step.
+      SCCACHE_IDLE_TIMEOUT: "0"
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+          ref: 567c4257157fb9e7c4201d413b85129f6265adc6
+      - uses: ./.github/actions/setup-ci
+      - uses: dtolnay/rust-toolchain@d124f86f28ff42855784ff3319f48ac182c248f8 # 1.99.1
+      - uses: taiki-e/install-action@44c6d64aa62cd779e873306675c7a58e86d6d532 # v2.62.49
+        with:
+          tool: nextest
+          version: 0.9.103
+      # Local-disk sccache persisted with actions/cache, as in
+      # rust-ci-full-nextest-platform.yml's fallback path.
+      - uses: taiki-e/install-action@44c6d64aa62cd779e873306675c7a58e86d6d532 # v2.62.49
+        with:
+          tool: sccache
+          version: 0.7.5
+      - name: Configure sccache
+        id: sccache_config
+        run: |
+          set -euo pipefail
+          {
+            echo "SCCACHE_DIR=${CI_BUILD_ROOT}/sccache"
+            echo "RUSTC_WRAPPER=$(command -v sccache)"
+          } >> "$GITHUB_ENV"
+          echo "lockhash=$(cat Cargo.lock rust-toolchain.toml | sha256sum | cut -c1-16)" >> "$GITHUB_OUTPUT"
+      - name: Restore sccache cache
+        id: sccache_restore
+        uses: actions/cache/restore@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
+        with:
+          path: ${{ env.SCCACHE_DIR }}
+          key: sccache-tmux-smoke-${{ runner.os }}-${{ steps.sccache_config.outputs.lockhash }}-${{ github.run_id }}
+          restore-keys: |
+            sccache-tmux-smoke-${{ runner.os }}-${{ steps.sccache_config.outputs.lockhash }}-
+            sccache-tmux-smoke-${{ runner.os }}-
+      - name: Install tmux prerequisites
+        run: |
+          sudo apt-get update -y
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+            libcap-dev \
+            pkg-config \
+            tmux
+          tmux -V
+      # Same package set as the helper build in scripts/isolated_rust_tests.py,
+      # so `just test` reuses these artifacts instead of resolving different
+      # features and rebuilding most of the workspace. Includes corbanu-walletd,
+      # which onboarding scenarios launch from beside the candidate binary.
+      - name: Build candidate and helper binaries
+        run: cargo build --locked -p codex-cli -p codex-wallet-daemon -p codex-rmcp-client -p codex-code-mode-host --bins
+      - name: Build tmux test binary
+        run: cargo nextest run --locked --no-run -p codex-tui --test all
+      - name: Run exact rehearsal and progress controls
+        timeout-minutes: 8
+        run: just test -p codex-tui --test all -E           "test(=suite::memory_human_fixture::tmux_memory_human_fixture_rehearsal) | test(=suite::memory_human_fixture::tmux_memory_rehearsal_progress_is_visible_before_cleanup) | test(=suite::memory_human_fixture::tmux_memory_rehearsal_progress_keeps_case_records_separate)" --retries 0
+      - name: sccache stats
+        if: always()
+        continue-on-error: true
+        run: |
+          sccache --show-stats || true
+          du -sh "${SCCACHE_DIR}" || true
+          df -h . || true
+      - name: Preserve bounded phase records on every terminal step outcome
+        if: always()
+        timeout-minutes: 2
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: pr1122-three-case-progress-${{ github.run_id }}-${{ github.run_attempt }}
+          path: tmux-artifacts/memory-rehearsal/**/progress.json
+          if-no-files-found: warn
+          retention-days: 7
