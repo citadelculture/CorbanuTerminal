@@ -1,0 +1,45 @@
+{
+  "schema": "issue943-setup-inputs-v2",
+  "baseCommit": "bfa6f7da57b55803be09ccd3613cdcdedd1c7e25",
+  "sourceInputs": {
+    ".codex/skills/corbanu-terminal-development/SKILL.md": "aae866dc7c03ef742e61dac57413de9b194b28fb1051471939eb1c85bd10c9c8",
+    ".codex/skills/remote-tests/SKILL.md": "5029f27ab93facafa8a673dfdd04832114e56aa76e27752c679bf33e0270d748",
+    ".github/actions/setup-ci/action.yml": "cef6b87a463c78813f9ba0c0dac8cc451a8be9b9ca218f5130f057af3801904a",
+    ".github/workflows/rust-ci.yml": "8cfb83e22f861c7dead4c805a2852fba971d9b2325bf8842cfea35458b445080",
+    "AGENTS.md": "4b6aa2003bb1b01c3313f1155e3e5e35516ec217da794d3bf3920ed483bbe608",
+    "codex-rs/.config/nextest.toml": "830c64fd157ef4bb618626c4f7aaf3de986b488289eb28ed352ff0a21e29c110",
+    "codex-rs/AGENTS.md": "8770b8bde8ddaf5f404090afb3f2251aca06bca5cfc5707ec42ae3a7490ce47a",
+    "codex-rs/Cargo.lock": "92f3c84583f85f631097f8eb99dc330421c653d85659aa30f38b2465af232b33",
+    "codex-rs/Cargo.toml": "137d2317b4c0ac6007cd2f9ee9633bc151f6b675e870f2a0dbfa89e5b850b4aa",
+    "codex-rs/core/AGENTS.md": "59efad64c941fcfe740dc1b2bea13d1fdc7fff068d2b5f9da0a9bcddb3566163",
+    "codex-rs/core/Cargo.toml": "9f1dbf31a50915de436cc0c37c2ab905ce920051285f4919aae9970ab3848a9f",
+    "codex-rs/core/src/tools/orchestrator_stale_tests.rs": "a0b07153b0dd708ab8c07a35250642c67b23c06fc48af597b5bc4af14448eb7e",
+    "codex-rs/core/tests/all.rs": "fb65d181d9fcd37714caa2b9ded5a35dd322edd04cee22176c21a8be8ee12f4c",
+    "codex-rs/core/tests/common/lib.rs": "f0457349dceb9c003079014d3178748529f5e23ebd0b9a6652c60b6463b98684",
+    "codex-rs/core/tests/common/test_codex.rs": "4d600bb0c4381316b7008c92b92cfd0e4d763034d5e04572931b106b1af614b0",
+    "codex-rs/core/tests/suite/mod.rs": "bc5a3dd72b53ad0fe62517004c23f1980adbd61e798f9fe060f34b205ad9665c",
+    "codex-rs/rust-toolchain.toml": "570656042681cfd8795403a455baf9a33035331a07db0645e866bbcea89a3d64",
+    "codex-rs/sandboxing/src/bwrap.rs": "bb207cdcded243c67a593f1ff5f24f5e686e7cb2df183c9538bacf51568546a3",
+    "docs/corbanu-product-spec.md": "5075bb5cc6f6ddf55f0592df7083531f68e82737b4d0446cc6891c77ff34ec7d",
+    "docs/development/test-isolation.md": "1a5c54c42d74e08c2a98ea6fc8217e05e15c43b2f6b40f679c6388090514cfd0",
+    "justfile": "ce2e815f90284ebc8c8812c9f94b63e78d9a3db5271c3416979d46499cdbb512",
+    "scripts/isolated_rust_tests.py": "2376d36fae0943cbbf4a0caf58109b0dece03cb226983d1276216adc90d2447c",
+    "scripts/just-shell.py": "444d6b328d44abf6453b77b6acce2a0c881fc162ff30b20f352c85067797fbe9",
+    "scripts/format.py": "d930139145ba3e80a188c1b5734aa7fee6bad5687e610cb58bda016216a2f37d",
+    ".github/actions/setup-rusty-v8/action.yml": "e05628c6361bf0f5ad02cbce304c5894f1ef3079f8b7630c1351cb4c48a118e1",
+    ".github/scripts/rusty_v8_bazel.py": "2cf64c3e1b7367e42bdadcafd0013419019099bacd0b96b599aa37c15d1d332f"
+  },
+  "originalProductFiles": {
+    "codex-rs/core/src/tools/orchestrator.rs": "4e63a50d4513988ae27bb0770a7a1e5863738e24c935e847378fcca277546c4d",
+    "codex-rs/core/tests/suite/issue_874.rs": "2e30548aac8da94aa1e266abf527d2aaeaa3539823424e79916cd7fec563e07e"
+  },
+  "historicalFailure": {
+    "runId": 39423100324,
+    "head": "d790c7811a0eaf18a93e89306398d3c08526f3f2",
+    "productTestsExecuted": 0,
+    "missingPathEstablished": false
+  },
+  "originalControllerSha256": "b2cb082ed261a77cec211a942d1115c8f16dab0afa1bd6dddc50585bf20467e9",
+  "originalToolsPinsSha256": "fbc855ee5f6bf612912c6ee1013e1a0ac9a3c1be911412ca80424e07e3a0a490",
+  "originalSourceManifestSha256": "c4a61111894853aa84ba7dc636a3a8a1dd194ee8ff4a4c78e583fe4c16ff8b55"
+}

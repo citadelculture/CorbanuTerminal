@@ -1,0 +1,48 @@
+name: Issue943 setup metadata diagnostic only
+on:
+  push:
+    branches: [codex/issue943-setup-diagnostic-v3-20261020]
+permissions:
+  contents: read
+concurrency:
+  group: issue943-setup-diagnostic-v3
+  cancel-in-progress: false
+jobs:
+  diagnose:
+    if: github.repository == 'citadelculture/CorbanuTerminal' && github.run_attempt == 1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout reviewed diagnostic
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          ref: ${{ github.sha }}
+          path: control
+          fetch-depth: 1
+          persist-credentials: false
+          submodules: false
+          lfs: false
+      - name: Checkout exact unchanged production base
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: CorbanuCore/CorbanuTerminal
+          ref: bfa6f7da57b55803be09ccd3613cdcdedd1c7e25
+          path: source
+          fetch-depth: 1
+          persist-credentials: false
+          submodules: false
+          lfs: false
+      - name: Metadata only; no product, subprocess, package or namespace probe
+        shell: bash
+        run: |
+          set -euo pipefail
+          /usr/bin/python3 -I -B control/setup-diagnostic-v3.py --dispatch
+      - name: Preserve precise public-safe setup observations
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: issue943-setup-diagnostic-${{ github.run_id }}
+          path: setup-evidence/setup-result-v3.json
+          if-no-files-found: warn
+          include-hidden-files: false
+          retention-days: 14

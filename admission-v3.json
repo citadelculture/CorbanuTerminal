@@ -1,0 +1,8 @@
+{
+  "schema": "issue943-setup-admission-v3",
+  "approved": true,
+  "scope": "metadata-only-no-subprocess",
+  "controllerSha256": "1f4971af02ab53e6b8ac78442f60d0441abf733f5358e8b309483f3bdac53547",
+  "inputsSha256": "0380ce0be725869c76e6ce0cc6a9c3bc6cf949de98427934213c6309a6301d88",
+  "workflowSha256": "d92188c83e4d6060d90fb189d1228f079b937a4d2c5f43311b68df0eab598aa9"
+}
