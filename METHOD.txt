@@ -1,0 +1,46 @@
+Issue928 per-thread writer-lock candidate-only continuation
+
+This is a cross-run comparison. Original run 39453441161, attempt1, head
+564bc169698bc15c3a6792ff6edb9a41ce432594 failed as a workflow/controller.
+It executed five actual baseline bodies: three frozen reacquisition assertions
+failed with Err("WouldBlock"), and two existing controls passed. There were 161
+unselected filter exclusions and no selected skips/retries. Full baseline fmt
+completed0 unchanged. The original manifest incorrectly expected Err(WouldBlock)
+without quotes; the strict offline parser correction changes only those three
+literal patterns. It neither reruns nor changes the original result.
+
+The carried evidence binds both officially digested ZIPs, red binary, full
+normalized red transcript and JUnit, exact source before/after full formatting,
+original tool archive pins and actual tool binary hashes. The original parser
+failed before an after-tests source capture. That contemporaneous source proof
+is unavailable and is not reconstructed or claimed. Full raw local artifacts
+and the original failed qualification receipt remain preserved separately.
+
+This fresh ubuntu-24.04 hosted job runs only the five candidate cases. It
+checks out the identical public base8643c121, applies the identical two-file
+patch, and verifies exact source/tool inputs. Source and test bytes are unchanged
+from the prior run's frozen candidate. The original baseline is not executed.
+The actual installed tool binary hashes must equal the original run. This does
+not establish identical host image, process, cache, runtime duration or machine.
+The job records its own runner/image identity for later comparison.
+
+After exact tool acquisition/version proof: full just fmt with no source change;
+locked dependency fetch; cargo fmt -p codex-thread-store -- --check;
+just clippy -p codex-thread-store --lib --locked --offline -- -D warnings;
+then unchanged ordinary just test -p codex-thread-store --lib --locked --offline
+with the exact five equality selectors, retries0/test-threads1/no-tests fail.
+Full selected test outputs, JUnit, source checks, normalized complete streams,
+command exits, cleanup and the sole bounded binary are retained. Qualification
+requires all five candidate bodies PASS and unchanged source through the run.
+
+The original process/environment/capture/cleanup code is unchanged. Inherited
+HOME/CODEX_HOME and sandbox markers remain intact; the ordinary repository
+wrapper owns its disposable test profile. No native credentials, forked-child
+case, network fixture, broad package suite or local product execution is added.
+Initial free reserve30GiB and fresh compile reserve30GiB before Clippy;8GiB
+before cached candidate tests;4GiB running floor. No cleanup/retry workaround.
+Resource limits and timeout/error/skip gates remain fail-closed.
+
+The candidate controller has not executed. Admission remains false until root
+review and normal approval. No CI success, candidate pass, historical flake rate,
+macOS/Windows, interactive or release qualification is claimed by this package.

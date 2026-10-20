@@ -1,0 +1,258 @@
+{
+  "status": "BASELINE_BEHAVIOR_VERIFIED_ORIGINAL_WORKFLOW_FAILED",
+  "baselineBehaviorVerified": true,
+  "wholeCandidateQualified": false,
+  "officialRun": {
+    "id": 39453441161,
+    "head": "564bc169698bc15c3a6792ff6edb9a41ce432594",
+    "attempt": 1,
+    "jobId": 118734006589,
+    "url": "https://github.com/citadelculture/CorbanuTerminal/actions/runs/39453441161",
+    "conclusion": "failure",
+    "labels": [
+      "ubuntu-24.04"
+    ],
+    "runnerId": 1000000368,
+    "runnerName": "GitHub Actions 1000000368"
+  },
+  "originalControllerFailure": "wrong_assertion_signature",
+  "originalControllerPassed": false,
+  "originalWorkflowStillFailed": true,
+  "originalManifestSha256": "f73cfc44214bb8ca074bb80c317d462a4599154c541ac29d3912bbe7c458474e",
+  "originalControllerSha256": "cbaa862e17ff5c72da323ed81b709e754debcfd4cf773226cc77114c26f30d23",
+  "toolsPinsSha256": "ecd18193a9f00817123fc1a5eaaf2a287d82cff2a6fee407d9a2816f243e1303",
+  "toolHashes": {
+    "cargo": "a670e02cfa39ac2e53f77a2d911ca1fc9e2c479b0603ec956625be1daf24e3af",
+    "cargo-nextest": "c38a2df61834a9d19e95c6a39e084b482f0dce555829a19b8348f64360586ecc",
+    "dotslash": "2d7880483256edf24e1c8b3e903ca174a723e70d945ffb1a16363c51cb271018",
+    "just": "3ad66571feae522db2cad31b9613bf21035b8a06d2738d6fc8fe6089856f2042",
+    "rustc": "b53b780f77f952062f8ca8a3b70aef2390b1e45ad91939be94afdc9543026853",
+    "uv": "14d8517598e3f9969e9cd5359c7e9241c292c81a328895fceed9b8b434b6dd45"
+  },
+  "parserCorrection": {
+    "onlyChange": "Err(WouldBlock) pattern becomes exact Err(\"WouldBlock\")",
+    "oldRules": [
+      {
+        "name": "local::writer_lock::tests::writer_lock_is_released_with_a_retained_descriptor",
+        "panicLine": 156,
+        "requiredPatterns": [
+          "writer\\ lock\\ remained\\ held\\ through\\ its\\ retained\\ descriptor: Err\\(WouldBlock\\)"
+        ]
+      },
+      {
+        "name": "local::writer_lock::tests::writer_lock_is_released_when_file_removal_fails",
+        "panicLine": 193,
+        "requiredPatterns": [
+          "failed\\ removal\\ left\\ the\\ writer\\ lock\\ held: Err\\(WouldBlock\\)"
+        ]
+      },
+      {
+        "name": "local::writer_lock::tests::writer_lock_is_released_when_coordination_fails",
+        "panicLine": 234,
+        "requiredPatterns": [
+          "failed\\ coordination\\ left\\ the\\ writer\\ lock\\ held: Err\\(WouldBlock\\)"
+        ]
+      }
+    ],
+    "correctedRules": [
+      {
+        "name": "local::writer_lock::tests::writer_lock_is_released_with_a_retained_descriptor",
+        "panicLine": 156,
+        "requiredPatterns": [
+          "writer\\ lock\\ remained\\ held\\ through\\ its\\ retained\\ descriptor: Err\\(\"WouldBlock\"\\)"
+        ]
+      },
+      {
+        "name": "local::writer_lock::tests::writer_lock_is_released_when_file_removal_fails",
+        "panicLine": 193,
+        "requiredPatterns": [
+          "failed\\ removal\\ left\\ the\\ writer\\ lock\\ held: Err\\(\"WouldBlock\"\\)"
+        ]
+      },
+      {
+        "name": "local::writer_lock::tests::writer_lock_is_released_when_coordination_fails",
+        "panicLine": 234,
+        "requiredPatterns": [
+          "failed\\ coordination\\ left\\ the\\ writer\\ lock\\ held: Err\\(\"WouldBlock\"\\)"
+        ]
+      }
+    ]
+  },
+  "outcome": {
+    "cases": {
+      "local::writer_lock::tests::first_acquisition_removes_stale_locks_without_removing_active_locks": {
+        "status": "PASS",
+        "seconds": 0.007
+      },
+      "local::writer_lock::tests::writer_lock_is_released_when_coordination_fails": {
+        "status": "EXPECTED_ASSERTION_FAILURE",
+        "seconds": 0.006
+      },
+      "local::writer_lock::tests::writer_lock_is_released_when_file_removal_fails": {
+        "status": "EXPECTED_ASSERTION_FAILURE",
+        "seconds": 0.006
+      },
+      "local::writer_lock::tests::writer_lock_is_released_with_a_retained_descriptor": {
+        "status": "EXPECTED_ASSERTION_FAILURE",
+        "seconds": 0.006
+      },
+      "local::writer_lock::tests::writer_locks_reject_competing_owners_and_release_their_files": {
+        "status": "PASS",
+        "seconds": 0.006
+      }
+    },
+    "counts": [
+      5,
+      2,
+      3
+    ],
+    "selectedSkips": 0,
+    "observedFilterExclusions": 161,
+    "retries": 0
+  },
+  "execution": {
+    "selected": {
+      "local::writer_lock::tests::first_acquisition_removes_stale_locks_without_removing_active_locks": "PASS",
+      "local::writer_lock::tests::writer_lock_is_released_when_coordination_fails": "FAIL",
+      "local::writer_lock::tests::writer_lock_is_released_when_file_removal_fails": "FAIL",
+      "local::writer_lock::tests::writer_lock_is_released_with_a_retained_descriptor": "FAIL",
+      "local::writer_lock::tests::writer_locks_reject_competing_owners_and_release_their_files": "PASS"
+    },
+    "unselectedSkipCount": 161,
+    "selectedSkips": 0
+  },
+  "bodyOutputsVerified": 5,
+  "assertions": [
+    {
+      "name": "local::writer_lock::tests::writer_lock_is_released_when_coordination_fails",
+      "type": "test failure with exit code 101",
+      "panicLine": 234,
+      "observedError": "Err(\"WouldBlock\")"
+    },
+    {
+      "name": "local::writer_lock::tests::writer_lock_is_released_when_file_removal_fails",
+      "type": "test failure with exit code 101",
+      "panicLine": 193,
+      "observedError": "Err(\"WouldBlock\")"
+    },
+    {
+      "name": "local::writer_lock::tests::writer_lock_is_released_with_a_retained_descriptor",
+      "type": "test failure with exit code 101",
+      "panicLine": 156,
+      "observedError": "Err(\"WouldBlock\")"
+    }
+  ],
+  "binary": {
+    "artifactFile": "dac66432f35dc89f892f772e5bdf825c78e3eacfec13ecedac30eafcd4d05a89.bin",
+    "artifactSha256": "dac66432f35dc89f892f772e5bdf825c78e3eacfec13ecedac30eafcd4d05a89",
+    "bytes": 68404104,
+    "name": "codex_thread_store-926195fd808c645d",
+    "retainedSha256": "dac66432f35dc89f892f772e5bdf825c78e3eacfec13ecedac30eafcd4d05a89",
+    "sha256": "dac66432f35dc89f892f772e5bdf825c78e3eacfec13ecedac30eafcd4d05a89"
+  },
+  "baselineSourceHashes": {
+    "codex-rs/thread-store/src/local/writer_lock.rs": "11ede12061a8839df66e990f2c41ba73b84093deac57d4690b18e71b120da640",
+    "codex-rs/thread-store/src/local/writer_lock_tests.rs": "c42468217aea31bad70a9f8c4fe2a55d207ef25c372fa334837018ea807f8c30"
+  },
+  "sourceEvidence": {
+    "beforeDiffSha256": "bb4a965e6157466e605e457e240fc87485216ef468a16307e24ffb2ba6816695",
+    "afterFormatDiffSha256": "bb4a965e6157466e605e457e240fc87485216ef468a16307e24ffb2ba6816695",
+    "afterTestsCaptureSaved": false,
+    "limitation": "Parser rejected before the controller's after-tests source capture. No contemporaneous after-tests source-hash proof is claimed."
+  },
+  "fullFormat": {
+    "changedFromBasePaths": [
+      "codex-rs/thread-store/src/local/writer_lock_tests.rs"
+    ],
+    "diffSha256": "bb4a965e6157466e605e457e240fc87485216ef468a16307e24ffb2ba6816695",
+    "exitCode": 0,
+    "sourceUnchanged": true
+  },
+  "commands": 44,
+  "verifiedStreams": 132,
+  "exactRawReconstructions": 132,
+  "verifiedSessions": 44,
+  "junit": {
+    "captureComplete": true,
+    "publicFile": "junit-red.xml",
+    "publicSha256": "3428123f3b92c5fd32719d2a612a13dee35da06f674ec6aa6b16298903b31633",
+    "rawBytes": 49344,
+    "rawSha256": "3428123f3b92c5fd32719d2a612a13dee35da06f674ec6aa6b16298903b31633",
+    "truncated": false
+  },
+  "controlsAndCleanupPassed": true,
+  "notExecuted": [
+    "candidate tests",
+    "candidate full formatting",
+    "scoped formatting",
+    "Clippy"
+  ],
+  "productRerun": false,
+  "sourceChanged": false,
+  "originalArtifactsModified": false,
+  "schema": "issue928-carried-red-evidence-v2",
+  "reconciliationSha256": "0238f0f2e96c4c916d60253cd97596c8dabe59d025ebca5cfde7341d635d107c",
+  "sourceFiles": [
+    {
+      "path": "codex-rs/thread-store/src/local/writer_lock.rs",
+      "originalSha256": "11ede12061a8839df66e990f2c41ba73b84093deac57d4690b18e71b120da640",
+      "candidateSha256": "ea723a2cecbca0b63ea1200727f5cc69ea906aa37e6d62f31c5e04e2a711c9c0",
+      "payload": "payload/writer_lock.rs",
+      "baselineSha256": "11ede12061a8839df66e990f2c41ba73b84093deac57d4690b18e71b120da640",
+      "baselinePayload": "payload/writer_lock.baseline.rs"
+    },
+    {
+      "path": "codex-rs/thread-store/src/local/writer_lock_tests.rs",
+      "originalSha256": "444ae02799b87863821e0ea263a0cf7e19413e1d0fbc53f9caf293b96346d988",
+      "candidateSha256": "c42468217aea31bad70a9f8c4fe2a55d207ef25c372fa334837018ea807f8c30",
+      "payload": "payload/writer_lock_tests.rs"
+    }
+  ],
+  "candidatePatchSha256": "5e2d8437eb5447eaefb63262a1aea55025b1968f0c505d224e50101e252edfad",
+  "archives": [
+    {
+      "id": 12279039870,
+      "name": "issue928-thread-writer-39453441161-1",
+      "sha256": "bb31eda47064cfa231793a6c20af2a6fa458327bb416bd129a73112530bb15da",
+      "bytes": 158619,
+      "expandedBytes": 534895
+    },
+    {
+      "id": 12280375293,
+      "name": "issue928-thread-writer-binaries-39453441161-1",
+      "sha256": "db0dc336fa9d0724544891e497cbb03267f5c3c73a8ced78e3a270bd40141a02",
+      "bytes": 15037480,
+      "expandedBytes": 68404104
+    }
+  ],
+  "officialInputs": [
+    {
+      "path": "run-03.json",
+      "sha256": "76033c02890285d6d1721529a1ecd846bf3b5102daf989fd3c5e4e87dc9f429d",
+      "bytes": 13703
+    },
+    {
+      "path": "jobs-final.json",
+      "sha256": "205fd4f85de0e9a8f0174d614a9b749ae4e3c07802fa6fefd5b013205802c3a3",
+      "bytes": 2816
+    },
+    {
+      "path": "artifacts-final.json",
+      "sha256": "eb3f8d2758e35c1bae3cda4541432ebcddf509e07667dee8304b7bd752756b74",
+      "bytes": 1570
+    }
+  ],
+  "captures": {
+    "baseline-junit.xml": {
+      "path": "baseline-junit.xml",
+      "sha256": "3428123f3b92c5fd32719d2a612a13dee35da06f674ec6aa6b16298903b31633",
+      "bytes": 49344
+    },
+    "baseline-tests.log": {
+      "path": "baseline-tests.log",
+      "sha256": "20a2c1fa1ebafdb54b01ab38f8efa69b7432a157986b0949f178e6a4acf2093a",
+      "bytes": 48061
+    }
+  },
+  "comparison": "Cross-run evidence only. Original runner and process are gone; no shared process/cache/runner claim. Source-after-tests capture was not reached in original failed controller."
+}

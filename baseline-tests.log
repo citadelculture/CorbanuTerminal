@@ -1,0 +1,840 @@
+python3 ../scripts/isolated_rust_tests.py "$@"
+Test isolation: disposable profile; native keyring disabled (debug lane)
+   Compiling proc-macro2 v1.0.106
+   Compiling quote v1.0.45
+   Compiling unicode-ident v1.0.22
+   Compiling serde v1.0.228
+   Compiling cfg-if v1.0.4
+   Compiling serde_core v1.0.228
+   Compiling syn v2.0.117
+   Compiling memchr v2.8.1
+   Compiling libc v0.2.186
+   Compiling itoa v1.0.17
+   Compiling scopeguard v1.2.0
+   Compiling parking_lot_core v0.9.12
+   Compiling lock_api v0.4.14
+   Compiling portable-atomic v1.13.1
+   Compiling serde_derive v1.0.228
+   Compiling thiserror-impl v2.0.18
+   Compiling thiserror v2.0.18
+   Compiling critical-section v1.2.0
+   Compiling once_cell v1.21.4
+   Compiling equivalent v1.0.2
+   Compiling regex-syntax v0.8.8
+   Compiling smallvec v1.15.1
+   Compiling parking_lot v0.12.5
+   Compiling version_check v0.9.5
+   Compiling pin-project-lite v0.2.16
+   Compiling jobserver v0.1.34
+   Compiling find-msvc-tools v0.1.9
+   Compiling shlex v1.3.0
+   Compiling cc v1.2.55
+   Compiling subtle v2.6.1
+   Compiling aho-corasick v1.1.4
+   Compiling log v0.4.29
+   Compiling regex-automata v0.4.13
+   Compiling futures-core v0.3.32
+   Compiling bytes v1.11.1
+   Compiling generic-array v0.14.7
+   Compiling typenum v1.20.0
+   Compiling stable_deref_trait v1.2.1
+   Compiling synstructure v0.13.2
+   Compiling zmij v1.0.19
+   Compiling block-buffer v0.10.4
+   Compiling crypto-common v0.1.7
+   Compiling allocator-api2 v0.2.21
+   Compiling foldhash v0.2.0
+   Compiling cpufeatures v0.2.17
+   Compiling digest v0.10.7
+   Compiling zerofrom-derive v0.1.6
+   Compiling errno v0.3.14
+   Compiling signal-hook-registry v1.4.8
+   Compiling tokio-macros v2.7.0
+   Compiling displaydoc v0.2.5
+   Compiling socket2 v0.6.3
+   Compiling mio v1.2.0
+   Compiling yoke-derive v0.8.2
+   Compiling tokio v1.52.3
+   Compiling pkg-config v0.3.32
+   Compiling tracing-attributes v0.1.31
+   Compiling futures-sink v0.3.32
+   Compiling serde_json v1.0.149
+   Compiling autocfg v1.5.0
+   Compiling zerovec-derive v0.11.3
+   Compiling bitflags v2.13.1
+   Compiling tracing-core v0.1.36
+   Compiling futures-io v0.3.32
+   Compiling futures-task v0.3.32
+   Compiling getrandom v0.3.4
+   Compiling fastrand v2.3.0
+   Compiling tracing v0.1.44
+   Compiling slab v0.4.12
+   Compiling percent-encoding v2.3.2
+   Compiling futures-channel v0.3.32
+   Compiling futures-macro v0.3.32
+   Compiling fnv v1.0.7
+   Compiling bstr v1.12.1
+   Compiling futures-util v0.3.32
+   Compiling dunce v1.0.5
+   Compiling utf8_iter v1.0.4
+   Compiling hashbrown v0.17.1
+   Compiling indexmap v2.14.0
+   Compiling http v1.4.0
+   Compiling tinyvec_macros v0.1.1
+   Compiling tinyvec v1.10.0
+   Compiling zerofrom v0.1.6
+   Compiling ring v0.17.14
+   Compiling zeroize v1.8.2
+   Compiling yoke v0.8.2
+   Compiling tokio-util v0.7.18
+   Compiling byteorder v1.5.0
+   Compiling icu_normalizer_data v2.2.0
+   Compiling icu_properties_data v2.2.0
+   Compiling num-traits v0.2.19
+   Compiling crossbeam-utils v0.8.21
+   Compiling crc32fast v1.5.0
+   Compiling zerovec v0.11.6
+   Compiling writeable v0.6.2
+   Compiling base64 v0.22.1
+   Compiling untrusted v0.9.0
+   Compiling rustls-pki-types v1.14.0
+   Compiling http-body v1.0.1
+   Compiling sha1 v0.10.6
+   Compiling hashbrown v0.16.1
+   Compiling cmake v0.1.57
+   Compiling fs_extra v1.3.0
+   Compiling zerocopy v0.8.37
+   Compiling aws-lc-sys v0.45.0
+   Compiling tinystr v0.8.3
+   Compiling form_urlencoded v1.2.2
+   Compiling litemap v0.8.1
+   Compiling icu_locale_core v2.2.0
+   Compiling potential_utf v0.1.4
+   Compiling zerotrie v0.2.4
+   Compiling regex v1.12.3
+   Compiling ipnet v2.11.0
+   Compiling icu_provider v2.2.0
+   Compiling icu_collections v2.2.0
+   Compiling either v1.15.0
+   Compiling num-conv v0.2.0
+   Compiling aws-lc-rs v1.18.1
+   Compiling powerfmt v0.2.0
+   Compiling time-core v0.1.8
+   Compiling time-macros v0.2.27
+   Compiling deranged v0.5.5
+   Compiling ppv-lite86 v0.2.21
+   Compiling futures-executor v0.3.32
+   Compiling rand_core v0.9.5
+   Compiling sync_wrapper v1.0.2
+   Compiling getrandom v0.2.17
+   Compiling untrusted v0.7.1
+   Compiling mime v0.3.17
+   Compiling rand_chacha v0.9.0
+   Compiling http-body-util v0.1.3
+   Compiling uuid v1.20.0
+   Compiling vcpkg v0.2.15
+   Compiling rand v0.9.3
+   Compiling icu_normalizer v2.2.0
+   Compiling icu_properties v2.2.0
+   Compiling spin v0.9.8
+   Compiling unicode-xid v0.2.6
+   Compiling lazy_static v1.5.0
+   Compiling getrandom v0.4.2
+   Compiling idna_adapter v1.2.1
+   Compiling sha2 v0.10.9
+   Compiling rand_core v0.10.1
+   Compiling psl-types v2.0.11
+   Compiling httparse v1.10.1
+   Compiling crossbeam-epoch v0.9.20
+   Compiling rustls v0.23.46
+   Compiling gix-trace v0.1.18
+   Compiling idna v1.1.0
+   Compiling gix-validate v0.11.0
+   Compiling rustix v1.1.4
+   Compiling num_threads v0.1.7
+   Compiling time v0.3.47
+   Compiling gix-path v0.11.2
+   Compiling unicode-normalization v0.1.25
+   Compiling same-file v1.0.6
+   Compiling linux-raw-sys v0.12.1
+   Compiling winnow v0.7.14
+   Compiling toml_parser v1.0.6+spec-1.1.0
+   Compiling walkdir v2.5.0
+   Compiling gix-utils v0.3.1
+   Compiling url v2.5.8
+   Compiling futures v0.3.31
+   Compiling itertools v0.14.0
+   Compiling async-trait v0.1.89
+   Compiling atomic-waker v1.1.2
+   Compiling unicase v2.9.0
+   Compiling toml_datetime v0.7.5+spec-1.1.0
+   Compiling heck v0.5.0
+   Compiling try-lock v0.2.5
+   Compiling want v0.3.1
+   Compiling toml_edit v0.23.10+spec-1.0.0
+   Compiling nibble_vec v0.1.0
+   Compiling proc-macro-crate v3.4.0
+   Compiling mime_guess v2.0.5
+   Compiling h2 v0.4.16
+   Compiling const_format_proc_macros v0.2.34
+   Compiling webpki-roots v1.0.5
+   Compiling ahash v0.8.12
+   Compiling prodash v31.0.0
+   Compiling serde_derive_internals v0.29.1
+   Compiling iana-time-zone v0.1.65
+   Compiling zlib-rs v0.6.3
+   Compiling gix-features v0.46.2
+   Compiling const_format v0.2.35
+   Compiling rama-macros v0.3.0-alpha.4
+   Compiling wildcard v0.3.0
+   Compiling smol_str v0.3.5
+   Compiling tower-service v0.3.3
+   Compiling hex v0.4.3
+   Compiling semver v1.0.27
+   Compiling heapless v0.8.0
+   Compiling strsim v0.11.1
+   Compiling rustc_version v0.4.1
+   Compiling rama-utils v0.3.0-alpha.4
+   Compiling flume v0.12.0
+   Compiling openssl-sys v0.9.111
+   Compiling hash32 v0.3.1
+   Compiling tokio-graceful v0.2.2
+   Compiling asynk-strim v0.1.5
+   Compiling rama-error v0.3.0-alpha.4
+   Compiling crc-catalog v2.4.0
+   Compiling anyhow v1.0.103
+   Compiling dyn-clone v1.0.20
+   Compiling pin-utils v0.1.0
+   Compiling openssl-probe v0.2.1
+   Compiling rustls-native-certs v0.8.3
+   Compiling hyper v1.8.1
+   Compiling crc v3.4.0
+   Compiling rama-core v0.3.0-alpha.4
+   Compiling gix-error v0.2.1
+   Compiling nom v8.0.0
+   Compiling data-encoding v2.10.0
+   Compiling ryu v1.0.22
+   Compiling endian-type v0.2.0
+   Compiling schemars v0.8.22
+   Compiling radix_trie v0.3.0
+   Compiling rama-http-types v0.3.0-alpha.4
+   Compiling faster-hex v0.10.0
+   Compiling hyper-util v0.1.20
+   Compiling schemars_derive v0.8.22
+   Compiling tempfile v3.27.0
+   Compiling psl v2.1.184
+   Compiling rustls-webpki v0.103.15
+   Compiling num-integer v0.1.46
+   Compiling tokio-stream v0.1.18
+   Compiling rayon-core v1.13.0
+   Compiling termcolor v1.4.1
+   Compiling md5 v0.8.0
+   Compiling option-ext v0.2.0
+   Compiling dirs-sys v0.5.0
+   Compiling rama-net v0.3.0-alpha.4
+   Compiling tokio-rustls v0.26.4
+   Compiling ts-rs-macros v11.1.0
+   Compiling num-bigint v0.4.6
+   Compiling crossbeam-deque v0.8.6
+   Compiling iri-string v0.7.10
+   Compiling openssl v0.10.75
+   Compiling foreign-types-shared v0.1.1
+   Compiling minimal-lexical v0.2.1
+   Compiling tower-layer v0.3.3
+   Compiling tower v0.5.3
+   Compiling nom v7.1.3
+   Compiling foreign-types v0.3.2
+   Compiling ts-rs v11.1.0
+   Compiling dirs v6.0.0
+   Compiling chrono v0.4.43
+   Compiling sha1-checked v0.10.0
+   Compiling openssl-macros v0.1.1
+   Compiling ref-cast v1.0.25
+   Compiling native-tls v0.2.14
+   Compiling unicode-segmentation v1.12.0
+   Compiling ident_case v1.0.1
+   Compiling gix-hash v0.23.0
+   Compiling codex-utils-absolute-path v0.1.48 ([CHECKOUT]/codex-rs/utils/absolute-path)
+   Compiling opentelemetry v0.31.0
+   Compiling cookie v0.18.1
+   Compiling ref-cast-impl v1.0.25
+   Compiling openssl-probe v0.1.6
+   Compiling utf8parse v0.2.2
+   Compiling syn v1.0.109
+   Compiling simd-adler32 v0.3.8
+   Compiling httpdate v1.0.3
+   Compiling heapless v0.7.17
+   Compiling env_filter v1.0.0
+   Compiling crossbeam-channel v0.5.15
+   Compiling memoffset v0.9.1
+   Compiling zstd-sys v2.0.16+zstd.1.5.7
+   Compiling bytemuck_derive v1.10.2
+   Compiling typeid v1.0.3
+   Compiling jiff v0.2.23
+   Compiling litrs v1.0.0
+   Compiling adler2 v2.0.1
+   Compiling miniz_oxide v0.8.9
+   Compiling document-features v0.2.12
+   Compiling gix-date v0.15.1
+   Compiling bytemuck v1.25.0
+   Compiling env_logger v0.11.9
+   Compiling tokio-native-tls v0.3.1
+   Compiling rusticata-macros v4.1.0
+   Compiling logos-codegen v0.15.1
+   Compiling enum-as-inner v0.6.1
+   Compiling publicsuffix v2.3.0
+   Compiling rand v0.10.1
+   Compiling sharded-slab v0.1.7
+   Compiling hash32 v0.2.1
+   Compiling tracing-log v0.2.0
+   Compiling asn1-rs-derive v0.6.0
+   Compiling blake3 v1.8.2
+   Compiling dupe_derive v0.9.1
+   Compiling asn1-rs-impl v0.2.0
+   Compiling encoding_rs v0.8.35
+   Compiling thread_local v1.1.9
+   Compiling bit-vec v0.8.0
+   Compiling zlib-rs v0.5.5
+   Compiling link-section v0.19.3
+   Compiling allocative v0.3.6
+   Compiling nu-ansi-term v0.50.3
+   Compiling linktime-proc-macro v0.2.3
+   Compiling tagptr v0.2.0
+   Compiling erased-serde v0.4.10
+   Compiling atomic v0.5.3
+   Compiling lock_free_hashtable v0.1.4
+   Compiling moka v0.12.13
+   Compiling ctor v1.0.13
+   Compiling flate2 v1.1.8
+   Compiling tracing-subscriber v0.3.22
+   Compiling bit-set v0.8.0
+   Compiling gix-actor v0.40.0
+   Compiling asn1-rs v0.7.1
+   Compiling dupe v0.9.1
+   Compiling quickcheck v1.1.0
+   Compiling cookie_store v0.22.1
+   Compiling hickory-proto v0.25.2
+   Compiling hyper-tls v0.6.0
+   Compiling anstyle-parse v0.2.7
+   Compiling gix-hashtable v0.13.0
+   Compiling tower-http v0.6.8
+   Compiling hyper-rustls v0.27.7
+   Compiling serde_urlencoded v0.7.1
+   Compiling cobs v0.3.0
+   Compiling allocative_derive v0.3.6
+   Compiling serde_repr v0.1.20
+   Compiling strong_hash_derive v0.1.0
+   Compiling parking v2.2.1
+   Compiling colorchoice v1.0.4
+   Compiling resolv-conf v0.7.6
+   Compiling anstyle v1.0.13
+   Compiling arrayvec v0.7.6
+   Compiling beef v0.5.2
+   Compiling rama-http-headers v0.3.0-alpha.4
+   Compiling anstyle-query v1.1.5
+   Compiling unicode-width v0.1.14
+   Compiling zstd-safe v7.2.4
+   Compiling arrayref v0.3.9
+   Compiling oid-registry v0.8.1
+   Compiling bumpalo v3.19.1
+   Compiling is_terminal_polyfill v1.70.2
+   Compiling constant_time_eq v0.3.1
+   Compiling cfg_aliases v0.2.1
+   Compiling cfg_aliases v0.1.1
+   Compiling hashbrown v0.14.5
+   Compiling nix v0.28.0
+   Compiling nix v0.30.1
+   Compiling dashmap v6.1.0
+   Compiling anstream v0.6.21
+   Compiling hickory-resolver v0.25.2
+   Compiling strong_hash v0.1.0
+   Compiling postcard v1.1.3
+   Compiling reqwest v0.12.28
+   Compiling gix-object v0.58.0
+   Compiling Inflector v0.11.4
+   Compiling sorted_vector_map v0.2.1
+   Compiling fancy-regex v0.16.2
+   Compiling static_interner v0.1.2
+   Compiling convert_case v0.6.0
+   Compiling schemafy_core v0.5.2
+   Compiling triomphe v0.1.15
+   Compiling pagable_derive v0.4.1
+   Compiling memmap2 v0.9.10
+   Compiling csv-core v0.1.13
+   Compiling clap_lex v1.0.0
+   Compiling take_mut v0.2.2
+   Compiling bitflags v1.3.2
+   Compiling inventory v0.3.24
+   Compiling starlark_map v0.14.2
+   Compiling static_assertions v1.1.0
+   Compiling sequence_trie v0.3.6
+   Compiling fluent-uri v0.1.4
+   Compiling pagable v0.4.1
+   Compiling clap_builder v4.5.58
+   Compiling csv v1.4.0
+   Compiling schemafy_lib v0.5.2
+   Compiling derive_more-impl v1.0.0
+   Compiling logos-derive v0.15.1
+   Compiling rama-dns v0.3.0-alpha.4
+   Compiling der-parser v10.0.0
+   Compiling darling_core v0.21.3
+   Compiling codex-utils-rustls-provider v0.1.48 ([CHECKOUT]/codex-rs/utils/rustls-provider)
+   Compiling serde_html_form v0.3.2
+   Compiling clap_derive v4.5.55
+   Compiling fxhash v0.2.1
+   Compiling enumflags2_derive v0.7.12
+   Compiling icu_locale_data v2.2.0
+   Compiling matchit v0.9.1
+   Compiling paste v1.0.15
+   Compiling endian-type v0.1.2
+   Compiling http-range-header v0.4.2
+   Compiling radix_trie v0.2.1
+   Compiling rama-http v0.3.0-alpha.4
+   Compiling enumflags2 v0.7.12
+   Compiling clap v4.5.58
+   Compiling darling_macro v0.21.3
+   Compiling x509-parser v0.18.1
+   Compiling rama-tcp v0.3.0-alpha.4
+   Compiling derive_more v1.0.0
+   Compiling logos v0.15.1
+   Compiling zstd v0.13.3
+   Compiling schemafy v0.5.2
+   Compiling lsp-types v0.97.0
+   Compiling annotate-snippets v0.9.2
+   Compiling tracing-opentelemetry v0.32.1
+   Compiling derivative v2.2.0
+   Compiling fdeflate v0.3.7
+   Compiling codex-security-policy v0.1.48 ([CHECKOUT]/codex-rs/security-policy)
+   Compiling tokio-test v0.4.5
+   Compiling fd-lock v4.0.4
+   Compiling yasna v0.5.2
+   Compiling pxfm v0.1.27
+   Compiling pem v3.0.6
+   Compiling globset v0.4.18
+   Compiling fslock v0.2.1
+   Compiling icu_decimal_data v2.2.0
+   Compiling weezl v0.1.12
+   Compiling byteorder-lite v0.1.0
+   Compiling zune-core v0.5.1
+   Compiling starlark v0.14.2
+   Compiling indenter v0.3.4
+   Compiling home v0.5.12
+   Compiling quick-error v2.0.1
+   Compiling color_quant v1.1.0
+   Compiling gif v0.14.1
+   Compiling image-webp v0.2.4
+   Compiling rustyline v14.0.0
+   Compiling display_container v0.9.0
+   Compiling zune-jpeg v0.5.12
+   Compiling moxcms v0.7.11
+   Compiling codex-security-audit v0.1.48 ([CHECKOUT]/codex-rs/security-audit)
+   Compiling rcgen v0.14.7
+   Compiling starlark_syntax v0.14.2
+   Compiling rama-http-core v0.3.0-alpha.4
+   Compiling png v0.18.0
+   Compiling codex-http-client v0.1.48 ([CHECKOUT]/codex-rs/http-client)
+   Compiling debugserver-types v0.5.0
+   Compiling darling v0.21.3
+   Compiling landlock v0.4.4
+   Compiling textwrap v0.11.0
+   Compiling starlark_derive v0.14.2
+   Compiling codex-utils-home-dir v0.1.48 ([CHECKOUT]/codex-rs/utils/home-dir)
+   Compiling rama-unix v0.3.0-alpha.4
+   Compiling rama-udp v0.3.0-alpha.4
+   Compiling gix-fs v0.19.2
+   Compiling lru v0.18.2
+   Compiling hmac v0.12.1
+   Compiling erased-serde v0.3.31
+   Compiling seccompiler v0.5.0
+   Compiling cmp_any v0.8.1
+   Compiling strsim v0.10.0
+   Compiling maplit v1.0.2
+   Compiling codex-process-hardening v0.1.48 ([CHECKOUT]/codex-rs/process-hardening)
+   Compiling codex-secret-broker v0.1.48 ([CHECKOUT]/codex-rs/secret-broker)
+   Compiling codex-utils-cache v0.1.48 ([CHECKOUT]/codex-rs/utils/cache)
+   Compiling rama-socks5 v0.3.0-alpha.4
+   Compiling rama-http-backend v0.3.0-alpha.4
+   Compiling icu_locale v2.2.0
+   Compiling serde_with_macros v3.17.0
+   Compiling image v0.25.9
+   Compiling rama-tls-rustls v0.3.0-alpha.4
+   Compiling gix-chunk v0.7.0
+   Compiling strum_macros v0.27.2
+   Compiling concurrent-queue v2.5.0
+   Compiling fixed_decimal v0.7.2
+   Compiling multimap v0.10.1
+   Compiling nonempty v0.12.0
+   Compiling urlencoding v2.1.3
+   Compiling regex-lite v0.1.8
+   Compiling codex-utils-string v0.1.48 ([CHECKOUT]/codex-rs/utils/string)
+   Compiling codex-utils-path-uri v0.1.48 ([CHECKOUT]/codex-rs/utils/path-uri)
+   Compiling codex-execpolicy v0.1.48 ([CHECKOUT]/codex-rs/execpolicy)
+   Compiling icu_decimal v2.2.0
+   Compiling event-listener v5.4.1
+   Compiling strum v0.27.2
+   Compiling codex-network-proxy v0.1.48 ([CHECKOUT]/codex-rs/network-proxy)
+   Compiling codex-utils-image v0.1.48 ([CHECKOUT]/codex-rs/utils/image)
+   Compiling serde_with v3.17.0
+   Compiling gix-tempfile v21.0.2
+   Compiling chardetng v0.1.17
+   Compiling codex-extension-items v0.1.48 ([CHECKOUT]/codex-rs/ext/items)
+   Compiling strum_macros v0.28.0
+   Compiling libsqlite3-sys v0.37.0
+   Compiling hashlink v0.11.0
+   Compiling codex-async-utils v0.1.48 ([CHECKOUT]/codex-rs/async-utils)
+   Compiling quick-xml v0.41.0
+   Compiling sys-locale v0.3.2
+   Compiling wildmatch v2.6.1
+   Compiling codex-protocol v0.1.48 ([CHECKOUT]/codex-rs/protocol)
+   Compiling gix-lock v21.0.2
+   Compiling tree-sitter-language v0.1.7
+   Compiling futures-intrusive v0.5.0
+   Compiling gix-commitgraph v0.35.0
+   Compiling crossbeam-queue v0.3.12
+   Compiling gix-quote v0.7.0
+   Compiling headers-core v0.3.0
+   Compiling gix-sec v0.13.2
+   Compiling pin-project-internal v1.1.10
+   Compiling rustversion v1.0.22
+   Compiling sqlx-core v0.9.0
+   Compiling pin-project v1.1.10
+   Compiling headers v0.4.1
+   Compiling prost-derive v0.14.3
+   Compiling gix-revwalk v0.29.0
+   Compiling gix-ref v0.61.0
+   Compiling atoi v2.0.0
+   Compiling hyper-timeout v0.5.2
+   Compiling utf-8 v0.7.6
+   Compiling shell-words v1.1.1
+   Compiling gix-command v0.8.0
+   Compiling tungstenite v0.27.0 (https://github.com/openai-oss-forks/tungstenite-rs?rev=4fffad30fe373adbdcffab9545e9e9bf4f2fc19f#4fffad30)
+   Compiling tonic v0.14.3
+   Compiling prost v0.14.3
+   Compiling darling_core v0.23.0
+   Compiling gix-packetline v0.21.2
+   Compiling gix-glob v0.24.0
+   Compiling gix-url v0.35.2
+   Compiling clru v0.6.3
+   Compiling dotenvy v0.15.7
+   Compiling gix-pack v0.68.0
+   Compiling gix-transport v0.55.1
+   Compiling darling_macro v0.23.0
+   Compiling arc-swap v1.9.0
+   Compiling tonic-prost v0.14.3
+   Compiling tokio-tungstenite v0.28.0 (https://github.com/openai-oss-forks/tokio-tungstenite?rev=0e5b2d73aa18dd9f0a50ee9ff199d5aef7594186#0e5b2d73)
+   Compiling gix-revision v0.43.0
+   Compiling gix-shallow v0.10.0
+   Compiling event-listener-strategy v0.5.4
+   Compiling opentelemetry_sdk v0.31.0
+   Compiling sqlx-sqlite v0.9.0
+   Compiling sqlx-macros-core v0.9.0
+   Compiling eventsource-stream v0.2.3
+   Compiling tree-sitter v0.25.10
+   Compiling gix-config-value v0.17.1
+   Compiling const-hex v1.17.0
+   Compiling tree-sitter-bash v0.25.1
+   Compiling maybe-async v0.2.10
+   Compiling unicode-bom v2.0.3
+   Compiling gix-config v0.54.0
+   Compiling gix-protocol v0.59.0
+   Compiling opentelemetry-proto v0.31.0
+   Compiling sqlx-macros v0.9.0
+   Compiling codex-client v0.1.48 ([CHECKOUT]/codex-rs/codex-client)
+   Compiling async-channel v2.5.0
+   Compiling gix-refspec v0.39.0
+   Compiling codex-websocket-client v0.1.48 ([CHECKOUT]/codex-rs/websocket-client)
+   Compiling gix-odb v0.78.0
+   Compiling darling v0.23.0
+   Compiling gix-discover v0.49.0
+   Compiling gix-traverse v0.55.0
+   Compiling opentelemetry-http v0.31.0
+   Compiling gix-diff v0.61.0
+   Compiling rayon v1.11.0
+   Compiling nucleo-matcher v0.3.1 (https://github.com/helix-editor/nucleo.git?rev=4253de9faabb4e5c6d81d946a5e35a90f87347ee#4253de9f)
+   Compiling schemars_derive v1.2.1
+   Compiling streaming-iterator v0.1.9
+   Compiling rmcp v3.0.0
+   Compiling env_home v0.1.0
+   Compiling which v8.0.0
+   Compiling schemars v1.2.1
+   Compiling nucleo v0.5.0 (https://github.com/helix-editor/nucleo.git?rev=4253de9faabb4e5c6d81d946a5e35a90f87347ee#4253de9f)
+   Compiling gix v0.81.0
+   Compiling opentelemetry-otlp v0.31.0
+   Compiling rmcp-macros v3.0.0
+   Compiling codex-api v0.1.48 ([CHECKOUT]/codex-rs/codex-api)
+   Compiling sqlx v0.9.0
+   Compiling codex-file-system v0.1.48 ([CHECKOUT]/codex-rs/file-system)
+   Compiling ignore v0.4.25
+   Compiling os_info v3.14.0
+   Compiling codex-log-guard v0.1.48 ([CHECKOUT]/codex-rs/log-guard)
+   Compiling opentelemetry-appender-tracing v0.31.1
+   Compiling gethostname v1.1.0
+   Compiling base64 v0.23.0
+   Compiling similar v2.7.0
+   Compiling pulldown-cmark v0.10.3
+   Compiling opentelemetry-semantic-conventions v0.31.0
+   Compiling pastey v0.2.1
+   Compiling codex-otel v0.1.48 ([CHECKOUT]/codex-rs/otel)
+   Compiling codex-git-utils v0.1.48 ([CHECKOUT]/codex-rs/git-utils)
+   Compiling codex-state v0.1.48 ([CHECKOUT]/codex-rs/state)
+   Compiling codex-file-search v0.1.48 ([CHECKOUT]/codex-rs/file-search)
+   Compiling codex-shell-command v0.1.48 ([CHECKOUT]/codex-rs/shell-command)
+   Compiling codex-utils-path v0.1.48 ([CHECKOUT]/codex-rs/utils/path-utils)
+   Compiling codex-experimental-api-macros v0.1.48 ([CHECKOUT]/codex-rs/codex-experimental-api-macros)
+   Compiling diff v0.1.13
+   Compiling codex-app-server-protocol-noop-macros v0.1.48 ([CHECKOUT]/codex-rs/app-server-protocol-noop-macros)
+   Compiling yansi v1.0.1
+   Compiling pretty_assertions v1.4.1
+   Compiling codex-app-server-protocol v0.1.48 ([CHECKOUT]/codex-rs/app-server-protocol)
+   Compiling codex-rollout v0.1.48 ([CHECKOUT]/codex-rs/rollout)
+   Compiling codex-install-context v0.1.48 ([CHECKOUT]/codex-rs/install-context)
+   Compiling codex-thread-store v0.1.48 ([CHECKOUT]/codex-rs/thread-store)
+    Finished `test` profile [unoptimized] target(s) in 5m 16s
+────────────
+ Nextest run ID 7d06e91a-66a3-48df-a3b5-53efa3048c3a with nextest profile: writer-red
+    Starting 5 tests across 1 binary (161 tests skipped)
+        SKIP [         ] (───) codex-thread-store in_memory::tests::default_turn_pagination_methods_return_unsupported
+        SKIP [         ] (───) codex-thread-store in_memory::tests::list_threads_filters_by_spawn_relationship
+        SKIP [         ] (───) codex-thread-store in_memory::tests::paginated_threads_allow_metadata_reads_and_resume_but_reject_legacy_history_paths
+        SKIP [         ] (───) codex-thread-store local::archive_thread::tests::archive_thread_moves_rollout_to_archived_collection
+        SKIP [         ] (───) codex-thread-store local::archive_thread::tests::archive_thread_updates_sqlite_metadata_when_present
+        SKIP [         ] (───) codex-thread-store local::archive_thread::tests::archive_threads_rejects_owned_descendants_before_archiving_anything
+        SKIP [         ] (───) codex-thread-store local::archive_thread::tests::archive_waits_for_fork_reservation_without_holding_writer_lock
+        SKIP [         ] (───) codex-thread-store local::delete_thread::tests::delete_rollout_file_treats_vanished_path_as_already_deleted
+        SKIP [         ] (───) codex-thread-store local::delete_thread::tests::delete_thread_ignores_unreadable_reference_metadata
+        SKIP [         ] (───) codex-thread-store local::delete_thread::tests::delete_thread_rejects_referenced_paginated_history
+        SKIP [         ] (───) codex-thread-store local::delete_thread::tests::delete_thread_removes_active_and_archived_rollouts
+        SKIP [         ] (───) codex-thread-store local::delete_thread::tests::delete_thread_removes_materialized_thread_history
+        SKIP [         ] (───) codex-thread-store local::delete_thread::tests::delete_thread_reports_missing_thread
+        SKIP [         ] (───) codex-thread-store local::delete_thread::tests::delete_thread_without_state_db_preserves_materialized_thread_history
+        SKIP [         ] (───) codex-thread-store local::delete_thread::tests::delete_threads_allows_internal_history_references
+        SKIP [         ] (───) codex-thread-store local::delete_thread::tests::delete_threads_rejects_owned_descendants_before_deleting_anything
+        SKIP [         ] (───) codex-thread-store local::delete_thread::tests::delete_threads_rejects_owned_thread_before_rollout_materializes
+        SKIP [         ] (───) codex-thread-store local::delete_thread::tests::delete_threads_removes_rollout_with_unreadable_metadata
+        SKIP [         ] (───) codex-thread-store local::helpers::tests::stored_thread_from_rollout_item_returns_logical_rollout_path
+        SKIP [         ] (───) codex-thread-store local::list_threads::tests::list_paginated_threads_uses_sqlite_name_over_legacy_compatibility
+        SKIP [         ] (───) codex-thread-store local::list_threads::tests::list_threads_preserves_sqlite_title_search_results
+        SKIP [         ] (───) codex-thread-store local::list_threads::tests::list_threads_rejects_invalid_cursor
+        SKIP [         ] (───) codex-thread-store local::list_threads::tests::list_threads_returns_local_rollout_summary
+        SKIP [         ] (───) codex-thread-store local::list_threads::tests::list_threads_selects_active_or_archived_collection
+        SKIP [         ] (───) codex-thread-store local::list_threads::tests::list_threads_uses_default_provider_when_rollout_omits_provider
+        SKIP [         ] (───) codex-thread-store local::list_threads::tests::section_listing_uses_sqlite_metadata_without_reading_rollouts
+        SKIP [         ] (───) codex-thread-store local::model_context::tests::fork_context_excludes_items_after_frozen_cutoff
+        SKIP [         ] (───) codex-thread-store local::model_context::tests::ignores_contextual_user_messages_when_selecting_turn_context
+        SKIP [         ] (───) codex-thread-store local::model_context::tests::loads_latest_checkpoint_with_required_turn_metadata
+        SKIP [         ] (───) codex-thread-store local::model_context::tests::loads_turn_metadata_across_an_older_checkpoint
+        SKIP [         ] (───) codex-thread-store local::model_context::tests::replays_nested_archived_lineage_from_frozen_prefix
+        SKIP [         ] (───) codex-thread-store local::model_context::tests::returns_scanned_full_history_at_bof_without_checkpoint
+        SKIP [         ] (───) codex-thread-store local::model_context::tests::returns_scanned_full_history_for_unsupported_compaction
+        SKIP [         ] (───) codex-thread-store local::model_context::tests::uses_agent_message_turn_context_without_scanning_older_turn
+        SKIP [         ] (───) codex-thread-store local::read_thread::tests::read_paginated_thread_prefers_sqlite_display_metadata
+        SKIP [         ] (───) codex-thread-store local::read_thread::tests::read_thread_accepts_legacy_sandbox_policy_metadata
+        SKIP [         ] (───) codex-thread-store local::read_thread::tests::read_thread_applies_sqlite_thread_name
+        SKIP [         ] (───) codex-thread-store local::read_thread::tests::read_thread_by_rollout_path_preserves_legacy_name_and_sqlite_git_info
+        SKIP [         ] (───) codex-thread-store local::read_thread::tests::read_thread_fails_without_rollout
+        SKIP [         ] (───) codex-thread-store local::read_thread::tests::read_thread_falls_back_to_rollout_search_when_sqlite_path_is_stale
+        SKIP [         ] (───) codex-thread-store local::read_thread::tests::read_thread_falls_back_to_sqlite_summary
+        SKIP [         ] (───) codex-thread-store local::read_thread::tests::read_thread_falls_back_when_sqlite_path_points_to_another_thread
+        SKIP [         ] (───) codex-thread-store local::read_thread::tests::read_thread_prefers_active_rollout_over_archived
+        SKIP [         ] (───) codex-thread-store local::read_thread::tests::read_thread_preserves_rollout_cwd_when_sqlite_metadata_exists
+        SKIP [         ] (───) codex-thread-store local::read_thread::tests::read_thread_returns_active_rollout_summary
+        SKIP [         ] (───) codex-thread-store local::read_thread::tests::read_thread_returns_archived_rollout_when_requested
+        SKIP [         ] (───) codex-thread-store local::read_thread::tests::read_thread_returns_forked_from_id
+        SKIP [         ] (───) codex-thread-store local::read_thread::tests::read_thread_returns_permission_profile_from_sqlite_metadata
+        SKIP [         ] (───) codex-thread-store local::read_thread::tests::read_thread_returns_rollout_path_summary
+        SKIP [         ] (───) codex-thread-store local::read_thread::tests::read_thread_sqlite_fallback_loads_archived_history
+        SKIP [         ] (───) codex-thread-store local::read_thread::tests::read_thread_sqlite_fallback_respects_include_archived
+        SKIP [         ] (───) codex-thread-store local::read_thread::tests::read_thread_uses_legacy_thread_name_when_sqlite_title_is_missing
+        SKIP [         ] (───) codex-thread-store local::read_thread::tests::read_thread_uses_session_meta_for_rollout_without_user_preview_or_sqlite_metadata
+        SKIP [         ] (───) codex-thread-store local::read_thread::tests::read_thread_uses_sqlite_metadata_for_rollout_without_user_preview
+        SKIP [         ] (───) codex-thread-store local::rollout_lineage::tests::rejects_missing_cycles_and_out_of_bounds_offsets
+        SKIP [         ] (───) codex-thread-store local::rollout_lineage::tests::resolves_archived_ancestors
+        SKIP [         ] (───) codex-thread-store local::rollout_lineage::tests::resolves_lineage_at_explicit_history_position
+        SKIP [         ] (───) codex-thread-store local::rollout_lineage::tests::resolves_nested_lineage_with_empty_intermediate_segments
+        SKIP [         ] (───) codex-thread-store local::search_threads::tests::recency_cursor_includes_thread_id_tie_breaker
+        SKIP [         ] (───) codex-thread-store local::tests::create_thread_rejects_duplicate_live_writer
+        SKIP [         ] (───) codex-thread-store local::tests::create_thread_rejects_missing_cwd
+        SKIP [         ] (───) codex-thread-store local::tests::discard_thread_drops_unmaterialized_live_writer
+        SKIP [         ] (───) codex-thread-store local::tests::live_thread_does_not_derive_metadata_from_inherited_items
+        SKIP [         ] (───) codex-thread-store local::tests::live_thread_memory_mode_update_before_rollout_materializes_keeps_history_mode
+        SKIP [         ] (───) codex-thread-store local::tests::live_thread_observes_appended_items_into_sqlite_metadata
+        SKIP [         ] (───) codex-thread-store local::tests::live_thread_output_advances_updated_at_but_not_recency_at
+        SKIP [         ] (───) codex-thread-store local::tests::live_thread_resume_loads_history_before_observing_metadata
+        SKIP [         ] (───) codex-thread-store local::tests::live_thread_resume_loads_history_from_explicit_external_rollout_path
+        SKIP [         ] (───) codex-thread-store local::tests::live_thread_shutdown_does_not_materialize_empty_thread_metadata
+        SKIP [         ] (───) codex-thread-store local::tests::live_thread_shutdown_with_buffered_items_materializes_before_metadata_read
+        SKIP [         ] (───) codex-thread-store local::tests::live_writer_lifecycle_writes_and_closes
+        SKIP [         ] (───) codex-thread-store local::tests::load_history_uses_live_writer_rollout_path
+        SKIP [         ] (───) codex-thread-store local::tests::load_history_uses_live_writer_rollout_path_for_archived_source
+        SKIP [         ] (───) codex-thread-store local::tests::paginated_live_appends_use_paginated_history_mode
+        SKIP [         ] (───) codex-thread-store local::tests::paginated_resume_prefers_explicit_rollout_path_over_stale_sqlite_path
+        SKIP [         ] (───) codex-thread-store local::tests::paginated_threads_allow_metadata_reads_and_resume_but_reject_legacy_history_paths
+        SKIP [         ] (───) codex-thread-store local::tests::raw_append_items_does_not_update_sqlite_metadata
+        SKIP [         ] (───) codex-thread-store local::tests::read_thread_by_rollout_path_includes_history
+        SKIP [         ] (───) codex-thread-store local::tests::read_thread_uses_live_writer_rollout_path_for_external_resume
+        SKIP [         ] (───) codex-thread-store local::tests::resume_thread_rejects_duplicate_live_writer
+        SKIP [         ] (───) codex-thread-store local::tests::resume_thread_rejects_missing_cwd
+        SKIP [         ] (───) codex-thread-store local::tests::resume_thread_reopens_live_writer_and_appends
+        SKIP [         ] (───) codex-thread-store local::thread_history::read::tests::inherited_search_excludes_turns_created_after_the_fork
+        SKIP [         ] (───) codex-thread-store local::thread_history::read::tests::lineage_reads_nested_forks
+        SKIP [         ] (───) codex-thread-store local::thread_history::read::tests::lineage_reads_page_across_parent_and_child_segments
+        SKIP [         ] (───) codex-thread-store local::thread_history::read::tests::list_history_keeps_legacy_threads_unsupported
+        SKIP [         ] (───) codex-thread-store local::thread_history::read::tests::list_items_filters_exclusive_update_ordinals_across_pages_and_turns
+        SKIP [         ] (───) codex-thread-store local::thread_history::read::tests::list_items_pages_whole_thread_and_per_turn_rows
+        SKIP [         ] (───) codex-thread-store local::thread_history::read::tests::list_items_rejects_update_ordinals_outside_sqlite_integer_range
+        SKIP [         ] (───) codex-thread-store local::thread_history::read::tests::list_turns_pages_projected_rows_and_applies_item_views
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::active_turn_stores_only_its_start_position
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::blank_and_rejected_rollout_lines_do_not_poison_projection
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::cancelled_fork_keeps_source_reserved_until_lineage_materialization_finishes
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::catch_up_preserves_trailing_partial_line_boundaries
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::catch_up_rejects_invalid_complete_suffixes_without_advancing_state
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::catch_up_rejects_missing_rollout_after_projection
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::delete_waits_for_in_flight_projection_before_removing_rows
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::event_timestamps_allow_invalid_rollout_timestamps
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::jsonl_failure_does_not_create_projection_database
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::malformed_rollout_lines_skip_inferred_ordinal_gaps
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::named_fork_boundaries_reject_invisible_and_noncanonical_turns
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::next_write_catches_up_unprojected_durable_suffix
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::paginated_fork_materializes_compressed_source_and_ancestor
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::paginated_fork_persists_empty_source
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::paginated_history_without_state_db_does_not_initialize_sqlite
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::paginated_live_append_materializes_turn_items_and_state
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::paginated_projection_accepts_float_rate_limits_and_later_final_answers
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::prepared_fork_reserves_source_until_child_reference_is_durable
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::referenced_paginated_rollout_projects_inherited_ordinal_range
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::shutdown_materializes_items_queued_without_a_flush
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::split_homes_support_backfill_listing_and_paginated_history
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::sqlite_failure_does_not_fail_durable_jsonl_write
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::subagent_prefix_advances_projection_without_materializing_history
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::summary_items_use_final_answers_and_ignore_commentary
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::synchronized_catch_up_does_not_replay_old_rows
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::terminal_turn_does_not_change_after_later_records
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::unexpected_duplicate_item_completion_does_not_poison_projection
+        SKIP [         ] (───) codex-thread-store local::thread_history_materialization::tests::unprojectable_rollout_lines_wait_for_later_ordinals
+        SKIP [         ] (───) codex-thread-store local::unarchive_thread::tests::unarchive_thread_restores_rollout_and_returns_updated_thread
+        SKIP [         ] (───) codex-thread-store local::unarchive_thread::tests::unarchive_thread_updates_sqlite_metadata_when_present
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::a_busy_state_db_puts_metadata_updates_off_and_applies_them_later
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::metadata_patch_applies_latest_preview_and_first_user_message
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::metadata_patch_applies_title_over_existing_name
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::observed_metadata_normalizes_cwd_for_list_filters
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::observed_metadata_rebuilds_history_mode_from_canonical_session_meta
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::observed_metadata_rejects_unknown_thread_without_rollout
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::paginated_name_updates_use_sqlite_without_rollout_writes
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::section_moves_persist_in_sqlite_without_changing_the_rollout
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::sqlite_failures_are_best_effort_for_legacy_rollout_compat_updates
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::sqlite_failures_are_best_effort_for_observed_metadata_updates
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::sqlite_failures_still_block_for_explicit_git_only_updates
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::update_thread_metadata_applies_combined_explicit_patch
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::update_thread_metadata_clears_git_info_fields
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::update_thread_metadata_keeps_archived_thread_archived_in_sqlite
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::update_thread_metadata_keeps_live_archived_thread_archived_in_sqlite
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::update_thread_metadata_partially_updates_git_info
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::update_thread_metadata_preserves_memory_mode_when_updating_git_info
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::update_thread_metadata_recreates_missing_archived_sqlite_row_as_archived
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::update_thread_metadata_rejects_mismatched_session_meta_id
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::update_thread_metadata_sets_git_info
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::update_thread_metadata_sets_memory_mode_on_active_rollout
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::update_thread_metadata_sets_name_on_active_rollout_and_indexes_name
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::update_thread_metadata_updates_paginated_git_info_in_sqlite_only
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::update_thread_metadata_updates_permission_profile_and_reasoning_effort
+        SKIP [         ] (───) codex-thread-store local::update_thread_metadata::tests::update_thread_metadata_uses_live_rollout_path_for_external_resume
+        SKIP [         ] (───) codex-thread-store local::writer_lock::tests::coordination_lock_is_released_while_a_forked_child_holds_its_descriptor
+        PASS [   0.007s] (1/5) codex-thread-store local::writer_lock::tests::first_acquisition_removes_stale_locks_without_removing_active_locks
+        FAIL [   0.006s] (2/5) codex-thread-store local::writer_lock::tests::writer_lock_is_released_when_coordination_fails
+        FAIL [   0.006s] (3/5) codex-thread-store local::writer_lock::tests::writer_lock_is_released_when_file_removal_fails
+        FAIL [   0.006s] (4/5) codex-thread-store local::writer_lock::tests::writer_lock_is_released_with_a_retained_descriptor
+        SKIP [         ] (───) codex-thread-store thread_metadata_sync::tests::completed_user_message_items_emit_metadata_fields
+        SKIP [         ] (───) codex-thread-store thread_metadata_sync::tests::goal_update_sets_preview_without_overriding_existing_preview
+        SKIP [         ] (───) codex-thread-store thread_metadata_sync::tests::later_user_messages_do_not_emit_existing_preview_fields
+        SKIP [         ] (───) codex-thread-store thread_metadata_sync::tests::metadata_irrelevant_items_coalesce_updated_at_touches
+        SKIP [         ] (───) codex-thread-store thread_metadata_sync::tests::paginated_resume_history_does_not_reapply_initial_metadata
+        SKIP [         ] (───) codex-thread-store thread_metadata_sync::tests::resume_history_keeps_derived_metadata_pending_until_applied
+        SKIP [         ] (───) codex-thread-store thread_metadata_sync::tests::resume_history_waits_for_append_before_flushing_metadata
+        SKIP [         ] (───) codex-thread-store thread_metadata_sync::tests::resume_preserves_existing_display_metadata_and_initializes_missing_title
+        SKIP [         ] (───) codex-thread-store thread_metadata_sync::tests::thread_settings_applied_updates_live_metadata
+        SKIP [         ] (───) codex-thread-store thread_metadata_sync::tests::turn_start_advances_recency_at_without_changing_updated_at_behavior
+        SKIP [         ] (───) codex-thread-store types::tests::canonical_history_mode_uses_first_session_meta
+        SKIP [         ] (───) codex-thread-store types::tests::git_info_patch_round_trips_optional_clears
+        SKIP [         ] (───) codex-thread-store types::tests::thread_metadata_patch_accepts_missing_fields
+        SKIP [         ] (───) codex-thread-store types::tests::thread_metadata_patch_merge_uses_presence_semantics
+        SKIP [         ] (───) codex-thread-store types::tests::thread_metadata_patch_round_trips_optional_clears
+        PASS [   0.006s] (5/5) codex-thread-store local::writer_lock::tests::writer_locks_reject_competing_owners_and_release_their_files
+────────────
+     Summary [   0.038s] 5 tests run: 2 passed, 3 failed, 161 skipped
+        PASS [   0.007s] (1/5) codex-thread-store local::writer_lock::tests::first_acquisition_removes_stale_locks_without_removing_active_locks
+  stdout ───
+
+    running 1 test
+    test local::writer_lock::tests::first_acquisition_removes_stale_locks_without_removing_active_locks ... ok
+
+    test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 165 filtered out; finished in 0.00s
+
+
+        PASS [   0.006s] (5/5) codex-thread-store local::writer_lock::tests::writer_locks_reject_competing_owners_and_release_their_files
+  stdout ───
+
+    running 1 test
+    test local::writer_lock::tests::writer_locks_reject_competing_owners_and_release_their_files ... ok
+
+    test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 165 filtered out; finished in 0.00s
+
+
+        FAIL [   0.006s] (2/5) codex-thread-store local::writer_lock::tests::writer_lock_is_released_when_coordination_fails
+  stdout ───
+
+    running 1 test
+    test local::writer_lock::tests::writer_lock_is_released_when_coordination_fails ... FAILED
+
+    failures:
+
+    failures:
+        local::writer_lock::tests::writer_lock_is_released_when_coordination_fails
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 165 filtered out; finished in 0.00s
+
+  stderr ───
+
+    thread 'local::writer_lock::tests::writer_lock_is_released_when_coordination_fails' (56169) panicked at thread-store/src/local/writer_lock_tests.rs:234:5:
+    failed coordination left the writer lock held: Err("WouldBlock")
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.006s] (3/5) codex-thread-store local::writer_lock::tests::writer_lock_is_released_when_file_removal_fails
+  stdout ───
+
+    running 1 test
+    test local::writer_lock::tests::writer_lock_is_released_when_file_removal_fails ... FAILED
+
+    failures:
+
+    failures:
+        local::writer_lock::tests::writer_lock_is_released_when_file_removal_fails
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 165 filtered out; finished in 0.00s
+
+  stderr ───
+
+    thread 'local::writer_lock::tests::writer_lock_is_released_when_file_removal_fails' (56171) panicked at thread-store/src/local/writer_lock_tests.rs:193:5:
+    failed removal left the writer lock held: Err("WouldBlock")
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.006s] (4/5) codex-thread-store local::writer_lock::tests::writer_lock_is_released_with_a_retained_descriptor
+  stdout ───
+
+    running 1 test
+    test local::writer_lock::tests::writer_lock_is_released_with_a_retained_descriptor ... FAILED
+
+    failures:
+
+    failures:
+        local::writer_lock::tests::writer_lock_is_released_with_a_retained_descriptor
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 165 filtered out; finished in 0.00s
+
+  stderr ───
+
+    thread 'local::writer_lock::tests::writer_lock_is_released_with_a_retained_descriptor' (56173) panicked at thread-store/src/local/writer_lock_tests.rs:156:5:
+    writer lock remained held through its retained descriptor: Err("WouldBlock")
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+error: test run failed
+error: recipe `test` failed on line 82 with exit code 100

@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="nextest-run" tests="166" skipped="161" failures="3" errors="0" uuid="7d06e91a-66a3-48df-a3b5-53efa3048c3a" timestamp="2026-10-20T16:06:25.380+00:00" time="0.038">
+    <testsuite name="codex-thread-store" tests="166" skipped="161" errors="0" failures="3">
+        <testcase name="in_memory::tests::default_turn_pagination_methods_return_unsupported" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="in_memory::tests::list_threads_filters_by_spawn_relationship" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="in_memory::tests::paginated_threads_allow_metadata_reads_and_resume_but_reject_legacy_history_paths" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::archive_thread::tests::archive_thread_moves_rollout_to_archived_collection" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::archive_thread::tests::archive_thread_updates_sqlite_metadata_when_present" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::archive_thread::tests::archive_threads_rejects_owned_descendants_before_archiving_anything" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::archive_thread::tests::archive_waits_for_fork_reservation_without_holding_writer_lock" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::delete_thread::tests::delete_rollout_file_treats_vanished_path_as_already_deleted" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::delete_thread::tests::delete_thread_ignores_unreadable_reference_metadata" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::delete_thread::tests::delete_thread_rejects_referenced_paginated_history" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::delete_thread::tests::delete_thread_removes_active_and_archived_rollouts" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::delete_thread::tests::delete_thread_removes_materialized_thread_history" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::delete_thread::tests::delete_thread_reports_missing_thread" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::delete_thread::tests::delete_thread_without_state_db_preserves_materialized_thread_history" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::delete_thread::tests::delete_threads_allows_internal_history_references" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::delete_thread::tests::delete_threads_rejects_owned_descendants_before_deleting_anything" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::delete_thread::tests::delete_threads_rejects_owned_thread_before_rollout_materializes" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::delete_thread::tests::delete_threads_removes_rollout_with_unreadable_metadata" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::helpers::tests::stored_thread_from_rollout_item_returns_logical_rollout_path" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::list_threads::tests::list_paginated_threads_uses_sqlite_name_over_legacy_compatibility" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::list_threads::tests::list_threads_preserves_sqlite_title_search_results" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::list_threads::tests::list_threads_rejects_invalid_cursor" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::list_threads::tests::list_threads_returns_local_rollout_summary" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::list_threads::tests::list_threads_selects_active_or_archived_collection" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::list_threads::tests::list_threads_uses_default_provider_when_rollout_omits_provider" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::list_threads::tests::section_listing_uses_sqlite_metadata_without_reading_rollouts" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::model_context::tests::fork_context_excludes_items_after_frozen_cutoff" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::model_context::tests::ignores_contextual_user_messages_when_selecting_turn_context" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::model_context::tests::loads_latest_checkpoint_with_required_turn_metadata" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::model_context::tests::loads_turn_metadata_across_an_older_checkpoint" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::model_context::tests::replays_nested_archived_lineage_from_frozen_prefix" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::model_context::tests::returns_scanned_full_history_at_bof_without_checkpoint" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::model_context::tests::returns_scanned_full_history_for_unsupported_compaction" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::model_context::tests::uses_agent_message_turn_context_without_scanning_older_turn" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::read_thread::tests::read_paginated_thread_prefers_sqlite_display_metadata" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::read_thread::tests::read_thread_accepts_legacy_sandbox_policy_metadata" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::read_thread::tests::read_thread_applies_sqlite_thread_name" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::read_thread::tests::read_thread_by_rollout_path_preserves_legacy_name_and_sqlite_git_info" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::read_thread::tests::read_thread_fails_without_rollout" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::read_thread::tests::read_thread_falls_back_to_rollout_search_when_sqlite_path_is_stale" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::read_thread::tests::read_thread_falls_back_to_sqlite_summary" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::read_thread::tests::read_thread_falls_back_when_sqlite_path_points_to_another_thread" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::read_thread::tests::read_thread_prefers_active_rollout_over_archived" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::read_thread::tests::read_thread_preserves_rollout_cwd_when_sqlite_metadata_exists" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::read_thread::tests::read_thread_returns_active_rollout_summary" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::read_thread::tests::read_thread_returns_archived_rollout_when_requested" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::read_thread::tests::read_thread_returns_forked_from_id" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::read_thread::tests::read_thread_returns_permission_profile_from_sqlite_metadata" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::read_thread::tests::read_thread_returns_rollout_path_summary" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::read_thread::tests::read_thread_sqlite_fallback_loads_archived_history" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::read_thread::tests::read_thread_sqlite_fallback_respects_include_archived" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::read_thread::tests::read_thread_uses_legacy_thread_name_when_sqlite_title_is_missing" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::read_thread::tests::read_thread_uses_session_meta_for_rollout_without_user_preview_or_sqlite_metadata" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::read_thread::tests::read_thread_uses_sqlite_metadata_for_rollout_without_user_preview" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::rollout_lineage::tests::rejects_missing_cycles_and_out_of_bounds_offsets" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::rollout_lineage::tests::resolves_archived_ancestors" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::rollout_lineage::tests::resolves_lineage_at_explicit_history_position" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::rollout_lineage::tests::resolves_nested_lineage_with_empty_intermediate_segments" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::search_threads::tests::recency_cursor_includes_thread_id_tie_breaker" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::tests::create_thread_rejects_duplicate_live_writer" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::tests::create_thread_rejects_missing_cwd" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::tests::discard_thread_drops_unmaterialized_live_writer" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::tests::live_thread_does_not_derive_metadata_from_inherited_items" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::tests::live_thread_memory_mode_update_before_rollout_materializes_keeps_history_mode" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::tests::live_thread_observes_appended_items_into_sqlite_metadata" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::tests::live_thread_output_advances_updated_at_but_not_recency_at" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::tests::live_thread_resume_loads_history_before_observing_metadata" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::tests::live_thread_resume_loads_history_from_explicit_external_rollout_path" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::tests::live_thread_shutdown_does_not_materialize_empty_thread_metadata" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::tests::live_thread_shutdown_with_buffered_items_materializes_before_metadata_read" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::tests::live_writer_lifecycle_writes_and_closes" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::tests::load_history_uses_live_writer_rollout_path" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::tests::load_history_uses_live_writer_rollout_path_for_archived_source" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::tests::paginated_live_appends_use_paginated_history_mode" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::tests::paginated_resume_prefers_explicit_rollout_path_over_stale_sqlite_path" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::tests::paginated_threads_allow_metadata_reads_and_resume_but_reject_legacy_history_paths" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::tests::raw_append_items_does_not_update_sqlite_metadata" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::tests::read_thread_by_rollout_path_includes_history" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::tests::read_thread_uses_live_writer_rollout_path_for_external_resume" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::tests::resume_thread_rejects_duplicate_live_writer" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::tests::resume_thread_rejects_missing_cwd" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::tests::resume_thread_reopens_live_writer_and_appends" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history::read::tests::inherited_search_excludes_turns_created_after_the_fork" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history::read::tests::lineage_reads_nested_forks" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history::read::tests::lineage_reads_page_across_parent_and_child_segments" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history::read::tests::list_history_keeps_legacy_threads_unsupported" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history::read::tests::list_items_filters_exclusive_update_ordinals_across_pages_and_turns" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history::read::tests::list_items_pages_whole_thread_and_per_turn_rows" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history::read::tests::list_items_rejects_update_ordinals_outside_sqlite_integer_range" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history::read::tests::list_turns_pages_projected_rows_and_applies_item_views" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::active_turn_stores_only_its_start_position" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::blank_and_rejected_rollout_lines_do_not_poison_projection" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::cancelled_fork_keeps_source_reserved_until_lineage_materialization_finishes" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::catch_up_preserves_trailing_partial_line_boundaries" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::catch_up_rejects_invalid_complete_suffixes_without_advancing_state" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::catch_up_rejects_missing_rollout_after_projection" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::delete_waits_for_in_flight_projection_before_removing_rows" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::event_timestamps_allow_invalid_rollout_timestamps" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::jsonl_failure_does_not_create_projection_database" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::malformed_rollout_lines_skip_inferred_ordinal_gaps" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::named_fork_boundaries_reject_invisible_and_noncanonical_turns" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::next_write_catches_up_unprojected_durable_suffix" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::paginated_fork_materializes_compressed_source_and_ancestor" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::paginated_fork_persists_empty_source" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::paginated_history_without_state_db_does_not_initialize_sqlite" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::paginated_live_append_materializes_turn_items_and_state" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::paginated_projection_accepts_float_rate_limits_and_later_final_answers" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::prepared_fork_reserves_source_until_child_reference_is_durable" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::referenced_paginated_rollout_projects_inherited_ordinal_range" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::shutdown_materializes_items_queued_without_a_flush" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::split_homes_support_backfill_listing_and_paginated_history" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::sqlite_failure_does_not_fail_durable_jsonl_write" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::subagent_prefix_advances_projection_without_materializing_history" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::summary_items_use_final_answers_and_ignore_commentary" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::synchronized_catch_up_does_not_replay_old_rows" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::terminal_turn_does_not_change_after_later_records" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::unexpected_duplicate_item_completion_does_not_poison_projection" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::thread_history_materialization::tests::unprojectable_rollout_lines_wait_for_later_ordinals" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::unarchive_thread::tests::unarchive_thread_restores_rollout_and_returns_updated_thread" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::unarchive_thread::tests::unarchive_thread_updates_sqlite_metadata_when_present" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::a_busy_state_db_puts_metadata_updates_off_and_applies_them_later" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::metadata_patch_applies_latest_preview_and_first_user_message" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::metadata_patch_applies_title_over_existing_name" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::observed_metadata_normalizes_cwd_for_list_filters" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::observed_metadata_rebuilds_history_mode_from_canonical_session_meta" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::observed_metadata_rejects_unknown_thread_without_rollout" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::paginated_name_updates_use_sqlite_without_rollout_writes" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::section_moves_persist_in_sqlite_without_changing_the_rollout" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::sqlite_failures_are_best_effort_for_legacy_rollout_compat_updates" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::sqlite_failures_are_best_effort_for_observed_metadata_updates" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::sqlite_failures_still_block_for_explicit_git_only_updates" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::update_thread_metadata_applies_combined_explicit_patch" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::update_thread_metadata_clears_git_info_fields" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::update_thread_metadata_keeps_archived_thread_archived_in_sqlite" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::update_thread_metadata_keeps_live_archived_thread_archived_in_sqlite" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::update_thread_metadata_partially_updates_git_info" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::update_thread_metadata_preserves_memory_mode_when_updating_git_info" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::update_thread_metadata_recreates_missing_archived_sqlite_row_as_archived" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::update_thread_metadata_rejects_mismatched_session_meta_id" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::update_thread_metadata_sets_git_info" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::update_thread_metadata_sets_memory_mode_on_active_rollout" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::update_thread_metadata_sets_name_on_active_rollout_and_indexes_name" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::update_thread_metadata_updates_paginated_git_info_in_sqlite_only" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::update_thread_metadata_updates_permission_profile_and_reasoning_effort" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::update_thread_metadata::tests::update_thread_metadata_uses_live_rollout_path_for_external_resume" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::writer_lock::tests::coordination_lock_is_released_while_a_forked_child_holds_its_descriptor" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::writer_lock::tests::first_acquisition_removes_stale_locks_without_removing_active_locks" classname="codex-thread-store" timestamp="2026-10-20T16:06:25.384+00:00" time="0.007">
+            <system-out>
+running 1 test
+test local::writer_lock::tests::first_acquisition_removes_stale_locks_without_removing_active_locks ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 165 filtered out; finished in 0.00s
+
+</system-out>
+            <system-err></system-err>
+        </testcase>
+        <testcase name="local::writer_lock::tests::writer_lock_is_released_when_coordination_fails" classname="codex-thread-store" timestamp="2026-10-20T16:06:25.391+00:00" time="0.006">
+            <failure message="thread &apos;local::writer_lock::tests::writer_lock_is_released_when_coordination_fails&apos; (56169) panicked at thread-store/src/local/writer_lock_tests.rs:234:5" type="test failure with exit code 101">thread &apos;local::writer_lock::tests::writer_lock_is_released_when_coordination_fails&apos; (56169) panicked at thread-store/src/local/writer_lock_tests.rs:234:5:
+failed coordination left the writer lock held: Err(&quot;WouldBlock&quot;)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace</failure>
+            <system-out>
+running 1 test
+test local::writer_lock::tests::writer_lock_is_released_when_coordination_fails ... FAILED
+
+failures:
+
+failures:
+    local::writer_lock::tests::writer_lock_is_released_when_coordination_fails
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 165 filtered out; finished in 0.00s
+
+</system-out>
+            <system-err>
+thread &apos;local::writer_lock::tests::writer_lock_is_released_when_coordination_fails&apos; (56169) panicked at thread-store/src/local/writer_lock_tests.rs:234:5:
+failed coordination left the writer lock held: Err(&quot;WouldBlock&quot;)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+</system-err>
+        </testcase>
+        <testcase name="local::writer_lock::tests::writer_lock_is_released_when_file_removal_fails" classname="codex-thread-store" timestamp="2026-10-20T16:06:25.398+00:00" time="0.006">
+            <failure message="thread &apos;local::writer_lock::tests::writer_lock_is_released_when_file_removal_fails&apos; (56171) panicked at thread-store/src/local/writer_lock_tests.rs:193:5" type="test failure with exit code 101">thread &apos;local::writer_lock::tests::writer_lock_is_released_when_file_removal_fails&apos; (56171) panicked at thread-store/src/local/writer_lock_tests.rs:193:5:
+failed removal left the writer lock held: Err(&quot;WouldBlock&quot;)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace</failure>
+            <system-out>
+running 1 test
+test local::writer_lock::tests::writer_lock_is_released_when_file_removal_fails ... FAILED
+
+failures:
+
+failures:
+    local::writer_lock::tests::writer_lock_is_released_when_file_removal_fails
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 165 filtered out; finished in 0.00s
+
+</system-out>
+            <system-err>
+thread &apos;local::writer_lock::tests::writer_lock_is_released_when_file_removal_fails&apos; (56171) panicked at thread-store/src/local/writer_lock_tests.rs:193:5:
+failed removal left the writer lock held: Err(&quot;WouldBlock&quot;)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+</system-err>
+        </testcase>
+        <testcase name="local::writer_lock::tests::writer_lock_is_released_with_a_retained_descriptor" classname="codex-thread-store" timestamp="2026-10-20T16:06:25.405+00:00" time="0.006">
+            <failure message="thread &apos;local::writer_lock::tests::writer_lock_is_released_with_a_retained_descriptor&apos; (56173) panicked at thread-store/src/local/writer_lock_tests.rs:156:5" type="test failure with exit code 101">thread &apos;local::writer_lock::tests::writer_lock_is_released_with_a_retained_descriptor&apos; (56173) panicked at thread-store/src/local/writer_lock_tests.rs:156:5:
+writer lock remained held through its retained descriptor: Err(&quot;WouldBlock&quot;)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace</failure>
+            <system-out>
+running 1 test
+test local::writer_lock::tests::writer_lock_is_released_with_a_retained_descriptor ... FAILED
+
+failures:
+
+failures:
+    local::writer_lock::tests::writer_lock_is_released_with_a_retained_descriptor
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 165 filtered out; finished in 0.00s
+
+</system-out>
+            <system-err>
+thread &apos;local::writer_lock::tests::writer_lock_is_released_with_a_retained_descriptor&apos; (56173) panicked at thread-store/src/local/writer_lock_tests.rs:156:5:
+writer lock remained held through its retained descriptor: Err(&quot;WouldBlock&quot;)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+</system-err>
+        </testcase>
+        <testcase name="thread_metadata_sync::tests::completed_user_message_items_emit_metadata_fields" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="thread_metadata_sync::tests::goal_update_sets_preview_without_overriding_existing_preview" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="thread_metadata_sync::tests::later_user_messages_do_not_emit_existing_preview_fields" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="thread_metadata_sync::tests::metadata_irrelevant_items_coalesce_updated_at_touches" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="thread_metadata_sync::tests::paginated_resume_history_does_not_reapply_initial_metadata" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="thread_metadata_sync::tests::resume_history_keeps_derived_metadata_pending_until_applied" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="thread_metadata_sync::tests::resume_history_waits_for_append_before_flushing_metadata" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="thread_metadata_sync::tests::resume_preserves_existing_display_metadata_and_initializes_missing_title" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="thread_metadata_sync::tests::thread_settings_applied_updates_live_metadata" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="thread_metadata_sync::tests::turn_start_advances_recency_at_without_changing_updated_at_behavior" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="types::tests::canonical_history_mode_uses_first_session_meta" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="types::tests::git_info_patch_round_trips_optional_clears" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="types::tests::thread_metadata_patch_accepts_missing_fields" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="types::tests::thread_metadata_patch_merge_uses_presence_semantics" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="types::tests::thread_metadata_patch_round_trips_optional_clears" classname="codex-thread-store" time="0.000">
+            <skipped message="Skipped: test does not match the provided expression filters"/>
+        </testcase>
+        <testcase name="local::writer_lock::tests::writer_locks_reject_competing_owners_and_release_their_files" classname="codex-thread-store" timestamp="2026-10-20T16:06:25.411+00:00" time="0.006">
+            <system-out>
+running 1 test
+test local::writer_lock::tests::writer_locks_reject_competing_owners_and_release_their_files ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 165 filtered out; finished in 0.00s
+
+</system-out>
+            <system-err></system-err>
+        </testcase>
+    </testsuite>
+</testsuites>

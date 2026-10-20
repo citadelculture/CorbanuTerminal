@@ -1,0 +1,116 @@
+diff --git a/codex-rs/thread-store/src/local/writer_lock_tests.rs b/codex-rs/thread-store/src/local/writer_lock_tests.rs
+index 236e4610..4cf974a0 100644
+--- a/codex-rs/thread-store/src/local/writer_lock_tests.rs
++++ b/codex-rs/thread-store/src/local/writer_lock_tests.rs
+@@ -130,3 +130,111 @@ fn coordination_lock_is_released_while_a_forked_child_holds_its_descriptor() ->
+     assert!(status.success(), "{status:?}");
+     Ok(())
+ }
++
++// A retained clone models the shared open-file description inherited across
++// fork, without starting a child or depending on how long it takes to exec.
++#[cfg(unix)]
++#[test]
++fn writer_lock_is_released_with_a_retained_descriptor() -> std::io::Result<()> {
++    let home = TempDir::new()?;
++    let coordinator = Arc::new(WriterLockCoordinator::new(home.path()));
++    let owner = coordinator
++        .acquire(ThreadId::default())
++        .expect("acquire writer lock");
++    let path = owner.path.clone();
++    let retained = owner.file.as_ref().expect("owned file").try_clone()?;
++    let observer = fs::OpenOptions::new().read(true).write(true).open(&path)?;
++    assert!(matches!(
++        observer.try_lock(),
++        Err(std::fs::TryLockError::WouldBlock)
++    ));
++
++    drop(owner);
++
++    assert!(!path.exists(), "normal cleanup removes the pathname");
++    let reacquired = observer.try_lock();
++    assert!(
++        reacquired.is_ok(),
++        "writer lock remained held through its retained descriptor: {reacquired:?}"
++    );
++    // Keep the duplicate alive until after the assertion; closing it must not
++    // be what lets the independent observer acquire the lock.
++    drop(retained);
++    Ok(())
++}
++
++#[cfg(unix)]
++#[test]
++fn writer_lock_is_released_when_file_removal_fails() -> std::io::Result<()> {
++    let home = TempDir::new()?;
++    let coordinator = Arc::new(WriterLockCoordinator::new(home.path()));
++    let owner = coordinator
++        .acquire(ThreadId::default())
++        .expect("acquire writer lock");
++    let path = owner.path.clone();
++    let retained = owner.file.as_ref().expect("owned file").try_clone()?;
++    let saved = home.path().join("retained-writer-inode");
++    fs::rename(&path, &saved)?;
++    fs::create_dir(&path)?;
++    let observer = fs::OpenOptions::new().read(true).write(true).open(&saved)?;
++    assert!(matches!(
++        observer.try_lock(),
++        Err(std::fs::TryLockError::WouldBlock)
++    ));
++
++    drop(owner);
++
++    assert!(
++        path.is_dir(),
++        "failed cleanup keeps the replacement directory"
++    );
++    assert!(saved.is_file(), "the observed inode remains reachable");
++    let reacquired = observer.try_lock();
++    assert!(
++        reacquired.is_ok(),
++        "failed removal left the writer lock held: {reacquired:?}"
++    );
++    drop(retained);
++    Ok(())
++}
++
++#[cfg(unix)]
++#[test]
++fn writer_lock_is_released_when_coordination_fails() -> std::io::Result<()> {
++    let home = TempDir::new()?;
++    let coordinator = Arc::new(WriterLockCoordinator::new(home.path()));
++    let owner = coordinator
++        .acquire(ThreadId::default())
++        .expect("acquire writer lock");
++    let path = owner.path.clone();
++    let retained = owner.file.as_ref().expect("owned file").try_clone()?;
++    let observer = fs::OpenOptions::new().read(true).write(true).open(&path)?;
++    assert!(matches!(
++        observer.try_lock(),
++        Err(std::fs::TryLockError::WouldBlock)
++    ));
++    let coordination_path = home
++        .path()
++        .join(WRITER_LOCK_DIR)
++        .join(COORDINATION_LOCK_FILE);
++    fs::remove_file(&coordination_path)?;
++    fs::create_dir(&coordination_path)?;
++
++    drop(owner);
++
++    assert!(
++        coordination_path.is_dir(),
++        "coordination failure is preserved"
++    );
++    assert!(
++        path.is_file(),
++        "uncoordinated cleanup does not remove the lock file"
++    );
++    let reacquired = observer.try_lock();
++    assert!(
++        reacquired.is_ok(),
++        "failed coordination left the writer lock held: {reacquired:?}"
++    );
++    drop(retained);
++    Ok(())
++}
