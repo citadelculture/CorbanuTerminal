@@ -1,0 +1,11 @@
+{
+  "schema": "issue943-hosted-admission-v1",
+  "approved": true,
+  "controllerSha256": "b2cb082ed261a77cec211a942d1115c8f16dab0afa1bd6dddc50585bf20467e9",
+  "sourceManifestSha256": "c4a61111894853aa84ba7dc636a3a8a1dd194ee8ff4a4c78e583fe4c16ff8b55",
+  "toolsPinsSha256": "fbc855ee5f6bf612912c6ee1013e1a0ac9a3c1be911412ca80424e07e3a0a490",
+  "workflowSha256": "84533c60b51ef33f1dc45721ad95926e66036b3c3cb5a8419303c6cd612b8363",
+  "scope": "Exact focused source-aware Linux qualification only. Native incident/host override hold preserved. Root reviews and explicitly approves before first push.",
+  "reviewSha256": "fc24498936349024ff2605c1d8ad8334e695b3ce267af7a197a82e8237e1b672",
+  "pending": "Actual normal-reviewed hosted execution; focused qualification only; native holds remain."
+}

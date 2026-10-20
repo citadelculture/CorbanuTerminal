@@ -1,0 +1,65 @@
+{
+  "schema": "issue943-hosted-source-v1",
+  "baseCommit": "bfa6f7da57b55803be09ccd3613cdcdedd1c7e25",
+  "files": [
+    {
+      "path": "codex-rs/core/src/tools/orchestrator.rs",
+      "originalSha256": "4e63a50d4513988ae27bb0770a7a1e5863738e24c935e847378fcca277546c4d",
+      "candidateSha256": "6f6a52ec3103aed3bd22192fd00802bb1b0d4e63c73f2364c8228044d98209c9",
+      "payload": "payload/orchestrator.rs"
+    },
+    {
+      "path": "codex-rs/core/tests/suite/issue_874.rs",
+      "originalSha256": "2e30548aac8da94aa1e266abf527d2aaeaa3539823424e79916cd7fec563e07e",
+      "candidateSha256": "7a368d50c2c4eccda70680dc6b0fbe7b95743fa3d87babdb70cbff8de5a56a66",
+      "payload": "payload/issue_874.rs"
+    }
+  ],
+  "patch": {
+    "path": "payload/change.patch",
+    "sha256": "d3523b055e2dcf2318d05099723e4f07f8ed8f5b17d5aa6d7803f96690ea3508"
+  },
+  "caseGroups": {
+    "orchestrator": [
+      "tools::orchestrator::tests::issue_540_retry_leaves_the_sandbox_only_where_a_person_approves_it",
+      "tools::orchestrator::tests::issue_826_user_namespace_rule_joins_sandboxed_profiles_only",
+      "tools::orchestrator::tests::linux_sandbox_startup_failure_is_classified_narrowly",
+      "tools::orchestrator::tests::on_request_sandbox_startup_retry_requires_prior_approval",
+      "tools::orchestrator::stale_tests::issue_1001_approval_before_a_transition_is_asked_again",
+      "tools::orchestrator::stale_tests::issue_1001_approval_without_a_transition_runs_as_before",
+      "tools::orchestrator::stale_tests::issue_1001_approval_stale_every_time_is_refused",
+      "tools::orchestrator::stale_tests::issue_1001_approval_before_aggressive_is_switched_on_is_refused",
+      "tools::orchestrator::stale_tests::issue_1001_retry_approved_before_a_transition_is_not_run",
+      "tools::orchestrator::stale_tests::issue_1001_unprompted_retry_after_a_transition_is_not_run",
+      "tools::orchestrator::stale_tests::issue_1001_stale_approval_with_permissions_is_refused",
+      "tools::orchestrator::stale_tests::issue_1057_grants_read_before_a_transition_are_not_used",
+      "tools::orchestrator::stale_tests::issue_1057_aggressive_switched_on_after_the_handler_is_refused",
+      "tools::orchestrator::stale_tests::issue_1057_handler_window_controls"
+    ],
+    "integration": [
+      "suite::issue_874::issue_874_planted_git_links_and_rebase_steps_are_reported",
+      "suite::issue_874::issue_874_approval_does_not_lift_the_rules_while_a_finding_stands",
+      "suite::issue_874::issue_943_held_note_is_sent_once_when_approval_and_retry_are_held",
+      "suite::issue_874::issue_874_a_standing_finding_keeps_user_namespaces_denied",
+      "suite::issue_874::issue_874_a_standing_finding_keeps_d48_known_tools_denied",
+      "suite::issue_874::issue_943_a_command_in_another_repository_is_checked"
+    ]
+  },
+  "redCases": [
+    {
+      "name": "suite::issue_874::issue_943_held_note_is_sent_once_when_approval_and_retry_are_held",
+      "panicLine": 373,
+      "requiredPatterns": [
+        "assertion failed:",
+        "planted=true: expected 1 held-back note\\(s\\), got 2"
+      ],
+      "forbiddenPatterns": [
+        "planted=false:",
+        "planted=true: asked="
+      ]
+    }
+  ],
+  "fixtureFreezeSha256": "27c00b6847a5eccf3bfa4e78356417d67180094912e1209e2077c46d4bf2d33a",
+  "sourceMethodSha256": "9513187171a87a16a10e6cc692ae2098b37abcb5a575485a3d845a4b3df7f624",
+  "nativeAndHostOverrideHoldsPreserved": true
+}
