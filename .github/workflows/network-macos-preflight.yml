@@ -1,0 +1,49 @@
+name: Network canary macOS preflight only
+on:
+  push:
+    branches: [codex/network-canary-macos-preflight-20261020]
+permissions:
+  contents: read
+concurrency:
+  group: network-canary-macos-preflight-20261020
+  cancel-in-progress: false
+jobs:
+  preflight:
+    if: github.repository == 'citadelculture/CorbanuTerminal' && github.event_name == 'push'
+    runs-on: macos-15
+    timeout-minutes: 8
+    steps:
+      - name: Check out only the reviewed control branch
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          path: control
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Check out the exact public canary source without executing it
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          repository: CorbanuCore/CorbanuTerminal
+          ref: 78dd811d6e3718140c938ad4839968d9995fd5ac
+          path: canary-source
+          persist-credentials: false
+          fetch-depth: 1
+          submodules: false
+          lfs: false
+      - name: Run fixed synthetic preflight (no build or canary)
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '%s  %s\n' '10d1d19ac50b411a2c259b5c21cfcf86b85e97c6996feabfa425fc7a726adc36' 'control/hosted-macos-preflight-v1.py' | /usr/bin/shasum -a 256 -c -
+          /usr/bin/python3 -I control/hosted-macos-preflight-v1.py \
+            --source "$GITHUB_WORKSPACE/canary-source" \
+            --output "$GITHUB_WORKSPACE/preflight-evidence"
+      - name: Retain bounded synthetic preflight evidence
+        if: always() && !cancelled()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: network-canary-preflight-${{ github.run_id }}-${{ github.run_attempt }}
+          path: preflight-evidence/
+          if-no-files-found: warn
+          retention-days: 14
+          compression-level: 9
+          include-hidden-files: false
