@@ -1,0 +1,94 @@
+{
+  "schema": "issue1056-mount-view-hosted-source-v1",
+  "baseCommit": "bac579e541b8fd8f0d67bc09ef45ab950fd247e3",
+  "files": [
+    {
+      "path": "codex-rs/linux-sandbox/src/placeholder_journal.rs",
+      "originalSha256": "3fb374f0f91a7a2b425b0218d2d18f23a6994969a76feebbe996b777560e32e5",
+      "candidateSha256": "ed4fd8a4b9b310a335ef65711d8f8246a044f53189fc0a6dcfaaf6a81dd4ddad",
+      "payload": "payload/placeholder_journal.rs",
+      "baselineSha256": "007cb9c80a835460c3c636c1a034c630ffa32613bc7827256f4e5ce5863b41cc",
+      "baselinePayload": "payload/placeholder_journal.baseline.rs"
+    },
+    {
+      "path": "codex-rs/linux-sandbox/src/placeholder_journal_tests.rs",
+      "originalSha256": "395dc3e9f6b2cc1095cc9a4463e289c3ed8ddbb823ef6123479199596ccfe352",
+      "candidateSha256": "e34490bce8fc8b45b64d65ccc62d4e45acec4ef24ea2f7ae19b6105000f5e80b",
+      "payload": "payload/placeholder_journal_tests.rs"
+    }
+  ],
+  "patch": {
+    "path": "payload/change.patch",
+    "sha256": "18f617da70ace8f7145d497c4808abc775a35f84fff9a55a9b4bb42b2cca814f"
+  },
+  "baselinePatch": {
+    "path": "payload/baseline-fixture.patch",
+    "sha256": "217e4248b71765b6636ceb50a11e0d63dc956da11661e3f56a27696843040534"
+  },
+  "productionTransitionPatch": {
+    "path": "payload/production-only.patch",
+    "sha256": "5729540e98247c5df7d4b7760bf101aee3be1ebf3277fafb5e4dd2723e6bc88d"
+  },
+  "selectedCases": [
+    "placeholder_journal::tests::different_roots_in_one_mount_namespace_are_all_scanned",
+    "placeholder_journal::tests::identical_mount_views_are_deduplicated_without_hiding_other_namespaces",
+    "placeholder_journal::tests::unidentified_roots_do_not_hide_another_process_mount_view",
+    "placeholder_journal::tests::an_unreadable_mount_view_still_fails_closed",
+    "placeholder_journal::tests::a_mount_point_in_any_of_this_users_namespaces_is_found"
+  ],
+  "redCases": [
+    {
+      "name": "placeholder_journal::tests::different_roots_in_one_mount_namespace_are_all_scanned",
+      "panicLine": 601,
+      "requiredPatterns": [
+        "assertion failed:"
+      ]
+    },
+    {
+      "name": "placeholder_journal::tests::unidentified_roots_do_not_hide_another_process_mount_view",
+      "panicLine": 643,
+      "requiredPatterns": [
+        "assertion failed:"
+      ]
+    },
+    {
+      "name": "placeholder_journal::tests::an_unreadable_mount_view_still_fails_closed",
+      "panicLine": 666,
+      "requiredPatterns": [
+        "assertion failed:"
+      ]
+    }
+  ],
+  "suiteCases": [
+    "placeholder_journal::tests::a_record_round_trips_and_one_not_written_by_this_version_is_not_read",
+    "placeholder_journal::tests::a_run_is_live_until_it_ends_its_boot_ends_or_its_pid_is_reused",
+    "placeholder_journal::tests::a_placeholder_a_run_made_and_left_is_removed",
+    "placeholder_journal::tests::a_persons_own_empty_read_only_file_at_that_path_is_kept",
+    "placeholder_journal::tests::a_placeholder_filled_replaced_or_changed_since_is_kept",
+    "placeholder_journal::tests::a_placeholder_a_live_run_uses_is_kept_until_it_ends",
+    "placeholder_journal::tests::a_pending_placeholder_is_never_removed",
+    "placeholder_journal::tests::removal_does_not_follow_a_link_above_the_placeholder",
+    "placeholder_journal::tests::a_run_records_and_makes_its_placeholders_then_finishes",
+    "placeholder_journal::tests::a_record_folder_of_another_kind_is_not_used",
+    "placeholder_journal::tests::an_unreadable_record_of_a_live_run_keeps_every_placeholder",
+    "placeholder_journal::tests::different_roots_in_one_mount_namespace_are_all_scanned",
+    "placeholder_journal::tests::identical_mount_views_are_deduplicated_without_hiding_other_namespaces",
+    "placeholder_journal::tests::unidentified_roots_do_not_hide_another_process_mount_view",
+    "placeholder_journal::tests::an_unreadable_mount_view_still_fails_closed",
+    "placeholder_journal::tests::a_mount_point_in_any_of_this_users_namespaces_is_found",
+    "placeholder_journal::tests::a_held_lock_leaves_the_run_without_the_record",
+    "placeholder_journal::tests::the_record_folder_is_found_through_another_path_to_it",
+    "placeholder_journal::tests::a_placeholder_folder_holding_another_of_the_runs_placeholders_is_removed",
+    "placeholder_journal::tests::a_read_only_record_folder_keeps_no_record",
+    "placeholder_journal::tests::a_path_another_run_made_is_recorded_as_used_and_nothing_else",
+    "placeholder_journal::tests::a_path_another_run_was_about_to_make_is_recorded_as_used",
+    "placeholder_journal::tests::a_changed_placeholder_stays_recorded_after_the_run",
+    "placeholder_journal::tests::another_runs_recorded_placeholder_is_named_as_one",
+    "placeholder_journal::tests::a_replaced_or_changed_placeholder_is_recorded_otherwise"
+  ],
+  "sourcePreparationSha256": "0f0b92b97226377ae0a855e0004bebd352011bbc7e757d8a801ef42b3a9b0391",
+  "baselineLimitation": "Original production plus only mechanical iterator seam extraction; same frozen tests; not an unmodified-base build.",
+  "fixtureFreezeSha256": "9e8af8f6b0d66792b6e2792948e4e03b49feddf5aa0993ae4c767b5961650e3a",
+  "sourceReviewSha256": "2c34fd34022f403479f96a1e4e93653b4fc3e5db652a49533603f66ed483d292",
+  "formatterReconciliationSha256": "9d316e278e41d88be117aa3e6579d114a84cce0f45bf8d0c5b0dae22988bc937"
+}

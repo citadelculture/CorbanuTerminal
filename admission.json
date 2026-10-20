@@ -1,0 +1,9 @@
+{
+  "schema": "issue1056-mount-view-hosted-admission-v1",
+  "approved": true,
+  "controllerSha256": "a6869e93e1818ed7a285de3e96b5bd19070379db22bcf1edb52ae009b83981e4",
+  "sourceManifestSha256": "f23bc6661231f66d9ddd4b88c416397e042ae63fd98c417ca393e0f143368e8c",
+  "toolsPinsSha256": "1811d1c10c1d608f4d0696cab90df4ad24d6415a45c5944df576d49eef563fe7",
+  "workflowSha256": "11e7ccd09cc4ecf7d3b417c6dc8b1d25493710faed95a25ed5d412304b237caf",
+  "pending": "Independent controller review, root normal publication/admission approval and first hosted execution."
+}
