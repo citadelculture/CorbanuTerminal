@@ -1,0 +1,58 @@
+Issue928: explicit per-thread writer-lock release
+
+Prepared qualification method, not an executed product result.
+Exact public source base: 8643c121acc1104c49bf65f9a018977bec19ae8d.
+The source manifest binds the two changed files, original production, final
+formatted fixture, full patch, baseline fixture patch and production transition.
+The baseline uses unchanged original production plus the same three new tests.
+No baseline helper seam or production observer is added.
+
+Run only in one new non-root GitHub-hosted Ubuntu24.04 job, attempt1, on the
+fixed control branch. Checkout authentication is not persisted. Admission is
+false until root reviews and binds the exact package. No local product runtime.
+Inherited HOME, CODEX_HOME and all three CODEX sandbox flags retain presence and
+value. The unchanged ordinary repository just-test wrapper owns its disposable
+product profile and disables native keyring in the debug lane. No real keys,
+credential/native application, sockets, privileged mount/chroot or inference
+are used by the five selected file-only test bodies. The unchanged fork test
+is not selected and is not claimed qualified.
+
+Acquire exact public archive hashes; Rust1.99.1 must match rust-toolchain.toml.
+No global rustup/APT/profile changes. New owned Cargo/cache/target directories.
+The same bounded process capture, subreaper, completed-child reap and strict
+live-descendant hold are reused from the successful mount-view campaign.
+An actual synthetic owned orphan preflight must pass on the hosted runner.
+Require30GiB initially and before red compilation;8GiB at cached green/Clippy
+start; stop at4GiB running. Two build jobs, incremental off, debug assertions on.
+The workflow deadline is120min; controller deadline115min; commands retain their
+individual bounds. Each test has60s and each Nextest phase15min, retries0,
+fail-fast false, one test thread. No timeout/retry increase is automatic.
+
+Run full just fmt on each variant, requiring unchanged source. Fetch locked
+public Cargo dependencies once, then use offline qualification. Run exactly
+five cases through ordinary just test -p codex-thread-store --lib. The first
+three must fail only at their frozen reacquisition assertions (Err(WouldBlock));
+the two existing controls must pass. Restore only the production transition,
+run scoped cargo fmt --check and ordinary just clippy -p codex-thread-store
+--lib --locked --offline -- -D warnings, then the same five cases must pass.
+Exact case names and assertion sites are in source-manifest.json. No extra
+suite run or full-crate claim. Selected JUnit skips/errors/retries, wrong
+assertions, missing wrapper marker, source drift, resource/output exhaustion
+or unresolved owned descendants are incomplete, never qualification.
+
+Store original raw stdout/stderr/combined streams in the disposable owned
+runner tree. Publish complete selected normalized streams and scripted command
+traces, with raw and public hashes/byte counts. Literal longest-first path
+substitutions use XML-safe square-bracket tokens; no line omissions. Capture
+JUnit before parser rejection, retain unexpected failures, and upload bounded
+actual test binaries separately. Do not publish environments, credentials,
+Cargo homes or private raw operator paths. Bind actual source hashes before and
+after each phase. Every actual outcome is still pending.
+
+Limits: descriptor clones test the shared-open-file-description lifetime, not
+an observed historical fork rate. Stale-lock inspection's descriptor window
+is not directly injected; its explicit unlock is source-reviewed and the
+existing stale-removal/active-owner control is selected. No Windows/macOS,
+interactive, whole-package, native-credential or release qualification claim.
+Demand is a public contributor follow-up, not a maintainer assignment. This
+unit is distinct from already delivered coordination/arg0/CLI-refresh locks.

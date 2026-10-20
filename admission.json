@@ -1,0 +1,8 @@
+{
+  "approved": true,
+  "controllerSha256": "cbaa862e17ff5c72da323ed81b709e754debcfd4cf773226cc77114c26f30d23",
+  "sourceManifestSha256": "f73cfc44214bb8ca074bb80c317d462a4599154c541ac29d3912bbe7c458474e",
+  "toolsPinsSha256": "ecd18193a9f00817123fc1a5eaaf2a287d82cff2a6fee407d9a2816f243e1303",
+  "workflowSha256": "a4dd757cda89f4acfe7db46aec6a7aa5e5136bd4ed648bfca69c27e5551fa83d",
+  "note": "Prepared only; root owns source/method review and any later hosted dispatch. No product qualification yet."
+}

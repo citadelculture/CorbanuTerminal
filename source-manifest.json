@@ -1,0 +1,76 @@
+{
+  "schema": "issue928-thread-writer-hosted-source-v1",
+  "baseCommit": "8643c121acc1104c49bf65f9a018977bec19ae8d",
+  "files": [
+    {
+      "path": "codex-rs/thread-store/src/local/writer_lock.rs",
+      "originalSha256": "11ede12061a8839df66e990f2c41ba73b84093deac57d4690b18e71b120da640",
+      "candidateSha256": "ea723a2cecbca0b63ea1200727f5cc69ea906aa37e6d62f31c5e04e2a711c9c0",
+      "payload": "payload/writer_lock.rs",
+      "baselineSha256": "11ede12061a8839df66e990f2c41ba73b84093deac57d4690b18e71b120da640",
+      "baselinePayload": "payload/writer_lock.baseline.rs"
+    },
+    {
+      "path": "codex-rs/thread-store/src/local/writer_lock_tests.rs",
+      "originalSha256": "444ae02799b87863821e0ea263a0cf7e19413e1d0fbc53f9caf293b96346d988",
+      "candidateSha256": "c42468217aea31bad70a9f8c4fe2a55d207ef25c372fa334837018ea807f8c30",
+      "payload": "payload/writer_lock_tests.rs"
+    }
+  ],
+  "patch": {
+    "path": "payload/change.patch",
+    "sha256": "5e2d8437eb5447eaefb63262a1aea55025b1968f0c505d224e50101e252edfad"
+  },
+  "baselinePatch": {
+    "path": "payload/baseline-fixture.patch",
+    "sha256": "bb4a965e6157466e605e457e240fc87485216ef468a16307e24ffb2ba6816695"
+  },
+  "productionTransitionPatch": {
+    "path": "payload/production-only.patch",
+    "sha256": "63e6c1aa6c226cce7fb8ff9b2bd3c67779d18dded61b7f8747738f5e617afcf4"
+  },
+  "selectedCases": [
+    "local::writer_lock::tests::writer_lock_is_released_with_a_retained_descriptor",
+    "local::writer_lock::tests::writer_lock_is_released_when_file_removal_fails",
+    "local::writer_lock::tests::writer_lock_is_released_when_coordination_fails",
+    "local::writer_lock::tests::writer_locks_reject_competing_owners_and_release_their_files",
+    "local::writer_lock::tests::first_acquisition_removes_stale_locks_without_removing_active_locks"
+  ],
+  "sourceCases": [
+    "local::writer_lock::tests::writer_locks_reject_competing_owners_and_release_their_files",
+    "local::writer_lock::tests::first_acquisition_removes_stale_locks_without_removing_active_locks",
+    "local::writer_lock::tests::coordination_lock_is_released_while_a_forked_child_holds_its_descriptor",
+    "local::writer_lock::tests::writer_lock_is_released_with_a_retained_descriptor",
+    "local::writer_lock::tests::writer_lock_is_released_when_file_removal_fails",
+    "local::writer_lock::tests::writer_lock_is_released_when_coordination_fails"
+  ],
+  "redCases": [
+    {
+      "name": "local::writer_lock::tests::writer_lock_is_released_with_a_retained_descriptor",
+      "panicLine": 156,
+      "requiredPatterns": [
+        "writer\\ lock\\ remained\\ held\\ through\\ its\\ retained\\ descriptor: Err\\(WouldBlock\\)"
+      ]
+    },
+    {
+      "name": "local::writer_lock::tests::writer_lock_is_released_when_file_removal_fails",
+      "panicLine": 193,
+      "requiredPatterns": [
+        "failed\\ removal\\ left\\ the\\ writer\\ lock\\ held: Err\\(WouldBlock\\)"
+      ]
+    },
+    {
+      "name": "local::writer_lock::tests::writer_lock_is_released_when_coordination_fails",
+      "panicLine": 234,
+      "requiredPatterns": [
+        "failed\\ coordination\\ left\\ the\\ writer\\ lock\\ held: Err\\(WouldBlock\\)"
+      ]
+    }
+  ],
+  "sourcePreparationSha256": "c39987b0f1cce68325cc8e83e76559a6793aab718faa429e0675d7dfb1956bc8",
+  "fixtureFreezeSha256": "1ce04ba1665aeab80323dbf3cedcf57f8a74ffe98d1d603a2ac65e5b717185ed",
+  "formatterReconciliationSha256": "72e20d9682410f6d2cef8d3f94f2a5df7cc53ec8ac33b8216b90f6ef2a91c2d4",
+  "baselineLimitation": "Original production byte-identical to exact base, with only the final frozen new tests appended; no production seam adaptation.",
+  "fullPackageQualification": false,
+  "excludedExistingForkCase": "local::writer_lock::tests::coordination_lock_is_released_while_a_forked_child_holds_its_descriptor"
+}
