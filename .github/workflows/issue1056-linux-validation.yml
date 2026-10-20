@@ -1,0 +1,41 @@
+name: Issue1056 focused Linux validation
+
+# Inert local preparation. A reviewed push to this exact owned-fork branch is
+# the dispatch action; publication requires separate root authorization.
+on:
+  push:
+    branches:
+      - codex/issue1056-linux-validation-v2-20261020
+
+permissions:
+  contents: read
+
+concurrency:
+  group: issue1056-linux-validation
+  cancel-in-progress: false
+
+jobs:
+  uses-filter:
+    if: github.repository == 'citadelculture/CorbanuTerminal'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Check out the reviewed CI overlay
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+
+      - name: Validate only the frozen Linux Uses cases
+        shell: bash
+        run: python3 .github/issue1056/run-linux-validation.py
+
+      - name: Upload bounded synthetic evidence
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: issue1056-linux-${{ github.sha }}
+          path: ${{ runner.temp }}/issue1056-evidence
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 6
