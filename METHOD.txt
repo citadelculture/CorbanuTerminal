@@ -1,0 +1,73 @@
+Issue1111: bounded flags argument allocation qualification (prepared, unexecuted)
+
+This control package targets a fresh nonroot GitHub-hosted Ubuntu 24.04 job in
+citadelculture/CorbanuTerminal, on the sole fixed push branch
+codex/issue1111-flags-copy-ci-v1-20261020, attempt 1. Admission is false until the
+root coordinator reviews and explicitly admits these exact hashes. There are no
+secrets, deployment steps, privileged runners, or product commands on an operator
+host. Checkout and upload actions are pinned; checkout credentials do not persist.
+
+Public production base: 2e3e1212638d335e33f94a02d9c47ff949ced310.
+The two touched originals and work counter were also verified identical at the
+later observed public head675dcf4075ab296649c651067f179c341702b2f8. That observation
+is not a claim about future main or overlap. Source is fetched independently from
+CorbanuCore/CorbanuTerminal; only the exact verified two-file patch is applied.
+
+The baseline contains byte-identical original production and the final candidate
+fixture. Both full just fmt invocations must pass without changing any source.
+The candidate additionally receives scoped formatting and Clippy before its final
+behavior tests. Any actual formatter delta is retained and holds qualification.
+The unchanged repository just test wrapper is mandatory; raw cargo test is not
+used. Its disposable profile/native-keyring debug guard remains active. Inherited
+HOME, CODEX_HOME presence and all sandbox markers are preserved. Task-local Cargo,
+XDG, tool and target directories are fresh; no operator credentials are imported.
+
+Exactly nine codex-core --lib tests are selected, as enumerated in source-manifest:
+- Original production must report exactly two specified allocation assertions and
+  seven passing controls. Setup, compilation, different assertions, zero tests,
+  retries, selected skips, timeouts, or incomplete capture cannot count as red.
+- Candidate production with the identical fixture must report all nine passing.
+- Every case's actual Nextest status, JUnit identity, body output and summary must
+  agree. Filter exclusions are reported separately from selected skips. Repeated
+  final output is not counted as another execution. Passing assertions emit no
+  numerical allocation telemetry; none is inferred.
+
+The first regression uses the existing allocation/loop work counter at1000 and
+4000 distinct CJK delimiters for each l/r/I flag, with and without quote-removal
+characters. The second uses the actual caller-shaped name/substitution predicate
+at100 and400 delimiters and bounds allocated bytes only. Both exact numeric red
+predicates require observed large bytes to exceed six times small bytes. Controls
+preserve callback text/order, Unicode/quote boundaries and unsafe nested arguments
+inside malformed substitutions. Other selected controls cover existing regions,
+name parsing, fallback classification and existing linearity families. Test helper
+commands are classified as strings; they are not executed. No body-skip gate,
+provider, bubblewrap, network fixture or native-keyring requirement was found in
+the selected source path. Wrapper compilation of other helper packages still occurs.
+
+This is an allocation correction, not a total CPU-linearity claim. Remaining
+repeated delimiter and name scans may be quadratic; actual substitution-containing
+text can still allocate. No whole-Issue1111 resolution, full core suite, interactive,
+release, cross-platform, historical failure, or performance timing pass is claimed.
+
+The inherited finite bounds remain120 minutes for the job,6900 seconds for the
+controller,4200 seconds for baseline command,1800 for candidate and Clippy,900 for
+each full format,120 for scoped format;60 seconds per test and15 minutes per Nextest
+execution, retries0, test threads1 and Cargo jobs2. Disk admission is30GiB initially
+and before first compile,8GiB for reuse, with4GiB running floor. Each output stream
+and JUnit report is bounded16MiB; truncation is explicitly incomplete, not success.
+
+Prior Issue1132 reached a512MiB qualification-binary cap; it did not qualify. This
+package instead records observed binary size before rejecting, caps each retained
+binary at2GiB and the uploaded binary artifact total at4GiB, and hashes streams.
+It may retain two physical copies per binary (up to8GiB across two stages), so it
+requires enough measured space for both copies plus the existing4GiB floor and
+checks the floor again after copying. The supervisor, descendant identity/reaping,
+resource admissions, environment and wrapper remain unchanged. The capacity fit
+of this new run is not predicted. Binaries go to a separate bounded artifact; full
+targets are never uploaded.
+
+Evidence consists only of normalized disposable hosted command streams, complete
+scripted transcripts, source/lock hashes, actual outcomes, cleanup and binary
+bindings. Local preparation/review receipts and operator paths are not uploaded.
+The source report's contributor demand is not a maintainer assignment. Product
+qualification remains pending actual execution and independent evidence review.

@@ -1,0 +1,8 @@
+{
+  "approved": false,
+  "controllerSha256": "21bf48157910bb2d796ae16c95bd1e11e97f57eb2caaa49063d4fca08f790da7",
+  "scope": "Root review required before the exact isolated hosted original/candidate nine-case campaign.",
+  "sourceManifestSha256": "8f0901c6c563ff04e7976e54edf66f6d460eb3f7a87c3014f7f2164d0bf8b130",
+  "toolsPinsSha256": "46acbee95d83dfe3bdfe9f0511f793b400fc872107268603954ca6e753987720",
+  "workflowSha256": "3632c1e3486475daa5f2f0b4f5882c23cc70c0f9d1201ed1110daa4cfbfb296d"
+}
