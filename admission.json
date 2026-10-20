@@ -1,0 +1,12 @@
+{
+  "approved": true,
+  "bubblewrapPinsSha256": "6aed14f70eda83a81a81b8aedf382270c5a11ec7630c658767f76e2c9370d941",
+  "bubblewrapSetupSha256": "9e8dc47855133b71fb6281577c275b4bfaf286e1272063632fb5d99fc242dcf7",
+  "controllerSha256": "36f2cfd173363c2bdb9b6e368dca384b8859a63c66350c60b785f5331b12d93a",
+  "exclusiveInstallerSha256": "b51aab11599a67ff53b618b2e64084e1a8be6fc6452929064797fad7ceba6d36",
+  "schema": "issue943-bubblewrap-recovery-admission-v2",
+  "scope": "Independent review and owner approval required before first push. Only official verified ELF installation on fresh hosted Ubuntu; unchanged namespace gates before product. Local native incident and security-control denial remain binding.",
+  "sourceManifestSha256": "c4a61111894853aa84ba7dc636a3a8a1dd194ee8ff4a4c78e583fe4c16ff8b55",
+  "toolsPinsSha256": "fbc855ee5f6bf612912c6ee1013e1a0ac9a3c1be911412ca80424e07e3a0a490",
+  "workflowSha256": "4f4b89b1b4f178b7eec7142a309de07a081073d3c6cdc126c8424c14ad9d5e88"
+}

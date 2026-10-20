@@ -1,0 +1,162 @@
+{
+  "package": "bubblewrap",
+  "version": "0.9.0-1ubuntu0.3",
+  "architecture": "amd64",
+  "filename": "pool/main/b/bubblewrap/bubblewrap_0.9.0-1ubuntu0.3_amd64.deb",
+  "debBytes": 50436,
+  "debSha256": "2461f1beee9cb04c8942739fe1a2b37e7b7c2a3d518f0779dc75f9245baa3094",
+  "elfBytes": 72160,
+  "elfSha256": "e318903862396f96de3df57264e0158682b952fd3fb53ac23d876413e7b30f71",
+  "dataMembers": [
+    {
+      "path": "",
+      "directory": true,
+      "bytes": 0
+    },
+    {
+      "path": "usr/",
+      "directory": true,
+      "bytes": 0
+    },
+    {
+      "path": "usr/bin/",
+      "directory": true,
+      "bytes": 0
+    },
+    {
+      "path": "usr/bin/bwrap",
+      "directory": false,
+      "bytes": 72160
+    },
+    {
+      "path": "usr/lib/",
+      "directory": true,
+      "bytes": 0
+    },
+    {
+      "path": "usr/lib/sysctl.d/",
+      "directory": true,
+      "bytes": 0
+    },
+    {
+      "path": "usr/lib/sysctl.d/50-bubblewrap.conf",
+      "directory": false,
+      "bytes": 403
+    },
+    {
+      "path": "usr/share/",
+      "directory": true,
+      "bytes": 0
+    },
+    {
+      "path": "usr/share/bash-completion/",
+      "directory": true,
+      "bytes": 0
+    },
+    {
+      "path": "usr/share/bash-completion/completions/",
+      "directory": true,
+      "bytes": 0
+    },
+    {
+      "path": "usr/share/bash-completion/completions/bwrap",
+      "directory": false,
+      "bytes": 1159
+    },
+    {
+      "path": "usr/share/bug/",
+      "directory": true,
+      "bytes": 0
+    },
+    {
+      "path": "usr/share/bug/bubblewrap",
+      "directory": false,
+      "bytes": 319
+    },
+    {
+      "path": "usr/share/doc/",
+      "directory": true,
+      "bytes": 0
+    },
+    {
+      "path": "usr/share/doc/bubblewrap/",
+      "directory": true,
+      "bytes": 0
+    },
+    {
+      "path": "usr/share/doc/bubblewrap/README.Debian.gz",
+      "directory": false,
+      "bytes": 2391
+    },
+    {
+      "path": "usr/share/doc/bubblewrap/README.md.gz",
+      "directory": false,
+      "bytes": 4692
+    },
+    {
+      "path": "usr/share/doc/bubblewrap/changelog.Debian.gz",
+      "directory": false,
+      "bytes": 3409
+    },
+    {
+      "path": "usr/share/doc/bubblewrap/copyright",
+      "directory": false,
+      "bytes": 3388
+    },
+    {
+      "path": "usr/share/doc/bubblewrap/examples/",
+      "directory": true,
+      "bytes": 0
+    },
+    {
+      "path": "usr/share/doc/bubblewrap/examples/bubblewrap-shell.sh",
+      "directory": false,
+      "bytes": 1204
+    },
+    {
+      "path": "usr/share/doc/bubblewrap/examples/flatpak-run.sh",
+      "directory": false,
+      "bytes": 2642
+    },
+    {
+      "path": "usr/share/doc/bubblewrap/examples/flatpak.bpf",
+      "directory": false,
+      "bytes": 744
+    },
+    {
+      "path": "usr/share/doc/bubblewrap/examples/userns-block-fd.py",
+      "directory": false,
+      "bytes": 969
+    },
+    {
+      "path": "usr/share/man/",
+      "directory": true,
+      "bytes": 0
+    },
+    {
+      "path": "usr/share/man/man1/",
+      "directory": true,
+      "bytes": 0
+    },
+    {
+      "path": "usr/share/man/man1/bwrap.1.gz",
+      "directory": false,
+      "bytes": 5338
+    },
+    {
+      "path": "usr/share/zsh/",
+      "directory": true,
+      "bytes": 0
+    },
+    {
+      "path": "usr/share/zsh/vendor-completions/",
+      "directory": true,
+      "bytes": 0
+    },
+    {
+      "path": "usr/share/zsh/vendor-completions/_bwrap",
+      "directory": false,
+      "bytes": 7396
+    }
+  ]
+}
