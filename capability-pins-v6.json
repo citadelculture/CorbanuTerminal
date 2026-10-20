@@ -1,0 +1,21 @@
+{
+  "canaryReady": false,
+  "code": {
+    "account-observation-v1.py": "e4bca0514d72b572334db510918a2f23a85f291749feecae51ce276bfc701f12",
+    "bounded-command-v3.py": "4737f7ede0461ec729f32598261382ef4b8b2e03d7abf85342072696ade3f494",
+    "capability-controller-v6.py": "fe7880fcbf6fe7bc52b077a6a52ddb46c752602faf47cbab153df61d352398cf",
+    "child-bootstrap-v2.py": "27d116dc8d1c3a2650f688b16546589df7f0027f7b9a205980e756ccac97ac28",
+    "mach-fixture-v2.py": "c3238a66d8e06e68857d9c522feae92c5bce017e31aad5deee0acfa25ad488e0",
+    "measurement-fixture-v1.py": "57a5e9c4f7ef6e1b14fa0706f5b749f76149b36941c91ca642dc74526a652486",
+    "synthetic-nested-seatbelt-probe-v1.py": "a5bec1c91f24e73fd86401c7df5921fea3c0cf29ba9f8c1a9530257cf0c02d00"
+  },
+  "route": {
+    "attempt": 1,
+    "branch": "refs/heads/codex/network-cleanup-combined-v1-20261020",
+    "repository": "citadelculture/CorbanuTerminal",
+    "runner": "macos-15"
+  },
+  "schema": "network-uid-pf-pins-v2",
+  "scope": "synthetic-capability-only",
+  "sourcePin": "78dd811d6e3718140c938ad4839968d9995fd5ac"
+}
