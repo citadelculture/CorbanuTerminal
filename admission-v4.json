@@ -1,0 +1,7 @@
+{
+  "approved": true,
+  "canaryApproved": false,
+  "pinsSha256": "3abe40a362a9b487adcf3b2a578cb961e0e12dfde0160e4cec076d518b15c05f",
+  "schema": "network-uid-pf-admission-v1",
+  "scope": "synthetic-capability-only"
+}
