@@ -1,0 +1,115 @@
+{
+  "actualRustResults": null,
+  "baseCommit": "2e3e1212638d335e33f94a02d9c47ff949ced310",
+  "baselineExpected": [
+    9,
+    7,
+    2
+  ],
+  "baselineLimitation": "Byte-identical original production with identical final formatted fixture, no production instrumentation. Both expected allocation assertions must actually fail.",
+  "baselinePatch": {
+    "path": "payload/baseline-fixture.patch",
+    "sha256": "b74d3097dedbf68f8aad78f8960c84d220bf2691af1e5bdb5c34ef252f9fb75f"
+  },
+  "candidateCountsLimitation": "Successful Rust growth assertions emit no numerical byte counts; no actual count telemetry claimed.",
+  "candidateExpected": [
+    9,
+    9,
+    0
+  ],
+  "candidatePatchSha256": "286059cbe3dad917c0337cf1eab29a53604d2cba3c3716a96402e7ad91c28e7e",
+  "caseAdmissionSha256": "33f0ae70850acf8219aa6eebf1607ef46a55904fb04ea64a689f4f06d095a77a",
+  "files": [
+    {
+      "baselinePayload": "payload/arithmetic.baseline.rs",
+      "baselineSha256": "a0bc4c11e64b245f921431e43c6c6cd8a16a31bd553aaf43e9a20521c310c00f",
+      "candidateSha256": "37a73a6a47160b3b78cd53f69f908851b60857ca961e5b2143ebe6178579f3e7",
+      "originalSha256": "a0bc4c11e64b245f921431e43c6c6cd8a16a31bd553aaf43e9a20521c310c00f",
+      "path": "codex-rs/core/src/security/tainted_action/arithmetic.rs",
+      "payload": "payload/arithmetic.rs"
+    },
+    {
+      "candidateSha256": "dc17b83875fc560ef6833ad48d6b7971d6834c772940f7c916ff42e08a7f3b5d",
+      "originalSha256": "661dd829855bd96b31a2ee39928dd8f83e9cd67442bd721cf8203f32d8cf0cdd",
+      "path": "codex-rs/core/src/security/tainted_action/arithmetic_tests.rs",
+      "payload": "payload/arithmetic_tests.rs"
+    }
+  ],
+  "formatReconciliationSha256": "ddd0fadfb885cf70dcec88f86cd39003d9e7583f1b475d163233e6c98603df26",
+  "formatterReceiptSha256": "040a46472a92eb13167364a9f362b50d11b41961be5a0d060398b0ea98cc230c",
+  "fullPackageQualification": false,
+  "historicalOutcome": "V1 baseline E0283 before tests; V2 baseline9cases6PASS/3FAIL plus no candidate. Both are preserved unqualified. V3 fixture corrects one mistaken control while retaining production and both allocation assertions.",
+  "patch": {
+    "path": "payload/change.patch",
+    "sha256": "286059cbe3dad917c0337cf1eab29a53604d2cba3c3716a96402e7ad91c28e7e"
+  },
+  "performanceScope": "Repeated quote-removal allocation and substitution-free caller allocation only. Remaining delimiter/name scans may stay quadratic; no overall CPU-linear or whole-issue claim.",
+  "priorFailureReceiptSha256": "ceb93d223ec3b76b12c74e278a8f7baf7bcb7ef7169f56d4c4a2cfb57e8c3593",
+  "priorHostedReviewSha256": "5f214a8bec9b590c5cb91e239e8a4186c0c0ade6d9f69af7e5afc07e6715ce82",
+  "priorProductionSourceReviewSha256": "83b50f6e3787a133ecb3c4e0ac7f6d7c024267949572d88b4cfbe2672074c58e",
+  "priorPublishedSourceManifestSha256": "1ab2e196b65206f338a467412d15a131eab7edbbfe66f637251792e1cb7a319b",
+  "priorSourceReviewSha256": "24a3e6cce22427bfee575d893e3aed435bcc0d5ee9d3262676350f98cfaaca7b",
+  "productionTransitionPatch": {
+    "path": "payload/production-only.patch",
+    "sha256": "b21b4c092a3ed2c9e53df98e75068a04e8e860b3e1d501e64bc71cfd021e7795"
+  },
+  "redCases": [
+    {
+      "maxGrowth": 6,
+      "messageRegex": "unclosed flag argument copies: ([0-9]+) bytes at 1x, ([0-9]+) at 4x \\(linear work grows at\\s+most 4x, quadratic about 16x\\)",
+      "name": "security::tainted_action::arithmetic::tests::unclosed_flag_argument_copying_stays_linear",
+      "panicLine": 129,
+      "siteRegex": "(?:^|[ /])(?:core/src/)?security/tainted_action/work\\.rs:129:[0-9]+"
+    },
+    {
+      "maxGrowth": 6,
+      "messageRegex": "flag l: ([0-9]+) bytes at 1x, ([0-9]+) at 4x",
+      "name": "security::tainted_action::arithmetic::tests::unclosed_flag_caller_allocation_stays_linear",
+      "panicLine": 882,
+      "siteRegex": "(?:^|[ /])(?:core/src/)?security/tainted_action/arithmetic_tests\\.rs:882:[0-9]+"
+    }
+  ],
+  "schema": "issue1111-flags-copy-hosted-source-v3",
+  "selectedCases": [
+    "security::tainted_action::arithmetic::tests::unclosed_flag_argument_copying_stays_linear",
+    "security::tainted_action::arithmetic::tests::unclosed_flag_caller_allocation_stays_linear",
+    "security::tainted_action::arithmetic::tests::flag_arguments_keep_original_quote_and_delimiter_boundaries",
+    "security::tainted_action::arithmetic::tests::malformed_flag_arguments_keep_unsafe_inner_names",
+    "security::tainted_action::arithmetic::tests::substitution_blanking_keeps_exact_text",
+    "security::tainted_action::arithmetic::tests::review_6_fallback_routes",
+    "security::tainted_action::arithmetic::tests::review_6_fallback_stays_linear",
+    "security::tainted_action::arithmetic::tests::names_skip_numbers_and_lengths",
+    "security::tainted_action::arithmetic::tests::regions_cover_every_arithmetic_context"
+  ],
+  "sourceCaseCount": 26,
+  "sourceCases": [
+    "security::tainted_action::arithmetic::tests::regions_cover_every_arithmetic_context",
+    "security::tainted_action::arithmetic::tests::names_skip_numbers_and_lengths",
+    "security::tainted_action::arithmetic::tests::numeric_formats",
+    "security::tainted_action::arithmetic::tests::function_definitions",
+    "security::tainted_action::arithmetic::tests::lexer_tells_arithmetic_from_command_output",
+    "security::tainted_action::arithmetic::tests::filled_variables_in_arithmetic_run_unseen",
+    "security::tainted_action::arithmetic::tests::counters_and_plain_uses_still_run",
+    "security::tainted_action::arithmetic::tests::review_1_regions_and_lists",
+    "security::tainted_action::arithmetic::tests::review_1_stays_linear",
+    "security::tainted_action::arithmetic::tests::review_2_non_ascii_before_parenthesis",
+    "security::tainted_action::arithmetic::tests::review_2_built_names_run_unseen",
+    "security::tainted_action::arithmetic::tests::review_2_specials_fills_and_printf",
+    "security::tainted_action::arithmetic::tests::review_2_redirects_and_decoded_values",
+    "security::tainted_action::arithmetic::tests::review_3_allow_list_and_new_sources",
+    "security::tainted_action::arithmetic::tests::review_4_routes",
+    "security::tainted_action::arithmetic::tests::review_5_routes",
+    "security::tainted_action::arithmetic::tests::review_6_fallback_routes",
+    "security::tainted_action::arithmetic::tests::review_7_fallback_routes",
+    "security::tainted_action::arithmetic::tests::glob_qualifier_lists_ask_on_output_lines",
+    "security::tainted_action::arithmetic::tests::review_6_fallback_stays_linear",
+    "security::tainted_action::arithmetic::tests::qualifier_code_reading_stays_linear",
+    "security::tainted_action::arithmetic::tests::unclosed_flag_argument_copying_stays_linear",
+    "security::tainted_action::arithmetic::tests::unclosed_flag_caller_allocation_stays_linear",
+    "security::tainted_action::arithmetic::tests::flag_arguments_keep_original_quote_and_delimiter_boundaries",
+    "security::tainted_action::arithmetic::tests::malformed_flag_arguments_keep_unsafe_inner_names",
+    "security::tainted_action::arithmetic::tests::substitution_blanking_keeps_exact_text"
+  ],
+  "sourcePreparationSha256": "51210eb13b00c840a2bf8478c3c8085231929ae2f3311e30d9cc9e02baadc585",
+  "sourceReviewSha256": "d4395dedbb5401fbfcaac74b2b67c4b64a966d7a966c19de21331d736209a55e"
+}

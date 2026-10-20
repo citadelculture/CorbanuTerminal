@@ -1,0 +1,8 @@
+{
+  "approved": false,
+  "controllerSha256": "e6534e815de49290e15588b63a5c8de866904844b908017fc836447dd2d456b6",
+  "scope": "Root review required for exact v3 corrected-control original/candidate nine-case campaign. V1 compile failure and V2 unexpected third failure remain unqualified.",
+  "sourceManifestSha256": "b1ed70834a2bc48eb61c94503bbc05a77481c9e2e2dc4b83092da2a5148e34cf",
+  "toolsPinsSha256": "46acbee95d83dfe3bdfe9f0511f793b400fc872107268603954ca6e753987720",
+  "workflowSha256": "0bcb22e3f85909927cf16dcc0f5f9144547a103aa0946b67db8464fc25e4dd13"
+}
