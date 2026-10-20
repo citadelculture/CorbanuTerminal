@@ -1,0 +1,74 @@
+Issue1120: disposable cwd and writable-root fixtures
+
+Scope and authority
+The issue is a contributor request, not a maintainer assignment. This package is
+unallocated and inert until the root coordinator approves the exact admission.
+The contribution changes eight test files, fifteen direct configuration calls
+and thirty assertions on returned configurations; production and common test
+helpers are unchanged. The prepared local DCO commit is
+fa13515160378d45e5c705c99d22c3cd805e88ce on
+c9dbae23b3d3f9753fc27a993479040b6b2735cd. Its public availability is not assumed.
+
+Execution and negative control
+A fresh GitHub-hosted Ubuntu24.04 x86_64 job independently checks out the exact
+public base, applies the pinned candidate patch, and verifies all source bytes.
+After pinned public tools, full just fmt and locked public dependency fetching,
+one intentionally restored implicit-cwd caller runs with the SAME new cwd
+assertion. Only the personality_does_not_mutate_base_instructions_without_template
+case may fail, at suite/personality.rs:99 with the frozen assertion signature.
+This is a designed negative control, not an unchanged upstream baseline or a
+historical flake reproduction. The caller is restored to the exact candidate
+before scoped formatting, ordinary just clippy and sixteen candidate cases.
+
+Ordinary repository test route (SOURCE and CONTROL are owned checkout roots):
+just test -p codex-core --test all [--test responses_headers for candidate]
+  --locked --offline --config-file OWNED_NEXTTEST_CONFIG
+  --profile test-roots-negative|test-roots-candidate --no-tests fail
+  --retries 0 --test-threads 1 --success-output final --failure-output final
+  --status-level all --final-status-level none -E EXACT_EQUALITY_FILTER
+The exact one/16 names and binary IDs are in source-manifest.json and controller.py.
+The unchanged just wrapper builds codex-cli, codex-wallet-daemon,
+codex-rmcp-client and codex-code-mode-host sibling binaries before Nextest.
+That compile scope is broader than the selected test bodies. No raw Nextest
+listing bypass or pre-execution runtime-listing claim is made. Source, target
+and filter identity are checked before dispatch; full observed JUnit and unique
+pre-Summary execution records must prove thirteen codex-core::all and three
+codex-core::responses_headers candidate cases. Each must pass once. Selected
+skips, retries, wrong/duplicate/missing/extra cases and in-body network/sandbox
+skip diagnostics hold qualification. Filter exclusions are separate.
+
+Environment and prerequisites
+HOME, CODEX_HOME and inherited CODEX_SANDBOX* markers are preserved. The original
+repository wrapper creates its disposable product profile and denies native
+keyring access. A present inherited NETWORK_DISABLED marker holds before product
+execution; it is never removed. Synthetic HTTP/WebSocket fixtures use owned
+loopback endpoints; the provider-auth case runs its own script with a synthetic
+token via tokio::process::Command. The selected cases do not request sandboxed
+shell-tool execution. No Bubblewrap acquisition, keyring-mode change, package
+installation, sysctl/AppArmor change or alternate host-control route is included.
+This is a source-backed selected-case assessment, not proof of an unrun hosted
+capability. Unexpected dependencies/failures remain failures. The fresh VM is
+the outer boundary; no extra per-product network namespace is claimed.
+
+Bounds and artifacts
+30GiB is measured before source/tools and initial compile; 8GiB is required for
+candidate reuse and Clippy; 4GiB is the running stop floor. Owned caches only,
+CARGO_BUILD_JOBS=2, debug assertions enabled, INSTA_UPDATE=no/FORCE_PASS=0.
+No test retries. Sixty seconds per body, twenty-minute Nextest global timeout,
+3600s negative command, 1800s candidate/Clippy, 6900s campaign and 120min job.
+All commands use the preserved bounded process recorder/subreaper. Actual owned
+orphan reaping is checked before downloads; live descendants hold qualification.
+Streams are capped at16MiB each; overflow holds. Full retained stdout/stderr/
+combined and scripted sessions are exported after deterministic literal path
+substitutions: source->[CHECKOUT], task root->[TASK_ROOT], workspace->[WORKSPACE],
+inherited runner homes->[RUNNER_HOME]/[INHERITED_CODEX_HOME], longest prefix first.
+Raw and public hashes/byte counts are retained; no lines omitted for success.
+Square-bracket tokens preserve XML validity. JUnit is retained before parsing
+and on failure. Separate artifacts retain one negative and two candidate
+executable files, <=512MiB each and <=1.5GiB total, SHA256 verified, never executed
+by the exporter. Failed setup/test/controller outcomes cannot qualify.
+
+Qualification remains pending. This package does not claim full-core, native,
+interactive, code-blind, Windows/macOS, historical failure-rate or release proof.
+Delivery is a useful DCO PR/immutable source and independently resolvable public
+CI evidence; no optional bulk Gist is part of this method.

@@ -1,0 +1,9 @@
+{
+  "schema": "issue1120-hosted-admission-v1",
+  "approved": true,
+  "sourceManifestSha256": "177548b97c69f0bfdfabab3bf0fbab4e3436f45584ed550e47482d96572d2c10",
+  "toolsPinsSha256": "07a3732ddc58455a6c5c9c9f942140482829db92d24a83ae71a273b1ddad188e",
+  "controllerSha256": "e61312c37bec95cefc3503576573614265e7511a498ade2eab36d8be16cdc96f",
+  "workflowSha256": "ab499666a4cd39837c46f5be4052c0a3c913137248d5abed3acd6c54f62a22c5",
+  "reason": "Inert preparation. Independent concrete controller review and root normal-reviewed admission/publication required. No runtime result inferred."
+}
