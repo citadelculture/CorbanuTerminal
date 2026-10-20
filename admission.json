@@ -1,0 +1,10 @@
+{
+  "schema": "issue1056-sweep-hosted-admission-v1",
+  "approved": true,
+  "controllerSha256": "70803bb74719bc6bbd455231e8d7b9c7a19900a4107f40c09cdfb11cd4bb101d",
+  "sourceManifestSha256": "4bd171ffe45cf6298abef750f8b26473be49c53e260974ced61626aff07cf53f",
+  "toolsPinsSha256": "14c30e677acd087cb2aeab66bb8058001d4f8bfa84fac42849494e49273b6eeb",
+  "workflowSha256": "4eb5940f0dc2163c382be19a87aac28ee98040451e6e739d8b168da7fa7c1d7c",
+  "pending": "Root normal execution review and fixed control-branch publication; no runtime yet.",
+  "reviewSha256": "5b6e28a107408fb779463555ecc89280b66345899480016ae3c65f844431754c"
+}

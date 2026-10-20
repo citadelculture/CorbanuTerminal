@@ -1,0 +1,74 @@
+{
+  "schema": "issue1056-sweep-hosted-source-v1",
+  "baseCommit": "bec9e5fb774ab984ce0d53eb82cf13113eb6b181",
+  "files": [
+    {
+      "path": "codex-rs/linux-sandbox/src/placeholder_journal.rs",
+      "originalSha256": "3fb374f0f91a7a2b425b0218d2d18f23a6994969a76feebbe996b777560e32e5",
+      "candidateSha256": "d4487b3501a9a20e456f76733b647a77ac26ce1f7c78e67bd18cd6b4ffad946c",
+      "payload": "payload/placeholder_journal.rs"
+    },
+    {
+      "path": "codex-rs/linux-sandbox/src/placeholder_journal_tests.rs",
+      "originalSha256": "395dc3e9f6b2cc1095cc9a4463e289c3ed8ddbb823ef6123479199596ccfe352",
+      "candidateSha256": "a60ac687ace096778bbf4db9e1448568bbc03062201e7315471bbbe24f52a7ca",
+      "payload": "payload/placeholder_journal_tests.rs"
+    }
+  ],
+  "patch": {
+    "path": "payload/change.patch",
+    "sha256": "8b7960e8cb6e936e30318d8e540201e27065144df26c15906cb9f1b36139b420"
+  },
+  "redCases": [
+    {
+      "name": "placeholder_journal::tests::a_sweep_limits_successful_removals_across_records_and_resumes",
+      "panicLine": 307,
+      "requiredPatterns": [
+        "assertion failed:",
+        "(?m)^\\s*<0\\s*$",
+        "(?m)^\\s*>16\\s*$"
+      ]
+    },
+    {
+      "name": "placeholder_journal::tests::a_deferred_parent_keeps_the_identity_its_removed_children_left",
+      "panicLine": 342,
+      "requiredPatterns": [
+        "the parent is deferred after 64 removals"
+      ]
+    },
+    {
+      "name": "placeholder_journal::tests::a_deferred_parent_changed_between_sweeps_is_still_kept",
+      "panicLine": 374,
+      "requiredPatterns": [
+        "assertion failed: folder\\.is_dir\\(\\)"
+      ]
+    }
+  ],
+  "suiteCases": [
+    "placeholder_journal::tests::a_record_round_trips_and_one_not_written_by_this_version_is_not_read",
+    "placeholder_journal::tests::a_run_is_live_until_it_ends_its_boot_ends_or_its_pid_is_reused",
+    "placeholder_journal::tests::a_placeholder_a_run_made_and_left_is_removed",
+    "placeholder_journal::tests::a_sweep_limits_successful_removals_across_records_and_resumes",
+    "placeholder_journal::tests::a_deferred_parent_keeps_the_identity_its_removed_children_left",
+    "placeholder_journal::tests::a_deferred_parent_changed_between_sweeps_is_still_kept",
+    "placeholder_journal::tests::a_persons_own_empty_read_only_file_at_that_path_is_kept",
+    "placeholder_journal::tests::a_placeholder_filled_replaced_or_changed_since_is_kept",
+    "placeholder_journal::tests::a_placeholder_a_live_run_uses_is_kept_until_it_ends",
+    "placeholder_journal::tests::a_pending_placeholder_is_never_removed",
+    "placeholder_journal::tests::removal_does_not_follow_a_link_above_the_placeholder",
+    "placeholder_journal::tests::a_run_records_and_makes_its_placeholders_then_finishes",
+    "placeholder_journal::tests::a_record_folder_of_another_kind_is_not_used",
+    "placeholder_journal::tests::an_unreadable_record_of_a_live_run_keeps_every_placeholder",
+    "placeholder_journal::tests::a_mount_point_in_any_of_this_users_namespaces_is_found",
+    "placeholder_journal::tests::a_held_lock_leaves_the_run_without_the_record",
+    "placeholder_journal::tests::the_record_folder_is_found_through_another_path_to_it",
+    "placeholder_journal::tests::a_placeholder_folder_holding_another_of_the_runs_placeholders_is_removed",
+    "placeholder_journal::tests::a_read_only_record_folder_keeps_no_record",
+    "placeholder_journal::tests::a_path_another_run_made_is_recorded_as_used_and_nothing_else",
+    "placeholder_journal::tests::a_path_another_run_was_about_to_make_is_recorded_as_used",
+    "placeholder_journal::tests::a_changed_placeholder_stays_recorded_after_the_run",
+    "placeholder_journal::tests::another_runs_recorded_placeholder_is_named_as_one",
+    "placeholder_journal::tests::a_replaced_or_changed_placeholder_is_recorded_otherwise"
+  ],
+  "sourceReviewSha256": "1ee975a9c707f882b85f78adfdb137b3687afd68d7c5bb6a5c2ef8f51cee3fea"
+}

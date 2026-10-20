@@ -1,0 +1,205 @@
+--- a/codex-rs/linux-sandbox/src/placeholder_journal.rs
++++ b/codex-rs/linux-sandbox/src/placeholder_journal.rs
+@@ -54,6 +54,9 @@
+ const TEMPORARY_STALE_AFTER: Duration = Duration::from_secs(10 * 60);
+ /// The largest record file read.
+ const RECORD_LIMIT: u64 = 16 << 20;
++/// Leave large cleanup backlogs for later sweeps rather than removing them
++/// all while holding the record folder's lock.
++const SWEEP_REMOVAL_LIMIT: usize = 64;
+ /// How long a run waits for the record folder's lock (a backstop: the lock
+ /// is a write lock, which a command that sees the folder read-only cannot
+ /// take). Then the run goes on without the record, as before (nothing
+@@ -1037,7 +1040,11 @@
+         let in_use = |path: &Path, real: &Path| {
+             live.iter().any(|(_, record)| uses(record, path, real)) || used_by_registry(path, real)
+         };
++        let mut removals_left = SWEEP_REMOVAL_LIMIT;
+         for (stem, record) in ended {
++            if removals_left == 0 {
++                break;
++            }
+             let mut kept = Vec::new();
+             // Deepest first, so a placeholder in a placeholder folder of the
+             // same run goes before the folder; the folder is then expected
+@@ -1045,8 +1052,20 @@
+             let mut entries = record.entries.clone();
+             entries.sort_by_key(|entry| std::cmp::Reverse(entry.paths().1.components().count()));
+             let mut expected: HashMap<PathBuf, Identity> = HashMap::new();
+-            for entry in entries {
++            for mut entry in entries {
+                 if matches!(entry, Entry::Uses { .. }) {
++                    continue;
++                }
++                if removals_left == 0 {
++                    // A child removed in this sweep can change a deferred
++                    // parent. Keep only the identity change already checked
++                    // below, so the next sweep can still check it exactly.
++                    if let Entry::Made { real, identity, .. } = &mut entry
++                        && let Some(after) = expected.get(real)
++                    {
++                        *identity = *after;
++                    }
++                    kept.push(entry);
+                     continue;
+                 }
+                 let (path, real) = entry.paths();
+@@ -1077,6 +1096,7 @@
+                                 folder_before,
+                                 folder_after,
+                             } => {
++                                removals_left -= 1;
+                                 // Only the change an unlink makes: times and
+                                 // size, never its mode or owner (a chmod or
+                                 // chown in between). Both readings come from
+--- a/codex-rs/linux-sandbox/src/placeholder_journal_tests.rs
++++ b/codex-rs/linux-sandbox/src/placeholder_journal_tests.rs
+@@ -63,6 +63,34 @@
+ 
+     fn sweep(&mut self) {
+         self.journal.sweep(&|_, _| false);
++    }
++
++    fn left_folder_with_children(&self, children: usize) -> PathBuf {
++        let folder = self.base.join("home/.git");
++        let paths = (0..children)
++            .map(|index| folder.join(format!("child-{index}")))
++            .collect::<Vec<_>>();
++        let mut planned = vec![Planned {
++            kind: Kind::Directory,
++            path: &folder,
++            real: &folder,
++            makes: true,
++        }];
++        planned.extend(paths.iter().map(|path| Planned {
++            kind: Kind::File,
++            path,
++            real: path,
++            makes: true,
++        }));
++        let mut maker =
++            open_journal(&self.base.join("corbanu/sandbox-placeholders")).expect("maker");
++        maker.register(&planned, &[]);
++        let records = self.records();
++        assert_eq!(records.len(), 1);
++        let record = maker.read(&records[0]).expect("record");
++        maker.remove_record().expect("unlink");
++        self.write(ended(), record.entries);
++        folder
+     }
+ }
+ 
+@@ -255,6 +283,113 @@
+ }
+ 
+ #[test]
++fn a_sweep_limits_successful_removals_across_records_and_resumes() {
++    let mut setup = Setup::new();
++    for group in 0..2 {
++        let entries = (0..40)
++            .map(|index| {
++                let path = setup.base.join(format!("home/group-{group}-{index}"));
++                let identity = make_placeholder(&path, Kind::File).expect("placeholder");
++                Entry::Made {
++                    kind: Kind::File,
++                    path: path.clone(),
++                    real: path,
++                    identity,
++                }
++            })
++            .collect();
++        setup.write(ended(), entries);
++    }
++    assert_eq!(setup.records().len(), 2);
++
++    setup.sweep();
++
++    assert_eq!(
++        std::fs::read_dir(setup.base.join("home"))
++            .expect("home")
++            .count(),
++        16
++    );
++    let remaining = setup
++        .records()
++        .iter()
++        .map(|name| setup.journal.read(name).expect("deferred record"))
++        .flat_map(|record| record.entries)
++        .collect::<Vec<_>>();
++    assert_eq!(remaining.len(), 16);
++    assert!(remaining.iter().all(|entry| entry.paths().1.is_file()));
++    assert_eq!(setup.report(), "");
++
++    setup.sweep();
++
++    assert_eq!(
++        std::fs::read_dir(setup.base.join("home"))
++            .expect("home")
++            .count(),
++        0
++    );
++    assert_eq!(setup.records(), Vec::<String>::new());
++    assert_eq!(setup.report(), "");
++}
++
++#[test]
++fn a_deferred_parent_keeps_the_identity_its_removed_children_left() {
++    let mut setup = Setup::new();
++    let folder = setup.left_folder_with_children(64);
++
++    setup.sweep();
++
++    assert!(folder.is_dir(), "the parent is deferred after 64 removals");
++    assert_eq!(std::fs::read_dir(&folder).expect("folder").count(), 0);
++    let names = setup.records();
++    assert_eq!(names.len(), 1);
++    let record = setup.journal.read(&names[0]).expect("deferred record");
++    let found = crate::placeholder_registry::find_without_links(&folder)
++        .expect("lookup")
++        .expect("parent");
++    assert_eq!(
++        record.entries,
++        vec![Entry::Made {
++            kind: Kind::Directory,
++            path: folder.clone(),
++            real: folder.clone(),
++            identity: Identity::of(&found.status),
++        }]
++    );
++
++    setup.sweep();
++
++    assert!(!folder.exists(), "{}", setup.report());
++    assert_eq!(setup.records(), Vec::<String>::new());
++    assert_eq!(setup.report(), "");
++}
++
++#[test]
++fn a_deferred_parent_changed_between_sweeps_is_still_kept() {
++    let mut setup = Setup::new();
++    let folder = setup.left_folder_with_children(64);
++
++    setup.sweep();
++
++    assert!(folder.is_dir());
++    tick();
++    std::fs::set_permissions(&folder, std::fs::Permissions::from_mode(0o700))
++        .expect("the person changes the parent");
++    setup.sweep();
++
++    assert_eq!(
++        std::fs::symlink_metadata(&folder)
++            .expect("kept parent")
++            .permissions()
++            .mode()
++            & 0o777,
++        0o700
++    );
++    assert_eq!(setup.records(), Vec::<String>::new(), "reported once");
++    assert!(setup.report().contains(".git"), "{}", setup.report());
++}
++
++#[test]
+ fn a_persons_own_empty_read_only_file_at_that_path_is_kept() {
+     let mut setup = Setup::new();
+     let path = setup.base.join("home/.pfterminal");
