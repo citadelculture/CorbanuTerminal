@@ -1,5 +1,5 @@
 {
-  "approved": false,
+  "approved": true,
   "diagnosticOnly": true,
   "files": {
     ".github/workflows/issue943-parent-identity.yml": "c43d6218e68b12e242a0ccb7300b67d15a6a047d12d52f756b13eacd7be762b8",
