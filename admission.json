@@ -1,0 +1,8 @@
+{
+  "approved": false,
+  "controllerSha256": "903c787fc39065cab8e61ff12a07e2a3b03404bc059a0f5e95c148284b9f04b8",
+  "scope": "Root review required for exact v2 corrected-fixture original/candidate nine-case campaign; prior E0283 is preserved and never counts as red.",
+  "sourceManifestSha256": "1ab2e196b65206f338a467412d15a131eab7edbbfe66f637251792e1cb7a319b",
+  "toolsPinsSha256": "46acbee95d83dfe3bdfe9f0511f793b400fc872107268603954ca6e753987720",
+  "workflowSha256": "5f52429b353277118bd90ac21a9c3dbe50929d91a4a47281fb8fd6107bf751de"
+}
