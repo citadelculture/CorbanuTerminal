@@ -1,0 +1,118 @@
+diff --git a/codex-rs/app-server/src/in_process.rs b/codex-rs/app-server/src/in_process.rs
+--- a/codex-rs/app-server/src/in_process.rs
++++ b/codex-rs/app-server/src/in_process.rs
+@@ -767,24 +767,23 @@
+     use codex_app_server_protocol::ThreadStartParams;
+     use codex_app_server_protocol::ThreadStartResponse;
+     use codex_core::config::ConfigBuilder;
++    use codex_core::config::ConfigOverrides;
+     use pretty_assertions::assert_eq;
+     use std::path::Path;
+     use tempfile::TempDir;
+ 
+     async fn build_test_config(codex_home: &Path) -> Config {
+-        match ConfigBuilder::default()
++        let cwd = codex_home.join("workspace");
++        std::fs::create_dir_all(&cwd).expect("temporary test workspace");
++        ConfigBuilder::default()
+             .codex_home(codex_home.to_path_buf())
++            .harness_overrides(ConfigOverrides {
++                cwd: Some(cwd),
++                ..Default::default()
++            })
+             .build()
+             .await
+-        {
+-            Ok(config) => config,
+-            Err(_) => Config::load_default_with_cli_overrides_for_codex_home(
+-                codex_home.to_path_buf(),
+-                Vec::new(),
+-            )
+-            .await
+-            .expect("default config should load"),
+-        }
++            .expect("test config should load for its temporary workspace")
+     }
+ 
+     #[tokio::test]
+diff --git a/codex-rs/app-server/src/message_processor_tracing_tests.rs b/codex-rs/app-server/src/message_processor_tracing_tests.rs
+--- a/codex-rs/app-server/src/message_processor_tracing_tests.rs
++++ b/codex-rs/app-server/src/message_processor_tracing_tests.rs
+@@ -27,6 +27,7 @@
+ use codex_config::LoaderOverrides;
+ use codex_core::config::Config;
+ use codex_core::config::ConfigBuilder;
++use codex_core::config::ConfigOverrides;
+ use codex_exec_server::EnvironmentManager;
+ use codex_feedback::CodexFeedback;
+ use codex_login::AuthManager;
+@@ -211,6 +212,8 @@
+ }
+ 
+ async fn build_test_config(codex_home: &Path, server_uri: &str) -> Result<Config> {
++    let cwd = codex_home.join("workspace");
++    std::fs::create_dir_all(&cwd)?;
+     write_mock_responses_config_toml(
+         codex_home,
+         server_uri,
+@@ -223,6 +226,10 @@
+ 
+     Ok(ConfigBuilder::default()
+         .codex_home(codex_home.to_path_buf())
++        .harness_overrides(ConfigOverrides {
++            cwd: Some(cwd),
++            ..Default::default()
++        })
+         .build()
+         .await?)
+ }
+diff --git a/codex-rs/app-server-client/src/lib.rs b/codex-rs/app-server-client/src/lib.rs
+--- a/codex-rs/app-server-client/src/lib.rs
++++ b/codex-rs/app-server-client/src/lib.rs
+@@ -1108,6 +1108,7 @@
+     use codex_app_server_protocol::ToolRequestUserInputParams;
+     use codex_app_server_protocol::ToolRequestUserInputQuestion;
+     use codex_core::config::ConfigBuilder;
++    use codex_core::config::ConfigOverrides;
+     use codex_core::init_state_db;
+     use codex_uds::UnixListener;
+     use codex_utils_absolute_path::AbsolutePathBuf;
+@@ -1129,29 +1130,22 @@
+ 
+     async fn build_test_config() -> (TempDir, Config) {
+         let codex_home = TempDir::new().expect("temporary config home");
+-        let config = match ConfigBuilder::default().build().await {
+-            Ok(config) => config,
+-            Err(_) => Config::load_default_with_cli_overrides(Vec::new())
+-                .await
+-                .expect("default config should load"),
+-        };
++        let config = build_test_config_for_codex_home(codex_home.path()).await;
+         (codex_home, config)
+     }
+ 
+     async fn build_test_config_for_codex_home(codex_home: &Path) -> Config {
+-        match ConfigBuilder::default()
++        let cwd = codex_home.join("workspace");
++        std::fs::create_dir_all(&cwd).expect("temporary test workspace");
++        ConfigBuilder::default()
+             .codex_home(codex_home.to_path_buf())
++            .harness_overrides(ConfigOverrides {
++                cwd: Some(cwd),
++                ..Default::default()
++            })
+             .build()
+             .await
+-        {
+-            Ok(config) => config,
+-            Err(_) => Config::load_default_with_cli_overrides_for_codex_home(
+-                codex_home.to_path_buf(),
+-                Vec::new(),
+-            )
+-            .await
+-            .expect("default config should load"),
+-        }
++            .expect("test config should load for its temporary workspace")
+     }
+ 
+     #[tokio::test]

@@ -1,0 +1,129 @@
+{
+  "actualRustResults": null,
+  "baseCommit": "2e3e1212638d335e33f94a02d9c47ff949ced310",
+  "baselineExpected": [
+    4,
+    0,
+    4
+  ],
+  "baselineLimitation": "Three original parameterized helper definitions restored exactly. Original noarg builder/fallback remains inside a mechanical (TempDir, Config) wrapper without passing that owner to the builder. Both existing noarg callers and all four new test bodies match candidate. This is an instrumented baseline, not pristine base.",
+  "baselinePatch": {
+    "path": "payload/baseline-fixture.patch",
+    "sha256": "07f17f6dacf989cf4971a93b2183697ba29bba58021ef5604f7dfd633a41c859"
+  },
+  "candidateExpected": [
+    4,
+    4,
+    0
+  ],
+  "candidatePatchSha256": "f9f08c32d4093a43d5ad1e04dade0430a5c4a82264b4c8ff4b60fbb82bef2ea8",
+  "caseBodies": [
+    {
+      "function": "test_config_uses_owned_temporary_roots",
+      "name": "in_process::tests::test_config_uses_owned_temporary_roots",
+      "path": "codex-rs/app-server/src/in_process.rs",
+      "sha256": "bdf3240afe88a940b439add157a3b82156649540b3df85468c287e749d6b9555",
+      "target": "codex-app-server"
+    },
+    {
+      "function": "test_config_uses_owned_temporary_roots",
+      "name": "message_processor::message_processor_tracing_tests::test_config_uses_owned_temporary_roots",
+      "path": "codex-rs/app-server/src/message_processor_tracing_tests.rs",
+      "sha256": "5e312dda6f223e78b63b419103a97716d7d8c4693ae1306eed5542cf6e859b94",
+      "target": "codex-app-server"
+    },
+    {
+      "function": "test_config_owns_temporary_roots",
+      "name": "tests::test_config_owns_temporary_roots",
+      "path": "codex-rs/app-server-client/src/lib.rs",
+      "sha256": "d383a857827ee90d5ed2c11ee60b13786266d9e68e1ba7ee21a01b6346c7c616",
+      "target": "codex-app-server-client"
+    },
+    {
+      "function": "test_config_for_codex_home_uses_owned_temporary_roots",
+      "name": "tests::test_config_for_codex_home_uses_owned_temporary_roots",
+      "path": "codex-rs/app-server-client/src/lib.rs",
+      "sha256": "25e9cb70beba409ff1e710baf11687a75faea63dd073ab15f67c46b606892bd0",
+      "target": "codex-app-server-client"
+    }
+  ],
+  "caseTargets": {
+    "in_process::tests::test_config_uses_owned_temporary_roots": "codex-app-server",
+    "message_processor::message_processor_tracing_tests::test_config_uses_owned_temporary_roots": "codex-app-server",
+    "tests::test_config_for_codex_home_uses_owned_temporary_roots": "codex-app-server-client",
+    "tests::test_config_owns_temporary_roots": "codex-app-server-client"
+  },
+  "files": [
+    {
+      "baselinePayload": "payload/in_process.baseline.rs",
+      "baselineSha256": "f2031ed03e61a8e13a3bf074b178fd1a8d1be5bc886bd77c9c00f96694740eeb",
+      "candidateSha256": "0c5e4614f3df82cd369ba9e10d8b92b9588933ddcc624c6e427b3c35cd1d4f01",
+      "originalSha256": "13cf4b11e88d21c638ce8cac5779396138ea5c0dbc98286f5d42502ea208212b",
+      "path": "codex-rs/app-server/src/in_process.rs",
+      "payload": "payload/in_process.rs"
+    },
+    {
+      "baselinePayload": "payload/message_processor_tracing_tests.baseline.rs",
+      "baselineSha256": "6ed5443c463b8c4407e8eaddf8ee3b13da88692ffc699f7da0e90c66e11a484d",
+      "candidateSha256": "4b3e24821a46df30847dfd29d8ca11e22951798003aab5e2b2ebf62863fa9591",
+      "originalSha256": "e8a0185ffb9c8ac83b397ee333b16aa69a84ca0f9eaacdc0a0cf6bec9c503270",
+      "path": "codex-rs/app-server/src/message_processor_tracing_tests.rs",
+      "payload": "payload/message_processor_tracing_tests.rs"
+    },
+    {
+      "baselinePayload": "payload/lib.baseline.rs",
+      "baselineSha256": "2e1bdbc145f8e40c0d2d92ac17a06a65284bc1b8aaa2bbc289e8e6607aa4221e",
+      "candidateSha256": "df6cbf2d1acf0e4bbfcf762538c0996ad3e802d4b934d8abecb9fd3e3e1a4c03",
+      "originalSha256": "bdbae8e5dda73f150057392d953069118ab11e028b71689d46d88e1351d92ed7",
+      "path": "codex-rs/app-server-client/src/lib.rs",
+      "payload": "payload/lib.rs"
+    }
+  ],
+  "formatReconciliationSha256": "e3f4f6e6810a28819bed911bb42a62c72e616784f753ea5b9ccd57df6ea9dd37",
+  "formatterReceiptSha256": "f2b17192809710633e0c42ec8fb1c5cfe674b5a43b1ba6c6dfee7f4106d48785",
+  "fullIssueQualification": false,
+  "helperTransitionPatch": {
+    "path": "payload/helper-transition.patch",
+    "sha256": "23cab375e9231b936c0e2f9a4c6f2de289aeb6a529c097f659cdbb06766606c0"
+  },
+  "patch": {
+    "path": "payload/change.patch",
+    "sha256": "f9f08c32d4093a43d5ad1e04dade0430a5c4a82264b4c8ff4b60fbb82bef2ea8"
+  },
+  "redCases": [
+    {
+      "messageRegex": "the\\ test\\ workspace\\ must\\ be\\ owned\\ by\\ the\\ temporary\\ home\\ guard",
+      "name": "in_process::tests::test_config_uses_owned_temporary_roots",
+      "panicLine": 795,
+      "siteRegex": "(?:^|[ /])(?:app\\-server/src/in_process\\.rs|src/in_process\\.rs):795:[0-9]+"
+    },
+    {
+      "messageRegex": "the\\ test\\ workspace\\ must\\ be\\ owned\\ by\\ the\\ temporary\\ home\\ guard",
+      "name": "message_processor::message_processor_tracing_tests::test_config_uses_owned_temporary_roots",
+      "panicLine": 237,
+      "siteRegex": "(?:^|[ /])(?:app\\-server/src/message_processor_tracing_tests\\.rs|src/message_processor_tracing_tests\\.rs):237:[0-9]+"
+    },
+    {
+      "messageRegex": "assertion\\ failed:\\ `\\(left\\ ==\\ right\\)`",
+      "name": "tests::test_config_owns_temporary_roots",
+      "panicLine": 1160,
+      "siteRegex": "(?:^|[ /])(?:app\\-server\\-client/src/lib\\.rs|src/lib\\.rs):1160:[0-9]+"
+    },
+    {
+      "messageRegex": "the\\ test\\ workspace\\ must\\ be\\ owned\\ by\\ the\\ temporary\\ home\\ guard",
+      "name": "tests::test_config_for_codex_home_uses_owned_temporary_roots",
+      "panicLine": 1196,
+      "siteRegex": "(?:^|[ /])(?:app\\-server\\-client/src/lib\\.rs|src/lib\\.rs):1196:[0-9]+"
+    }
+  ],
+  "schema": "issue1138-app-server-hosted-source-v1",
+  "scope": "Four private helper entrypoints in three app-server/client files only. Core remains unchanged and unresolved. No whole Issue1138, transport/provider, full-suite or release claim.",
+  "selectedCases": [
+    "in_process::tests::test_config_uses_owned_temporary_roots",
+    "message_processor::message_processor_tracing_tests::test_config_uses_owned_temporary_roots",
+    "tests::test_config_owns_temporary_roots",
+    "tests::test_config_for_codex_home_uses_owned_temporary_roots"
+  ],
+  "sourcePreparationSha256": "64ccb93f09e45a5e3c1a31c8bf5502dad90839df8340f38a65bbe8bdd22ec86d",
+  "sourceReviewSha256": "227e99e0f07ae3d7585ce20ad8c1139d0ea78f913c232c9cbc7f7132cc8ce171"
+}

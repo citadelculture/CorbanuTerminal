@@ -1,0 +1,82 @@
+Issue1138: four app-server/client test configuration helpers (inert preparation)
+
+This package selects four config-only library tests in a fresh nonroot standard
+GitHub-hosted Ubuntu 24.04 VM, attempt 1, on the exact own-fork push branch
+codex/issue1138-app-server-roots-ci-v1-20261020. Admission remains false. Source is
+independently checked out from CorbanuCore/CorbanuTerminal at immutable public base
+2e3e1212638d335e33f94a02d9c47ff949ced310. The fixed three-file patch and all source,
+wrapper, toolchain, Cargo.lock and fixture hashes must match before any test.
+No source commit or public availability of an unpublished candidate is assumed.
+
+The contribution covers four private helper entrypoints in app-server and
+app-server-client only. The previously identified core Session/Config ownership
+problem remains held and unchanged. This is not whole-Issue1138 completion, a
+maintainer assignment, allocation, reward, full-suite or release-readiness claim.
+
+Each variant receives ONE unchanged ordinary just test invocation with BOTH exact
+packages, --lib and four equality filters. This explicitly consolidates the source
+plan's two per-package invocations; it does not alter cases or expected assertions.
+Source body hashes and actual target/name identities, not a claimed pre-execution
+listing, determine the finite selection. The two expected Nextest library IDs are
+codex-app-server and codex-app-server-client. Cases are listed in source-manifest.
+
+Baseline: identical final fixture bodies and original helper expressions. The
+no-argument helper has the disclosed tuple/owner return adaptation needed by the
+identical caller/test API, while its original ambient ConfigBuilder expression is
+retained. This is an instrumented original-helper baseline, not pristine upstream.
+All FOUR cases must fail at their exact owner assertion site with the frozen text:
+three temporary-workspace owner messages, and the lock-pinned pretty_assertions
+message "assertion failed: `(left == right)`" in the no-argument helper test.
+Compilation, setup, different assertions, missing tests or config errors are not red.
+Candidate: all FOUR must pass with the same test bodies and retained-owner roots.
+
+Both library identities, ordinal pre-Summary execution records and JUnit statuses
+must agree exactly, each selected case once. Exclusions are keyed by binary/name
+and counted separately; the same excluded name in two libraries is allowed.
+Selected skips, in-body skip markers, retries, timeout/leak/cancel diagnostics,
+missing output captures or duplicate executions hold qualification. Repeated final
+failure presentation after Summary is not a new execution. Expected statuses are
+predictions until actual hosted evidence exists; pure parser tests are synthetic.
+
+Both variants require full ordinary just fmt to pass without source changes.
+Candidate additionally requires scoped cargo fmt --check and ordinary just clippy
+for both packages with --lib --tests --locked --offline -- -D warnings. Source and
+immutable wrapper/lock inputs are checked before and after tests, before outcome
+classification. Original local full formatter child0/controller1 layout hold and
+its exact reconciliation remain separate preserved preparation evidence.
+
+The unchanged ordinary wrapper owns its disposable CODEX_HOME and native-keyring
+debug guard. Inherited HOME/CODEX_HOME presence and values and all three sandbox
+markers remain intact. Task-owned Cargo/XDG/tool/target directories are fresh;
+checkout credentials do not persist and no operator credentials are imported.
+The selected bodies construct configs and manipulate temporary files, without
+starting a provider, transport, native keychain or Bubblewrap fixture. Wrapper
+helper packages still compile; its helper-build --locked propagation limitation
+is covered by unchanged Cargo.lock/source gates, not concealed.
+
+Finite inherited bounds: job120min, controller6900s, baseline command4200s,
+candidate/Clippy1800s, each full format900s, scoped format120s; each test60s,
+Nextest aggregate15min, retries0, test threads1, Cargo jobs2. These explicit
+profile bounds differ from the repository's inherited local defaults. Initial
+and first-build free reserve30GiB; target reuse/Clippy8GiB; running floor4GiB.
+Each command stream and JUnit report is at most16MiB; truncation is incomplete.
+Owned process identities and cleanup must be complete; live descendants hold.
+
+Exactly one executable per selected library prefix is identified at each stage.
+Each binary is capped at2GiB, with4GiB TOTAL distinct uploaded binary bytes across
+both stages and both libraries. This bound is not silently expanded for four
+binaries. Each in-bound binary's size and SHA are saved before any aggregate or
+copy-space hold; an oversized binary records size and an explicit uncomputed
+SHA because no read beyond the size allowance is authorized. Two physical copies
+may be needed per binary, so each stage requires projected duplicate-copy bytes
+plus4GiB free and checks again after copying. A bound hit preserves metadata and
+holds qualification. No capacity fit is assumed. Successful evidence requires
+source/retained/artifact hashes of all four stage/library binaries to agree.
+
+Only normalized command streams and complete scripted sessions, XML-safe JUnit,
+source/lock/tool hashes, outcomes, cleanup and bounded binary metadata are public
+evidence. Deterministic disposable-path substitutions preserve original/public
+hashes and all lines. Binaries are a separate bounded artifact, never full targets.
+Local preparation, reviews, tests and operator paths are not publication payload.
+No hosted/product execution, admission, publication or API mutation is authorized
+by this prepared package; the root coordinator owns those decisions.
