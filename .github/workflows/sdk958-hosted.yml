@@ -1,0 +1,69 @@
+name: SDK958 exact native zero-retry qualification
+on:
+  push:
+    branches: [codex/sdk958-hosted-recovery-20261020]
+permissions:
+  contents: read
+concurrency:
+  group: sdk958-hosted-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  qualify:
+    if: github.repository == 'citadelculture/CorbanuTerminal' && github.run_attempt == 1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 250
+    steps:
+      - name: Reserve native build capacity
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I -B - <<'PY'
+          import json, pathlib, shutil, sys
+          output = pathlib.Path("initial-resource-evidence")
+          output.mkdir()
+          free = shutil.disk_usage(".").free
+          passed = free >= 30 * 1024 ** 3
+          (output / "resource-preflight.json").write_text(json.dumps({
+              "freeBytes": free, "floorBytes": 30 * 1024 ** 3,
+              "passed": passed, "testBodiesExecuted": 0}, indent=2) + "\n")
+          print("RESOURCE_PREFLIGHT_PASSED" if passed else "RESOURCE_HOLD_NO_TESTS")
+          sys.exit(0 if passed else 1)
+          PY
+      - name: Checkout frozen reviewed control package
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: ${{ github.sha }}
+          path: control
+          fetch-depth: 1
+          persist-credentials: false
+          submodules: false
+          lfs: false
+      - name: One bounded ordinary Jest campaign
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I -B control/controller.py --dispatch \
+            --control "$GITHUB_WORKSPACE/control" \
+            --output "$GITHUB_WORKSPACE/public-evidence" \
+            --binaries "$GITHUB_WORKSPACE/qualification-binaries"
+      - name: Preserve bounded normalized evidence
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: sdk958-zero-retry-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            initial-resource-evidence/
+            public-evidence/
+          if-no-files-found: warn
+          include-hidden-files: false
+          retention-days: 14
+      - name: Retain exact bounded qualification binaries
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: sdk958-binaries-${{ github.run_id }}-${{ github.run_attempt }}
+          path: qualification-binaries/
+          if-no-files-found: warn
+          include-hidden-files: false
+          compression-level: 6
+          retention-days: 14

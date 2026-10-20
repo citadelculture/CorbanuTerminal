@@ -1,0 +1,75 @@
+--- a/sdk/typescript/tests/run.test.ts
++++ b/sdk/typescript/tests/run.test.ts
+@@ -10,9 +10,7 @@
+   responseCompleted,
+   responseStarted,
+   sse,
+-  responseFailed,
+   startResponsesTestProxy,
+-  SseResponseBody,
+ } from "./responsesProxy";
+ import { createMockClient, createTestClient } from "./testCodex";
+ 
+@@ -753,26 +751,21 @@
+     }
+   });
+   it("throws ThreadRunError on turn failures", async () => {
+-    const { url, close } = await startResponsesTestProxy({
+-      statusCode: 200,
+-      responseBodies: (function* (): Generator<SseResponseBody> {
+-        yield sse(responseStarted("response_1"));
+-        // 7 = the client's default 5 retries (DEFAULT_STREAM_MAX_RETRIES) plus extra.
+-        for (let i = 0; i < 7; i += 1) {
+-          yield sse(responseFailed("rate limit exceeded"));
+-        }
+-      })(),
+-    });
+-    const { client, cleanup } = createMockClient(url);
++    const { url, close, requests } = await startResponsesTestProxy({
++      statusCode: 200,
++      responseBodies: [sse(responseStarted("response_1"))],
++    });
++    const { client, cleanup } = createMockClient(url, { streamMaxRetries: 0 });
+ 
+     try {
+       const thread = client.startThread();
+       await expect(thread.run("fail")).rejects.toThrow("stream disconnected before completion:");
+-    } finally {
+-      cleanup();
+-      await close();
+-    }
+-  }, 10000); // TODO(pakrym): remove timeout
++      expect(requests).toHaveLength(1);
++    } finally {
++      cleanup();
++      await close();
++    }
++  });
+ });
+ 
+ /**
+--- a/sdk/typescript/tests/testCodex.ts
++++ b/sdk/typescript/tests/testCodex.ts
+@@ -20,7 +20,11 @@
+   client: Codex;
+ };
+ 
+-export function createMockClient(url: string): TestClient {
++type MockClientOptions = {
++  streamMaxRetries?: number;
++};
++
++export function createMockClient(url: string, options: MockClientOptions = {}): TestClient {
+   return createTestClient({
+     config: {
+       model_provider: "mock",
+@@ -30,6 +34,9 @@
+           base_url: url,
+           wire_api: "responses",
+           supports_websockets: false,
++          ...(options.streamMaxRetries === undefined
++            ? {}
++            : { stream_max_retries: options.streamMaxRetries }),
+         },
+       },
+     },

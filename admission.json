@@ -1,0 +1,15 @@
+{
+  "schema": "sdk958-hosted-admission-v1",
+  "approved": true,
+  "reviewer": null,
+  "files": {
+    "controller.py": "8bcd9580fba9b6510c356374cb07aa6fc3837263b5be00ac0fce9715cd43b800",
+    "owned_process.py": "e47f8e3400d4abb166e3da13e029aaaa4f7c69a85945184af062b75a422f5a3f",
+    "source-manifest.json": "6ee05c2870b58789597b3044f0ff5e4897d2cae9acc7004b7b3dfa02b8efb38e",
+    "tools-pins.json": "93ef9fc3d11f2d095ebe910247c5bdd4641acf437c4d3af3af8ea00fa7a71317",
+    "sdk958-hosted.yml": "6ff83d37fbf18414bbfce6294a819d96eade1c5a8f3076521652cdfd915dfe29",
+    "test_controller.py": "d6b57a602495ce7065702abe0f9fc8b8d59cb4743c599bd9f300434c6fdf576d"
+  },
+  "reason": "Prepared only. Root coordinates independent method review and normal publication/execution approval. Native host incident and override denial remain binding.",
+  "independentReviewSha256": "78fb6c531fde47065b9e78acdfe93d585bb971f77a98b7f496d33fc3433e47eb"
+}

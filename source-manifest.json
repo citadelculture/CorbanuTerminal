@@ -1,0 +1,71 @@
+{
+  "schema": "sdk958-hosted-source-v1",
+  "taskId": "task_eff3fbf2dc866231339b38d540e376e5",
+  "nativePins": {
+    "base": "78dd811d6e3718140c938ad4839968d9995fd5ac",
+    "head": "9f404feeb0f63347209ec5d97a277d86101921be"
+  },
+  "sdkSourcePin": "9f404feeb0f63347209ec5d97a277d86101921be",
+  "nativeRustTree": "914d20b44d7f06abb02c640c257232150a27c81e",
+  "sourceInputs": {
+    "AGENTS.md": "fd296fe6adebcebf9d9b70a9c2634e684bb72915196e0f4ebf9b1994924e1d0b",
+    "codex-rs/AGENTS.md": "8770b8bde8ddaf5f404090afb3f2251aca06bca5cfc5707ec42ae3a7490ce47a",
+    "docs/development/test-isolation.md": "1a5c54c42d74e08c2a98ea6fc8217e05e15c43b2f6b40f679c6388090514cfd0",
+    "justfile": "ce2e815f90284ebc8c8812c9f94b63e78d9a3db5271c3416979d46499cdbb512",
+    "scripts/isolated_rust_tests.py": "2376d36fae0943cbbf4a0caf58109b0dece03cb226983d1276216adc90d2447c",
+    "scripts/format.py": "d930139145ba3e80a188c1b5734aa7fee6bad5687e610cb58bda016216a2f37d",
+    "scripts/just-shell.py": "444d6b328d44abf6453b77b6acce2a0c881fc162ff30b20f352c85067797fbe9",
+    "codex-rs/rust-toolchain.toml": "570656042681cfd8795403a455baf9a33035331a07db0645e866bbcea89a3d64",
+    "codex-rs/Cargo.toml": "24c73d8f872aa27c08ff1b080b57f70e05147566bdf79b80aace7e4998544752",
+    "codex-rs/Cargo.lock": "3c62ca2fdc1d9fcc4b234dcf3ee6d0fd824faaa2e06aca8022ff418e1e051d9c",
+    "codex-rs/cli/Cargo.toml": "356471a9ac8c1af5489631d3f80d9e086f4ca308998ab4eff89822cee6213106",
+    "codex-rs/code-mode-host/Cargo.toml": "adb8942a61a85b8ad1de535c551bb984c6e27ea9b6a30d4999b312516ab9deb3",
+    "package.json": "f1acde1b951a8d3a3d1a8bbf23e0252f38f80734b59ac241e69647d5acd31483",
+    "pnpm-lock.yaml": "316f340e80f0fcc1bfae0caebb92739389ac31c08a8296a96e81cd7ad0bf714d",
+    "pnpm-workspace.yaml": "261755c323328f05cbbabd51f524e3207f1e6762a10d21156bfb9829b0865322",
+    ".npmrc": "966e472185f648dcaf0fd13867fdfdc417d40fcb0ba1de99a2a55c5a95b5c815",
+    "sdk/typescript/package.json": "a975441007acc8d413cf5f1030f52d419f10acc3ee255e0c92f1ef4293aa38f6",
+    "sdk/typescript/jest.config.cjs": "c5babef9cbbbf1e3ada6fec43c56415fee9f3e6562fc8db9103f3afba52e4b0c",
+    "sdk/typescript/tsconfig.json": "7ea91a28506f38955ac6e1fbcdd6a324d1d6e357b945b10d8e5943efefc883d0",
+    "sdk/typescript/tests/setupCodexHome.ts": "7212a09dd1169661746eb9c5f7d90271beb336134648c268804a256e241e1e44",
+    "sdk/typescript/tests/codexExecSpy.ts": "ded178b232db5673eae501b9993dbf8570527a39dcca8222ecea1fe66bc0d5a2",
+    "sdk/typescript/tests/responsesProxy.ts": "6e0908916f8367fc264fd18bb7f34817c0a8608c7e5697e6e6df7e94dc5e26c9",
+    "sdk/typescript/src/exec.ts": "237cf8ed00e542bfbcfa483a35516e90ac33649126408dd4a8de6004153e6170",
+    "sdk/typescript/src/codex.ts": "cfbd308e3b47809f434faa5837275593e093d5c0743ffc58a84a9b70b241c9e2",
+    "sdk/typescript/src/thread.ts": "92ffb5da32465d6afb0c9ed5e55a0bf20a2f3a5e01cc6d438f653acbc9ce2f91"
+  },
+  "patch": {
+    "path": "payload/change.patch",
+    "sha256": "82a7132ee436e9d77cf1acb90e6e03153f009f08aa71a87be9d597134c9a9f64"
+  },
+  "files": [
+    {
+      "path": "sdk/typescript/tests/run.test.ts",
+      "originalSha256": "cedf577258713c1dcff9cb73bb241f992d41b7be360435dedf9d0d45c241b67c",
+      "candidateSha256": "8c5d599c8ecbf8fff98a0be4e3165b8a516d7e260a4f0e795de0005266f76372",
+      "payload": "payload/run.test.ts"
+    },
+    {
+      "path": "sdk/typescript/tests/testCodex.ts",
+      "originalSha256": "d93fee678eca5af22dbcf3cbfbd4ab42865ced87bb1eb917ced3ae07f88878e4",
+      "candidateSha256": "cce9798b8aa04f209797d7929273b4612ecb86f6c16abe2d40030653d972920d",
+      "payload": "payload/testCodex.ts"
+    }
+  ],
+  "targetTest": "Codex throws ThreadRunError on turn failures",
+  "timeoutMilliseconds": 5000,
+  "runsPerPin": 3,
+  "fixtureAssertions": [
+    "one finite responseStarted SSE body",
+    "mock stream_max_retries = 0",
+    "actual thread.run rejects with stream disconnected before completion:",
+    "actual recorded proxy requests length is 1"
+  ],
+  "ordinaryRunner": "pnpm --dir sdk/typescript test",
+  "ordinarySetup": "sdk/typescript/tests/setupCodexHome.ts",
+  "limits": [
+    "Cold means first native process per freshly built pin; hashing/build may already warm OS caches.",
+    "Exact source title names ThreadRunError; actual SDK throws Error and is not relabeled.",
+    "Jest raw reports prove retained source assertions passed; no extra observer injects native events or rewrites product logic."
+  ]
+}

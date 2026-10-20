@@ -1,0 +1,89 @@
+SDK958 hosted recovery — prepared, not executed
+
+Accepted task: task_eff3fbf2dc866231339b38d540e376e5.
+The exact existing two-file patch is retained unchanged. Current main
+978281cd8af72eb99296f5c5a8f01e3f53841b3c and the merged PR958 final head retain the
+old seven-retry fixture and explicit 10-second timeout. That merge does not
+fulfil the zero-retry, one-request, ordinary-timeout qualification outcome.
+The separate timeout-removal work mentioned in PR958 remains unlinked; bounded
+public search is not proof of exclusive contribution ownership.
+
+Method
+Run once on fresh GitHub-hosted Ubuntu24.04 x86_64, nonroot, exact branch
+codex/sdk958-hosted-recovery-20261020, first run attempt only. The workflow has
+read-only contents permission, no secrets, no cache restoration, and a control
+checkout with persist-credentials:false. Source acquisition is anonymous HTTPS
+Git in the controller's explicit credential-free child environment.
+
+The source-independent supervisor carries bounded output/time/disk handling,
+a Linux process-local child subreaper, PID+birth-identity cleanup, and a
+synthetic orphan-reaping control. It contains no copied product result oracle.
+Inherited HOME and CODEX_HOME identity is preserved. Either inherited CODEX
+security marker, including an empty string, holds before dispatch; no marker is
+removed or replaced. Credential variables and higher-priority profile aliases
+are absent from the allowlisted child environment. No operator profile, macOS
+credential service, host VM, browser, signing or transfer primitive is used.
+This method relies on the disposable hosted machine and reviewed source;
+it does not claim an additional per-process network/filesystem sandbox.
+
+Acquire checksum-pinned public Rust1.95, Node24.21, pnpm10.33, Just1.58,
+DotSlash0.5.9, uv0.11.3 and V8 artifacts. Pin original package/workspace/lock/
+wrapper bytes. Install the original SDK dependency graph with frozen lock,
+ignore-scripts and ignore-pnpmfile. No package-manager automatic version switch.
+
+Independently checkout native base78dd811d6e3718140c938ad4839968d9995fd5ac
+and native head9f404feeb0f63347209ec5d97a277d86101921be. Verify both commit IDs
+and identical original Rust tree914d20b44d7f06abb02c640c257232150a27c81e.
+Apply only the reviewed two test files to the SDK at9f404fe. Run touched TS
+Prettier check and actual full just fmt on each source. Any formatter delta is
+retained and stops; the controller does not silently bless a changed baseline.
+
+Fetch Cargo dependencies with original lock, then build each CLI and same-pin
+codex-code-mode-host offline in a fresh independent dev-small target with debug
+assertions forced on. Record retained ELF binary hashes before any native
+execution. Each source-pin build has a 30 GiB starting floor and a running
+4 GiB stop floor. Preserve exact binaries and source/log evidence; after that
+pin's three completed tests, remove only its fresh inactive owned build target.
+
+The ordinary SDK runner is package.json's pnpm test -> Jest, not just test
+(which is the Rust-only nextest wrapper). Keep jest.config.cjs and the actual
+setupCodexHome.ts hooks unchanged. The hooks create and delete test CODEX_HOME.
+Run exactly the anchored target in tests/run.test.ts with runInBand, JSON
+reporting and owned Jest cache. Do not add --testTimeout, forceExit, retry,
+NODE_OPTIONS, a callback replay, event generator or native-event observer.
+
+For each exact binary pin, execute first-process, warm-1, warm-2 sequentially;
+abort successors at the first failure or incomplete cleanup. Successful
+qualification requires six actual passing selected cases, no selected skip,
+no unexpected executed case, exactly one invocation and observed per-test
+milliseconds below5000. Passing the pinned actual target asserts both the real
+SDK rejection substring and one recorded proxy request. Complete ordinary Jest
+transcripts and bounded JSON reports, including failed reports, are retained.
+
+Bounds: controller14400 seconds, workflow250 minutes, source fetch900 seconds,
+package install900 seconds, full format900 seconds per pin, native build4200
+seconds per pin, each Jest command90 seconds (the actual test still5000 ms),
+16 MiB each command output stream, 8 MiB each Jest JSON, 512 MiB each retained
+binary, 2 GiB each expanded public archive. Every successor depends on prior
+exit/source/hash/owned-child checks. No automatic reruns.
+
+Limits
+First-process/cold means the first native process for the freshly built binary;
+building and hashing may already have warmed OS caches. This is not a cold
+machine/cache benchmark. The existing test title says ThreadRunError but the
+pinned SDK throws ordinary Error; do not relabel the constructor. Jest reports
+plus pinned retained assertions prove the expected error and one-request
+assertions; they do not expose a separately instrumented raw request counter.
+No full SDK suite, macOS/keychain qualification, original incident resolution,
+exclusive ownership, public contribution, Tasknode delivery or reward is claimed.
+
+Current state and next executable action
+Local source/manifest/pure-control preparation is complete. Seven pure tests
+pass, with no product test body or native process execution. admission.json is
+false. Have the independent reviewer inspect the frozen hashes and method.
+After CLEAR and normal publication approval, root may set admission approved
+with the same reviewed hash values, place this package at branch root, place
+sdk958-hosted.yml at .github/workflows/sdk958-hosted.yml, and push exactly that
+reviewed branch once. That push launches the bounded method. Any source or
+controller correction changes hashes and requires refreshed review/admission.
+Native host overrides and the unresolved old native incident remain held.
