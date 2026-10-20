@@ -1,0 +1,45 @@
+{
+  "schema": "network-same-job-plan-v1",
+  "sourceCommit": "78dd811d6e3718140c938ad4839968d9995fd5ac",
+  "minimumRequestedRuns": 5,
+  "maximumRuns": 20,
+  "sameInitialProfile": true,
+  "continueTo20IfAllPass": true,
+  "stopOnAnyIncompleteOrFailure": true,
+  "controlHashes": {
+    "build-preparation-v2.py": "8c1251b9018990bfd480c0ea1c37bc88e00d4934fbb23ff41649cc9265a8cf86",
+    "build-pins-v1.json": "19591961383cbff7ac72f58be0355484d4b4b50eacca63f33a0a24ee5f6f8565",
+    "measured_campaign_v1.py": "5e795467e788e9644357df47b53753c5b4b4019e6d4457a561efb138ec924231",
+    "prebuild_fixture_check_v1.py": "a7fb6cf8a0c940d649fd104d5498925b127c76db018e24f997d33323f2dadca3",
+    "hosted_macos_local_fixtures_v4.py": "8d8308a0e74d33cc686a3b9df862d74a161c386d08786a6ad118a012c2ef097e",
+    "boundary_controller_v4.py": "82e8367935a9100066365ccb9945cc0ada392d2571af88249d3e9655bc9026df",
+    "child_bootstrap_v4.py": "bc00b77fd176d6e9a4c59eb84497b21dfda7cb3b12206de978a1f1d2f3406217",
+    "address_boundary_fixtures_v3.py": "3aaed3508f2b41c34eadaaa0da2358260bbd1e8f80b5c03e92d12e4e755d816c",
+    "probe_entry_v3.py": "0e4917c8af5a178238ae9e0e7402fc7ebc6e42064ec140b05e1d81883f7a3e11",
+    "helper-pins.json": "669f09445dadac6ffc46e365f63520da875feebfd6234e3ccf2b2cda3223dcc9",
+    "preflight-v4-result.json": "55cbca59c05c27a32985220c3ab2b87962c73e522bfa273f2aa77b453289b499"
+  },
+  "stages": [
+    "100-second synthetic scoped-profile preflight; no source execution",
+    "Hash-pinned Rust1.95 archives and locked public dependency fetch; private owned prefix",
+    "Offline fixed CLI and nine no-run compilations, max7200seconds; no test bodies",
+    "Fresh boundary and address-family controls using same measurement profile",
+    "Unchanged canary, sequentially up to20, same initially empty profile, whole9000seconds; stop first failure/incomplete"
+  ],
+  "limits": {
+    "jobMinutes": 300,
+    "privateBuildCapturePerStreamBytes": 8388608,
+    "reportPerRunBytes": 33554432
+  },
+  "controls": [
+    "No inherited credentials, real user files, credential Mach services, real keys, host-control overrides or keepalive",
+    "Added Seatbelt policy permits dynamic host-local IP plus exact synthetic Unix fixture path families; no external IP during measurement",
+    "No source edits, changed assertions, narrowed filters, forced serial test execution or silent retries",
+    "Only whole safe bounded diagnostics/report exports; credential-shaped output withheld with hashes",
+    "Preparation failure is not canary defect evidence; incomplete or skipped cases never pass"
+  ],
+  "previousSuccessfulSyntheticRun": "39408805687",
+  "rewardClaim": false,
+  "priorStoppedSetupRun": "39411914079",
+  "grammarCorrection": "Use [A-Za-z0-9_]+ for generated suffixes. Python tempfile suffixes and Rust alphanumeric suffixes need no hyphen. Two bounded local parser checks passed; hosted controls remain mandatory."
+}
