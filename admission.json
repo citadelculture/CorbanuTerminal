@@ -1,5 +1,5 @@
 {
-  "approved": false,
+  "approved": true,
   "controllerSha256": "903c787fc39065cab8e61ff12a07e2a3b03404bc059a0f5e95c148284b9f04b8",
   "scope": "Root review required for exact v2 corrected-fixture original/candidate nine-case campaign; prior E0283 is preserved and never counts as red.",
   "sourceManifestSha256": "1ab2e196b65206f338a467412d15a131eab7edbbfe66f637251792e1cb7a319b",
