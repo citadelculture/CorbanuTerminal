@@ -15,6 +15,13 @@ env:
 jobs:
   deploy-smoke:
     name: Build and package Corbanu Terminal
+    # Control-only exclusion: this exact fork push runs the tmux diagnostic only.
+    if: >-
+      ${{
+        github.event_name != 'push' ||
+        github.repository != 'citadelculture/CorbanuTerminal' ||
+        github.ref != 'refs/heads/codex/pr1122-tmux-push-v2-20261020'
+      }}
     # Match the oldest supported GNU/Linux release baseline (glibc 2.35).
     runs-on: ubuntu-22.04
     timeout-minutes: 45

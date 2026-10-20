@@ -3,7 +3,7 @@ name: tmux smoke
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, codex/pr1122-tmux-push-v2-20261020]
   workflow_dispatch:
 
 permissions:
@@ -16,6 +16,14 @@ concurrency:
 jobs:
   tmux-smoke:
     name: Ubuntu tmux smoke
+    # Control-only fork diagnostic route; omit this guard from the upstream patch.
+    if: >-
+      ${{
+        github.ref != 'refs/heads/codex/pr1122-tmux-push-v2-20261020' ||
+        (github.event_name == 'push' &&
+         github.repository == 'citadelculture/CorbanuTerminal' &&
+         github.run_attempt == 1)
+      }}
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     defaults:
