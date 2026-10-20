@@ -1,0 +1,128 @@
+{
+  "schema": "issue1120-hosted-source-v1",
+  "baseCommit": "c9dbae23b3d3f9753fc27a993479040b6b2735cd",
+  "files": [
+    {
+      "path": "codex-rs/core/tests/suite/resume_warning.rs",
+      "originalSha256": "201339a7cd3ffc6327f3b6376ecea8565b4132f86fb4549a79516a71b7b6cdc4",
+      "candidateSha256": "0d039121b29cffc8c48157e6ba6ffe6c23a2d3b9fa878378986e99c1d23ef2bc",
+      "payload": "payload/resume_warning.rs",
+      "negativeSha256": "0d039121b29cffc8c48157e6ba6ffe6c23a2d3b9fa878378986e99c1d23ef2bc"
+    },
+    {
+      "path": "codex-rs/core/tests/suite/client.rs",
+      "originalSha256": "5a17ba84e802083c48447fce020a2e1fc07e97f871631b088daae1c0913f23f7",
+      "candidateSha256": "aa3f9b923e6459c221851dc889bb2de97bf7af815ea3154615ee04ce04bec122",
+      "payload": "payload/client.rs",
+      "negativeSha256": "aa3f9b923e6459c221851dc889bb2de97bf7af815ea3154615ee04ce04bec122"
+    },
+    {
+      "path": "codex-rs/core/tests/suite/client_websockets.rs",
+      "originalSha256": "418da73236ee15ef201f53b504b93b83e8550b3305ca0db3154fda6b470d9418",
+      "candidateSha256": "6bf4d894e0e65b019c279dd9f7ea2b9b57f9953587e1ecbbb9f2b9f6677ba59f",
+      "payload": "payload/client_websockets.rs",
+      "negativeSha256": "6bf4d894e0e65b019c279dd9f7ea2b9b57f9953587e1ecbbb9f2b9f6677ba59f"
+    },
+    {
+      "path": "codex-rs/core/tests/suite/personality.rs",
+      "originalSha256": "a267414d040524b9a20628fe1ab58a782b431ddf727769211e317a29222c3af4",
+      "candidateSha256": "d9d33b59c46de83413a5052e7f348437bb8f4de128f7d7556fcb42ebf9e05293",
+      "payload": "payload/personality.rs",
+      "negativeSha256": "e440b7c80b626fca5f9e54cc74c8158a9dd430b7274dd0d1798a854fa09f60f9",
+      "negativePayload": "payload/personality.negative.rs"
+    },
+    {
+      "path": "codex-rs/core/tests/suite/remote_models.rs",
+      "originalSha256": "0df0343a4980f434bf71a48e952ef555155814e023798379882b091296783249",
+      "candidateSha256": "496616ff64e28552a89d532ba70e556f06acf6e8421d8cf4c44c08b15e968315",
+      "payload": "payload/remote_models.rs",
+      "negativeSha256": "496616ff64e28552a89d532ba70e556f06acf6e8421d8cf4c44c08b15e968315"
+    },
+    {
+      "path": "codex-rs/core/tests/suite/agents_md.rs",
+      "originalSha256": "210348c4bedc44a84e5b1a22b8783790259c637c0203ab598d9adef3fe762cfe",
+      "candidateSha256": "de00a28d791d8af3f5f738520752f9cec99e745cfbc354b0cbc9d09ae64f5c0d",
+      "payload": "payload/agents_md.rs",
+      "negativeSha256": "de00a28d791d8af3f5f738520752f9cec99e745cfbc354b0cbc9d09ae64f5c0d"
+    },
+    {
+      "path": "codex-rs/core/tests/suite/unstable_features_warning.rs",
+      "originalSha256": "a3667cb7b3f167c77f73b811b2c61c9085b197bf3e81f8339a6b2d2091cbf07a",
+      "candidateSha256": "786e6fce3291d3a392a744f158c78662df7b0e97c7e59b84d64a1b9b47df37b0",
+      "payload": "payload/unstable_features_warning.rs",
+      "negativeSha256": "786e6fce3291d3a392a744f158c78662df7b0e97c7e59b84d64a1b9b47df37b0"
+    },
+    {
+      "path": "codex-rs/core/tests/responses_headers.rs",
+      "originalSha256": "1640bff66b566de1db43fbab5f427886a4d09f9b5f9ddeeee144d1b5980ddf30",
+      "candidateSha256": "6d197e941291bc96b555808e2d8576b8cb6dec7b89a7f6493c5c5c6050c87376",
+      "payload": "payload/responses_headers.rs",
+      "negativeSha256": "6d197e941291bc96b555808e2d8576b8cb6dec7b89a7f6493c5c5c6050c87376"
+    }
+  ],
+  "patch": {
+    "path": "payload/change.patch",
+    "sha256": "08931ac2db7c9e28686eb60a80a2a0f5166135ffa672abf949803d5ed96b94b7"
+  },
+  "negativePatch": {
+    "path": "payload/negative-control.patch",
+    "sha256": "cbe1581b82952f5ec16e5aa7ee6058d6219b18d2ccb872b6e2e1b063b345fb8d"
+  },
+  "selectedCases": [
+    "suite::resume_warning::emits_warning_when_resumed_model_differs",
+    "suite::personality::personality_does_not_mutate_base_instructions_without_template",
+    "suite::personality::base_instructions_override_disables_personality_template",
+    "suite::personality::instructions_uses_base_if_feature_disabled",
+    "suite::remote_models::remote_models_get_model_info_uses_longest_matching_prefix",
+    "suite::agents_md::fork_injects_changed_agents_md_once",
+    "suite::unstable_features_warning::emits_warning_when_unstable_features_enabled_via_config",
+    "suite::unstable_features_warning::suppresses_warning_when_configured",
+    "suite::client::prefers_apikey_when_config_prefers_apikey_even_with_chatgpt_tokens",
+    "suite::client::azure_responses_request_includes_store_and_prefixed_item_ids",
+    "suite::client::provider_auth_command_supplies_bearer_token",
+    "suite::client_websockets::responses_websocket_streams_request",
+    "suite::client_websockets::responses_websocket_omits_unprefixed_item_ids_without_mutating_prompt",
+    "responses_stream_includes_subagent_header_on_review",
+    "responses_stream_includes_subagent_header_on_other",
+    "responses_respects_model_info_overrides_from_config"
+  ],
+  "caseTargets": {
+    "suite::resume_warning::emits_warning_when_resumed_model_differs": "codex-core::all",
+    "suite::personality::personality_does_not_mutate_base_instructions_without_template": "codex-core::all",
+    "suite::personality::base_instructions_override_disables_personality_template": "codex-core::all",
+    "suite::personality::instructions_uses_base_if_feature_disabled": "codex-core::all",
+    "suite::remote_models::remote_models_get_model_info_uses_longest_matching_prefix": "codex-core::all",
+    "suite::agents_md::fork_injects_changed_agents_md_once": "codex-core::all",
+    "suite::unstable_features_warning::emits_warning_when_unstable_features_enabled_via_config": "codex-core::all",
+    "suite::unstable_features_warning::suppresses_warning_when_configured": "codex-core::all",
+    "suite::client::prefers_apikey_when_config_prefers_apikey_even_with_chatgpt_tokens": "codex-core::all",
+    "suite::client::azure_responses_request_includes_store_and_prefixed_item_ids": "codex-core::all",
+    "suite::client::provider_auth_command_supplies_bearer_token": "codex-core::all",
+    "suite::client_websockets::responses_websocket_streams_request": "codex-core::all",
+    "suite::client_websockets::responses_websocket_omits_unprefixed_item_ids_without_mutating_prompt": "codex-core::all",
+    "responses_stream_includes_subagent_header_on_review": "codex-core::responses_headers",
+    "responses_stream_includes_subagent_header_on_other": "codex-core::responses_headers",
+    "responses_respects_model_info_overrides_from_config": "codex-core::responses_headers"
+  },
+  "negativeCase": "suite::personality::personality_does_not_mutate_base_instructions_without_template",
+  "redCases": [
+    {
+      "name": "suite::personality::personality_does_not_mutate_base_instructions_without_template",
+      "panicFile": "suite/personality.rs",
+      "panicLine": 99,
+      "requiredPatterns": [
+        "assertion failed:.*left == right",
+        "codex-rs/core"
+      ]
+    }
+  ],
+  "sourcePreparationSha256": "d382eef4e3e5623545996c017de5ec9295a8043af5579acccf7fc80d0edfaac4",
+  "fixtureFreezeSha256": "ed5b4a52c0ed3e3324be6aff740102159cbba2cad9003892c7fdbeec33c32727",
+  "fullFormatSha256": "b0cbc32852021d32af360ffe6482864348846f5f2d7b8fb75e89687e654a1b90",
+  "negativeControlLimitation": "One intentionally restored implicit-cwd caller with same new assertions; not an unchanged upstream baseline. No production changes.",
+  "fullPackageQualification": false,
+  "candidateContributionCommit": "fa13515160378d45e5c705c99d22c3cd805e88ce",
+  "candidateCommitPublicAvailabilityClaim": false,
+  "independentSourceReviewSha256": "b483f247ddac16936f25d3df710929bcab68f8bea3e89b93b789c1f5a01fb6d5",
+  "inventoryRefinement": "No raw pre-run list. Exact source/target/filter admission, then complete observed unique pre-Summary records and JUnit: 13 all plus 3 responses_headers, zero selected skips/retries/body-skip diagnostics."
+}

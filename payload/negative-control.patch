@@ -1,0 +1,19 @@
+--- a/codex-rs/core/tests/suite/personality.rs
++++ b/codex-rs/core/tests/suite/personality.rs
+@@ -19,6 +19,7 @@
+ use codex_protocol::protocol::Op;
+ use codex_protocol::user_input::UserInput;
+ use core_test_support::TempDirExt;
++use core_test_support::load_default_config_for_test;
+ use core_test_support::load_default_config_for_test_in;
+ use core_test_support::responses::mount_models_once;
+ use core_test_support::responses::mount_sse_once;
+@@ -94,7 +95,7 @@
+     let codex_home = TempDir::new().expect("create temp dir");
+     let cwd = TempDir::new().expect("create test workspace");
+     let mut config =
+-        load_default_config_for_test_in(&codex_home, Default::default(), cwd.path()).await;
++        load_default_config_for_test(&codex_home).await;
+     assert_eq!(config.cwd, cwd.abs());
+     assert_eq!(config.workspace_roots, vec![cwd.abs()]);
+     config

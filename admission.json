@@ -1,0 +1,10 @@
+{
+  "approved": false,
+  "controllerSha256": "9fb1db158e6692637218780632c46cf4f4805a3f339714ab47dcf91310ed345a",
+  "priorNegativeSha256": "1bd33cab2440f8eab19fb805baff8b783ea7b55398319f5e7fb47e3e51fc9f33",
+  "reason": "Inert candidate-only preparation; root review and normal approval required. No negative dispatch or whole paired qualification.",
+  "schema": "issue1120-candidate-only-admission-v2",
+  "sourceManifestSha256": "177548b97c69f0bfdfabab3bf0fbab4e3436f45584ed550e47482d96572d2c10",
+  "toolsPinsSha256": "07a3732ddc58455a6c5c9c9f942140482829db92d24a83ae71a273b1ddad188e",
+  "workflowSha256": "9fe7a1ac60ab42747fc5cb07646df0ed8af295b376b8aed76778c228ebc39257"
+}

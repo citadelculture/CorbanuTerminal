@@ -1,0 +1,87 @@
+{
+  "actualAssertion": {
+    "left": "[CHECKOUT]/codex-rs/core",
+    "purpose": "One intentionally reverted caller; not a wholesale upstream baseline.",
+    "right": "[TASK_ROOT]/tmp/corbanu-tests-xckyve47/tmp/.tmpVouVSV",
+    "site": "core/tests/suite/personality.rs:99:5"
+  },
+  "afterTestSourceCapturePresent": false,
+  "attempt": 1,
+  "baseCommit": "c9dbae23b3d3f9753fc27a993479040b6b2735cd",
+  "candidateContributionCommit": "fa13515160378d45e5c705c99d22c3cd805e88ce",
+  "controlHead": "5f4f175a7e014e6a1fdc2a7cd463d3e6aaad63c9",
+  "diagnosisHandoffSha256": "3625b19c53f6b78e5730765ce480f927d80ec3433aafe01965795fdd79c993f9",
+  "exportFilesVerified": 243,
+  "limitations": [
+    "Original hosted workflow remains failed; the intended one-caller negative assertion is separately reconciled from captured output.",
+    "Classifier failed before negative after-test source capture; no unchanged-during-negative-test claim.",
+    "Negative retained binary is metadata only; its bytes were not downloaded or independently hashed.",
+    "A future candidate run is a different hosted VM/process/cache, not a same-run paired qualification."
+  ],
+  "negativeBeforeSourceDiffSha256": "113c107b412f10b6200bfc5bd0c8dd498fdcc75feef7d3944621b849c51ebb2f",
+  "negativeBinary": {
+    "binaryBytesDownloadedOrVerified": false,
+    "limitation": "Retained binary identity is metadata only in this evidence artifact.",
+    "reported": {
+      "codex-core::all": {
+        "artifactFile": "2983306fcfd341bf60c50bf9182451d60a3f7f4fca2dafe2e515d4a439c1dc6f.bin",
+        "artifactSha256": "2983306fcfd341bf60c50bf9182451d60a3f7f4fca2dafe2e515d4a439c1dc6f",
+        "bytes": 528056184,
+        "name": "all-b96975b8c8ab1568",
+        "retainedSha256": "2983306fcfd341bf60c50bf9182451d60a3f7f4fca2dafe2e515d4a439c1dc6f",
+        "sha256": "2983306fcfd341bf60c50bf9182451d60a3f7f4fca2dafe2e515d4a439c1dc6f"
+      }
+    }
+  },
+  "negativeControlIsUpstreamBaseline": false,
+  "observed": {
+    "binaryCounts": {
+      "codex-core::all": 1
+    },
+    "cases": {
+      "suite::personality::personality_does_not_mutate_base_instructions_without_template": {
+        "binaryId": "codex-core::all",
+        "seconds": 0.027,
+        "status": "EXPECTED_ASSERTION_FAILURE"
+      }
+    },
+    "counts": [
+      1,
+      0,
+      1
+    ],
+    "observedFilterExclusions": 1336,
+    "retries": 0,
+    "selectedSkips": 0,
+    "uniquePreSummaryRecords": {
+      "suite::personality::personality_does_not_mutate_base_instructions_without_template": "FAIL"
+    }
+  },
+  "officialArtifactId": 12287758875,
+  "officialConclusion": "failure",
+  "officialEvidenceZipSha256": "245ab00fdb54e1c54d4575822ef125887626cc77cdba97f65f33e829cf7b1d24",
+  "officialRunUrl": "https://github.com/citadelculture/CorbanuTerminal/actions/runs/39470597035",
+  "offlineReconciliationSha256": "64d9faeb28eccb5eadef01086e068d0cd471d8ec189bebb320e693c6dbb34e3e",
+  "originalControllerResultSha256": "55175fc5a0441075d1b7a7a00802719c891fefc3f00f2e53c4073f71ff0ee9ee",
+  "originalControllerSha256": "e61312c37bec95cefc3503576573614265e7511a498ade2eab36d8be16cdc96f",
+  "originalLocalAcquisitionFailure": "command_stage_identity",
+  "originalQualified": false,
+  "originalRuntimeFailure": "execution_record_mismatch",
+  "productRerun": false,
+  "rawJunitSha256": "ffc794c93351c1bce074c8a09e291f547c0a21aa726662abc456bb1a7f263e63",
+  "rawStreamsVerified": 144,
+  "runId": 39470597035,
+  "runnerIdentity": {
+    "ImageOS": "ubuntu24",
+    "ImageVersion": "20261012.334.1",
+    "RUNNER_ARCH": "X64",
+    "RUNNER_ENVIRONMENT": "github-hosted",
+    "RUNNER_NAME": "GitHub Actions 1000000383",
+    "RUNNER_OS": "Linux"
+  },
+  "schema": "issue1120-external-negative-evidence-v2",
+  "sourceManifestSha256": "177548b97c69f0bfdfabab3bf0fbab4e3436f45584ed550e47482d96572d2c10",
+  "sourceUnchangedDuringNegativeTestClaimed": false,
+  "toolsPinsSha256": "07a3732ddc58455a6c5c9c9f942140482829db92d24a83ae71a273b1ddad188e",
+  "wrapperExitCode": 100
+}

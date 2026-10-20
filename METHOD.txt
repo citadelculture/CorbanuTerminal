@@ -1,0 +1,75 @@
+Issue1120 candidate-only continuation, version 2
+
+Inert preparation. Admission is false. This package has not executed any product
+test. Root owns review, normal approval, publication and the first hosted attempt.
+
+Source
+The workflow checks out public base c9dbae23b3d3f9753fc27a993479040b6b2735cd and
+applies the same eight-file frozen test patch. Candidate bytes correspond to local
+DCO commit fa13515160378d45e5c705c99d22c3cd805e88ce; public availability of that
+candidate commit is not required or claimed. The source manifest, all payloads,
+tool archives and source-input hashes are unchanged from the first attempt.
+Negative payload files remain immutable provenance only and are never applied.
+
+Prior negative evidence
+Run39470597035 attempt1 ended with controller failure execution_record_mismatch.
+Its single intentionally reverted caller executed and failed the intended cwd
+assertion at core/tests/suite/personality.rs:99. The ordinary wrapper exited100;
+JUnit and output show one test, zero passed, one failed,1336 filter exclusions,
+zero selected skips/retries. Offline reconciliation verified all243 artifact files,
+144 original/public stream pairs,48 sessions and the JUnit raw digest.
+The original run remains FAILED/INCOMPLETE. It is not an upstream baseline.
+Its parser failed before after-test source verification, so source equality during
+that negative run is unproved. The negative binary is retained metadata only;
+its bytes were not independently acquired. prior-negative-evidence.json records
+those facts, source/tool identities and the exact immutable artifact/receipt hashes.
+This new job uses a separate hosted VM/process/cache and records its runner identity.
+No same-run paired qualification or repeated negative execution is claimed.
+
+Correction and candidate qualification
+The execution-row parser accepts Nextest's optional numeric progress column,
+including "(1/16)", and the "(───)" unselected marker. It still parses only before
+the unique Summary line, rejects duplicate/wrong-target/missing selected records,
+selected skips, retries, in-body skip diagnostics, unexpected executed cases and
+JUnit/status disagreements. Post-summary presentation is not another execution.
+The separate local artifact-label parser admits only the two exact pinned
+fetch-rusty_v8_archive and fetch-rusty_v8_src_binding_path underscore labels.
+Original parser/controller files and their failure receipts remain unchanged.
+
+On a fresh standard GitHub-hosted ubuntu-24.04 runner, acquire the same hash-pinned
+public tools, run full just fmt with unchanged-source gating, locked fetch, scoped
+cargo fmt check, ordinary just clippy and ordinary just test -p codex-core --test all
+--test responses_headers. The exact equality filter selects13 all-target and3
+responses_headers cases from the unchanged manifest. There is no raw nextest
+listing claim and no full-core/suite/interactive/platform-general qualification.
+No real provider credentials are supplied.
+
+The existing ordinary wrapper, helper-build scope, isolated profile/debug-native-
+keyring guard, inherited HOME/CODEX_HOME and all inherited sandbox markers remain
+unchanged. No control override, Bubblewrap installer or namespace workaround is
+added. If inherited CODEX_SANDBOX_NETWORK_DISABLED is present, hold before tests.
+Product children receive no imported provider tokens.
+
+Bounds and evidence
+Existing approved budget:120-minute workflow;6900-second controller deadline;
+two compile jobs;one test thread;zero retries;20-minute test-global limit;
+60-second per-case termination and zero grace. Fullfmt900s, fetch900s,
+scopedfmt120s, Clippy1800s, candidate wrapper1800s including builds.
+Measure30GiB before acquisition and before the first compilation (now Clippy);
+require8GiB before candidate tests reusing that target, stop at4GiB while running.
+Targets/caches are exclusive to /tmp/issue1120-candidate-v2-<runId>.
+The original bounded owned-descendant cleanup,16MiB per-stream/XML bound and
+qualification-binary bounds are unchanged.
+
+Capture complete command streams/sessions and JUnit with public and original
+digests. Normalize only fixed task/source/workspace/home prefixes to square-bracket
+tokens; no omission is treated as complete. Capture source vectors before static
+checks, immediately before tests, and after tests BEFORE parsing the outcome.
+Capture rejected/incomplete JUnit and retain both actual test binaries with hashes.
+
+The success field is candidateQualified=true only when all candidate gates pass.
+The broad qualified field and pairedQualification remain false. Success status is
+CANDIDATE_SIXTEEN_PASSED_EXTERNAL_NEGATIVE_LIMITATIONS. Future reconciliation must
+check this schema explicitly, not reuse the previous paired-success predicate.
+Raw local operational receipts stay local; only this reviewed runtime allowlist
+and its bounded normalized artifacts are eligible for a future public workflow.
