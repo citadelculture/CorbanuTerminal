@@ -1,0 +1,93 @@
+{
+  "actions": {
+    "checkout": "de0fac2e4500dabe0009e67214ff5f5447ce83dd",
+    "uploadArtifact": "bbbca2ddaa5d8feaa63e36b76fdaad77386f024f"
+  },
+  "explicitCompilationTuning": {
+    "CARGO_BUILD_JOBS": "2",
+    "CARGO_INCREMENTAL": "0"
+  },
+  "noProfileOrSecurityFlagOverrides": true,
+  "officialRustManifestSha256": "821ff14e4c4a1cbe1e8915f35aff0a3fbbdf8d293ad48ab8f31e3b0440c581f9",
+  "preflightRequiredSchema": "network-hosted-macos-preflight-result-v4",
+  "preflightSuccessIsNotCanaryAdmission": true,
+  "priorVerifiedRustBundleSha256": "f39b0e16fc96a929f90cf3e12a112dab11c0af70db654a4465c15bdb7c3008dd",
+  "rustArchiveBytes": 111983024,
+  "rustArchives": [
+    {
+      "bytes": 8731256,
+      "component": "cargo",
+      "filename": "cargo-1.95.0-aarch64-apple-darwin.tar.xz",
+      "sha256": "6c2ffed8e1ac9cf4dc9e80f282a869a6b237a153e7c55cca039d33de29d80aaf",
+      "sourceUrl": "https://static.rust-lang.org/dist/2026-04-16/cargo-1.95.0-aarch64-apple-darwin.tar.xz",
+      "target": "aarch64-apple-darwin"
+    },
+    {
+      "bytes": 67652240,
+      "component": "rustc",
+      "filename": "rustc-1.95.0-aarch64-apple-darwin.tar.xz",
+      "sha256": "149e85a285b6eba58eb6c8bdf7deb1b93763890598e62cb635a712e3a8454f04",
+      "sourceUrl": "https://static.rust-lang.org/dist/2026-04-16/rustc-1.95.0-aarch64-apple-darwin.tar.xz",
+      "target": "aarch64-apple-darwin"
+    },
+    {
+      "bytes": 27317176,
+      "component": "rust-std",
+      "filename": "rust-std-1.95.0-aarch64-apple-darwin.tar.xz",
+      "sha256": "9b30089b0f767cb91b2190ffec55a9beeb2a21a1405d8da0f664d7e09d08e6d8",
+      "sourceUrl": "https://static.rust-lang.org/dist/2026-04-16/rust-std-1.95.0-aarch64-apple-darwin.tar.xz",
+      "target": "aarch64-apple-darwin"
+    },
+    {
+      "bytes": 2947288,
+      "component": "clippy-preview",
+      "filename": "clippy-1.95.0-aarch64-apple-darwin.tar.xz",
+      "sha256": "fd183baa023d0c4e0c5b8184226e2d4c85126adf156cb1f3a726ec593bba8d62",
+      "sourceUrl": "https://static.rust-lang.org/dist/2026-04-16/clippy-1.95.0-aarch64-apple-darwin.tar.xz",
+      "target": "aarch64-apple-darwin"
+    },
+    {
+      "bytes": 1507696,
+      "component": "rustfmt-preview",
+      "filename": "rustfmt-1.95.0-aarch64-apple-darwin.tar.xz",
+      "sha256": "c54af79adfdc790d27fc56e24407e370c80be5a89ad537eef9fbd45d3c3e28e8",
+      "sourceUrl": "https://static.rust-lang.org/dist/2026-04-16/rustfmt-1.95.0-aarch64-apple-darwin.tar.xz",
+      "target": "aarch64-apple-darwin"
+    },
+    {
+      "bytes": 3827368,
+      "component": "rust-src",
+      "filename": "rust-src-1.95.0.tar.xz",
+      "sha256": "67b09138c8db96afc4bbfc69ea771ac9a091fd777698acb43f6dfd9fb7dea363",
+      "sourceUrl": "https://static.rust-lang.org/dist/2026-04-16/rust-src-1.95.0.tar.xz",
+      "target": "*"
+    }
+  ],
+  "rustTarget": "aarch64-apple-darwin",
+  "rustVersion": "1.95.0",
+  "schema": "network-build-pins-v1",
+  "sourceCommit": "78dd811d6e3718140c938ad4839968d9995fd5ac",
+  "sourceFiles": {
+    ".github/workflows/credential-boundary-canary.yml": "bc2b39df1716d56f339531d6e8c125f031408c81346055deab2607b259a2d4d6",
+    "AGENTS.md": "fd296fe6adebcebf9d9b70a9c2634e684bb72915196e0f4ebf9b1994924e1d0b",
+    "codex-rs/.cargo/config.toml": "b8ae1cea341beb2d4a3c8fb81f97a96f4aee1fd53f769c57f140dfe949806a80",
+    "codex-rs/AGENTS.md": "8770b8bde8ddaf5f404090afb3f2251aca06bca5cfc5707ec42ae3a7490ce47a",
+    "codex-rs/Cargo.lock": "3c62ca2fdc1d9fcc4b234dcf3ee6d0fd824faaa2e06aca8022ff418e1e051d9c",
+    "codex-rs/Cargo.toml": "24c73d8f872aa27c08ff1b080b57f70e05147566bdf79b80aace7e4998544752",
+    "codex-rs/cli/Cargo.toml": "356471a9ac8c1af5489631d3f80d9e086f4ca308998ab4eff89822cee6213106",
+    "codex-rs/code-mode-host/Cargo.toml": "adb8942a61a85b8ad1de535c551bb984c6e27ea9b6a30d4999b312516ab9deb3",
+    "codex-rs/code-mode-runtime/Cargo.toml": "e94c8fb1a75df5424882ee04fe9c4eec4192835a08441e5fa5588e8e99d11458",
+    "codex-rs/code-mode/Cargo.toml": "e94b40d7541baf4fc372529d8cfa72a506e55799f42e17969b8ef314d530ccbe",
+    "codex-rs/core/Cargo.toml": "9f1dbf31a50915de436cc0c37c2ab905ce920051285f4919aae9970ab3848a9f",
+    "codex-rs/network-proxy/Cargo.toml": "f848bf6b7a329d28e4adf2289210da38c6f2c0592a642eb8eb5ad71d99f4db26",
+    "codex-rs/rust-toolchain.toml": "570656042681cfd8795403a455baf9a33035331a07db0645e866bbcea89a3d64",
+    "codex-rs/sandboxing/src/seatbelt.rs": "4ae1520c93526b168b6aa839d2dce762f4ac50ae61389294350df1f46e24274f",
+    "codex-rs/security-policy/Cargo.toml": "1ddfece301a647c7111151556d10cf7e2235288045e0d525b5618ed60f7c702c",
+    "codex-rs/tui/Cargo.toml": "f2e82674e1baf4884c4519004a9bc40c8822bba773864351e8dd333706fbd2be",
+    "codex-rs/vault/Cargo.toml": "d63d7f04cb20551c2783b983d785a438ce654253974ad584f8890bef14174569",
+    "scripts/security-credential-canary": "ddb9629ec3d6f428f19f1db73c10f544e5114f1093346cc6957bb9bdcd70bbc7",
+    "scripts/security_credential_canary.py": "dac51ad02bfbde1a4d4d70c5a4ed564cba41c64cf47b59ae5090fd398a1ea05a"
+  },
+  "sourceRepository": "CorbanuCore/CorbanuTerminal",
+  "v8ArtifactRequiredByExactSelectedGraph": false
+}
