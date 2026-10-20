@@ -23,6 +23,8 @@ jobs:
         working-directory: codex-rs
     env:
       CORBANU_TMUX_ARTIFACT_DIR: ${{ github.workspace }}/tmux-artifacts
+      # Keep bounded progress even when Nextest terminates the rehearsal.
+      CORBANU_MEMORY_REHEARSAL_PROGRESS: ${{ github.workspace }}/tmux-artifacts/memory-rehearsal
       CORBANU_TMUX_REQUIRED: "1"
       # sccache cannot cache incremental compilations.
       CARGO_INCREMENTAL: "0"

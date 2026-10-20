@@ -55,6 +55,80 @@ enum Outcome {
     TimedOut,
 }
 
+/// Write progress while a case is alive: an external timeout need not run Drop.
+/// Each fixed case has one overwritten JSON file, with no profile or log content.
+struct RehearsalProgress {
+    root: Option<std::path::PathBuf>,
+    case: Case,
+    started: Instant,
+}
+
+impl RehearsalProgress {
+    fn new(case: Case, root: Option<&Path>) -> Result<Self> {
+        let root = root.map(|root| root.join(format!("{case:?}")));
+        if let Some(root) = &root {
+            fs::create_dir_all(root)?;
+        }
+        Ok(Self {
+            root,
+            case,
+            started: Instant::now(),
+        })
+    }
+
+    fn record(&self, phase: &str) -> Result<()> {
+        if let Some(root) = &self.root {
+            write_json(
+                root,
+                "progress.json",
+                &json!({
+                    "case": format!("{:?}", self.case),
+                    "phase": phase,
+                    "elapsed_ms": self.started.elapsed().as_millis(),
+                }),
+            )?;
+        }
+        Ok(())
+    }
+}
+
+#[test]
+fn tmux_memory_rehearsal_progress_is_visible_before_cleanup() -> Result<()> {
+    let root = tempdir()?;
+    let progress = RehearsalProgress::new(Case::Cancel, Some(root.path()))?;
+    progress.record("waiting_initial_ready")?;
+    progress.record("cancel_return_pending_cleanup")?;
+    let path = root.path().join("Cancel/progress.json");
+    // Read while the recorder still exists, as an external timeout collector would.
+    let before_drop = fs::read(&path)?;
+    let value: Value = serde_json::from_slice(&before_drop)?;
+    pretty_assertions::assert_eq!(value["case"], "Cancel");
+    pretty_assertions::assert_eq!(value["phase"], "cancel_return_pending_cleanup");
+    assert!(value["elapsed_ms"].is_u64());
+    pretty_assertions::assert_eq!(value.as_object().unwrap().len(), 3);
+    pretty_assertions::assert_eq!(fs::read_dir(path.parent().unwrap())?.count(), 1);
+    drop(progress);
+    pretty_assertions::assert_eq!(fs::read(path)?, before_drop);
+    Ok(())
+}
+
+#[test]
+fn tmux_memory_rehearsal_progress_keeps_case_records_separate() -> Result<()> {
+    let root = tempdir()?;
+    let cancel = RehearsalProgress::new(Case::Cancel, Some(root.path()))?;
+    cancel.record("case_returned")?;
+    let cancel_path = root.path().join("Cancel/progress.json");
+    let cancel_bytes = fs::read(&cancel_path)?;
+    let timeout = RehearsalProgress::new(Case::Timeout, Some(root.path()))?;
+    timeout.record("waiting_initial_ready")?;
+    pretty_assertions::assert_eq!(fs::read(cancel_path)?, cancel_bytes);
+    let value: Value =
+        serde_json::from_slice(&fs::read(root.path().join("Timeout/progress.json"))?)?;
+    pretty_assertions::assert_eq!(value["case"], "Timeout");
+    pretty_assertions::assert_eq!(value["phase"], "waiting_initial_ready");
+    Ok(())
+}
+
 #[derive(Clone, Copy)]
 struct PendingExitProof {
     elapsed: Option<Duration>,
@@ -180,6 +254,7 @@ async fn human_memory_fixture() -> Result<()> {
         &root,
         Duration::from_secs(600),
         Duration::from_secs(120),
+        &RehearsalProgress::new(case, /*root*/ None)?,
     )
     .await;
     write_json(
@@ -200,6 +275,8 @@ async fn tmux_memory_human_fixture_rehearsal() -> Result<()> {
         return Ok(());
     }
     let artifacts = Artifacts::load()?;
+    let progress_root =
+        std::env::var_os("CORBANU_MEMORY_REHEARSAL_PROGRESS").map(std::path::PathBuf::from);
     for case in [
         Case::Startup,
         Case::ProviderSwitch,
@@ -208,6 +285,8 @@ async fn tmux_memory_human_fixture_rehearsal() -> Result<()> {
         Case::Timeout,
     ] {
         let root = tempdir()?;
+        let progress = RehearsalProgress::new(case, progress_root.as_deref())?;
+        progress.record("case_started")?;
         let limit = if case == Case::Timeout {
             Duration::from_millis(500)
         } else {
@@ -220,8 +299,10 @@ async fn tmux_memory_human_fixture_rehearsal() -> Result<()> {
             root.path(),
             limit,
             Duration::from_secs(30),
+            &progress,
         )
         .await;
+        progress.record("case_returned")?;
         save_rehearsal_artifacts(root.path(), case)?;
         let result = result?;
         let expected = match case {
@@ -239,6 +320,7 @@ async fn tmux_memory_human_fixture_rehearsal() -> Result<()> {
             !Path::new(ready["socket_dir"].as_str().unwrap()).exists(),
             "private TMUX leaked"
         );
+        progress.record("case_assertions_passed")?;
     }
     Ok(())
 }
@@ -250,10 +332,12 @@ async fn run_case(
     root: &Path,
     limit: Duration,
     delay: Duration,
+    progress: &RehearsalProgress,
 ) -> Result<Outcome> {
     let home = tempdir()?;
     let repo = codex_utils_cargo_bin::repo_root()?;
     let binary = &artifacts.binary;
+    progress.record("starting_fake_providers")?;
     let a = fake_provider("A", case, delay).await;
     let b = fake_provider("B", case, delay).await;
     let models = serde_json::to_value(codex_models_manager::bundled_models_response()?)?;
@@ -339,6 +423,7 @@ animations = false
         home.path().join("auth.json"),
         r#"{"OPENAI_API_KEY":"synthetic-memory-test","tokens":null,"last_refresh":null}"#,
     )?;
+    progress.record("preparing_state")?;
     let db = codex_state::StateRuntime::init(
         codex_state::SqliteConfig::new_for_testing(
             codex_utils_absolute_path::AbsolutePathBuf::try_from(home.path())?,
@@ -372,6 +457,7 @@ animations = false
     metadata.first_user_message = Some(CANARY.into());
     db.upsert_thread(&metadata).await?;
     db.set_thread_memory_mode(source, "enabled").await?;
+    progress.record("starting_tmux")?;
     let tmux = TmuxServer::start("memory-human")?;
     let spec = |name| {
         SessionSpec::new(
@@ -395,7 +481,9 @@ animations = false
         )
         .current_dir(&repo)
     };
+    progress.record("starting_session")?;
     let mut session = tmux.new_session(spec("memory-human"))?;
+    progress.record("waiting_initial_ready")?;
     session
         .primary_pane()
         .wait_stable_contains("Corbanu Terminal", READY)?;
@@ -407,11 +495,14 @@ animations = false
     let mut switched = false;
     let mut restarted = false;
     if driver == Driver::Rehearsal && !matches!(case, Case::Cancel | Case::Timeout) {
+        progress.record("submitting_foreground")?;
         submit(session.primary_pane(), FOREGROUND, &mut keys)?;
     }
     loop {
+        progress.record("reading_routes")?;
         let routes = routing(&a, &b).await;
         let canaries = routes.iter().filter(|r| r["kind"] == "memory").count();
+        progress.record("reading_stage_one_outputs")?;
         let outputs = db
             .memories()
             .list_stage1_outputs_for_global(/*n*/ 100)
@@ -439,13 +530,16 @@ animations = false
         )?;
         fs::write(root.join("input-events.txt"), keys.join("\n"))?;
         if root.join("cancel").exists() || (driver == Driver::Rehearsal && case == Case::Cancel) {
+            progress.record("cancel_return_pending_cleanup")?;
             return Ok(Outcome::Cancelled);
         }
         if start.elapsed() >= limit {
+            progress.record("timeout_return_pending_cleanup")?;
             return Ok(Outcome::TimedOut);
         }
         if session.is_running() {
             let pane = session.primary_pane();
+            progress.record("capturing_viewport")?;
             match pane.capture_viewport() {
                 Ok(view) => fs::write(
                     root.join(if restarted {
@@ -460,6 +554,7 @@ animations = false
             }
             if driver == Driver::Rehearsal {
                 if case == Case::ProviderSwitch && canaries == 1 && !switched {
+                    progress.record("switching_provider")?;
                     switch_provider(pane, root, &mut keys)?;
                     switched = true;
                     submit(pane, FOREGROUND, &mut keys)?;
@@ -471,6 +566,7 @@ animations = false
                     Case::Cancel | Case::Timeout => false,
                 };
                 if exit {
+                    progress.record("waiting_foreground")?;
                     pane.wait_stable_contains(
                         if switched {
                             "B foreground complete"
@@ -479,7 +575,9 @@ animations = false
                         },
                         READY,
                     )?;
+                    progress.record("sending_exit")?;
                     submit(pane, "/exit", &mut keys)?;
+                    progress.record("waiting_exit")?;
                     session.wait_for_exit(READY)?;
                 }
             }
@@ -510,14 +608,18 @@ animations = false
                 )?;
             }
             if driver == Driver::Rehearsal || root.join("restart").exists() {
+                progress.record("starting_restart")?;
                 session = tmux.new_session(spec("memory-restart"))?;
                 restarted = true;
+                progress.record("waiting_restart_ready")?;
                 session
                     .primary_pane()
                     .wait_stable_contains("Corbanu Terminal", READY)?;
                 publish_attachment(&session, root, home.path(), artifacts)?;
                 if driver == Driver::Rehearsal {
+                    progress.record("submitting_restart_status")?;
                     submit(session.primary_pane(), "/status", &mut keys)?;
+                    progress.record("waiting_restart_status")?;
                     session
                         .primary_pane()
                         .wait_stable_contains("Security:", READY)?;
@@ -525,7 +627,9 @@ animations = false
                         root.join("restart.txt"),
                         session.primary_pane().capture_viewport()?,
                     )?;
+                    progress.record("sending_restart_exit")?;
                     submit(session.primary_pane(), "/exit", &mut keys)?;
+                    progress.record("waiting_restart_exit")?;
                     session.wait_for_exit(READY)?;
                 }
             }
@@ -546,8 +650,10 @@ animations = false
                 &json!({"outcome":"complete", "source_outputs":outputs, "canary_requests":canaries, "human_acceptance":false}),
             )?;
             fs::write(root.join("trace.log"), log)?;
+            progress.record("complete_return_pending_cleanup")?;
             return Ok(Outcome::Complete);
         }
+        progress.record("poll_delay")?;
         tokio::time::sleep(Duration::from_millis(100)).await;
     }
 }
