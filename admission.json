@@ -1,5 +1,5 @@
 {
-  "approved": false,
+  "approved": true,
   "authenticatedKeyringSha256": "80a36b0a6de2f69f49d2df75ef473ccde121e9e190b9ea01d20a4f63778d5c31",
   "bubblewrapPinsSha256": "6aed14f70eda83a81a81b8aedf382270c5a11ec7630c658767f76e2c9370d941",
   "bubblewrapSetupSha256": "a0858ad5c75c1d668aaf83b0075a9e048aecb2c84fbb18172792cf3d6c99d784",
