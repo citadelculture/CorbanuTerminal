@@ -1,5 +1,5 @@
 {
-  "approved": false,
+  "approved": true,
   "controllerSha256": "8286cee97e5dd48528e91f057ebccf2c4bcd2d43d3d1a076370378dfa4391bc6",
   "scope": "Root review and normal approval required for one six-case original/candidate Git output classifier campaign. No actual Rust outcome yet.",
   "sourceManifestSha256": "f6b7a0a4ff60a38378804c2c2bdb1610ba73368dae955330660ba6a5549113e5",
