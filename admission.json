@@ -1,0 +1,12 @@
+{
+  "approved": true,
+  "bubblewrapPinsSha256": "6aed14f70eda83a81a81b8aedf382270c5a11ec7630c658767f76e2c9370d941",
+  "bubblewrapSetupSha256": "30b1b71d2a6dffdc193b73a678ee93a21a04d28149d4bbf708c4af1c8aa5b38a",
+  "controllerSha256": "6506f1cbb44e16d0f7a6996dde4bf91abeee83d4506c4a9eee1bf67cd7e2f2ad",
+  "exclusiveInstallerSha256": "b51aab11599a67ff53b618b2e64084e1a8be6fc6452929064797fad7ceba6d36",
+  "schema": "issue943-bubblewrap-recovery-admission-v2",
+  "scope": "Changed observation only at existing fixed public keyring stat. Root independent review and normal approved publication required before new first-attempt route. Every prior trust, package, namespace, product, cleanup and denial gate remains unchanged.",
+  "sourceManifestSha256": "c4a61111894853aa84ba7dc636a3a8a1dd194ee8ff4a4c78e583fe4c16ff8b55",
+  "toolsPinsSha256": "fbc855ee5f6bf612912c6ee1013e1a0ac9a3c1be911412ca80424e07e3a0a490",
+  "workflowSha256": "904a726b3efcd6e69249d6ef94210313545ac8bf576b1a6a0dc9a28f315b5ea0"
+}

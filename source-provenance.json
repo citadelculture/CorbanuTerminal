@@ -1,0 +1,243 @@
+{
+  "currentPublicIndexInspection": {
+    "at": "2026-10-20T14:23:08.783386+00:00",
+    "inRelease": {
+      "bytes": 126127,
+      "sha256": "02688fbf18e38d394945f3f11f65c7c8616a05e8f7520996f8a5e17b1757afde",
+      "url": "https://security.ubuntu.com/ubuntu/dists/noble-security/InRelease"
+    },
+    "index": {
+      "bytes": 1145224,
+      "expandedBytes": 6236359,
+      "expandedSha256": "7f1aabd56b26a17c1f6c5858a92d28311eb8f70458e780a3b2f6d7ab878d5038",
+      "path": "main/binary-amd64/Packages.xz",
+      "sha256": "dff4fe59f35a7c3b7b22aa0c8795180fcc21c44e2526067882396d44f9b4d891",
+      "url": "https://security.ubuntu.com/ubuntu/dists/noble-security/main/binary-amd64/Packages.xz"
+    },
+    "installation": false,
+    "package": {
+      "Architecture": "amd64",
+      "Filename": "pool/main/b/bubblewrap/bubblewrap_0.9.0-1ubuntu0.3_amd64.deb",
+      "Package": "bubblewrap",
+      "SHA256": "2461f1beee9cb04c8942739fe1a2b37e7b7c2a3d518f0779dc75f9245baa3094",
+      "Size": "50436",
+      "Version": "0.9.0-1ubuntu0.3"
+    },
+    "packageOrProductExecution": false,
+    "packageRecordSha256": "a274c409ee28fe88fff698b118dac8457fb290057187b17edcaf868efc2a97e4",
+    "publicReadOnlyDownloads": 2,
+    "releaseDate": "Tue, 20 Oct 2026  4:11:29 UTC",
+    "runtimeSignatureVerificationRequired": true,
+    "schema": "issue943-ubuntu-source-inspection-v1",
+    "signatureVerifiedLocally": false,
+    "status": "EXACT_PACKAGE_PRESENT_AND_INDEX_HASH_MATCHES_PUBLIC_INRELEASE"
+  },
+  "dataArchiveEntries": 30,
+  "dataArchiveRegularBytes": 106214,
+  "earlierMissingFilenameEstablished": false,
+  "localSignatureVerified": false,
+  "maintainerScriptsExecuted": false,
+  "memberInspection": [
+    {
+      "archive": "control.tar.zst",
+      "bytes": 1159,
+      "executed": false,
+      "member": "./control",
+      "savedAs": "package-control.txt",
+      "sha256": "22e827ac8b3b472f8cbe4d95f0f2a45862bae2cbe1a340891c04c28d6210d859"
+    },
+    {
+      "archive": "control.tar.zst",
+      "bytes": 187,
+      "executed": false,
+      "member": "./postinst",
+      "savedAs": "package-postinst.txt",
+      "sha256": "8a0d18a37185a8634d9d7259dddf9b18b1f970608490d61510fb8a67b355a7ec"
+    },
+    {
+      "archive": "data.tar.zst",
+      "bytes": 403,
+      "executed": false,
+      "member": "./usr/lib/sysctl.d/50-bubblewrap.conf",
+      "savedAs": "package-sysctl.txt",
+      "sha256": "7f34e797bf48d7273c1145ef2d0031f481dfe242c34d48b5f99d49fe3dd359b9"
+    },
+    {
+      "archive": "data.tar.zst",
+      "bytes": 72160,
+      "executed": false,
+      "member": "./usr/bin/bwrap",
+      "savedAs": "bwrap-elf.inert",
+      "sha256": "e318903862396f96de3df57264e0158682b952fd3fb53ac23d876413e7b30f71"
+    }
+  ],
+  "nativeIncidentResolved": false,
+  "normalPackageInstallExcludedBecause": "Official postinst applies sysctl --system for kernel.unprivileged_userns_clone; only the bound ELF will be installed.",
+  "officialChecksumPage": "https://packages.ubuntu.com/noble-updates/amd64/bubblewrap/download",
+  "officialPackageUrl": "https://security.ubuntu.com/ubuntu/pool/main/b/bubblewrap/bubblewrap_0.9.0-1ubuntu0.3_amd64.deb",
+  "recordedAt": "2026-10-20T14:24:58.270176+00:00",
+  "reviewedPackage": {
+    "architecture": "amd64",
+    "dataMembers": [
+      {
+        "bytes": 0,
+        "directory": true,
+        "path": ""
+      },
+      {
+        "bytes": 0,
+        "directory": true,
+        "path": "usr/"
+      },
+      {
+        "bytes": 0,
+        "directory": true,
+        "path": "usr/bin/"
+      },
+      {
+        "bytes": 72160,
+        "directory": false,
+        "path": "usr/bin/bwrap"
+      },
+      {
+        "bytes": 0,
+        "directory": true,
+        "path": "usr/lib/"
+      },
+      {
+        "bytes": 0,
+        "directory": true,
+        "path": "usr/lib/sysctl.d/"
+      },
+      {
+        "bytes": 403,
+        "directory": false,
+        "path": "usr/lib/sysctl.d/50-bubblewrap.conf"
+      },
+      {
+        "bytes": 0,
+        "directory": true,
+        "path": "usr/share/"
+      },
+      {
+        "bytes": 0,
+        "directory": true,
+        "path": "usr/share/bash-completion/"
+      },
+      {
+        "bytes": 0,
+        "directory": true,
+        "path": "usr/share/bash-completion/completions/"
+      },
+      {
+        "bytes": 1159,
+        "directory": false,
+        "path": "usr/share/bash-completion/completions/bwrap"
+      },
+      {
+        "bytes": 0,
+        "directory": true,
+        "path": "usr/share/bug/"
+      },
+      {
+        "bytes": 319,
+        "directory": false,
+        "path": "usr/share/bug/bubblewrap"
+      },
+      {
+        "bytes": 0,
+        "directory": true,
+        "path": "usr/share/doc/"
+      },
+      {
+        "bytes": 0,
+        "directory": true,
+        "path": "usr/share/doc/bubblewrap/"
+      },
+      {
+        "bytes": 2391,
+        "directory": false,
+        "path": "usr/share/doc/bubblewrap/README.Debian.gz"
+      },
+      {
+        "bytes": 4692,
+        "directory": false,
+        "path": "usr/share/doc/bubblewrap/README.md.gz"
+      },
+      {
+        "bytes": 3409,
+        "directory": false,
+        "path": "usr/share/doc/bubblewrap/changelog.Debian.gz"
+      },
+      {
+        "bytes": 3388,
+        "directory": false,
+        "path": "usr/share/doc/bubblewrap/copyright"
+      },
+      {
+        "bytes": 0,
+        "directory": true,
+        "path": "usr/share/doc/bubblewrap/examples/"
+      },
+      {
+        "bytes": 1204,
+        "directory": false,
+        "path": "usr/share/doc/bubblewrap/examples/bubblewrap-shell.sh"
+      },
+      {
+        "bytes": 2642,
+        "directory": false,
+        "path": "usr/share/doc/bubblewrap/examples/flatpak-run.sh"
+      },
+      {
+        "bytes": 744,
+        "directory": false,
+        "path": "usr/share/doc/bubblewrap/examples/flatpak.bpf"
+      },
+      {
+        "bytes": 969,
+        "directory": false,
+        "path": "usr/share/doc/bubblewrap/examples/userns-block-fd.py"
+      },
+      {
+        "bytes": 0,
+        "directory": true,
+        "path": "usr/share/man/"
+      },
+      {
+        "bytes": 0,
+        "directory": true,
+        "path": "usr/share/man/man1/"
+      },
+      {
+        "bytes": 5338,
+        "directory": false,
+        "path": "usr/share/man/man1/bwrap.1.gz"
+      },
+      {
+        "bytes": 0,
+        "directory": true,
+        "path": "usr/share/zsh/"
+      },
+      {
+        "bytes": 0,
+        "directory": true,
+        "path": "usr/share/zsh/vendor-completions/"
+      },
+      {
+        "bytes": 7396,
+        "directory": false,
+        "path": "usr/share/zsh/vendor-completions/_bwrap"
+      }
+    ],
+    "debBytes": 50436,
+    "debSha256": "2461f1beee9cb04c8942739fe1a2b37e7b7c2a3d518f0779dc75f9245baa3094",
+    "elfBytes": 72160,
+    "elfSha256": "e318903862396f96de3df57264e0158682b952fd3fb53ac23d876413e7b30f71",
+    "filename": "pool/main/b/bubblewrap/bubblewrap_0.9.0-1ubuntu0.3_amd64.deb",
+    "package": "bubblewrap",
+    "version": "0.9.0-1ubuntu0.3"
+  },
+  "runtimeSignatureVerificationRequired": true,
+  "schema": "issue943-bwrap-public-source-provenance-v1"
+}
