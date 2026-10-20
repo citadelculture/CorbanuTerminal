@@ -1,0 +1,119 @@
+diff --git a/codex-rs/core/src/security/tainted_action_tests.rs b/codex-rs/core/src/security/tainted_action_tests.rs
+index b24a37091078d1199cfb4157ea70dfa3afb869a3..dcec8d4853d13d4fa328c922779bb253fe5b4cda 100644
+--- a/codex-rs/core/src/security/tainted_action_tests.rs
++++ b/codex-rs/core/src/security/tainted_action_tests.rs
+@@ -1562,6 +1562,114 @@ fn pf_23_s02_persistence_writes_are_protected() {
+     }
+ }
+ 
++/// #1141: output-file operands are writes, unlike history/pathspec inputs.
++#[test]
++#[cfg_attr(
++    windows,
++    ignore = "Unix protected-path fixtures; hosted qualification uses Linux"
++)]
++fn issue_1141_git_output_protects_persistence_files() {
++    assert_eq!(
++        kind(&["git", "log", "--output=/home/fixture/.zshrc"]),
++        Some(ProtectedActionKind::Persistence)
++    );
++    for verb in ["log", "diff", "show"] {
++        for output in [
++            "--output=~/.zshrc",
++            "--output /home/fixture/.zshrc",
++            "--output=.git/hooks/pre-commit",
++            "--output .git/config",
++        ] {
++            let command = format!("git {verb} {output}");
++            assert_eq!(
++                script(&command),
++                Some(ProtectedActionKind::Persistence),
++                "{command}"
++            );
++        }
++    }
++    assert_eq!(
++        script("git log -1 --format=x --output=~/.zshrc"),
++        Some(ProtectedActionKind::Persistence)
++    );
++}
++
++#[test]
++#[cfg_attr(
++    windows,
++    ignore = "Unix protected-path fixtures; hosted qualification uses Linux"
++)]
++fn issue_1141_git_output_follows_quotes_variables_and_git_folder() {
++    for command in [
++        "git log --output='/home/fixture/.zshrc'",
++        "git show '--output=/home/fixture/.bashrc'",
++        "git diff --output \"$HOME/.profile\"",
++        "out=/home/fixture/.zshrc; git log --output=$out",
++        "git -C /home/fixture log --output=.zshrc",
++        "git -C/home/fixture log --output=.zshrc",
++        "git -C /home -C fixture show --output=.bashrc",
++        "git -C/home -Cfixture diff --output=.profile",
++        "git -c color.ui=false --no-pager show --output /home/fixture/.zshrc",
++        "env LC_ALL=C git diff --output=/home/fixture/.zshrc",
++        "command git log --output=/home/fixture/.zshrc",
++        "git log --output=notes.txt --output=/home/fixture/.zshrc",
++    ] {
++        assert_eq!(
++            script(command),
++            Some(ProtectedActionKind::Persistence),
++            "{command}"
++        );
++    }
++}
++
++#[test]
++#[cfg_attr(
++    windows,
++    ignore = "Unix protected-path fixtures; hosted qualification uses Linux"
++)]
++fn issue_1141_git_output_preserves_read_and_option_boundaries() {
++    for command in [
++        "git log /home/fixture/.zshrc",
++        "git diff -- /home/fixture/.zshrc",
++        "git show -- --output=/home/fixture/.zshrc",
++        "git log -- --output /home/fixture/.zshrc",
++        "git log --grep --output=/home/fixture/.zshrc",
++        "git log --grep=--output=/home/fixture/.zshrc",
++        "git log --format=--output=/home/fixture/.zshrc",
++        "git diff --src-prefix --output=/home/fixture/.zshrc",
++        "git log --output-indicator-new=/home/fixture/.zshrc",
++        "git -c log status --output=/home/fixture/.zshrc",
++        "git status --output=/home/fixture/.zshrc",
++        "echo git log --output=/home/fixture/.zshrc",
++        "git log --output=notes.txt",
++        "git diff --output notes.txt",
++        "git show --output=",
++        "git show --output",
++    ] {
++        assert_eq!(script(command), None, "{command}");
++    }
++}
++
++#[test]
++#[cfg_attr(
++    windows,
++    ignore = "Unix protected-path fixtures; hosted qualification uses Linux"
++)]
++fn issue_1141_git_output_keeps_stronger_protected_paths() {
++    for (command, expected) in [
++        (
++            "git log --output=$CODEX_HOME/config.toml",
++            ProtectedActionKind::SecurityPolicy,
++        ),
++        (
++            "git diff --output=/home/fixture/.ssh/id_rsa",
++            ProtectedActionKind::Credentials,
++        ),
++    ] {
++        assert_eq!(script(command), Some(expected), "{command}");
++    }
++}
++
+ /// #442 (milestone evidence r6): `$CORBANU_HOME` and `$PFTERMINAL_HOME` name
+ /// the Corbanu home as `$CODEX_HOME` does, so reading through them is a
+ /// protected action too (it drew no approval prompt before).

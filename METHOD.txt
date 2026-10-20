@@ -1,0 +1,44 @@
+Issue1141 focused hosted qualification method v1
+
+This control package is inert until its separate admission record is approved. It contains no observed Rust qualification result. The source base is exactly 27789468a486431861f9e409b0dafc28cf62de86 from CorbanuCore/CorbanuTerminal; it is not a claim about a later main branch.
+
+The candidate handles exact Git log/diff/show --output operands using the existing protected-path classification and strongest-category ordering. The selected fixture consists of four new classifier tests and two existing controls in codex-core's library target. These are deterministic classifier inputs with bounded existing filesystem observations; they do not execute Git commands or prove native sandbox, interactive, human acceptance, whole-library, or release qualification.
+
+Source construction and identity
+
+The candidate source has exactly three changed paths: tainted_action.rs, tainted_action_tests.rs, and new tainted_action/git_output.rs. The hosted checkout independently fetches the public base. The patch adds the new module with Git intent-to-add, and the controller requires the exact empty-blob index entry. The baseline restores byte-identical original production, removes the new module, and retains the final formatted test fixture. The candidate restores only its two production files. Test source bytes remain identical across both stages.
+
+Every source-vector and format capture uses git diff --binary --full-index HEAD. The canonical candidate, baseline-fixture and production-transition patches were generated from those same original and frozen final bytes. The source manifest separately preserves the authored patch hashes; authored difflib bytes are never compared directly with Git capture bytes. Unexpected untracked files, changed path sets, new-module presence on baseline, missing/changed/symlinked candidate files, differing canonical patches, and changed wrapper/lock inputs hold qualification.
+
+The source was already processed by the ordinary full formatter before this freeze. Its child returned zero and its source-capture controller returned a deliberate layout-change hold; the exact layout delta was reconciled and independently checked. That historical hold is retained. This prepared campaign requires fresh full just fmt on both variants, unchanged source afterward, and candidate scoped formatting plus Clippy before final tests.
+
+Exact selected cases (all binary ID codex-core)
+
+security::tainted_action::tests::issue_1141_git_output_protects_persistence_files
+security::tainted_action::tests::issue_1141_git_output_follows_quotes_variables_and_git_folder
+security::tainted_action::tests::issue_1141_git_output_preserves_read_and_option_boundaries
+security::tainted_action::tests::issue_1141_git_output_keeps_stronger_protected_paths
+security::tainted_action::tests::pf_23_s02_persistence_writes_are_protected
+security::tainted_action::tests::pf_30_s03_indirect_checks_leave_ordinary_commands_alone
+
+Expected, not yet observed: baseline six executions, two specific assertion failures and four controls passed; candidate six passed. Both baseline failures must report pretty_assertions None versus Some(Persistence), at tainted_action_tests.rs lines1572 and1617 respectively. The second also requires the exact custom command git log --output='/home/fixture/.zshrc'. The prefix/diff shape is derived from the locked pretty_assertions1.4.1 source, not invented runtime evidence. Other assertions, unexpected passes, setup/compile failures, selected skips, retries, leaked processes, incomplete captures and unknown output shapes hold qualification.
+
+Ordinary invocation and observation
+
+Each variant uses unchanged just test -p codex-core --lib --locked --offline, exact equality filters for the six names, no-tests fail, zero retries and one test thread. Wrapper helper builds remain required; their existing --locked propagation limitation is bounded by Cargo.lock/source hashes before and after stages. No raw cargo test or raw nextest substitute is used. The controller compares JUnit identities/statuses with unique pre-Summary execution lines, accepts padded ordinals and the known three/five Unicode exclusion dashes, and excludes duplicate final-output headings from execution counts. Filter exclusions are reported separately from selected skips. Both selected output elements must be captured and contain no body-skip indicators. Source after-vectors and JUnit are retained before parsing/classification can fail.
+
+Candidate formatting/checks use ordinary full just fmt, cargo fmt --manifest-path <source>/codex-rs/Cargo.toml -p codex-core -- --check, and just clippy -p codex-core --lib --locked --offline -- -D warnings. Rust1.99.1 and every downloaded archive/hash are fixed in tools-pins.json. Existing immutable wrapper, lockfile, formatting, policy and support-source inputs are checked at every source vector.
+
+Operational bounds and isolation
+
+Only the first push attempt on the fixed own-fork branch, standard fresh GitHub-hosted Ubuntu24.04 x86_64, nonroot Python3.12+ is admitted. Checkout credentials are not persisted; no secret is supplied. HOME, CODEX_HOME and inherited CODEX sandbox markers are preserved by the controller. The ordinary wrapper creates its documented disposable fixture profile and forces native-keyring denial. This does not change a parent home or host security policy.
+
+The unchanged supervisor bounds descendants, records birth identities, reaps owned children, preserves bounded complete normalized streams, and fails closed on stop/timeout/capture/cleanup/resource errors. The owned orphan cleanup preflight must pass before product work. Cargo jobs2; test threads1; per-case60s threshold with terminate-after1 and zero grace; Nextest global15min; controller6900s; workflow120min. Full format900s, scoped fmt120s, Clippy1800s; test command budgets4200s baseline and1800s candidate including builds. These are explicit campaign resource settings, not an assertion that the repository default warning/grace profile is unchanged.
+
+Disk floors:30GiB before acquisition/first compile,8GiB for reuse/Clippy,4GiB while running. Streams/JUnit are capped at16MiB each. Qualification binary retention is capped at2GiB each and4GiB total artifact bytes, with observed size before rejection, streaming digests, two projected copies plus4GiB reserve and post-copy floor. No operator runtime, credential, profile or process data is part of this public package.
+
+Evidence and remaining gates
+
+The always-run evidence uploader preserves resource observations, qualification-result.json, command receipts, normalized complete streams and JUnit; a separate bounded artifact retains qualification binaries. Normalization replaces known fresh-host path roots only; raw byte counts/hashes remain separate from public normalized hashes. A failed stage remains incomplete with its actual captures. No unchanged retry is defined here.
+
+A qualified result requires all six exact paired outcomes, source vectors, formatting/Clippy, tool/binary/capture bindings, preserved inherited controls and complete owned-process cleanup. Independent terminal evidence review remains required. Public demand/overlap checks, contribution decisions, human/native/functional gates and Tasknode status are separate; this package makes no allocation, reward or completed-release claim.

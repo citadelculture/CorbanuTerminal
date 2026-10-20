@@ -1,0 +1,157 @@
+diff --git a/codex-rs/core/src/security/tainted_action.rs b/codex-rs/core/src/security/tainted_action.rs
+index 323dc9f322d8cf790a5c6354f571cef3626d34c4..0a57c6c88922c8850e1f2e63bfe0ec60980330c9 100644
+--- a/codex-rs/core/src/security/tainted_action.rs
++++ b/codex-rs/core/src/security/tainted_action.rs
+@@ -29,6 +29,7 @@ use std::collections::HashSet;
+ use std::path::Path;
+ 
+ mod arithmetic;
++mod git_output;
+ mod indirect;
+ mod invocation;
+ mod nested;
+@@ -1083,6 +1084,35 @@ impl Classifier {
+             .as_ref()
+             .map(|(index, name)| (*index, WRITERS.contains(&name.as_str())));
+         let cwd = folders.cwd.clone();
++        // #1141: Git output options write their operands, including paths
++        // relative to cumulative global -C options. Keep the existing word
++        // reading below unchanged; this pass can only add protection.
++        if let Some((index, name)) = &command
++            && name == "git"
++        {
++            let output = git_output::files(&words[index + 1..]);
++            let mut output_folder = cwd.clone();
++            for directory in output.directories {
++                work::step();
++                let resolved = self.homes.resolve(directory, &output_folder);
++                if resolved.len() > MAX_FOLDER_BYTES {
++                    self.note(ProtectedActionKind::UnseenCode);
++                    break;
++                }
++                output_folder = resolved;
++            }
++            for path in output.paths {
++                work::step();
++                if path.is_empty() {
++                    continue;
++                }
++                let resolved = self.homes.resolve(path, &output_folder);
++                self.word_path(&resolved, path, depth);
++                if self.homes.is_persistence(&resolved) {
++                    self.note(ProtectedActionKind::Persistence);
++                }
++            }
++        }
+         // Words resolve against the folder of a `-C`/`--directory` flag
+         // (`tar -C ~ ...`, `git -C ~/.codex ...`) once one has been given.
+         let mut folder = cwd.clone();
+diff --git a/codex-rs/core/src/security/tainted_action/git_output.rs b/codex-rs/core/src/security/tainted_action/git_output.rs
+new file mode 100644
+index 0000000000000000000000000000000000000000..34d3604bacd6b83094b29c4057ddced9cd7122b3
+--- /dev/null
++++ b/codex-rs/core/src/security/tainted_action/git_output.rs
+@@ -0,0 +1,103 @@
++//! Git's history/diff output files use the same protected-path checks as
++//! shell redirections. This is deliberately not a general Git option parser
++//! or a list of output options for other programs.
++
++use super::work;
++
++/// Borrowed operands; global `-C` folders apply in order to every output.
++#[derive(Default)]
++pub(super) struct OutputFiles<'a> {
++    pub(super) directories: Vec<&'a str>,
++    pub(super) paths: Vec<&'a str>,
++}
++
++/// Known output operands after the resolved Git command word, with quotes
++/// removed and known variables substituted by the existing shell reading.
++pub(super) fn files(args: &[String]) -> OutputFiles<'_> {
++    let mut words = args.iter();
++    let mut found = OutputFiles::default();
++    loop {
++        let Some(word) = words.next() else {
++            return OutputFiles::default();
++        };
++        work::step();
++        match word.as_str() {
++            "-C" => {
++                if let Some(directory) = words.next() {
++                    found.directories.push(directory);
++                }
++            }
++            option if option.starts_with("-C") => {
++                found.directories.push(&option[2..]);
++            }
++            // Global options whose separate value is not a subcommand.
++            "-c" | "--git-dir" | "--work-tree" | "--namespace" | "--config-env"
++            | "--super-prefix" | "--attr-source" => {
++                words.next();
++            }
++            "--" => return OutputFiles::default(),
++            "log" | "diff" | "show" => break,
++            option if option.starts_with('-') => {}
++            _ => return OutputFiles::default(),
++        }
++    }
++    while let Some(word) = words.next() {
++        work::step();
++        match word.as_str() {
++            // After this marker, even an output-looking path is data.
++            "--" => break,
++            "--output" => {
++                if let Some(path) = words.next() {
++                    found.paths.push(path);
++                }
++            }
++            option if option.starts_with("--output=") => {
++                found.paths.push(&option["--output=".len()..]);
++            }
++            // Required separate option values can themselves look like an
++            // output option. Attached values are already a single word.
++            "-n"
++            | "-L"
++            | "-S"
++            | "-G"
++            | "-O"
++            | "--max-count"
++            | "--skip"
++            | "--since"
++            | "--after"
++            | "--since-as-filter"
++            | "--until"
++            | "--before"
++            | "--author"
++            | "--committer"
++            | "--grep"
++            | "--grep-reflog"
++            | "--encoding"
++            | "--date"
++            | "--diff-filter"
++            | "--find-object"
++            | "--diff-algorithm"
++            | "--anchored"
++            | "--word-diff-regex"
++            | "--src-prefix"
++            | "--dst-prefix"
++            | "--line-prefix"
++            | "--output-indicator-new"
++            | "--output-indicator-old"
++            | "--output-indicator-context"
++            | "--stat-width"
++            | "--stat-name-width"
++            | "--stat-graph-width"
++            | "--stat-count"
++            | "--rotate-to"
++            | "--skip-to" => {
++                words.next();
++            }
++            _ => {}
++        }
++    }
++    if found.paths.is_empty() {
++        found.directories.clear();
++    }
++    found
++}

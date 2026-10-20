@@ -1,0 +1,141 @@
+{
+  "actualRustResults": null,
+  "authorBaselinePatchSha256": "f4cb7bcb140f139507770cd3c4310789a0eab1b54e205f4a002ee97030c48bdc",
+  "authorPatchSha256": "dff46d5f074b9cdbc2dd19e645dd95e6ac1abd94b634afa8f3408b0c706aa90d",
+  "baseCommit": "27789468a486431861f9e409b0dafc28cf62de86",
+  "baselineExpected": [
+    6,
+    4,
+    2
+  ],
+  "baselineLimitation": "Unmodified original production with identical final formatted six-case test fixture. New helper module absent on baseline.",
+  "baselinePatch": {
+    "path": "payload/baseline-fixture.patch",
+    "sha256": "13a9c65fe60c68b82165e2a9a9acb00bdc842a7040904dc271cd0824052ad5f6"
+  },
+  "candidateExpected": [
+    6,
+    6,
+    0
+  ],
+  "candidatePatchSha256": "9e61f108586e787172f7687e127b6bba3d70618f73b42b3d7c89e42d674f7435",
+  "files": [
+    {
+      "baselinePayload": "payload/tainted_action.baseline.rs",
+      "baselineSha256": "8f8e871195ac263c01f96f2acbda26d030e87dd0aad0eebe503a067cf320e846",
+      "candidateSha256": "9445c87b5c98ab26116121b8736b3ef390e6aad4bfc9fbd9fbe1d77d8ea84da5",
+      "originalSha256": "8f8e871195ac263c01f96f2acbda26d030e87dd0aad0eebe503a067cf320e846",
+      "path": "codex-rs/core/src/security/tainted_action.rs",
+      "payload": "payload/tainted_action.rs"
+    },
+    {
+      "candidateSha256": "c6e3a3d4c8e0524d16c5b1db722133376b8c634f69ca808dff222c4ed18cc0c6",
+      "originalSha256": "6165f0ad64a54b106358dbc1c597a5625c0deed0ff9e42e6ec7f5cdec8140d1d",
+      "path": "codex-rs/core/src/security/tainted_action_tests.rs",
+      "payload": "payload/tainted_action_tests.rs"
+    },
+    {
+      "baselineState": "absent",
+      "candidateSha256": "76f87ab23226199e66e86729dc620b9e42c96fa0c5e2c2f1804532237d43a6b2",
+      "originalSha256": null,
+      "originalState": "absent",
+      "path": "codex-rs/core/src/security/tainted_action/git_output.rs",
+      "payload": "payload/git_output.rs"
+    }
+  ],
+  "fixtureFreezeSha256": "f9f9bcf70ff0a18f73fcf5f9f8470b0ec8bbd88a6694e3c2c77321b17e6e280a",
+  "formattedBindingReviewSha256": "bf1d332a883fd06d9365ef42e2187c18e203f16c97725f6cb5e2ddca7e61db97",
+  "fullPackageQualification": false,
+  "patch": {
+    "path": "payload/change.patch",
+    "sha256": "9e61f108586e787172f7687e127b6bba3d70618f73b42b3d7c89e42d674f7435"
+  },
+  "patchRepresentation": "Canonical Git --full-index HEAD diff; same frozen blobs and fixture; new module bound by intent-to-add, absent on original production.",
+  "productionTransitionPatch": {
+    "path": "payload/production-only.patch",
+    "sha256": "711ec624bb291ab6dc6b9d7cb35e51204239278a6d8b02889315584dfe86755e"
+  },
+  "redCases": [
+    {
+      "customMessage": null,
+      "expectedLeftDebug": "None",
+      "expectedRightDebug": "Some(Persistence)",
+      "messageRegex": "(?m)^assertion\\ failed:\\ `\\(left\\ ==\\ right\\)`\\n\\nDiff < left / right > :\\n<None\\n>Some\\(\\n>    Persistence,\\n>\\)\\n",
+      "name": "security::tainted_action::tests::issue_1141_git_output_protects_persistence_files",
+      "panicLine": 1572,
+      "siteRegex": "(?:^|[ /])(?:core/src/)?security/tainted_action_tests\\.rs:1572:[0-9]+"
+    },
+    {
+      "customMessage": "git log --output='/home/fixture/.zshrc'",
+      "expectedLeftDebug": "None",
+      "expectedRightDebug": "Some(Persistence)",
+      "messageRegex": "(?m)^assertion\\ failed:\\ `\\(left\\ ==\\ right\\)`:\\ git\\ log\\ \\-\\-output='/home/fixture/\\.zshrc'\\n\\nDiff < left / right > :\\n<None\\n>Some\\(\\n>    Persistence,\\n>\\)\\n",
+      "name": "security::tainted_action::tests::issue_1141_git_output_follows_quotes_variables_and_git_folder",
+      "panicLine": 1617,
+      "siteRegex": "(?:^|[ /])(?:core/src/)?security/tainted_action_tests\\.rs:1617:[0-9]+"
+    }
+  ],
+  "schema": "issue1141-git-output-hosted-source-v1",
+  "scope": "Exact Git log/diff/show output operands and existing persistence classification; no complete Git grammar, native enforcement or whole-product release claim.",
+  "selectedCases": [
+    "security::tainted_action::tests::issue_1141_git_output_protects_persistence_files",
+    "security::tainted_action::tests::issue_1141_git_output_follows_quotes_variables_and_git_folder",
+    "security::tainted_action::tests::issue_1141_git_output_preserves_read_and_option_boundaries",
+    "security::tainted_action::tests::issue_1141_git_output_keeps_stronger_protected_paths",
+    "security::tainted_action::tests::pf_23_s02_persistence_writes_are_protected",
+    "security::tainted_action::tests::pf_30_s03_indirect_checks_leave_ordinary_commands_alone"
+  ],
+  "sourceCaseCount": 48,
+  "sourceCases": [
+    "security::tainted_action::tests::pf_30_s03_vault_credential_and_policy_commands_are_protected",
+    "security::tainted_action::tests::pf_30_s03_ordinary_commands_are_not_protected",
+    "security::tainted_action::tests::pf_30_s03_patches_into_the_home_or_credential_files_are_protected",
+    "security::tainted_action::tests::pf_30_s03_a_custom_home_matches_as_a_whole_segment_run",
+    "security::tainted_action::tests::pf_30_s03_indirect_routes_are_protected",
+    "security::tainted_action::tests::pf_30_s03_indirect_checks_leave_ordinary_commands_alone",
+    "security::tainted_action::tests::pf_30_s03_symlinks_and_canonical_spellings_reach_the_home",
+    "security::tainted_action::tests::pf_30_s03_script_files_and_patched_scripts_are_read",
+    "security::tainted_action::tests::pf_30_s03_research_workflow_prompt_count_and_latency",
+    "security::tainted_action::tests::issue_239_protected_paths_apply_under_protected_level_before_taint",
+    "security::tainted_action::tests::issue_239_human_approval_lifts_rules_only_under_bound_moderate",
+    "security::tainted_action::tests::pf_30_s03_approval_is_bound_to_taint_and_policy",
+    "security::tainted_action::tests::pf_30_s03_review_bypasses_are_closed",
+    "security::tainted_action::tests::pf_30_s03_script_limits_fail_closed_and_patches_follow_symlinks",
+    "security::tainted_action::tests::pf_30_s03_review_2_bypasses_are_closed",
+    "security::tainted_action::tests::pf_30_s03_everyday_commands_stay_quiet",
+    "security::tainted_action::tests::pf_30_s03_review_3_bypasses_are_closed",
+    "security::tainted_action::tests::pf_23_s01_value_transfer_and_outbound_content_are_protected",
+    "security::tainted_action::tests::pf_23_s01_wrapper_positions_are_bounded",
+    "security::tainted_action::tests::pf_23_s02_persistence_writes_are_protected",
+    "security::tainted_action::tests::issue_1141_git_output_protects_persistence_files",
+    "security::tainted_action::tests::issue_1141_git_output_follows_quotes_variables_and_git_folder",
+    "security::tainted_action::tests::issue_1141_git_output_preserves_read_and_option_boundaries",
+    "security::tainted_action::tests::issue_1141_git_output_keeps_stronger_protected_paths",
+    "security::tainted_action::tests::issue_442_corbanu_home_variables_name_the_home",
+    "security::tainted_action::tests::issue_442_aggressive_credential_reads_say_they_are_never_granted",
+    "security::tainted_action::tests::issue_841_sed_edits_are_not_unseen_code",
+    "security::tainted_action::tests::issue_841_text_only_sed_programs",
+    "security::tainted_action::tests::issue_885_sed_that_runs_commands_is_unseen_code",
+    "security::tainted_action::tests::issue_885_nested_shell_scripts_are_judged",
+    "security::tainted_action::tests::issue_885_sed_writing_a_file_the_line_runs_is_unseen_code",
+    "security::tainted_action::tests::issue_885_review_1_routes_and_limits",
+    "security::tainted_action::tests::issue_885_review_2_routes_and_limits",
+    "security::tainted_action::tests::issue_885_review_3_routes",
+    "security::tainted_action::tests::issue_937_arithmetic_on_filled_variables_is_unseen_code",
+    "security::tainted_action::tests::issue_937_counters_and_plain_uses_are_not_unseen_code",
+    "security::tainted_action::tests::issue_937_review_1_routes",
+    "security::tainted_action::tests::issue_937_review_1_everyday_lines_still_run",
+    "security::tainted_action::tests::issue_937_review_2_routes",
+    "security::tainted_action::tests::issue_937_review_2_everyday_lines_still_run",
+    "security::tainted_action::tests::issue_937_review_6_fallback_routes",
+    "security::tainted_action::tests::issue_1020_deep_substitutions_stay_fast_and_ask",
+    "security::tainted_action::tests::issue_1020_deep_nesting_is_classified_quickly",
+    "security::tainted_action::tests::issue_1012_prompt_transformation_is_unseen_code",
+    "security::tainted_action::tests::issue_1028_glob_qualifiers_that_run_code_are_unseen_code",
+    "security::tainted_action::tests::issue_1065_substituted_values_are_capped",
+    "security::tainted_action::tests::issue_1065_review_1_limits",
+    "security::tainted_action::tests::issue_1065_review_2_large_values_are_judged_once"
+  ],
+  "sourcePreparationSha256": "c5e0e2b092f5af1fd8626319faaa37ee44b5bd3875ef399e2a5ee114cc7d1cd3",
+  "sourceReviewSha256": "d18ee07b2bf1d9a7dee43d4ee91f24172953ecf9e9cf3dad1a0dd2e8b200eb4f"
+}

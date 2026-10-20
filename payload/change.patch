@@ -1,0 +1,276 @@
+diff --git a/codex-rs/core/src/security/tainted_action.rs b/codex-rs/core/src/security/tainted_action.rs
+index 323dc9f322d8cf790a5c6354f571cef3626d34c4..0a57c6c88922c8850e1f2e63bfe0ec60980330c9 100644
+--- a/codex-rs/core/src/security/tainted_action.rs
++++ b/codex-rs/core/src/security/tainted_action.rs
+@@ -29,6 +29,7 @@ use std::collections::HashSet;
+ use std::path::Path;
+ 
+ mod arithmetic;
++mod git_output;
+ mod indirect;
+ mod invocation;
+ mod nested;
+@@ -1083,6 +1084,35 @@ impl Classifier {
+             .as_ref()
+             .map(|(index, name)| (*index, WRITERS.contains(&name.as_str())));
+         let cwd = folders.cwd.clone();
++        // #1141: Git output options write their operands, including paths
++        // relative to cumulative global -C options. Keep the existing word
++        // reading below unchanged; this pass can only add protection.
++        if let Some((index, name)) = &command
++            && name == "git"
++        {
++            let output = git_output::files(&words[index + 1..]);
++            let mut output_folder = cwd.clone();
++            for directory in output.directories {
++                work::step();
++                let resolved = self.homes.resolve(directory, &output_folder);
++                if resolved.len() > MAX_FOLDER_BYTES {
++                    self.note(ProtectedActionKind::UnseenCode);
++                    break;
++                }
++                output_folder = resolved;
++            }
++            for path in output.paths {
++                work::step();
++                if path.is_empty() {
++                    continue;
++                }
++                let resolved = self.homes.resolve(path, &output_folder);
++                self.word_path(&resolved, path, depth);
++                if self.homes.is_persistence(&resolved) {
++                    self.note(ProtectedActionKind::Persistence);
++                }
++            }
++        }
+         // Words resolve against the folder of a `-C`/`--directory` flag
+         // (`tar -C ~ ...`, `git -C ~/.codex ...`) once one has been given.
+         let mut folder = cwd.clone();
+diff --git a/codex-rs/core/src/security/tainted_action/git_output.rs b/codex-rs/core/src/security/tainted_action/git_output.rs
+new file mode 100644
+index 0000000000000000000000000000000000000000..34d3604bacd6b83094b29c4057ddced9cd7122b3
+--- /dev/null
++++ b/codex-rs/core/src/security/tainted_action/git_output.rs
+@@ -0,0 +1,103 @@
++//! Git's history/diff output files use the same protected-path checks as
++//! shell redirections. This is deliberately not a general Git option parser
++//! or a list of output options for other programs.
++
++use super::work;
++
++/// Borrowed operands; global `-C` folders apply in order to every output.
++#[derive(Default)]
++pub(super) struct OutputFiles<'a> {
++    pub(super) directories: Vec<&'a str>,
++    pub(super) paths: Vec<&'a str>,
++}
++
++/// Known output operands after the resolved Git command word, with quotes
++/// removed and known variables substituted by the existing shell reading.
++pub(super) fn files(args: &[String]) -> OutputFiles<'_> {
++    let mut words = args.iter();
++    let mut found = OutputFiles::default();
++    loop {
++        let Some(word) = words.next() else {
++            return OutputFiles::default();
++        };
++        work::step();
++        match word.as_str() {
++            "-C" => {
++                if let Some(directory) = words.next() {
++                    found.directories.push(directory);
++                }
++            }
++            option if option.starts_with("-C") => {
++                found.directories.push(&option[2..]);
++            }
++            // Global options whose separate value is not a subcommand.
++            "-c" | "--git-dir" | "--work-tree" | "--namespace" | "--config-env"
++            | "--super-prefix" | "--attr-source" => {
++                words.next();
++            }
++            "--" => return OutputFiles::default(),
++            "log" | "diff" | "show" => break,
++            option if option.starts_with('-') => {}
++            _ => return OutputFiles::default(),
++        }
++    }
++    while let Some(word) = words.next() {
++        work::step();
++        match word.as_str() {
++            // After this marker, even an output-looking path is data.
++            "--" => break,
++            "--output" => {
++                if let Some(path) = words.next() {
++                    found.paths.push(path);
++                }
++            }
++            option if option.starts_with("--output=") => {
++                found.paths.push(&option["--output=".len()..]);
++            }
++            // Required separate option values can themselves look like an
++            // output option. Attached values are already a single word.
++            "-n"
++            | "-L"
++            | "-S"
++            | "-G"
++            | "-O"
++            | "--max-count"
++            | "--skip"
++            | "--since"
++            | "--after"
++            | "--since-as-filter"
++            | "--until"
++            | "--before"
++            | "--author"
++            | "--committer"
++            | "--grep"
++            | "--grep-reflog"
++            | "--encoding"
++            | "--date"
++            | "--diff-filter"
++            | "--find-object"
++            | "--diff-algorithm"
++            | "--anchored"
++            | "--word-diff-regex"
++            | "--src-prefix"
++            | "--dst-prefix"
++            | "--line-prefix"
++            | "--output-indicator-new"
++            | "--output-indicator-old"
++            | "--output-indicator-context"
++            | "--stat-width"
++            | "--stat-name-width"
++            | "--stat-graph-width"
++            | "--stat-count"
++            | "--rotate-to"
++            | "--skip-to" => {
++                words.next();
++            }
++            _ => {}
++        }
++    }
++    if found.paths.is_empty() {
++        found.directories.clear();
++    }
++    found
++}
+diff --git a/codex-rs/core/src/security/tainted_action_tests.rs b/codex-rs/core/src/security/tainted_action_tests.rs
+index b24a37091078d1199cfb4157ea70dfa3afb869a3..dcec8d4853d13d4fa328c922779bb253fe5b4cda 100644
+--- a/codex-rs/core/src/security/tainted_action_tests.rs
++++ b/codex-rs/core/src/security/tainted_action_tests.rs
+@@ -1562,6 +1562,114 @@ fn pf_23_s02_persistence_writes_are_protected() {
+     }
+ }
+ 
++/// #1141: output-file operands are writes, unlike history/pathspec inputs.
++#[test]
++#[cfg_attr(
++    windows,
++    ignore = "Unix protected-path fixtures; hosted qualification uses Linux"
++)]
++fn issue_1141_git_output_protects_persistence_files() {
++    assert_eq!(
++        kind(&["git", "log", "--output=/home/fixture/.zshrc"]),
++        Some(ProtectedActionKind::Persistence)
++    );
++    for verb in ["log", "diff", "show"] {
++        for output in [
++            "--output=~/.zshrc",
++            "--output /home/fixture/.zshrc",
++            "--output=.git/hooks/pre-commit",
++            "--output .git/config",
++        ] {
++            let command = format!("git {verb} {output}");
++            assert_eq!(
++                script(&command),
++                Some(ProtectedActionKind::Persistence),
++                "{command}"
++            );
++        }
++    }
++    assert_eq!(
++        script("git log -1 --format=x --output=~/.zshrc"),
++        Some(ProtectedActionKind::Persistence)
++    );
++}
++
++#[test]
++#[cfg_attr(
++    windows,
++    ignore = "Unix protected-path fixtures; hosted qualification uses Linux"
++)]
++fn issue_1141_git_output_follows_quotes_variables_and_git_folder() {
++    for command in [
++        "git log --output='/home/fixture/.zshrc'",
++        "git show '--output=/home/fixture/.bashrc'",
++        "git diff --output \"$HOME/.profile\"",
++        "out=/home/fixture/.zshrc; git log --output=$out",
++        "git -C /home/fixture log --output=.zshrc",
++        "git -C/home/fixture log --output=.zshrc",
++        "git -C /home -C fixture show --output=.bashrc",
++        "git -C/home -Cfixture diff --output=.profile",
++        "git -c color.ui=false --no-pager show --output /home/fixture/.zshrc",
++        "env LC_ALL=C git diff --output=/home/fixture/.zshrc",
++        "command git log --output=/home/fixture/.zshrc",
++        "git log --output=notes.txt --output=/home/fixture/.zshrc",
++    ] {
++        assert_eq!(
++            script(command),
++            Some(ProtectedActionKind::Persistence),
++            "{command}"
++        );
++    }
++}
++
++#[test]
++#[cfg_attr(
++    windows,
++    ignore = "Unix protected-path fixtures; hosted qualification uses Linux"
++)]
++fn issue_1141_git_output_preserves_read_and_option_boundaries() {
++    for command in [
++        "git log /home/fixture/.zshrc",
++        "git diff -- /home/fixture/.zshrc",
++        "git show -- --output=/home/fixture/.zshrc",
++        "git log -- --output /home/fixture/.zshrc",
++        "git log --grep --output=/home/fixture/.zshrc",
++        "git log --grep=--output=/home/fixture/.zshrc",
++        "git log --format=--output=/home/fixture/.zshrc",
++        "git diff --src-prefix --output=/home/fixture/.zshrc",
++        "git log --output-indicator-new=/home/fixture/.zshrc",
++        "git -c log status --output=/home/fixture/.zshrc",
++        "git status --output=/home/fixture/.zshrc",
++        "echo git log --output=/home/fixture/.zshrc",
++        "git log --output=notes.txt",
++        "git diff --output notes.txt",
++        "git show --output=",
++        "git show --output",
++    ] {
++        assert_eq!(script(command), None, "{command}");
++    }
++}
++
++#[test]
++#[cfg_attr(
++    windows,
++    ignore = "Unix protected-path fixtures; hosted qualification uses Linux"
++)]
++fn issue_1141_git_output_keeps_stronger_protected_paths() {
++    for (command, expected) in [
++        (
++            "git log --output=$CODEX_HOME/config.toml",
++            ProtectedActionKind::SecurityPolicy,
++        ),
++        (
++            "git diff --output=/home/fixture/.ssh/id_rsa",
++            ProtectedActionKind::Credentials,
++        ),
++    ] {
++        assert_eq!(script(command), Some(expected), "{command}");
++    }
++}
++
+ /// #442 (milestone evidence r6): `$CORBANU_HOME` and `$PFTERMINAL_HOME` name
+ /// the Corbanu home as `$CODEX_HOME` does, so reading through them is a
+ /// protected action too (it drew no approval prompt before).
