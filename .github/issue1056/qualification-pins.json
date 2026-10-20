@@ -1,0 +1,73 @@
+{
+  "schema": "issue1056-final-ci-pins-v1",
+  "status": "ROOT_APPROVED_FROZEN_CI_PINS",
+  "requiredReleasedStatus": "ROOT_APPROVED_FROZEN_CI_PINS",
+  "sourceCommit": "7dea83962dbdb9c6208ab679ee724ee9262de6ad",
+  "sourceBase": "8c73c8ea804e81f69024f0efcee2650cc5bc14ae",
+  "sourceFiles": {
+    "codex-rs/linux-sandbox/src/placeholder_journal_tests.rs": "c951ca85046860b941bf8fac54588e961a78245521afe5007af9fe4e887b36cf",
+    "AGENTS.md": "4b6aa2003bb1b01c3313f1155e3e5e35516ec217da794d3bf3920ed483bbe608",
+    "codex-rs/AGENTS.md": "8770b8bde8ddaf5f404090afb3f2251aca06bca5cfc5707ec42ae3a7490ce47a",
+    "docs/development/test-isolation.md": "1a5c54c42d74e08c2a98ea6fc8217e05e15c43b2f6b40f679c6388090514cfd0",
+    "docs/corbanu-product-spec.md": "5075bb5cc6f6ddf55f0592df7083531f68e82737b4d0446cc6891c77ff34ec7d",
+    "codex-rs/linux-sandbox/Cargo.toml": "7d95a666464513755f4512ccd1b8cabbc23ca4d8a60017efd37069603aebf2ae",
+    "codex-rs/linux-sandbox/src/lib.rs": "0cab886ecbfa1c3c3cba053e2fd4938eb7c502107481efcebb5dacdb0733c8dd",
+    "codex-rs/linux-sandbox/src/placeholder_journal.rs": "4a5d806f8db4e53f774b2b1b5f7b235e270a4bde7763d2a2d68466efbc6740e2",
+    "codex-rs/linux-sandbox/src/placeholder_registry.rs": "74a54c1bc9e41f642945f413572855b57e76e3d43ee98b984e8d5baf92bac957",
+    "codex-rs/linux-sandbox/BUILD.bazel": "9a54d0a6b2e100d7ee2aa42288fe267b9ae44b22e4726b279231a6ffa6d51a3a",
+    "codex-rs/Cargo.toml": "137d2317b4c0ac6007cd2f9ee9633bc151f6b675e870f2a0dbfa89e5b850b4aa",
+    "codex-rs/Cargo.lock": "92f3c84583f85f631097f8eb99dc330421c653d85659aa30f38b2465af232b33",
+    "codex-rs/rust-toolchain.toml": "570656042681cfd8795403a455baf9a33035331a07db0645e866bbcea89a3d64",
+    "justfile": "ce2e815f90284ebc8c8812c9f94b63e78d9a3db5271c3416979d46499cdbb512",
+    "scripts/isolated_rust_tests.py": "2376d36fae0943cbbf4a0caf58109b0dece03cb226983d1276216adc90d2447c",
+    "codex-rs/.config/nextest.toml": "830c64fd157ef4bb618626c4f7aaf3de986b488289eb28ed352ff0a21e29c110",
+    "scripts/just-shell.py": "444d6b328d44abf6453b77b6acce2a0c881fc162ff30b20f352c85067797fbe9",
+    ".github/actions/setup-rusty-v8/action.yml": "e05628c6361bf0f5ad02cbce304c5894f1ef3079f8b7630c1351cb4c48a118e1",
+    ".github/scripts/rusty_v8_bazel.py": "2cf64c3e1b7367e42bdadcafd0013419019099bacd0b96b599aa37c15d1d332f",
+    "codex-rs/core/Cargo.toml": "9f1dbf31a50915de436cc0c37c2ab905ce920051285f4919aae9970ab3848a9f"
+  },
+  "cases": [
+    "placeholder_journal::tests::a_path_another_run_made_is_recorded_as_used_and_nothing_else",
+    "placeholder_journal::tests::a_path_another_run_was_about_to_make_is_recorded_as_used",
+    "placeholder_journal::tests::a_child_of_a_pending_placeholder_folder_is_recorded_as_used"
+  ],
+  "runnerSha256": "12f99050883f0087ac9fb98fbc4e733bbf0b349baf770ee4503429f1c22dfdf0",
+  "workflowSha256": "b2e7c258617e9ac54c29b9c7af822d8287af980f6cb756dd0ca50ee329daa46c",
+  "minimumInitialFreeGiB": 12,
+  "stopFreeGiB": 4,
+  "archives": {
+    "just": {
+      "url": "https://github.com/casey/just/releases/download/1.58.0/just-1.58.0-x86_64-unknown-linux-musl.tar.gz",
+      "sha256": "4a5cc2f53e6f0f8c59092a6cc38291eb729d46a7dd95d3ae582008881b84931d",
+      "bytes": 2529009
+    },
+    "cargo-nextest": {
+      "url": "https://github.com/nextest-rs/nextest/releases/download/cargo-nextest-0.9.146/cargo-nextest-0.9.146-x86_64-unknown-linux-musl.tar.gz",
+      "sha256": "b64617e8640624e8f9ba99819e37d7971154e97836d7ae4774fed4715501a6aa",
+      "bytes": 9732566
+    }
+  },
+  "v8Assets": {
+    "RUSTY_V8_ARCHIVE": {
+      "url": "https://github.com/openai/codex/releases/download/rusty-v8-v150.4.0/librusty_v8_release_x86_64-unknown-linux-gnu.a.gz",
+      "sha256": "70ea96d34e2e9655bd34d3ec8415ff80d047bc5d7f37f01b53d8ce49be4c5eb3",
+      "bytes": 28834415
+    },
+    "RUSTY_V8_SRC_BINDING_PATH": {
+      "url": "https://github.com/openai/codex/releases/download/rusty-v8-v150.4.0/src_binding_release_x86_64-unknown-linux-gnu.rs",
+      "sha256": "7727826ae479bdb645e807239fb12d1f8e2e23de7a6cf16f5ee592690d1d8506",
+      "bytes": 39884
+    }
+  },
+  "finalBinding": {
+    "formattedSourceManifestSha256": "887700cc29b2071fd36e264316b779d7068f3d974ba2f1760b0f3414c91d5550",
+    "formatterReceiptSha256": "d7254dd1c045f690dfbbd58d04436431ac05a3101329d706959f931da8cbfd12",
+    "formatterExitCode": 0,
+    "formatterSourceUnchanged": true,
+    "formatterFinishedAt": "2026-10-20T09:15:06.109855+00:00",
+    "sourcePatchSha256": "f729ce8ed82f69d2b80dbb92d504dc64efc3650fe70f2c0d76fc35fe738b524b",
+    "sourceReviewSha256": "35476121dde5b1a7ca85ff69587b82166b9d86cd3f7a7247082ad0a2a475504b",
+    "ciMethodReviewSha256": "8be07574b077221abf607f1a31fda42855e67a9a9b661652ff1e01cdf5dfe60a",
+    "qualificationStatus": "Not run; these pins admit only the fixed hosted Linux campaign."
+  }
+}
