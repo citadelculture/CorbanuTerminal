@@ -1,0 +1,2591 @@
+{
+  "schema": "network-hosted-macos-preflight-result-v4",
+  "startedAt": "2026-10-20T10:34:09.889629+00:00",
+  "status": "SYNTHETIC_PREFLIGHT_CONTROLS_PASSED_NOT_CANARY_ADMISSION",
+  "canaryReady": false,
+  "canaryInvocations": 0,
+  "compilationInvocations": 0,
+  "runId": "39408805687",
+  "runAttempt": "1",
+  "controlCommit": "dd73119a2c085282aac6e7d8db37c9ac48245df7",
+  "sourceCommit": "78dd811d6e3718140c938ad4839968d9995fd5ac",
+  "runnerImage": "macos15",
+  "runnerImageVersion": "20260907.0337.1",
+  "architecture": "arm64",
+  "pythonVersion": "3.9.6",
+  "controllerSha256": "8d8308a0e74d33cc686a3b9df862d74a161c386d08786a6ad118a012c2ef097e",
+  "commands": [
+    {
+      "label": "source-head",
+      "exitCode": 0,
+      "seconds": 0.0129,
+      "stopReason": null,
+      "groupGone": true,
+      "stdoutSha256": "9ee2dc0a39bf561ee44c28437e36fa2ba98b645323fb8034ac0b0be386d2b9bc",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 41,
+      "stderrBytes": 0,
+      "capture": {
+        "stdout": {
+          "observedBytes": 41,
+          "retainedBytes": 41,
+          "truncated": false
+        },
+        "stderr": {
+          "observedBytes": 0,
+          "retainedBytes": 0,
+          "truncated": false
+        }
+      },
+      "captureComplete": true
+    },
+    {
+      "label": "source-status",
+      "exitCode": 0,
+      "seconds": 0.2732,
+      "stopReason": null,
+      "groupGone": true,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 0,
+      "stderrBytes": 0,
+      "capture": {
+        "stdout": {
+          "observedBytes": 0,
+          "retainedBytes": 0,
+          "truncated": false
+        },
+        "stderr": {
+          "observedBytes": 0,
+          "retainedBytes": 0,
+          "truncated": false
+        }
+      },
+      "captureComplete": true
+    },
+    {
+      "label": "os",
+      "exitCode": 0,
+      "seconds": 0.0123,
+      "stopReason": null,
+      "groupGone": true,
+      "stdoutSha256": "3e7f3aac6ec05838460f29272ec4647dbdf438a5b83be784975079531ab79eb1",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 7,
+      "stderrBytes": 0,
+      "capture": {
+        "stdout": {
+          "observedBytes": 7,
+          "retainedBytes": 7,
+          "truncated": false
+        },
+        "stderr": {
+          "observedBytes": 0,
+          "retainedBytes": 0,
+          "truncated": false
+        }
+      },
+      "captureComplete": true
+    },
+    {
+      "label": "memory",
+      "exitCode": 0,
+      "seconds": 0.0054,
+      "stopReason": null,
+      "groupGone": true,
+      "stdoutSha256": "ae0cc22f5ea218082f5dec9c827424ea217b458c0891472d43332507e3435b13",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 11,
+      "stderrBytes": 0,
+      "capture": {
+        "stdout": {
+          "observedBytes": 11,
+          "retainedBytes": 11,
+          "truncated": false
+        },
+        "stderr": {
+          "observedBytes": 0,
+          "retainedBytes": 0,
+          "truncated": false
+        }
+      },
+      "captureComplete": true
+    },
+    {
+      "label": "sdk",
+      "exitCode": 0,
+      "seconds": 1.6162,
+      "stopReason": null,
+      "groupGone": true,
+      "stdoutSha256": "521fbd942d19d4f08ee3ac22fe5e1fee54d05fb48db0d8d179461b8195d210eb",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 5,
+      "stderrBytes": 0,
+      "capture": {
+        "stdout": {
+          "observedBytes": 5,
+          "retainedBytes": 5,
+          "truncated": false
+        },
+        "stderr": {
+          "observedBytes": 0,
+          "retainedBytes": 0,
+          "truncated": false
+        }
+      },
+      "captureComplete": true
+    },
+    {
+      "label": "clang",
+      "exitCode": 0,
+      "seconds": 0.7866,
+      "stopReason": null,
+      "groupGone": true,
+      "stdoutSha256": "df12815703ce3452ab4bd51ecbea4cf8155246b94b5b15113a580ff6aec2befd",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 206,
+      "stderrBytes": 0,
+      "capture": {
+        "stdout": {
+          "observedBytes": 206,
+          "retainedBytes": 206,
+          "truncated": false
+        },
+        "stderr": {
+          "observedBytes": 0,
+          "retainedBytes": 0,
+          "truncated": false
+        }
+      },
+      "captureComplete": true
+    },
+    {
+      "label": "git",
+      "exitCode": 0,
+      "seconds": 0.0083,
+      "stopReason": null,
+      "groupGone": true,
+      "stdoutSha256": "e928567de6f903039a669b7647bf037309d50e4f7916bb5c06f7b05d3bf966fe",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 19,
+      "stderrBytes": 0,
+      "capture": {
+        "stdout": {
+          "observedBytes": 19,
+          "retainedBytes": 19,
+          "truncated": false
+        },
+        "stderr": {
+          "observedBytes": 0,
+          "retainedBytes": 0,
+          "truncated": false
+        }
+      },
+      "captureComplete": true
+    },
+    {
+      "label": "synthetic-boundary",
+      "exitCode": 0,
+      "seconds": 0.2716,
+      "stopReason": null,
+      "groupGone": true,
+      "stdoutSha256": "829aef071110439aa75f863ee7f6353ff7a79959f2ff095a8ab06826abb154dd",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 296,
+      "stderrBytes": 0,
+      "capture": {
+        "stdout": {
+          "observedBytes": 296,
+          "retainedBytes": 296,
+          "truncated": false
+        },
+        "stderr": {
+          "observedBytes": 0,
+          "retainedBytes": 0,
+          "truncated": false
+        }
+      },
+      "captureComplete": true
+    }
+  ],
+  "limits": {
+    "preflightSeconds": 180,
+    "commandSeconds": 10,
+    "capturedStreamBytes": 65536,
+    "inheritedFileSizeLimitUnchanged": true
+  },
+  "requiredMetadataToolsHealthy": true,
+  "nativeObserverMeaning": "Process absence/health observation only, not proven UI prompt recognition.",
+  "unqualified": [
+    "No canary, native product, Cargo build or dependency fetch was executed.",
+    "Rust1.95 closure/build capacity and five-to-twenty-run duration are unqualified.",
+    "Credential-service Mach denial is configured but deliberately not probed.",
+    "Denied foreign Unix socket is not a Mach credential-service test.",
+    "Localhost permits dynamic local ports and both IP transports; no IPv4-only or exact-port claim. External endpoint denial remains unmeasured.",
+    "Synthetic child policy is not yet admitted for the unchanged canary graph.",
+    "Group checks cover directly owned groups, not independently detached sessions."
+  ],
+  "gitSelection": [
+    {
+      "candidate": "/opt/homebrew/bin/git",
+      "resolved": "/opt/homebrew/Cellar/git/2.55.0/bin/git",
+      "sha256": "80045299a1ae4309b716fd02f076c677d74c5dac2d5f065ca6d6364afab198ad",
+      "state": "selected"
+    }
+  ],
+  "sourceHashes": {
+    "scripts/security-credential-canary": "ddb9629ec3d6f428f19f1db73c10f544e5114f1093346cc6957bb9bdcd70bbc7",
+    "scripts/security_credential_canary.py": "dac51ad02bfbde1a4d4d70c5a4ed564cba41c64cf47b59ae5090fd398a1ea05a",
+    "codex-rs/rust-toolchain.toml": "570656042681cfd8795403a455baf9a33035331a07db0645e866bbcea89a3d64",
+    "codex-rs/Cargo.lock": "3c62ca2fdc1d9fcc4b234dcf3ee6d0fd824faaa2e06aca8022ff418e1e051d9c"
+  },
+  "freeBytes": 44982681600,
+  "toolObservations": {
+    "os": {
+      "exitCode": 0,
+      "text": "15.7.9"
+    },
+    "memory": {
+      "exitCode": 0,
+      "text": "7516192768"
+    },
+    "sdk": {
+      "exitCode": 0,
+      "text": "15.5"
+    },
+    "clang": {
+      "exitCode": 0,
+      "text": "Apple clang version 17.0.0 (clang-1700.0.13.5)\nTarget: arm64-apple-darwin24.6.0\nThread model: posix\nInstalledDir: /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin"
+    },
+    "git": {
+      "exitCode": 0,
+      "text": "git version 2.55.0"
+    }
+  },
+  "pinnedRustToolchainPresent": false,
+  "pythonSha256": "5c5950c62eee5fd227a67e4bdfcde81c9add59799bba0949635f3d5ba9661c26",
+  "sandboxExecSha256": "2ff75194b3e5689debee061c69f27f873ca21ff8fc54b7d49cbf5f2fb673f6ea",
+  "promptProcessesBefore": {
+    "SecurityAgent": 1,
+    "CoreAuthUI": 1
+  },
+  "controls": {
+    "allowedChild": true,
+    "allowedFile": true,
+    "allowedLoopback": true,
+    "foreignReadDenied": true,
+    "foreignUnixSocketDenied": true,
+    "foreignWriteDenied": true,
+    "localEphemeralBindAllowed": true,
+    "markersPreservedInChild": true,
+    "ownedUnixSocketAllowed": true,
+    "secondDynamicLocalPortAllowed": true
+  },
+  "helperHashes": {
+    "address_boundary_fixtures_v3.py": "3aaed3508f2b41c34eadaaa0da2358260bbd1e8f80b5c03e92d12e4e755d816c",
+    "boundary_controller_v4.py": "82e8367935a9100066365ccb9945cc0ada392d2571af88249d3e9655bc9026df",
+    "child_bootstrap_v4.py": "bc00b77fd176d6e9a4c59eb84497b21dfda7cb3b12206de978a1f1d2f3406217",
+    "probe_entry_v3.py": "0e4917c8af5a178238ae9e0e7402fc7ebc6e42064ec140b05e1d81883f7a3e11"
+  },
+  "addressCampaign": {
+    "schema": "network-parent-boundary-campaign-v4",
+    "expectedBoundaryPassed": true,
+    "diagnosticsComplete": true,
+    "canaryAdmitted": false,
+    "sourceFixtureSha256": "3aaed3508f2b41c34eadaaa0da2358260bbd1e8f80b5c03e92d12e4e755d816c",
+    "expectations": {
+      "tcp_allowed_ipv4": "allow",
+      "tcp_ipv6_loopback": "allow",
+      "tcp_ipv4_mapped": "observe",
+      "tcp_owned_nonloopback": "observe",
+      "tcp_other_port": "allow",
+      "udp_allowed_ipv4": "allow",
+      "udp_ipv6_loopback": "allow",
+      "udp_ipv4_mapped": "observe",
+      "udp_owned_nonloopback": "observe",
+      "udp_other_port": "allow"
+    },
+    "contexts": [
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      },
+      {
+        "ownedIpv4": "192.168.64.20",
+        "interfaceOwnershipVerified": true,
+        "nativeObserversHealthy": true,
+        "nativeObserver": {
+          "SecurityAgent": 1,
+          "CoreAuthUI": 1
+        },
+        "inheritedControlsMatched": true,
+        "stopRequested": false
+      }
+    ],
+    "cases": [
+      {
+        "case": "tcp_allowed_ipv4",
+        "expectation": "allow",
+        "passed": true,
+        "before": {
+          "case": "tcp_allowed_ipv4",
+          "transport": "tcp",
+          "status": "connected",
+          "errno": null,
+          "operation": "receive",
+          "elapsedSeconds": 0.00039804200000004286
+        },
+        "commandResult": {
+          "argv": [
+            "/usr/bin/sandbox-exec",
+            "-f",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/preflight.sb",
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/probe_entry_v3.py",
+            "--manifest",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/address-campaign/instance.json",
+            "--case",
+            "tcp_allowed_ipv4",
+            "--token",
+            "f000df97426c22d37625323e933ccf06"
+          ],
+          "dispatchArgv": [
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "-B",
+            "/Users/runner/work/CorbanuTerminal/CorbanuTerminal/control/child_bootstrap_v4.py",
+            "/usr/bin/sandbox-exec",
+            "-f",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/preflight.sb",
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/probe_entry_v3.py",
+            "--manifest",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/address-campaign/instance.json",
+            "--case",
+            "tcp_allowed_ipv4",
+            "--token",
+            "f000df97426c22d37625323e933ccf06"
+          ],
+          "bootstrapSha256": "bc00b77fd176d6e9a4c59eb84497b21dfda7cb3b12206de978a1f1d2f3406217",
+          "startedMonotonic": 3.928635041,
+          "exitCode": 0,
+          "completeOutput": true,
+          "stopReason": null,
+          "cleanup": {
+            "groupGone": true,
+            "directChildReaped": true,
+            "signals": [],
+            "error": null
+          },
+          "error": null,
+          "finishedMonotonic": 4.503878291,
+          "streams": {
+            "stdout": {
+              "sha256": "656eea811cd624a2dce131269f19e0e46b0e66ea5abd0a5dde6964ecd5329310",
+              "bytes": 269
+            },
+            "stderr": {
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0
+            }
+          },
+          "completed": true
+        },
+        "subject": {
+          "case": "tcp_allowed_ipv4",
+          "elapsedSeconds": 0.000387874999999982,
+          "errno": null,
+          "fixtureSha256": "3aaed3508f2b41c34eadaaa0da2358260bbd1e8f80b5c03e92d12e4e755d816c",
+          "inheritedMarkersMatched": true,
+          "operation": "receive",
+          "status": "connected",
+          "transport": "tcp"
+        },
+        "after": {
+          "case": "tcp_allowed_ipv4",
+          "transport": "tcp",
+          "status": "connected",
+          "errno": null,
+          "operation": "receive",
+          "elapsedSeconds": 0.00034674999999939615
+        }
+      },
+      {
+        "case": "tcp_ipv6_loopback",
+        "expectation": "allow",
+        "passed": true,
+        "before": {
+          "case": "tcp_ipv6_loopback",
+          "transport": "tcp",
+          "status": "connected",
+          "errno": null,
+          "operation": "receive",
+          "elapsedSeconds": 0.0005290829999999858
+        },
+        "commandResult": {
+          "argv": [
+            "/usr/bin/sandbox-exec",
+            "-f",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/preflight.sb",
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/probe_entry_v3.py",
+            "--manifest",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/address-campaign/instance.json",
+            "--case",
+            "tcp_ipv6_loopback",
+            "--token",
+            "b787ddc6f1a90a2d4ba7dd95c9df83c5"
+          ],
+          "dispatchArgv": [
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "-B",
+            "/Users/runner/work/CorbanuTerminal/CorbanuTerminal/control/child_bootstrap_v4.py",
+            "/usr/bin/sandbox-exec",
+            "-f",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/preflight.sb",
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/probe_entry_v3.py",
+            "--manifest",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/address-campaign/instance.json",
+            "--case",
+            "tcp_ipv6_loopback",
+            "--token",
+            "b787ddc6f1a90a2d4ba7dd95c9df83c5"
+          ],
+          "bootstrapSha256": "bc00b77fd176d6e9a4c59eb84497b21dfda7cb3b12206de978a1f1d2f3406217",
+          "startedMonotonic": 4.716492833,
+          "exitCode": 0,
+          "completeOutput": true,
+          "stopReason": null,
+          "cleanup": {
+            "groupGone": true,
+            "directChildReaped": true,
+            "signals": [],
+            "error": null
+          },
+          "error": null,
+          "finishedMonotonic": 5.248212666,
+          "streams": {
+            "stdout": {
+              "sha256": "83ab5470e92c76a91f37f8516297ea0dd17bcf4cd38c1eaeb2ad58da1e970a9a",
+              "bytes": 272
+            },
+            "stderr": {
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0
+            }
+          },
+          "completed": true
+        },
+        "subject": {
+          "case": "tcp_ipv6_loopback",
+          "elapsedSeconds": 0.00041058299999999215,
+          "errno": null,
+          "fixtureSha256": "3aaed3508f2b41c34eadaaa0da2358260bbd1e8f80b5c03e92d12e4e755d816c",
+          "inheritedMarkersMatched": true,
+          "operation": "receive",
+          "status": "connected",
+          "transport": "tcp"
+        },
+        "after": {
+          "case": "tcp_ipv6_loopback",
+          "transport": "tcp",
+          "status": "connected",
+          "errno": null,
+          "operation": "receive",
+          "elapsedSeconds": 0.00048308399999985596
+        }
+      },
+      {
+        "case": "tcp_ipv4_mapped",
+        "expectation": "observe",
+        "passed": true,
+        "before": {
+          "case": "tcp_ipv4_mapped",
+          "transport": "tcp",
+          "status": "connected",
+          "errno": null,
+          "operation": "receive",
+          "elapsedSeconds": 0.00029970800000000963
+        },
+        "commandResult": {
+          "argv": [
+            "/usr/bin/sandbox-exec",
+            "-f",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/preflight.sb",
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/probe_entry_v3.py",
+            "--manifest",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/address-campaign/instance.json",
+            "--case",
+            "tcp_ipv4_mapped",
+            "--token",
+            "46d6424021f5d5f3cd232564a97c50cf"
+          ],
+          "dispatchArgv": [
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "-B",
+            "/Users/runner/work/CorbanuTerminal/CorbanuTerminal/control/child_bootstrap_v4.py",
+            "/usr/bin/sandbox-exec",
+            "-f",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/preflight.sb",
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/probe_entry_v3.py",
+            "--manifest",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/address-campaign/instance.json",
+            "--case",
+            "tcp_ipv4_mapped",
+            "--token",
+            "46d6424021f5d5f3cd232564a97c50cf"
+          ],
+          "bootstrapSha256": "bc00b77fd176d6e9a4c59eb84497b21dfda7cb3b12206de978a1f1d2f3406217",
+          "startedMonotonic": 5.459286208,
+          "exitCode": 0,
+          "completeOutput": true,
+          "stopReason": null,
+          "cleanup": {
+            "groupGone": true,
+            "directChildReaped": true,
+            "signals": [],
+            "error": null
+          },
+          "error": null,
+          "finishedMonotonic": 5.926375083,
+          "streams": {
+            "stdout": {
+              "sha256": "8646456dcd000f6a0dbf12620d2e80c70f57683d93c323656e748e79d3244eea",
+              "bytes": 274
+            },
+            "stderr": {
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0
+            }
+          },
+          "completed": true
+        },
+        "subject": {
+          "case": "tcp_ipv4_mapped",
+          "elapsedSeconds": 7.662499999999683e-05,
+          "errno": 1,
+          "fixtureSha256": "3aaed3508f2b41c34eadaaa0da2358260bbd1e8f80b5c03e92d12e4e755d816c",
+          "inheritedMarkersMatched": true,
+          "operation": "connect",
+          "status": "permission_denied",
+          "transport": "tcp"
+        },
+        "after": {
+          "case": "tcp_ipv4_mapped",
+          "transport": "tcp",
+          "status": "connected",
+          "errno": null,
+          "operation": "receive",
+          "elapsedSeconds": 0.00028749999999977405
+        }
+      },
+      {
+        "case": "tcp_owned_nonloopback",
+        "expectation": "observe",
+        "passed": true,
+        "before": {
+          "case": "tcp_owned_nonloopback",
+          "transport": "tcp",
+          "status": "connected",
+          "errno": null,
+          "operation": "receive",
+          "elapsedSeconds": 0.0004577079999998901
+        },
+        "commandResult": {
+          "argv": [
+            "/usr/bin/sandbox-exec",
+            "-f",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/preflight.sb",
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/probe_entry_v3.py",
+            "--manifest",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/address-campaign/instance.json",
+            "--case",
+            "tcp_owned_nonloopback",
+            "--token",
+            "a98bc839daba299f5baad60a95abe7e5"
+          ],
+          "dispatchArgv": [
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "-B",
+            "/Users/runner/work/CorbanuTerminal/CorbanuTerminal/control/child_bootstrap_v4.py",
+            "/usr/bin/sandbox-exec",
+            "-f",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/preflight.sb",
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/probe_entry_v3.py",
+            "--manifest",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/address-campaign/instance.json",
+            "--case",
+            "tcp_owned_nonloopback",
+            "--token",
+            "a98bc839daba299f5baad60a95abe7e5"
+          ],
+          "bootstrapSha256": "bc00b77fd176d6e9a4c59eb84497b21dfda7cb3b12206de978a1f1d2f3406217",
+          "startedMonotonic": 6.11354525,
+          "exitCode": 0,
+          "completeOutput": true,
+          "stopReason": null,
+          "cleanup": {
+            "groupGone": true,
+            "directChildReaped": true,
+            "signals": [],
+            "error": null
+          },
+          "error": null,
+          "finishedMonotonic": 6.5776055,
+          "streams": {
+            "stdout": {
+              "sha256": "a7fd2519d41306d6f4cabe544d22a9c305cbf9adeed10f5313e5c3c8b3dd4a3a",
+              "bytes": 275
+            },
+            "stderr": {
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0
+            }
+          },
+          "completed": true
+        },
+        "subject": {
+          "case": "tcp_owned_nonloopback",
+          "elapsedSeconds": 0.0005555419999999922,
+          "errno": null,
+          "fixtureSha256": "3aaed3508f2b41c34eadaaa0da2358260bbd1e8f80b5c03e92d12e4e755d816c",
+          "inheritedMarkersMatched": true,
+          "operation": "receive",
+          "status": "connected",
+          "transport": "tcp"
+        },
+        "after": {
+          "case": "tcp_owned_nonloopback",
+          "transport": "tcp",
+          "status": "connected",
+          "errno": null,
+          "operation": "receive",
+          "elapsedSeconds": 0.0011286249999997722
+        }
+      },
+      {
+        "case": "tcp_other_port",
+        "expectation": "allow",
+        "passed": true,
+        "before": {
+          "case": "tcp_other_port",
+          "transport": "tcp",
+          "status": "connected",
+          "errno": null,
+          "operation": "receive",
+          "elapsedSeconds": 0.0004991670000000781
+        },
+        "commandResult": {
+          "argv": [
+            "/usr/bin/sandbox-exec",
+            "-f",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/preflight.sb",
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/probe_entry_v3.py",
+            "--manifest",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/address-campaign/instance.json",
+            "--case",
+            "tcp_other_port",
+            "--token",
+            "008cbf2a49ccc0fd11c128b1e107455e"
+          ],
+          "dispatchArgv": [
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "-B",
+            "/Users/runner/work/CorbanuTerminal/CorbanuTerminal/control/child_bootstrap_v4.py",
+            "/usr/bin/sandbox-exec",
+            "-f",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/preflight.sb",
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/probe_entry_v3.py",
+            "--manifest",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/address-campaign/instance.json",
+            "--case",
+            "tcp_other_port",
+            "--token",
+            "008cbf2a49ccc0fd11c128b1e107455e"
+          ],
+          "bootstrapSha256": "bc00b77fd176d6e9a4c59eb84497b21dfda7cb3b12206de978a1f1d2f3406217",
+          "startedMonotonic": 6.821043791,
+          "exitCode": 0,
+          "completeOutput": true,
+          "stopReason": null,
+          "cleanup": {
+            "groupGone": true,
+            "directChildReaped": true,
+            "signals": [],
+            "error": null
+          },
+          "error": null,
+          "finishedMonotonic": 7.412329458,
+          "streams": {
+            "stdout": {
+              "sha256": "a2049389fec5533244579308a836a64d0846d3f6bd6ec131c68aaf1b55a698fb",
+              "bytes": 268
+            },
+            "stderr": {
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0
+            }
+          },
+          "completed": true
+        },
+        "subject": {
+          "case": "tcp_other_port",
+          "elapsedSeconds": 0.0006357919999999961,
+          "errno": null,
+          "fixtureSha256": "3aaed3508f2b41c34eadaaa0da2358260bbd1e8f80b5c03e92d12e4e755d816c",
+          "inheritedMarkersMatched": true,
+          "operation": "receive",
+          "status": "connected",
+          "transport": "tcp"
+        },
+        "after": {
+          "case": "tcp_other_port",
+          "transport": "tcp",
+          "status": "connected",
+          "errno": null,
+          "operation": "receive",
+          "elapsedSeconds": 0.0003478750000001085
+        }
+      },
+      {
+        "case": "udp_allowed_ipv4",
+        "expectation": "allow",
+        "passed": true,
+        "before": {
+          "case": "udp_allowed_ipv4",
+          "transport": "udp",
+          "status": "connected",
+          "errno": null,
+          "operation": "receive",
+          "elapsedSeconds": 0.000280333000000077
+        },
+        "commandResult": {
+          "argv": [
+            "/usr/bin/sandbox-exec",
+            "-f",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/preflight.sb",
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/probe_entry_v3.py",
+            "--manifest",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/address-campaign/instance.json",
+            "--case",
+            "udp_allowed_ipv4",
+            "--token",
+            "c4621282d8aa7556c9cbfa002ced4e93"
+          ],
+          "dispatchArgv": [
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "-B",
+            "/Users/runner/work/CorbanuTerminal/CorbanuTerminal/control/child_bootstrap_v4.py",
+            "/usr/bin/sandbox-exec",
+            "-f",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/preflight.sb",
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/probe_entry_v3.py",
+            "--manifest",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/address-campaign/instance.json",
+            "--case",
+            "udp_allowed_ipv4",
+            "--token",
+            "c4621282d8aa7556c9cbfa002ced4e93"
+          ],
+          "bootstrapSha256": "bc00b77fd176d6e9a4c59eb84497b21dfda7cb3b12206de978a1f1d2f3406217",
+          "startedMonotonic": 7.605131291,
+          "exitCode": 0,
+          "completeOutput": true,
+          "stopReason": null,
+          "cleanup": {
+            "groupGone": true,
+            "directChildReaped": true,
+            "signals": [],
+            "error": null
+          },
+          "error": null,
+          "finishedMonotonic": 8.22208475,
+          "streams": {
+            "stdout": {
+              "sha256": "33e793f3775c7a0000d28b2716f9cf3828b70b09b5629886bba94da81ab9a682",
+              "bytes": 271
+            },
+            "stderr": {
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0
+            }
+          },
+          "completed": true
+        },
+        "subject": {
+          "case": "udp_allowed_ipv4",
+          "elapsedSeconds": 0.00039658299999997815,
+          "errno": null,
+          "fixtureSha256": "3aaed3508f2b41c34eadaaa0da2358260bbd1e8f80b5c03e92d12e4e755d816c",
+          "inheritedMarkersMatched": true,
+          "operation": "receive",
+          "status": "connected",
+          "transport": "udp"
+        },
+        "after": {
+          "case": "udp_allowed_ipv4",
+          "transport": "udp",
+          "status": "connected",
+          "errno": null,
+          "operation": "receive",
+          "elapsedSeconds": 0.00041279100000046753
+        }
+      },
+      {
+        "case": "udp_ipv6_loopback",
+        "expectation": "allow",
+        "passed": true,
+        "before": {
+          "case": "udp_ipv6_loopback",
+          "transport": "udp",
+          "status": "connected",
+          "errno": null,
+          "operation": "receive",
+          "elapsedSeconds": 0.00034537500000020316
+        },
+        "commandResult": {
+          "argv": [
+            "/usr/bin/sandbox-exec",
+            "-f",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/preflight.sb",
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/probe_entry_v3.py",
+            "--manifest",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/address-campaign/instance.json",
+            "--case",
+            "udp_ipv6_loopback",
+            "--token",
+            "830b9f64ccdb51bfc2837d3b0773a2b8"
+          ],
+          "dispatchArgv": [
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "-B",
+            "/Users/runner/work/CorbanuTerminal/CorbanuTerminal/control/child_bootstrap_v4.py",
+            "/usr/bin/sandbox-exec",
+            "-f",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/preflight.sb",
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/probe_entry_v3.py",
+            "--manifest",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/address-campaign/instance.json",
+            "--case",
+            "udp_ipv6_loopback",
+            "--token",
+            "830b9f64ccdb51bfc2837d3b0773a2b8"
+          ],
+          "bootstrapSha256": "bc00b77fd176d6e9a4c59eb84497b21dfda7cb3b12206de978a1f1d2f3406217",
+          "startedMonotonic": 8.425126833,
+          "exitCode": 0,
+          "completeOutput": true,
+          "stopReason": null,
+          "cleanup": {
+            "groupGone": true,
+            "directChildReaped": true,
+            "signals": [],
+            "error": null
+          },
+          "error": null,
+          "finishedMonotonic": 8.997099958,
+          "streams": {
+            "stdout": {
+              "sha256": "b8d24e31261e1f594f8d0fa4066f0ae6aca089b3e2758451bfdffd70e2222b95",
+              "bytes": 271
+            },
+            "stderr": {
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0
+            }
+          },
+          "completed": true
+        },
+        "subject": {
+          "case": "udp_ipv6_loopback",
+          "elapsedSeconds": 0.0005293339999999924,
+          "errno": null,
+          "fixtureSha256": "3aaed3508f2b41c34eadaaa0da2358260bbd1e8f80b5c03e92d12e4e755d816c",
+          "inheritedMarkersMatched": true,
+          "operation": "receive",
+          "status": "connected",
+          "transport": "udp"
+        },
+        "after": {
+          "case": "udp_ipv6_loopback",
+          "transport": "udp",
+          "status": "connected",
+          "errno": null,
+          "operation": "receive",
+          "elapsedSeconds": 0.0005490840000010877
+        }
+      },
+      {
+        "case": "udp_ipv4_mapped",
+        "expectation": "observe",
+        "passed": true,
+        "before": {
+          "case": "udp_ipv4_mapped",
+          "transport": "udp",
+          "status": "connected",
+          "errno": null,
+          "operation": "receive",
+          "elapsedSeconds": 0.0003523750000002934
+        },
+        "commandResult": {
+          "argv": [
+            "/usr/bin/sandbox-exec",
+            "-f",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/preflight.sb",
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/probe_entry_v3.py",
+            "--manifest",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/address-campaign/instance.json",
+            "--case",
+            "udp_ipv4_mapped",
+            "--token",
+            "ce9fa25a06b73e5972e9a9bd20d52877"
+          ],
+          "dispatchArgv": [
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "-B",
+            "/Users/runner/work/CorbanuTerminal/CorbanuTerminal/control/child_bootstrap_v4.py",
+            "/usr/bin/sandbox-exec",
+            "-f",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/preflight.sb",
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/probe_entry_v3.py",
+            "--manifest",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/address-campaign/instance.json",
+            "--case",
+            "udp_ipv4_mapped",
+            "--token",
+            "ce9fa25a06b73e5972e9a9bd20d52877"
+          ],
+          "bootstrapSha256": "bc00b77fd176d6e9a4c59eb84497b21dfda7cb3b12206de978a1f1d2f3406217",
+          "startedMonotonic": 9.203679041,
+          "exitCode": 0,
+          "completeOutput": true,
+          "stopReason": null,
+          "cleanup": {
+            "groupGone": true,
+            "directChildReaped": true,
+            "signals": [],
+            "error": null
+          },
+          "error": null,
+          "finishedMonotonic": 9.729617166,
+          "streams": {
+            "stdout": {
+              "sha256": "a2d8140f15a7e7365473c4ff5250c864820b0efbb0f875bdcba0f9387d4066e9",
+              "bytes": 274
+            },
+            "stderr": {
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0
+            }
+          },
+          "completed": true
+        },
+        "subject": {
+          "case": "udp_ipv4_mapped",
+          "elapsedSeconds": 5.933300000002251e-05,
+          "errno": 1,
+          "fixtureSha256": "3aaed3508f2b41c34eadaaa0da2358260bbd1e8f80b5c03e92d12e4e755d816c",
+          "inheritedMarkersMatched": true,
+          "operation": "connect",
+          "status": "permission_denied",
+          "transport": "udp"
+        },
+        "after": {
+          "case": "udp_ipv4_mapped",
+          "transport": "udp",
+          "status": "connected",
+          "errno": null,
+          "operation": "receive",
+          "elapsedSeconds": 0.00024795899999929816
+        }
+      },
+      {
+        "case": "udp_owned_nonloopback",
+        "expectation": "observe",
+        "passed": true,
+        "before": {
+          "case": "udp_owned_nonloopback",
+          "transport": "udp",
+          "status": "connected",
+          "errno": null,
+          "operation": "receive",
+          "elapsedSeconds": 0.00034558399999973233
+        },
+        "commandResult": {
+          "argv": [
+            "/usr/bin/sandbox-exec",
+            "-f",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/preflight.sb",
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/probe_entry_v3.py",
+            "--manifest",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/address-campaign/instance.json",
+            "--case",
+            "udp_owned_nonloopback",
+            "--token",
+            "c17293fa5c13ef08ea18aa517be78cfc"
+          ],
+          "dispatchArgv": [
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "-B",
+            "/Users/runner/work/CorbanuTerminal/CorbanuTerminal/control/child_bootstrap_v4.py",
+            "/usr/bin/sandbox-exec",
+            "-f",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/preflight.sb",
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/probe_entry_v3.py",
+            "--manifest",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/address-campaign/instance.json",
+            "--case",
+            "udp_owned_nonloopback",
+            "--token",
+            "c17293fa5c13ef08ea18aa517be78cfc"
+          ],
+          "bootstrapSha256": "bc00b77fd176d6e9a4c59eb84497b21dfda7cb3b12206de978a1f1d2f3406217",
+          "startedMonotonic": 9.900379875,
+          "exitCode": 0,
+          "completeOutput": true,
+          "stopReason": null,
+          "cleanup": {
+            "groupGone": true,
+            "directChildReaped": true,
+            "signals": [],
+            "error": null
+          },
+          "error": null,
+          "finishedMonotonic": 10.491114666,
+          "streams": {
+            "stdout": {
+              "sha256": "181b0f2929fea418868f2ac891ba873120fdd90b6f642c76476701d6646e7e0a",
+              "bytes": 275
+            },
+            "stderr": {
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0
+            }
+          },
+          "completed": true
+        },
+        "subject": {
+          "case": "udp_owned_nonloopback",
+          "elapsedSeconds": 0.0008013750000000208,
+          "errno": null,
+          "fixtureSha256": "3aaed3508f2b41c34eadaaa0da2358260bbd1e8f80b5c03e92d12e4e755d816c",
+          "inheritedMarkersMatched": true,
+          "operation": "receive",
+          "status": "connected",
+          "transport": "udp"
+        },
+        "after": {
+          "case": "udp_owned_nonloopback",
+          "transport": "udp",
+          "status": "connected",
+          "errno": null,
+          "operation": "receive",
+          "elapsedSeconds": 0.0006085829999999959
+        }
+      },
+      {
+        "case": "udp_other_port",
+        "expectation": "allow",
+        "passed": true,
+        "before": {
+          "case": "udp_other_port",
+          "transport": "udp",
+          "status": "connected",
+          "errno": null,
+          "operation": "receive",
+          "elapsedSeconds": 0.00035183299999985707
+        },
+        "commandResult": {
+          "argv": [
+            "/usr/bin/sandbox-exec",
+            "-f",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/preflight.sb",
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/probe_entry_v3.py",
+            "--manifest",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/address-campaign/instance.json",
+            "--case",
+            "udp_other_port",
+            "--token",
+            "a487639b52224d1936d866d686bc1445"
+          ],
+          "dispatchArgv": [
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "-B",
+            "/Users/runner/work/CorbanuTerminal/CorbanuTerminal/control/child_bootstrap_v4.py",
+            "/usr/bin/sandbox-exec",
+            "-f",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/preflight.sb",
+            "/Applications/Xcode_16.4.app/Contents/Developer/usr/bin/python3",
+            "-I",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/probe_entry_v3.py",
+            "--manifest",
+            "/private/tmp/tasknode-network-local-fixtures-v4-39408805687-1/allowed/address-campaign/instance.json",
+            "--case",
+            "udp_other_port",
+            "--token",
+            "a487639b52224d1936d866d686bc1445"
+          ],
+          "bootstrapSha256": "bc00b77fd176d6e9a4c59eb84497b21dfda7cb3b12206de978a1f1d2f3406217",
+          "startedMonotonic": 10.677985208,
+          "exitCode": 0,
+          "completeOutput": true,
+          "stopReason": null,
+          "cleanup": {
+            "groupGone": true,
+            "directChildReaped": true,
+            "signals": [],
+            "error": null
+          },
+          "error": null,
+          "finishedMonotonic": 11.266330375,
+          "streams": {
+            "stdout": {
+              "sha256": "8bff228f939b6ea0040970d3bf8ab069d088b5ba2e21d6e5af67e1f52f3c39b5",
+              "bytes": 269
+            },
+            "stderr": {
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0
+            }
+          },
+          "completed": true
+        },
+        "subject": {
+          "case": "udp_other_port",
+          "elapsedSeconds": 0.00041554100000001926,
+          "errno": null,
+          "fixtureSha256": "3aaed3508f2b41c34eadaaa0da2358260bbd1e8f80b5c03e92d12e4e755d816c",
+          "inheritedMarkersMatched": true,
+          "operation": "receive",
+          "status": "connected",
+          "transport": "udp"
+        },
+        "after": {
+          "case": "udp_other_port",
+          "transport": "udp",
+          "status": "connected",
+          "errno": null,
+          "operation": "receive",
+          "elapsedSeconds": 0.0002907919999994846
+        }
+      }
+    ],
+    "events": [
+      {
+        "transport": "tcp",
+        "listener": "ipv4_P",
+        "event": "accepted",
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "transport": "tcp",
+        "listener": "ipv4_P",
+        "event": "received",
+        "payloadSha256": "361fce4dec18ed1fd419c7032f1975c52d9eb37053aa18897aca4b31a79a6ceb"
+      },
+      {
+        "transport": "tcp",
+        "listener": "ipv4_P",
+        "event": "accepted",
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "transport": "tcp",
+        "listener": "ipv4_P",
+        "event": "received",
+        "payloadSha256": "ccf6f8e74ea6807e016816dc66ab01d41b2daecd698b8c4d7889edb7e4cc4aa3"
+      },
+      {
+        "transport": "tcp",
+        "listener": "ipv4_P",
+        "event": "accepted",
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "transport": "tcp",
+        "listener": "ipv4_P",
+        "event": "received",
+        "payloadSha256": "da628b7e15d915b82b80c8aa4190f5243c200ebf3b92fe38ab17b0d0be29b61f"
+      },
+      {
+        "transport": "tcp",
+        "listener": "ipv6_P",
+        "event": "accepted",
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "transport": "tcp",
+        "listener": "ipv6_P",
+        "event": "received",
+        "payloadSha256": "5a8b65a8be66af40115c9184d4bac0d0ba0435a485404b288eaf1f2c28dbc238"
+      },
+      {
+        "transport": "tcp",
+        "listener": "ipv6_P",
+        "event": "accepted",
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "transport": "tcp",
+        "listener": "ipv6_P",
+        "event": "received",
+        "payloadSha256": "321f7f692b6ca86ded2800c79bfadd54872c5b213202c119c9cce1f94b87ea0e"
+      },
+      {
+        "transport": "tcp",
+        "listener": "ipv6_P",
+        "event": "accepted",
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "transport": "tcp",
+        "listener": "ipv6_P",
+        "event": "received",
+        "payloadSha256": "3cf50e5e1c613b59ba01ac81c376b09e0bbc4888909fd5fa670ce7584f68dcec"
+      },
+      {
+        "transport": "tcp",
+        "listener": "ipv4_P",
+        "event": "accepted",
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "transport": "tcp",
+        "listener": "ipv4_P",
+        "event": "received",
+        "payloadSha256": "3e4db2829add83f1c0d32c0659d8b79250f0d8f700309a72bb729a684a744223"
+      },
+      {
+        "transport": "tcp",
+        "listener": "ipv4_P",
+        "event": "accepted",
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "transport": "tcp",
+        "listener": "ipv4_P",
+        "event": "received",
+        "payloadSha256": "eb52b469eb856a8d287a6346833980918d327e3e8fbde23a54e7e18b84b90349"
+      },
+      {
+        "transport": "tcp",
+        "listener": "interface_P",
+        "event": "accepted",
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "transport": "tcp",
+        "listener": "interface_P",
+        "event": "received",
+        "payloadSha256": "eb4c49e339d3b9dc1cd9027d97a1d19edfe1c9c6937f570da8c09b5f783b9af9"
+      },
+      {
+        "transport": "tcp",
+        "listener": "interface_P",
+        "event": "accepted",
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "transport": "tcp",
+        "listener": "interface_P",
+        "event": "received",
+        "payloadSha256": "e5196c83f026e89daece900c6159dd24770d8dc2600f8806fec5aaf53e403052"
+      },
+      {
+        "transport": "tcp",
+        "listener": "interface_P",
+        "event": "accepted",
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "transport": "tcp",
+        "listener": "interface_P",
+        "event": "received",
+        "payloadSha256": "c8e9705c42def0d2bcb31ba5d7fb4ee8611d8eeb7096170ef63be733aaf68e15"
+      },
+      {
+        "transport": "tcp",
+        "listener": "ipv4_Q",
+        "event": "accepted",
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "transport": "tcp",
+        "listener": "ipv4_Q",
+        "event": "received",
+        "payloadSha256": "9a5f730efec3d7811381451fa36e40ae1a1993a8f5a1857b6f1d44f5ead6bcb1"
+      },
+      {
+        "transport": "tcp",
+        "listener": "ipv4_Q",
+        "event": "accepted",
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "transport": "tcp",
+        "listener": "ipv4_Q",
+        "event": "received",
+        "payloadSha256": "25f01b7cbdac86ba933fcb5c89ba4e60b5a3b2b623568d120b266785c82ccbcb"
+      },
+      {
+        "transport": "tcp",
+        "listener": "ipv4_Q",
+        "event": "accepted",
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "transport": "tcp",
+        "listener": "ipv4_Q",
+        "event": "received",
+        "payloadSha256": "87b035a961435f66e16d0c9170fae72e1b012754d27564cf7607d89453089923"
+      },
+      {
+        "transport": "udp",
+        "listener": "ipv4_P",
+        "event": "received",
+        "payloadSha256": "5ca0126c544b54fbcebc097d93c8c3fe80e3fcd60ffa240935f9abd11ce6ca90"
+      },
+      {
+        "transport": "udp",
+        "listener": "ipv4_P",
+        "event": "received",
+        "payloadSha256": "0e1530084eafce462e00ef211bbc6a5819c37fb2702c4bf73d3bba33e39710a5"
+      },
+      {
+        "transport": "udp",
+        "listener": "ipv4_P",
+        "event": "received",
+        "payloadSha256": "156240effa12351ae5ecfd2aa2a556bc2cc0f09d1027f055516f254b726ca62d"
+      },
+      {
+        "transport": "udp",
+        "listener": "ipv6_P",
+        "event": "received",
+        "payloadSha256": "a57e2aa3fff032f9070f85387e6e86b5872f83823f5849c72a28768c8a5ee509"
+      },
+      {
+        "transport": "udp",
+        "listener": "ipv6_P",
+        "event": "received",
+        "payloadSha256": "17f748e35f338f2b73397ccc3fe832ef39e5ba41b6aae7b4778297d2b5ff8f02"
+      },
+      {
+        "transport": "udp",
+        "listener": "ipv6_P",
+        "event": "received",
+        "payloadSha256": "3c571dc09e97d220ff3a5b300ccf75894119c8565ce19979fa13eed6e2148bfc"
+      },
+      {
+        "transport": "udp",
+        "listener": "ipv4_P",
+        "event": "received",
+        "payloadSha256": "0ee2a187236878101d7cf5cf9dd16521be62bddff8fb59a73f53fdf419b2c330"
+      },
+      {
+        "transport": "udp",
+        "listener": "ipv4_P",
+        "event": "received",
+        "payloadSha256": "6818e63768806147da3a9c2acd1baec927e526b183262e5547dbba9d3ef5a37c"
+      },
+      {
+        "transport": "udp",
+        "listener": "interface_P",
+        "event": "received",
+        "payloadSha256": "6d73f60c791ac7d1f3173f7ca29a237a79e69dbd4c7739d84c9e44b84e4be74e"
+      },
+      {
+        "transport": "udp",
+        "listener": "interface_P",
+        "event": "received",
+        "payloadSha256": "763dea5d277e0c5bab6781a5ce66e5825c2622b4a581065ee95c4a0935cc66db"
+      },
+      {
+        "transport": "udp",
+        "listener": "interface_P",
+        "event": "received",
+        "payloadSha256": "6f79381eac25f4f094ec039c44b690d4c3d95b89bdeb7750fb1629a0c75f6e45"
+      },
+      {
+        "transport": "udp",
+        "listener": "ipv4_Q",
+        "event": "received",
+        "payloadSha256": "9a674962259ae64cf25bd1156e89d44ded4625ea3cdaf67969b98c6e7336ff51"
+      },
+      {
+        "transport": "udp",
+        "listener": "ipv4_Q",
+        "event": "received",
+        "payloadSha256": "d59e46c6e14e4fa318806ce01a627e06a6f7bbc0bcb09df9ead66b16e771f218"
+      },
+      {
+        "transport": "udp",
+        "listener": "ipv4_Q",
+        "event": "received",
+        "payloadSha256": "d4419b477278518dc0f735a248da307830b5e7bc16de454976939a1a6284607b"
+      }
+    ],
+    "cleanup": {
+      "listenersClosed": true,
+      "serverThreadStopped": true,
+      "serverError": null
+    },
+    "errors": [],
+    "addressScopeClaim": "Only explicitly expected rows; no IPv4-only equivalence",
+    "policyScopeLimit": "This engine does not qualify file/IPC/Mach services, native prompt monitoring, external egress, TLS, or canary runs.",
+    "instance": {
+      "P": 49174,
+      "Q": 49175,
+      "ownedIpv4": "192.168.64.20",
+      "fixedCaseIds": [
+        "tcp_allowed_ipv4",
+        "tcp_ipv6_loopback",
+        "tcp_ipv4_mapped",
+        "tcp_owned_nonloopback",
+        "tcp_other_port",
+        "udp_allowed_ipv4",
+        "udp_ipv6_loopback",
+        "udp_ipv4_mapped",
+        "udp_owned_nonloopback",
+        "udp_other_port"
+      ],
+      "schema": "network-address-fixture-instance-v3",
+      "fixtureSha256": "3aaed3508f2b41c34eadaaa0da2358260bbd1e8f80b5c03e92d12e4e755d816c",
+      "inheritedMarkersSha256": "77957649f5c5dcae8a4d17989c2c83f94a632780294f3d78fb67575fa979f787"
+    },
+    "instanceSha256": "adacf50c227021f7d82cebf81db025a217447cece0b8df97992c6da2f0215da8",
+    "startedMonotonic": 3.749359208,
+    "finishedMonotonic": 11.445127416,
+    "observationOnlyCases": [
+      "tcp_ipv4_mapped",
+      "tcp_owned_nonloopback",
+      "udp_ipv4_mapped",
+      "udp_owned_nonloopback"
+    ],
+    "allTenExpectationsQualified": false,
+    "contextHoldLatched": false
+  },
+  "profileSha256": "da1d2b349d7aee7a1763b4aebd22da4eff063c71ad4ba2a622661fdd9e725d9a",
+  "syntheticSentinelUnchanged": true,
+  "promptProcessesAfter": {
+    "SecurityAgent": 1,
+    "CoreAuthUI": 1
+  },
+  "parentMarkersUnchanged": true,
+  "sourceHashesAfter": {
+    "scripts/security-credential-canary": "ddb9629ec3d6f428f19f1db73c10f544e5114f1093346cc6957bb9bdcd70bbc7",
+    "scripts/security_credential_canary.py": "dac51ad02bfbde1a4d4d70c5a4ed564cba41c64cf47b59ae5090fd398a1ea05a",
+    "codex-rs/rust-toolchain.toml": "570656042681cfd8795403a455baf9a33035331a07db0645e866bbcea89a3d64",
+    "codex-rs/Cargo.lock": "3c62ca2fdc1d9fcc4b234dcf3ee6d0fd824faaa2e06aca8022ff418e1e051d9c"
+  },
+  "allOwnedListenersClosed": true,
+  "finishedAt": "2026-10-20T10:34:20.832892+00:00",
+  "rawStreamsRetainedInEphemeralJob": true,
+  "rawStreamsUploaded": true
+}
