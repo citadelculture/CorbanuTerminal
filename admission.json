@@ -1,0 +1,14 @@
+{
+  "approved": true,
+  "authenticatedKeyringSha256": "80a36b0a6de2f69f49d2df75ef473ccde121e9e190b9ea01d20a4f63778d5c31",
+  "bubblewrapPinsSha256": "6aed14f70eda83a81a81b8aedf382270c5a11ec7630c658767f76e2c9370d941",
+  "bubblewrapSetupSha256": "0f8130168e79a9b7bf2b6455c001c0c4838d0b16eb1036bedf116bbe70a41e77",
+  "controllerSha256": "e6752601c050dd5d70468b6792719649fc32e51c9522720b58bef4c90214851f",
+  "exclusiveInstallerSha256": "b51aab11599a67ff53b618b2e64084e1a8be6fc6452929064797fad7ceba6d36",
+  "keyringProvisionerSha256": "89636c931e7abc35f0bb6fdf62c8ce832ebf2d91f18425d09c42e43869161551",
+  "schema": "issue943-authenticated-current-admission-v3",
+  "scope": "Exact reviewed authenticated bootstrap and focused20-case paired qualification on pinned public c9d; no host override or human/release gate waiver.",
+  "sourceManifestSha256": "875de510e6bccc7fce77b6c15b93260489db7c5807d29cceb6457461efaa907f",
+  "toolsPinsSha256": "f8b7516351efb0a5eedf06b2b2a8006f67dcad632818611961840715b3ec4a30",
+  "workflowSha256": "b235a1a8024df84adafaae460e62dd8114195abc01fdbfe3aa7d848e353a32a4"
+}

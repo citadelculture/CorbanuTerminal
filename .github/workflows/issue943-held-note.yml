@@ -1,0 +1,85 @@
+name: Issue943 authenticated current-source qualification
+
+on:
+  push:
+    branches: [codex/issue943-authenticated-current-v3-20261020]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: issue943-held-note-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  qualify:
+    if: github.repository == 'citadelculture/CorbanuTerminal' && github.run_attempt == 1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - name: Measure capacity before source checkout or tool acquisition
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I -B - <<'PY'
+          import json, pathlib, shutil, sys
+          output = pathlib.Path("initial-resource-evidence")
+          output.mkdir()
+          free = shutil.disk_usage(".").free
+          floor = 30 * 1024 ** 3
+          result = {"stage": "before-source-and-tools", "freeBytesBefore": free,
+                    "minimumFreeBytes": floor, "passed": free >= floor,
+                    "testBodiesExecuted": 0, "qualification": False}
+          (output / "resource-preflight.json").write_text(json.dumps(result, indent=2) + "\n")
+          print("RESOURCE_PREFLIGHT_PASSED" if free >= floor else "RESOURCE_HOLD_NO_TESTS")
+          sys.exit(0 if free >= floor else 1)
+          PY
+      - name: Checkout reviewed control package
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: ${{ github.sha }}
+          path: control
+          fetch-depth: 1
+          persist-credentials: false
+          submodules: false
+          lfs: false
+      - name: Independently checkout exact public production base
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          repository: CorbanuCore/CorbanuTerminal
+          ref: c9dbae23b3d3f9753fc27a993479040b6b2735cd
+          path: source
+          fetch-depth: 1
+          persist-credentials: false
+          submodules: false
+          lfs: false
+      - name: One bounded paired qualification campaign
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I -B control/controller.py --dispatch \
+            --source "$GITHUB_WORKSPACE/source" \
+            --control "$GITHUB_WORKSPACE/control" \
+            --output "$GITHUB_WORKSPACE/public-evidence" \
+            --binaries "$GITHUB_WORKSPACE/qualification-binaries"
+      - name: Preserve complete normalized hosted evidence
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: issue943-held-note-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            initial-resource-evidence/
+            public-evidence/
+          if-no-files-found: warn
+          include-hidden-files: false
+          retention-days: 14
+      - name: Retain only bounded qualification binaries
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: issue943-held-note-binaries-${{ github.run_id }}-${{ github.run_attempt }}
+          path: qualification-binaries/
+          if-no-files-found: warn
+          include-hidden-files: false
+          compression-level: 6
+          retention-days: 14

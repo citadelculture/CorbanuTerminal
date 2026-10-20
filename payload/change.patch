@@ -1,0 +1,126 @@
+diff --git a/codex-rs/core/src/tools/orchestrator.rs b/codex-rs/core/src/tools/orchestrator.rs
+index 927f2cfe..cca4eaa3 100644
+--- a/codex-rs/core/src/tools/orchestrator.rs
++++ b/codex-rs/core/src/tools/orchestrator.rs
+@@ -215,6 +215,8 @@ impl ToolOrchestrator {
+             first_under = None;
+         }
+         let mut asked_again = false;
++        // #943: approval and retry can report the same hold. Keep this across stale rounds.
++        let mut git_held_note_sent = false;
+         for _ in 0..MAX_STALE_APPROVAL_ROUNDS {
+             // D50: the policy this round is decided under.
+             let decided_under = first_under
+@@ -228,6 +230,7 @@ impl ToolOrchestrator {
+                 approval_policy,
+                 asked_again,
+                 decided_under,
++                &mut git_held_note_sent,
+             ))
+             .await?
+             {
+@@ -268,6 +271,7 @@ impl ToolOrchestrator {
+         approval_policy: AskForApproval,
+         asked_again: bool,
+         decided_under: crate::state::AuthorityMarker,
++        git_held_note_sent: &mut bool,
+     ) -> Result<Round<Out>, ToolError>
+     where
+         T: ToolRuntime<Rq, Out>,
+@@ -948,8 +952,9 @@ impl ToolOrchestrator {
+         {
+             git_held_back = true;
+         }
+-        if git_held_back {
++        if git_held_back && !*git_held_note_sent {
+             warn(tool_ctx, &git_held_note(&git_held)).await;
++            *git_held_note_sent = true;
+         }
+         // A person's approval of this command when asked about it now: it
+         // counts for nothing below while the git check's findings stand
+@@ -1293,8 +1298,9 @@ impl ToolOrchestrator {
+                     post_taint.is_some(),
+                     network_approval_context.is_some(),
+                 );
+-                if unsandboxed_allowed && !git_held.is_empty() {
++                if unsandboxed_allowed && !git_held.is_empty() && !*git_held_note_sent {
+                     warn(tool_ctx, &git_held_note(&git_held)).await;
++                    *git_held_note_sent = true;
+                 }
+                 let unsandboxed_allowed = unsandboxed_allowed && git_held.is_empty();
+                 // Under `Never` or `OnRequest`, do not retry without sandbox;
+diff --git a/codex-rs/core/tests/suite/issue_874.rs b/codex-rs/core/tests/suite/issue_874.rs
+index bbca59b0..ce9cfe22 100644
+--- a/codex-rs/core/tests/suite/issue_874.rs
++++ b/codex-rs/core/tests/suite/issue_874.rs
+@@ -343,6 +343,70 @@ async fn issue_874_approval_does_not_lift_the_rules_while_a_finding_stands() ->
+     Ok(())
+ }
+ 
++/// #943 item 3: an approval held by a planted finding and the refused retry
++/// belong to one command. Keep the note once, with the protected read still held.
++#[tokio::test(flavor = "multi_thread", worker_threads = 2)]
++async fn issue_943_held_note_is_sent_once_when_approval_and_retry_are_held() -> anyhow::Result<()> {
++    skip_if_no_network!(Ok(()));
++    skip_if_sandbox!(Ok(()));
++    let mut wrong = Vec::new();
++    for planted in [false, true] {
++        let outside = TempDir::new()?;
++        let outside_path = outside.path().canonicalize()?;
++        std::fs::write(outside_path.join("zshrc"), "# start-up\n")?;
++        let home = Arc::new(TempDir::new()?);
++        let auth = home.path().canonicalize()?.join("auth.json");
++        std::fs::write(&auth, CANARY)?;
++        let first = if planted {
++            plant(&outside_path)
++        } else {
++            "printf 'tidied'".to_string()
++        };
++        let (run, _) = run(
++            SecurityLevel::Moderate,
++            Setting::FullAccess,
++            home,
++            vec![
++                step("call-first", json!({ "command": first })),
++                step(
++                    "call-read",
++                    json!({
++                        "command": format!("cat '{}'", auth.display()),
++                        "sandbox_permissions": "require_escalated",
++                        "justification": "check the sign-in",
++                    }),
++                ),
++            ],
++        )
++        .await?;
++        let held_notes = run
++            .warnings
++            .iter()
++            .filter(|warning| {
++                warning.starts_with("The approval doesn't lift the protected-file rules")
++            })
++            .collect::<Vec<_>>();
++        let expected_held_note_count = usize::from(planted);
++        if held_notes.len() != expected_held_note_count {
++            wrong.push(format!(
++                "planted={planted}: expected {expected_held_note_count} held-back note(s), got {}: \
++                 {held_notes:?}",
++                held_notes.len()
++            ));
++        }
++        let read = output(&run.requests, "call-read");
++        // Asked and approved either way; lifted only without the finding.
++        if run.asked == 0 || read.contains(CANARY) == planted {
++            wrong.push(format!(
++                "planted={planted}: asked={} warnings={:?} read={read}",
++                run.asked, run.warnings
++            ));
++        }
++    }
++    assert_eq!(wrong, Vec::<String>::new());
++    Ok(())
++}
++
+ /// Merge review (#926 with D27 (a), #891): while a finding stands in a
+ /// project (found by any session of this process), a person's approval of
+ /// a command there doesn't let its run create user namespaces either: in
