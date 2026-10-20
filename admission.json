@@ -1,5 +1,5 @@
 {
-  "approved": false,
+  "approved": true,
   "controllerSha256": "7244cd51ac92e1ca98a1a9a45f5e3cd2a296d2fb6a2398bcb2ccf2dd1ad41dee",
   "scope": "Root review and normal approval required for one exact thirteen-case original/candidate command-environment campaign. No actual Rust outcome yet.",
   "sourceManifestSha256": "3f8f12d0e52bf6327ea5371ef4f0f3e3f0ce335faf6d876ec7b19f3fa1e6d26f",
