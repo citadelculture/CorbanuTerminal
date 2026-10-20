@@ -1,0 +1,74 @@
+{
+  "schema": "issue928-spool-lock-hosted-source-v1",
+  "baseCommit": "8643c121acc1104c49bf65f9a018977bec19ae8d",
+  "candidateCommit": "a527effa66060ecdce336d89a62c17c5ef6eadde",
+  "files": [
+    {
+      "path": "codex-rs/state/src/runtime/accounting_writer.rs",
+      "originalSha256": "9c4dd33a7f4265012339929097c20209a52ec283142187ef779fcf02ebbf5790",
+      "candidateSha256": "523c6910bd44892fa8bc1bd39b0c2622bdce5a4dd681e6d8717f62c732e17451",
+      "payload": "payload/accounting_writer.rs",
+      "baselineSha256": "9c4dd33a7f4265012339929097c20209a52ec283142187ef779fcf02ebbf5790",
+      "baselinePayload": "payload/accounting_writer.baseline.rs"
+    },
+    {
+      "path": "codex-rs/state/src/runtime/accounting_writer_tests.rs",
+      "originalSha256": "5b41e100559a3329e787b3170fae9785cf0a485e1e7e6967ab20d1b6344bc108",
+      "candidateSha256": "8676ef9b6fd6c81a1092a2f5532d56d77dad3a9ba50e0a81651d5f6c0922dcee",
+      "payload": "payload/accounting_writer_tests.rs"
+    }
+  ],
+  "patch": {
+    "path": "payload/change.patch",
+    "sha256": "aee0a8a2096f1e3f0b0b111cd36819281499b87211f951bbe38e6d7a3f5aa8e0"
+  },
+  "baselinePatch": {
+    "path": "payload/baseline-fixture.patch",
+    "sha256": "375bf1d4e3d0b3d640168126fd9da422929b12db5b57c37d4075071c8c662d65"
+  },
+  "productionTransitionPatch": {
+    "path": "payload/production-only.patch",
+    "sha256": "88da94e16e7465a2dafaf27598cb4590034efe5099d927c1f96dab9116755eb7"
+  },
+  "selectedCases": [
+    "runtime::accounting::store::writer::tests::the_final_spool_owner_releases_its_lock_with_a_retained_descriptor"
+  ],
+  "sourceCases": [
+    "runtime::accounting::store::writer::tests::records_are_written_in_order_and_their_files_removed",
+    "runtime::accounting::store::writer::tests::a_busy_state_db_puts_records_off_without_waiting_and_loses_none",
+    "runtime::accounting::store::writer::tests::records_an_exited_process_left_are_written_once",
+    "runtime::accounting::store::writer::tests::a_refused_record_is_an_error_and_not_kept",
+    "runtime::accounting::store::writer::tests::a_record_waits_for_its_conversation_row",
+    "runtime::accounting::store::writer::tests::adopted_usage_waits_for_its_admission",
+    "runtime::accounting::store::writer::tests::the_owner_day_query_uses_the_lookup_index",
+    "runtime::accounting::store::writer::tests::without_a_pending_folder_records_are_written_and_the_writer_idles",
+    "runtime::accounting::store::writer::tests::lock_files_without_records_are_swept_only_when_old",
+    "runtime::accounting::store::writer::tests::settling_does_not_wait_for_parked_records",
+    "runtime::accounting::store::writer::tests::the_hourly_validation_waits_for_the_lease",
+    "runtime::accounting::store::writer::tests::an_adopted_retry_waits_for_its_predecessor",
+    "runtime::accounting::store::writer::tests::ten_sessions_on_one_home_wait_briefly_and_lose_no_record",
+    "runtime::accounting::store::writer::tests::the_final_spool_owner_releases_its_lock_with_a_retained_descriptor",
+    "runtime::accounting::store::writer::tests::a_dropped_validation_lease_is_free_while_a_forked_child_holds_its_descriptor",
+    "runtime::accounting::store::writer::tests::a_dropped_claim_is_free_while_a_forked_child_holds_its_descriptor"
+  ],
+  "redCases": [
+    {
+      "name": "runtime::accounting::store::writer::tests::the_final_spool_owner_releases_its_lock_with_a_retained_descriptor",
+      "panicLine": 725,
+      "requiredPatterns": [
+        "the\\ final\\ owner's\\ lock\\ remains\\ held\\ through\\ a\\ retained\\ descriptor"
+      ]
+    }
+  ],
+  "sourcePreparationSha256": "1b3f8fcdeab7e9a80f5acd83a2f73735fb193fba1047f905f05d4f48a9c465a1",
+  "formatterReceiptSha256": "0ffcba2b1fca0b74c868c3b6332207621957a5bb26dab7e1ed8b8b7482854584",
+  "sourceReviewSha256": "039075cd163fc953cc995798ce71960e98641c3404ac970b29b5fedccb7e678f",
+  "baselineLimitation": "Unmodified exact-base production with the identical final frozen test file. New test only; no instrumentation or mechanical production seam.",
+  "liveOwnerControls": "Two live-owner assertions execute inside the one selected test; never counted as separate tests.",
+  "fullPackageQualification": false,
+  "platformScope": "Hosted Linux retained-descriptor semantics only; cfg(unix) remains unchanged; no Windows/macOS or fork inheritance claim.",
+  "excludedExistingForkCases": [
+    "runtime::accounting::store::writer::tests::a_dropped_validation_lease_is_free_while_a_forked_child_holds_its_descriptor",
+    "runtime::accounting::store::writer::tests::a_dropped_claim_is_free_while_a_forked_child_holds_its_descriptor"
+  ]
+}

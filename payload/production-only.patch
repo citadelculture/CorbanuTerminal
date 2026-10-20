@@ -1,0 +1,17 @@
+diff --git a/codex-rs/state/src/runtime/accounting_writer.rs b/codex-rs/state/src/runtime/accounting_writer.rs
+index 80ebf60d..889dc509 100644
+--- a/codex-rs/state/src/runtime/accounting_writer.rs
++++ b/codex-rs/state/src/runtime/accounting_writer.rs
+@@ -300,6 +300,12 @@ struct Spool {
+     _lock: std::fs::File,
+ }
+ 
++impl Drop for Spool {
++    fn drop(&mut self) {
++        let _ = self._lock.unlock();
++    }
++}
++
+ impl Spool {
+     fn open(home: &Path) -> std::io::Result<Self> {
+         let dir = home.join(PENDING_DIR);

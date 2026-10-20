@@ -1,0 +1,42 @@
+diff --git a/codex-rs/state/src/runtime/accounting_writer_tests.rs b/codex-rs/state/src/runtime/accounting_writer_tests.rs
+index e5db3331..6194fd97 100644
+--- a/codex-rs/state/src/runtime/accounting_writer_tests.rs
++++ b/codex-rs/state/src/runtime/accounting_writer_tests.rs
+@@ -702,6 +702,37 @@ async fn ten_sessions_on_one_home_wait_briefly_and_lose_no_record() -> anyhow::R
+     Ok(())
+ }
+ 
++/// The final spool owner releases its lock even if a duplicated descriptor
++/// remains open, so another writer can claim its leftover records immediately.
++#[cfg(unix)]
++#[test]
++fn the_final_spool_owner_releases_its_lock_with_a_retained_descriptor() {
++    let home = home();
++    let spool = Arc::new(Spool::open(&home).expect("open spool"));
++    let dir = spool.dir.clone();
++    let process = spool.process.clone();
++    let retained = spool._lock.try_clone().expect("retain spool descriptor");
++    let other_owner = Arc::clone(&spool);
++
++    assert!(claim(&dir, &process).is_none(), "the live spool is held");
++    drop(spool);
++    assert!(
++        claim(&dir, &process).is_none(),
++        "another spool owner still holds the lock"
++    );
++    drop(other_owner);
++    let claimed = claim(&dir, &process);
++    assert!(
++        claimed.is_some(),
++        "the final owner's lock remains held through a retained descriptor"
++    );
++    assert_eq!(
++        claimed.expect("claim released spool").path,
++        Some(dir.join(format!("{process}.lock")))
++    );
++    drop(retained);
++}
++
+ /// Fork a child that keeps a copy of every descriptor of this process open
+ /// for 2 s before it starts its program (as any spawn does until exec), and
+ /// return once it has forked. #928: a lock released only by closing its file

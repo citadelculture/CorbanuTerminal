@@ -1,0 +1,55 @@
+Issue928 accounting Spool final-owner lock qualification
+
+Source base: 8643c121acc1104c49bf65f9a018977bec19ae8d
+Prepared contribution commit: a527effa66060ecdce336d89a62c17c5ef6eadde
+Scope: one Unix-guarded retained-descriptor regression on hosted Linux. No
+full-state suite, actual fork inheritance, other-platform or product-workflow claim.
+
+Baseline uses the unmodified pinned production file plus the final frozen test
+file. Candidate changes only production to the prepared contribution bytes;
+both variants use the identical test file. Its two live-owner assertions are
+controls inside one test, never separately counted cases. The baseline must
+reach the final-owner reacquisition assertion at accounting_writer_tests.rs:725
+with exactly "the final owner's lock remains held through a retained descriptor".
+A setup, compile, wrong assertion, missing/ignored body, retry or timeout is HOLD.
+Candidate must pass this same test, including exact original claimed lock path.
+
+Ordinary command core, both stages:
+just test -p codex-state --lib --locked --offline -E 'test(=runtime::accounting::store::writer::tests::the_final_spool_owner_releases_its_lock_with_a_retained_descriptor)'
+The frozen controller also supplies owned nextest config/store, red or green
+profile, one test thread, zero retries, no-tests fail, complete final output and
+60-second per-test fail timeout. Expected selected counts: red1run/0pass/1fail;
+green1run/1pass/0fail; zero selected skips in either. Excluded tests are recorded
+separately, including existing fork fixtures which are not selected.
+
+Each variant runs full ordinary just fmt and requires no source changes. The
+candidate then runs cargo fmt -p codex-state -- --check and ordinary
+just clippy -p codex-state --lib --locked --offline -- -D warnings before its
+final test. The repository clippy recipe also adds --tests. Source hashes are
+verified before/after formatting, checks and test stages. No format override.
+
+Controller is inert unless explicitly dispatched with exact admission true,
+controller/source/tool/workflow hashes and the fixed fresh GitHub-hosted
+nonroot ubuntu-24.04 x86_64 push/attempt1 context. Admission is false in this
+frozen preparation. Root must perform independent review and normal reviewed
+publication before a future dispatch. Never invoke this product campaign locally.
+
+Runtime command (only in that admitted hosted context):
+python3 -I -B control/controller.py --dispatch --source "$GITHUB_WORKSPACE/source" --control "$GITHUB_WORKSPACE/control" --output "$GITHUB_WORKSPACE/public-evidence" --binaries "$GITHUB_WORKSPACE/qualification-binaries"
+
+Unchanged owned-command supervision, inherited HOME/CODEX_HOME and sandbox
+markers, debug native-keyring denial and the ordinary repository isolation
+wrapper apply. Source/tool download pins are exact; no token/config credential
+propagation, version fallback, global installation, privileged service, chroot,
+mount or broker action. Public downloads precede locked offline compilation.
+Task-owned caches/targets/configs only; no inherited home replacement.
+
+Resource bounds: 120-minute job, 6900-second campaign; 30GiB before first
+compile, 8GiB before reused-target compile/Clippy, 4GiB running stop floor;
+2 build jobs; 16MiB per stream/XML, 512MiB per binary and1GiB binary total.
+Each command retains bounded raw digest/size plus complete normalized streams
+and transcript; literal path normalization removes no lines. XML is retained
+before classification, including on failure. Qualification requires owned child
+cleanup and unchanged inherited markers/homes. No unchanged rerun.
+
+This is a method frozen before execution. Actual product outcomes remain pending.

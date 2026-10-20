@@ -1,0 +1,9 @@
+{
+  "schema": "issue928-spool-lock-hosted-admission-v1",
+  "approved": true,
+  "scope": "single-selected-spool-lock-paired-qualification-only",
+  "controllerSha256": "a23347f76da7da2d2d6b79229e852ed9eee2f74fc87927805bf5b9780e7056e8",
+  "sourceManifestSha256": "36a40bc8cbecad552e97de1fc142b432e5475a5d7135633e4b0d3522c3e438bf",
+  "toolsPinsSha256": "e17a320d95bda95c2b247b4e27f33a480911e82c6cb5f3dfc3ef13c867effb83",
+  "workflowSha256": "a4dde5c623da0cc9a65204c47caeafb67de69871b20e0330d0c66b3977988a22"
+}
