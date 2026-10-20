@@ -1,0 +1,214 @@
+{
+  "actualRustResults": null,
+  "additionalExistingControls": [
+    "security::tainted_action::tests::pf_30_s03_everyday_commands_stay_quiet",
+    "security::tainted_action::tests::issue_885_nested_shell_scripts_are_judged",
+    "security::tainted_action::tests::pf_23_s01_wrapper_positions_are_bounded"
+  ],
+  "authorBaselinePatchSha256": "f6d3bda9d1d41a814156f43ef0a494a946c2b038c736377546b62442ca2e8aa2",
+  "authorPatchSha256": "fc128c51447e01dd1436792c919c6d7c2c0264a274bbbab8cede223d91a28547",
+  "baseCommit": "27789468a486431861f9e409b0dafc28cf62de86",
+  "baselineExpected": [
+    13,
+    8,
+    5
+  ],
+  "baselineLimitation": "Unmodified original three-file production plus same final formatted fixture; no command_env.rs module on baseline.",
+  "baselinePatch": {
+    "path": "payload/baseline-fixture.patch",
+    "sha256": "9b6ba8bc3163e2f0b951577c8203066a62f4c0c02b85cc4b0ff6b9a89a21d14c"
+  },
+  "candidateExpected": [
+    13,
+    13,
+    0
+  ],
+  "candidatePatchSha256": "ba893dfb7e91c6bbda31a36560d35e9d1761cd41d33488f40dcd3f27f3db2b56",
+  "files": [
+    {
+      "baselinePayload": "payload/tainted_action.baseline.rs",
+      "baselineSha256": "8f8e871195ac263c01f96f2acbda26d030e87dd0aad0eebe503a067cf320e846",
+      "candidateSha256": "d93792a8592b4023885ee759ac413d78787d69719e1a259f9a531fa0ea1fda17",
+      "originalSha256": "8f8e871195ac263c01f96f2acbda26d030e87dd0aad0eebe503a067cf320e846",
+      "path": "codex-rs/core/src/security/tainted_action.rs",
+      "payload": "payload/tainted_action.rs"
+    },
+    {
+      "baselinePayload": "payload/nested.baseline.rs",
+      "baselineSha256": "d832a710e6881a45d7822a83b4db37c79272d7a6afd0f1109c229572c2a0e319",
+      "candidateSha256": "8a3836a22fa9358314e15f37e745a343c1053c63566250e7bbdd8b2f53aa60ca",
+      "originalSha256": "d832a710e6881a45d7822a83b4db37c79272d7a6afd0f1109c229572c2a0e319",
+      "path": "codex-rs/core/src/security/tainted_action/nested.rs",
+      "payload": "payload/nested.rs"
+    },
+    {
+      "baselinePayload": "payload/indirect.baseline.rs",
+      "baselineSha256": "0bda1b01359059ace39380847ac3e8232df537fb3a2d1ee5a65620fcb02c76a0",
+      "candidateSha256": "7cd1fb9dd47b2a4ad7fd403af74f3835e309eb701fa1539269b7221f62749ee9",
+      "originalSha256": "0bda1b01359059ace39380847ac3e8232df537fb3a2d1ee5a65620fcb02c76a0",
+      "path": "codex-rs/core/src/security/tainted_action/indirect.rs",
+      "payload": "payload/indirect.rs"
+    },
+    {
+      "baselineState": "absent",
+      "candidateSha256": "dcf9a2ee9d94d8cdbf03f7cb54f5f1a098e456192130c855c9031a12e27ba315",
+      "originalSha256": null,
+      "originalState": "absent",
+      "path": "codex-rs/core/src/security/tainted_action/command_env.rs",
+      "payload": "payload/command_env.rs"
+    },
+    {
+      "candidateSha256": "78bcfb1eb3956e7eacde05a5480c2b7301d0f5b2634af99236225b97c126c378",
+      "originalSha256": "6165f0ad64a54b106358dbc1c597a5625c0deed0ff9e42e6ec7f5cdec8140d1d",
+      "path": "codex-rs/core/src/security/tainted_action_tests.rs",
+      "payload": "payload/tainted_action_tests.rs"
+    }
+  ],
+  "fixtureFreezeSha256": "f39b736a8c3a6359ce6653fc2613c93e4eda0d88350bb3f6a35ccb5de87da758",
+  "formattedBindingReviewSha256": "97ea43ed18803d07f470119373dc5c945a41c84389592e123c026b45b282d2d6",
+  "fullPackageQualification": false,
+  "patch": {
+    "path": "payload/change.patch",
+    "sha256": "ba893dfb7e91c6bbda31a36560d35e9d1761cd41d33488f40dcd3f27f3db2b56"
+  },
+  "patchRepresentation": "Canonical Git --binary --full-index HEAD; exact frozen five-file candidate and unchanged test fixture; new command_env.rs bound by intent-to-add and absent on baseline.",
+  "productionTransitionPatch": {
+    "path": "payload/production-only.patch",
+    "sha256": "e02988390d037b3c0244055b93abf6155156b3440f6822c975f09309c901f0e6"
+  },
+  "redCases": [
+    {
+      "customMessage": "GIT_PAGER='touch marker' git log",
+      "expectedLeftDebug": "None",
+      "expectedRightDebug": "Some(UnseenCode)",
+      "messageRegex": "(?m)^assertion\\ failed:\\ `\\(left\\ ==\\ right\\)`:\\ GIT_PAGER='touch\\ marker'\\ git\\ log\\n\\nDiff < left / right > :\\n<None\\n>Some\\(\\n>    UnseenCode,\\n>\\)\\n",
+      "name": "security::tainted_action::tests::issue_1142_command_environment_prefixes_ask",
+      "panicLine": 3174,
+      "siteRegex": "(?:^|[ /])(?:core/src/)?security/tainted_action_tests\\.rs:3174:[0-9]+"
+    },
+    {
+      "customMessage": "GIT_PAGER='touch marker'; git log",
+      "expectedLeftDebug": "None",
+      "expectedRightDebug": "Some(UnseenCode)",
+      "messageRegex": "(?m)^assertion\\ failed:\\ `\\(left\\ ==\\ right\\)`:\\ GIT_PAGER='touch\\ marker';\\ git\\ log\\n\\nDiff < left / right > :\\n<None\\n>Some\\(\\n>    UnseenCode,\\n>\\)\\n",
+      "name": "security::tainted_action::tests::issue_1142_command_environment_writers_ask",
+      "panicLine": 3211,
+      "siteRegex": "(?:^|[ /])(?:core/src/)?security/tainted_action_tests\\.rs:3211:[0-9]+"
+    },
+    {
+      "customMessage": "GIT_PAGER='touch marker' bash -lc 'git log'",
+      "expectedLeftDebug": "None",
+      "expectedRightDebug": "Some(UnseenCode)",
+      "messageRegex": "(?m)^assertion\\ failed:\\ `\\(left\\ ==\\ right\\)`:\\ GIT_PAGER='touch\\ marker'\\ bash\\ \\-lc\\ 'git\\ log'\\n\\nDiff < left / right > :\\n<None\\n>Some\\(\\n>    UnseenCode,\\n>\\)\\n",
+      "name": "security::tainted_action::tests::issue_1142_command_environment_is_inherited_by_shell_scripts",
+      "panicLine": 3231,
+      "siteRegex": "(?:^|[ /])(?:core/src/)?security/tainted_action_tests\\.rs:3231:[0-9]+"
+    },
+    {
+      "customMessage": "LESSOPEN='touch marker' less notes",
+      "expectedLeftDebug": "None",
+      "expectedRightDebug": "Some(UnseenCode)",
+      "messageRegex": "(?m)^assertion\\ failed:\\ `\\(left\\ ==\\ right\\)`:\\ LESSOPEN='touch\\ marker'\\ less\\ notes\\n\\nDiff < left / right > :\\n<None\\n>Some\\(\\n>    UnseenCode,\\n>\\)\\n",
+      "name": "security::tainted_action::tests::issue_1142_command_environment_pager_consumers_ask",
+      "panicLine": 3254,
+      "siteRegex": "(?:^|[ /])(?:core/src/)?security/tainted_action_tests\\.rs:3254:[0-9]+"
+    },
+    {
+      "customMessage": "GIT_PAGER='touch marker'; unset GIT_PAGER; git log",
+      "expectedLeftDebug": "None",
+      "expectedRightDebug": "Some(UnseenCode)",
+      "messageRegex": "(?m)^assertion\\ failed:\\ `\\(left\\ ==\\ right\\)`:\\ GIT_PAGER='touch\\ marker';\\ unset\\ GIT_PAGER;\\ git\\ log\\n\\nDiff < left / right > :\\n<None\\n>Some\\(\\n>    UnseenCode,\\n>\\)\\n",
+      "name": "security::tainted_action::tests::issue_1142_command_environment_conservative_boundaries_ask",
+      "panicLine": 3278,
+      "siteRegex": "(?:^|[ /])(?:core/src/)?security/tainted_action_tests\\.rs:3278:[0-9]+"
+    }
+  ],
+  "requiredNewCases": [
+    "security::tainted_action::tests::issue_1142_command_environment_prefixes_ask",
+    "security::tainted_action::tests::issue_1142_command_environment_writers_ask",
+    "security::tainted_action::tests::issue_1142_command_environment_is_inherited_by_shell_scripts",
+    "security::tainted_action::tests::issue_1142_command_environment_pager_consumers_ask",
+    "security::tainted_action::tests::issue_1142_command_environment_conservative_boundaries_ask",
+    "security::tainted_action::tests::issue_1142_command_environment_temporary_writes_do_not_escape",
+    "security::tainted_action::tests::issue_1142_command_environment_data_and_unrelated_consumers_stay_data",
+    "security::tainted_action::tests::issue_1142_command_environment_inspection_and_option_values_stay_data",
+    "security::tainted_action::tests::issue_1142_command_environment_literal_pager_defaults_stay_safe",
+    "security::tainted_action::tests::issue_1142_command_environment_does_not_replace_stronger_findings"
+  ],
+  "schema": "issue1142-command-env-hosted-source-v1",
+  "scope": "Ten new command-environment classifier cases and three explicitly added existing controls; no complete shell/environment grammar, native enforcement or whole-product release claim.",
+  "selectedCases": [
+    "security::tainted_action::tests::issue_1142_command_environment_prefixes_ask",
+    "security::tainted_action::tests::issue_1142_command_environment_writers_ask",
+    "security::tainted_action::tests::issue_1142_command_environment_is_inherited_by_shell_scripts",
+    "security::tainted_action::tests::issue_1142_command_environment_pager_consumers_ask",
+    "security::tainted_action::tests::issue_1142_command_environment_conservative_boundaries_ask",
+    "security::tainted_action::tests::issue_1142_command_environment_temporary_writes_do_not_escape",
+    "security::tainted_action::tests::issue_1142_command_environment_data_and_unrelated_consumers_stay_data",
+    "security::tainted_action::tests::issue_1142_command_environment_inspection_and_option_values_stay_data",
+    "security::tainted_action::tests::issue_1142_command_environment_literal_pager_defaults_stay_safe",
+    "security::tainted_action::tests::issue_1142_command_environment_does_not_replace_stronger_findings",
+    "security::tainted_action::tests::pf_30_s03_everyday_commands_stay_quiet",
+    "security::tainted_action::tests::issue_885_nested_shell_scripts_are_judged",
+    "security::tainted_action::tests::pf_23_s01_wrapper_positions_are_bounded"
+  ],
+  "sourceCaseCount": 54,
+  "sourceCases": [
+    "security::tainted_action::tests::pf_30_s03_vault_credential_and_policy_commands_are_protected",
+    "security::tainted_action::tests::pf_30_s03_ordinary_commands_are_not_protected",
+    "security::tainted_action::tests::pf_30_s03_patches_into_the_home_or_credential_files_are_protected",
+    "security::tainted_action::tests::pf_30_s03_a_custom_home_matches_as_a_whole_segment_run",
+    "security::tainted_action::tests::pf_30_s03_indirect_routes_are_protected",
+    "security::tainted_action::tests::pf_30_s03_indirect_checks_leave_ordinary_commands_alone",
+    "security::tainted_action::tests::pf_30_s03_symlinks_and_canonical_spellings_reach_the_home",
+    "security::tainted_action::tests::pf_30_s03_script_files_and_patched_scripts_are_read",
+    "security::tainted_action::tests::pf_30_s03_research_workflow_prompt_count_and_latency",
+    "security::tainted_action::tests::issue_239_protected_paths_apply_under_protected_level_before_taint",
+    "security::tainted_action::tests::issue_239_human_approval_lifts_rules_only_under_bound_moderate",
+    "security::tainted_action::tests::pf_30_s03_approval_is_bound_to_taint_and_policy",
+    "security::tainted_action::tests::pf_30_s03_review_bypasses_are_closed",
+    "security::tainted_action::tests::pf_30_s03_script_limits_fail_closed_and_patches_follow_symlinks",
+    "security::tainted_action::tests::pf_30_s03_review_2_bypasses_are_closed",
+    "security::tainted_action::tests::pf_30_s03_everyday_commands_stay_quiet",
+    "security::tainted_action::tests::pf_30_s03_review_3_bypasses_are_closed",
+    "security::tainted_action::tests::pf_23_s01_value_transfer_and_outbound_content_are_protected",
+    "security::tainted_action::tests::pf_23_s01_wrapper_positions_are_bounded",
+    "security::tainted_action::tests::pf_23_s02_persistence_writes_are_protected",
+    "security::tainted_action::tests::issue_442_corbanu_home_variables_name_the_home",
+    "security::tainted_action::tests::issue_442_aggressive_credential_reads_say_they_are_never_granted",
+    "security::tainted_action::tests::issue_841_sed_edits_are_not_unseen_code",
+    "security::tainted_action::tests::issue_841_text_only_sed_programs",
+    "security::tainted_action::tests::issue_885_sed_that_runs_commands_is_unseen_code",
+    "security::tainted_action::tests::issue_885_nested_shell_scripts_are_judged",
+    "security::tainted_action::tests::issue_885_sed_writing_a_file_the_line_runs_is_unseen_code",
+    "security::tainted_action::tests::issue_885_review_1_routes_and_limits",
+    "security::tainted_action::tests::issue_885_review_2_routes_and_limits",
+    "security::tainted_action::tests::issue_885_review_3_routes",
+    "security::tainted_action::tests::issue_937_arithmetic_on_filled_variables_is_unseen_code",
+    "security::tainted_action::tests::issue_937_counters_and_plain_uses_are_not_unseen_code",
+    "security::tainted_action::tests::issue_937_review_1_routes",
+    "security::tainted_action::tests::issue_937_review_1_everyday_lines_still_run",
+    "security::tainted_action::tests::issue_937_review_2_routes",
+    "security::tainted_action::tests::issue_937_review_2_everyday_lines_still_run",
+    "security::tainted_action::tests::issue_937_review_6_fallback_routes",
+    "security::tainted_action::tests::issue_1020_deep_substitutions_stay_fast_and_ask",
+    "security::tainted_action::tests::issue_1020_deep_nesting_is_classified_quickly",
+    "security::tainted_action::tests::issue_1012_prompt_transformation_is_unseen_code",
+    "security::tainted_action::tests::issue_1028_glob_qualifiers_that_run_code_are_unseen_code",
+    "security::tainted_action::tests::issue_1065_substituted_values_are_capped",
+    "security::tainted_action::tests::issue_1065_review_1_limits",
+    "security::tainted_action::tests::issue_1065_review_2_large_values_are_judged_once",
+    "security::tainted_action::tests::issue_1142_command_environment_prefixes_ask",
+    "security::tainted_action::tests::issue_1142_command_environment_writers_ask",
+    "security::tainted_action::tests::issue_1142_command_environment_is_inherited_by_shell_scripts",
+    "security::tainted_action::tests::issue_1142_command_environment_pager_consumers_ask",
+    "security::tainted_action::tests::issue_1142_command_environment_conservative_boundaries_ask",
+    "security::tainted_action::tests::issue_1142_command_environment_temporary_writes_do_not_escape",
+    "security::tainted_action::tests::issue_1142_command_environment_data_and_unrelated_consumers_stay_data",
+    "security::tainted_action::tests::issue_1142_command_environment_inspection_and_option_values_stay_data",
+    "security::tainted_action::tests::issue_1142_command_environment_literal_pager_defaults_stay_safe",
+    "security::tainted_action::tests::issue_1142_command_environment_does_not_replace_stronger_findings"
+  ],
+  "sourcePreparationSha256": "9622c42677da62168eb403d210b13b1506b7923eb3d60b2c4a8e0dfd76056848",
+  "sourceReviewSha256": "7f1c917c637ba5eaff172f124e8c1ebcd0a42b8dedff4efad9929510298d4538"
+}

@@ -1,0 +1,222 @@
+diff --git a/codex-rs/core/src/security/tainted_action_tests.rs b/codex-rs/core/src/security/tainted_action_tests.rs
+index b24a37091078d1199cfb4157ea70dfa3afb869a3..92059860d40f8f884aea345c582667a10be534f6 100644
+--- a/codex-rs/core/src/security/tainted_action_tests.rs
++++ b/codex-rs/core/src/security/tainted_action_tests.rs
+@@ -3151,3 +3151,217 @@ fn issue_1065_review_2_large_values_are_judged_once() {
+     assert_eq!(many.1, few.1);
+     assert!(many.2 - few.2 <= 8 * 997 * 2, "{few:?} {many:?}");
+ }
++
++/// #1142: these values are programs, even when their literal shell text
++/// does not itself mention a protected path. No Git/pager is executed.
++#[test]
++fn issue_1142_command_environment_prefixes_ask() {
++    for name in [
++        "GIT_PAGER",
++        "PAGER",
++        "GIT_EDITOR",
++        "EDITOR",
++        "VISUAL",
++        "GIT_SEQUENCE_EDITOR",
++        "GIT_SSH",
++        "GIT_SSH_COMMAND",
++        "GIT_EXTERNAL_DIFF",
++        "GIT_ASKPASS",
++        "LESSOPEN",
++        "LESSCLOSE",
++    ] {
++        let line = format!("{name}='touch marker' git log");
++        assert_eq!(
++            script(&line),
++            Some(ProtectedActionKind::UnseenCode),
++            "{line}"
++        );
++    }
++    for line in [
++        "env GIT_PAGER='touch marker' git log",
++        "env -i GIT_PAGER='touch marker' git log",
++        "env -- GIT_PAGER='touch marker' /usr/bin/git log",
++        "GIT_PAGER='touch marker' command -- git log",
++        "export GIT_PAGER=marker; timeout -k 1 2 nice -n 1 git log",
++    ] {
++        assert_eq!(
++            script(line),
++            Some(ProtectedActionKind::UnseenCode),
++            "{line}"
++        );
++    }
++}
++
++#[test]
++fn issue_1142_command_environment_writers_ask() {
++    for line in [
++        "GIT_PAGER='touch marker'; git log",
++        "export GIT_PAGER='touch marker'; git log",
++        "declare -x GIT_PAGER='touch marker'; git log",
++        "typeset -x GIT_PAGER='touch marker'; git log",
++        "readonly GIT_PAGER='touch marker'; git log",
++        "printf -v GIT_PAGER %s 'touch marker'; git log",
++        "printf -v PAGER %s 'touch marker'; git log",
++        "builtin printf -vGIT_PAGER %s 'touch marker'; git log",
++        "read -r GIT_PAGER; git log",
++        "read -t 1 -r GIT_PAGER; git log",
++        "read -a GIT_PAGER; git log",
++        "GIT_PAGER+=cat; git log",
++    ] {
++        assert_eq!(
++            script(line),
++            Some(ProtectedActionKind::UnseenCode),
++            "{line}"
++        );
++    }
++}
++
++#[test]
++fn issue_1142_command_environment_is_inherited_by_shell_scripts() {
++    for line in [
++        "GIT_PAGER='touch marker' bash -lc 'git log'",
++        "export GIT_PAGER='touch marker'; bash -lc 'git log'",
++        "export GIT_PAGER=marker; env --split-string='git log'",
++        "GIT_PAGER=marker env --split-string='git log'",
++        "export GIT_PAGER=marker; command env --split-string='git log'",
++        "export GIT_PAGER=marker; flock guard --command='git log'",
++        "env GIT_PAGER='touch marker' sh -c 'git log'",
++        "printf %s \"$(printf -v GIT_PAGER %s 'touch marker'; git log)\"",
++    ] {
++        assert_eq!(
++            script(line),
++            Some(ProtectedActionKind::UnseenCode),
++            "{line}"
++        );
++    }
++    assert_eq!(
++        kind(&["env", "GIT_PAGER=touch marker", "bash", "-lc", "git log"]),
++        Some(ProtectedActionKind::UnseenCode),
++    );
++}
++
++#[test]
++fn issue_1142_command_environment_pager_consumers_ask() {
++    for line in [
++        "LESSOPEN='touch marker' less notes",
++        "export LESSCLOSE='touch marker'; less notes",
++        "EDITOR='touch marker' less notes",
++        "VISUAL='touch marker' less notes",
++        "PAGER='touch marker' man git",
++        "MANPAGER='touch marker' man git",
++        "LESSOPEN='touch marker' man git",
++    ] {
++        assert_eq!(
++            script(line),
++            Some(ProtectedActionKind::UnseenCode),
++            "{line}"
++        );
++    }
++}
++
++/// A later reset does not prove which branch ran. This is a conservative
++/// command-line analysis, not a shell/environment evaluator.
++#[test]
++fn issue_1142_command_environment_conservative_boundaries_ask() {
++    for line in [
++        "GIT_PAGER='touch marker'; unset GIT_PAGER; git log",
++        "GIT_PAGER='touch marker'; GIT_PAGER=cat; git log",
++        "if false; then GIT_PAGER='touch marker'; fi; git log",
++        "GIT_PAGER='touch marker'; env -u GIT_PAGER git log",
++        // The word reader does not retain whether the assignment operator
++        // itself was quoted. Preserve that conservative ambiguity.
++        "'GIT_PAGER=marker' git log",
++        // Direct data writes do not contribute, but the existing shared
++        // script discovery may re-read shell-shaped quoted data as code.
++        "printf '%s' \"bash -c 'GIT_PAGER=marker; git log'\"",
++    ] {
++        assert_eq!(
++            script(line),
++            Some(ProtectedActionKind::UnseenCode),
++            "{line}"
++        );
++    }
++}
++
++#[test]
++fn issue_1142_command_environment_temporary_writes_do_not_escape() {
++    for line in [
++        "GIT_PAGER=cat printf '%s' ok; git log",
++        "GIT_PAGER='touch marker' true; git log",
++        "env GIT_PAGER='touch marker' true; git log",
++        "env GIT_PAGER='touch marker'; git log",
++        "env printf -v GIT_PAGER %s marker; git log",
++        "bash -c 'GIT_PAGER=marker'; git log",
++        "printf %s \"$(printf -v GIT_PAGER %s 'touch marker')\"; git log",
++    ] {
++        assert_eq!(script(line), None, "{line}");
++    }
++}
++
++#[test]
++fn issue_1142_command_environment_data_and_unrelated_consumers_stay_data() {
++    for line in [
++        "printf %s 'GIT_PAGER=touch marker'; git log",
++        "echo GIT_PAGER=marker; git log",
++        "printf -v other %s GIT_PAGER; git log",
++        "# GIT_PAGER=marker\ngit log",
++        "printf %s ok # GIT_PAGER=marker git log",
++        "cat <<'END'\nGIT_PAGER=marker git log\nEND",
++        "git log; GIT_PAGER=marker",
++        "git_pager=marker git log",
++        "cat <<'END'\nGIT_PAGER=marker\nEND\ngit log",
++        "GIT_PAGER='touch marker'; printf %s git",
++        "GIT_PAGER='touch marker' less notes",
++        "MANPAGER='touch marker' git log",
++        "env --split-string='git log'",
++        "command env --split-string='git log'",
++        "export GIT_PAGER=marker; printf %s env --split-string='git log'",
++        "flock guard --command='git log'",
++        "export GIT_PAGER=marker; printf %s \"env --split-string='git log'\"",
++        "ordinary='touch marker' git log",
++    ] {
++        assert_eq!(script(line), None, "{line}");
++    }
++}
++
++#[test]
++fn issue_1142_command_environment_inspection_and_option_values_stay_data() {
++    for line in [
++        "env -u GIT_PAGER git log",
++        "env --unset=GIT_PAGER git log",
++        "env -C GIT_PAGER=marker git log",
++        "env --chdir GIT_PAGER=marker git log",
++        "exec -a GIT_PAGER=marker git log",
++        "declare -p GIT_PAGER; git log",
++        "export -p GIT_PAGER; git log",
++        "read -p GIT_PAGER answer; git log",
++        "GIT_PAGER='touch marker'; command -v git",
++        "GIT_PAGER='touch marker'; command -V git",
++        "GIT_PAGER='touch marker'; env --help git",
++        "GIT_PAGER='touch marker'; exec -a git printf ok",
++    ] {
++        assert_eq!(script(line), None, "{line}");
++    }
++}
++
++#[test]
++fn issue_1142_command_environment_literal_pager_defaults_stay_safe() {
++    for line in [
++        "GIT_PAGER=cat git log",
++        "GIT_PAGER='' git log",
++        "PAGER=cat git log",
++        "export GIT_PAGER=cat; git log",
++        "env PAGER=cat GIT_PAGER=cat git log",
++        "git log",
++    ] {
++        assert_eq!(script(line), None, "{line}");
++    }
++}
++
++#[test]
++fn issue_1142_command_environment_does_not_replace_stronger_findings() {
++    assert_eq!(
++        script("GIT_PAGER='touch marker' git log; cat ~/.ssh/id_rsa"),
++        Some(ProtectedActionKind::Credentials),
++    );
++}

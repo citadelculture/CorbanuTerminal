@@ -1,0 +1,95 @@
+Issue1142 command-environment classifier: bounded paired hosted qualification
+
+This is an inert preparation. admission.json remains approved=false. The root
+coordinator owns any later exact publication and first attempt on a standard,
+disposable GitHub-hosted Ubuntu x86_64 runner. No product test was run by the
+preparer, and no actual outcome is claimed in this package.
+
+Source is exact public base 27789468a486431861f9e409b0dafc28cf62de86 plus the
+bound patch. It is not a current-main claim. Five source files are bound:
+tainted_action.rs, nested.rs, indirect.rs, command_env.rs and the common
+formatted tainted_action_tests.rs fixture. Baseline retains the original three
+production files and has no command_env.rs module; the test fixture is identical
+across baseline and candidate. The candidate new module uses Git intent-to-add,
+with exact empty index identity observed before source capture. Every source
+vector requires the full-index Git diff and exact file hashes, including absence.
+Authored patch hashes remain separate from canonical source-capture hashes.
+
+The required new matrix is ten exact issue_1142_command_environment_* tests.
+Three existing controls are explicitly added to this hosted method:
+security::tainted_action::tests::pf_30_s03_everyday_commands_stay_quiet
+security::tainted_action::tests::issue_885_nested_shell_scripts_are_judged
+security::tainted_action::tests::pf_23_s01_wrapper_positions_are_bounded
+The expected total is therefore thirteen cases, not ten. Original production is
+predicted to show exactly five source-bound classification assertions and eight
+passing controls. The candidate must show thirteen passes. These are expected
+outcomes until observed. Compilation/setup errors, a different assertion site or
+message, body skips, retries, missing cases, unexpected execution, unknown output
+shapes or any source/capture/cleanup failure cannot qualify.
+
+The tests classify strings and owned temporary fixture files. Command text inside
+the fixtures is data for the classifier; this method does not execute those Git,
+pager, shell, credential or network commands. The existing wrapper-position test
+also exercises its original counted-work assertions. There are no selected
+service, keyring, browser, privileged namespace or credential prerequisites. The
+source retains Windows ignores; qualification is restricted to Linux.
+
+One unchanged ordinary repository just test invocation runs each variant:
+just test -p codex-core --lib --locked --offline -E <exact equality filter>
+with retries=0 and test-threads=1. The full exact argv is generated and frozen in
+the controller. The original wrapper's helper builds are retained; --locked does
+not propagate to those helper builds, so immutable Cargo.lock and wrapper/source
+hashes are checked before and after every meaningful stage. No raw nextest test
+invocation or direct test-binary execution replaces the wrapper.
+
+The public tool archive URLs, SHA256 pins and installed versions are inherited
+from the actually qualified Issue1141 method, including Rust1.99.1 and both V8
+assets. There is no tool-version invention, cache borrowing from an operator,
+credential setup, privilege installation or local native execution. Acquisition
+is finite, HTTPS-only, hash checked and zero retry on the fresh hosted runner.
+
+Both source variants must pass full ordinary just fmt without any source change.
+Candidate scoped cargo fmt --check and ordinary just clippy -p codex-core --lib
+--locked --offline -- -D warnings are required. The clippy recipe already adds
+--tests. Source before and after the tests is captured before result parsing.
+The final local formatter's layout delta is separately retained in the local
+source handoff; this hosted package does not rewrite or conceal that history.
+
+Resource and process controls are inherited without relaxation: two Cargo jobs;
+one test thread; zero retries; 60-second per-case termination with zero grace;
+15-minute Nextest execution budget; 4200-second baseline command, 1800-second
+candidate and Clippy commands; 900-second full format; 120-second scoped format;
+6900-second controller and 120-minute job bounds. Initial/first compile free
+space is at least30GiB, reuse/Clippy at least8GiB, running reserve at least4GiB.
+Output streams and JUnit each have16MiB caps; incomplete captures hold. Each
+retained qualification binary is at most2GiB and the total binary artifact at
+most4GiB, with observed metadata and two-copy projected space plus4GiB checked
+before copy. Binary contents are never treated as evidence merely from a name.
+
+HOME, CODEX_HOME and all inherited CODEX sandbox markers retain their original
+presence and values. Owned caches, target, profile and Nextest store isolate task
+outputs. No marker is unset to change capability. The inherited supervisor owns
+and bounds only its descendants, checks the subreaper fixture, reaps exited
+children and preserves any unresolved cleanup as HOLD. No host security policy
+or permission setting is modified.
+
+JUnit, pre-summary execution identities and exactly one complete summary must
+agree for all thirteen cases and every observed filter exclusion. Padded ordinals,
+three/five-dash filter exclusions and repeated final-output presentation are
+handled separately. A selected body skip is never counted as a pass. Assertions
+are matched against exact source case/site/message/debug-value contracts, not
+against a generic nonzero exit. Candidate assertions do not emit numerical
+allocation telemetry, and no such values are invented.
+
+Normalized complete logs, scripted transcripts, source vectors, source/tool
+identities, actual command exits, resource observations, JUnit, retained binary
+metadata and qualification-result.json are exported. Normalization is literal
+path replacement; recorded raw hashes are not blanket raw-byte reconstruction
+claims. Secret-shaped output fails closed. Ordinary official run/artifact/head
+bindings and archive digests need separate terminal acquisition and review.
+
+Scope remains the supported known command-valued variables/consumers and the
+existing UnseenCode/strongest-category behavior. This is no complete
+shell/environment grammar, native enforcement or whole-product release claim.
+No human/TUI, code-blind, whole-library, allocation, payment, assignment, reward
+or public release qualification is transferred from earlier work.
