@@ -17,7 +17,7 @@ jobs:
     # Root flips this one admission literal only after exact package review.
     if: >-
       ${{
-        false &&
+        true &&
         github.ref == 'refs/heads/codex/pr1122-tmux-three-case-v3-20261020' &&
         github.event_name == 'push' &&
         github.repository == 'citadelculture/CorbanuTerminal' &&
