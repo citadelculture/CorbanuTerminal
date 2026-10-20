@@ -1,0 +1,77 @@
+name: Bounded Network credential canary campaign
+on:
+  push:
+    branches: [codex/network-canary-macos-combined-v1-20261020]
+permissions:
+  contents: read
+concurrency:
+  group: network-canary-macos-combined-v1-20261020
+  cancel-in-progress: false
+jobs:
+  campaign:
+    if: github.repository == 'citadelculture/CorbanuTerminal' && github.event_name == 'push'
+    runs-on: macos-15
+    timeout-minutes: 300
+    steps:
+      - name: Check out reviewed controls
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          path: control
+          persist-credentials: false
+          fetch-depth: 1
+          submodules: false
+          lfs: false
+      - name: Check out exact public source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: CorbanuCore/CorbanuTerminal
+          ref: 78dd811d6e3718140c938ad4839968d9995fd5ac
+          path: canary-source
+          persist-credentials: false
+          fetch-depth: 1
+          submodules: false
+          lfs: false
+      - name: Qualify actual scoped fixtures before expensive preparation
+        shell: bash
+        run: |
+          set -euo pipefail
+          /usr/bin/python3 -I control/prebuild_fixture_check_v1.py \
+            --control "$GITHUB_WORKSPACE/control" \
+            --combined-plan "$GITHUB_WORKSPACE/control/combined-plan.json" \
+            --admission "$GITHUB_WORKSPACE/control/combined-admission.json" \
+            --output "$GITHUB_WORKSPACE/prebuild-evidence"
+      - name: Prepare tools and exact offline targets
+        shell: bash
+        run: |
+          set -euo pipefail
+          /usr/bin/python3 -I control/build-preparation-v2.py --dispatch \
+            --source "$GITHUB_WORKSPACE/canary-source" \
+            --pins "$GITHUB_WORKSPACE/control/build-pins-v1.json" \
+            --admission "$GITHUB_WORKSPACE/control/combined-admission.json" \
+            --preflight-result "$GITHUB_WORKSPACE/control/preflight-v4-result.json" \
+            --prebuild-result "$GITHUB_WORKSPACE/prebuild-evidence/prebuild-result.json" \
+            --combined-plan "$GITHUB_WORKSPACE/control/combined-plan.json" \
+            --output "$GITHUB_WORKSPACE/build-evidence"
+      - name: Qualify fresh containment then measure unchanged canary
+        shell: bash
+        run: |
+          set -euo pipefail
+          /usr/bin/python3 -I control/measured_campaign_v1.py --dispatch \
+            --control "$GITHUB_WORKSPACE/control" \
+            --build-result "$GITHUB_WORKSPACE/build-evidence/build-preparation-result.json" \
+            --combined-plan "$GITHUB_WORKSPACE/control/combined-plan.json" \
+            --admission "$GITHUB_WORKSPACE/control/combined-admission.json" \
+            --output "$GITHUB_WORKSPACE/canary-evidence"
+      - name: Retain bounded safe evidence
+        if: always() && !cancelled()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: network-canary-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            prebuild-evidence/
+            build-evidence/
+            canary-evidence/
+          if-no-files-found: warn
+          retention-days: 14
+          compression-level: 9
+          include-hidden-files: false

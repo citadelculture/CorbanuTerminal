@@ -1,0 +1,16 @@
+{
+  "schema": "network-build-admission-v1",
+  "buildPreparationApproved": true,
+  "canaryExecutionApproved": false,
+  "sourceCommit": "78dd811d6e3718140c938ad4839968d9995fd5ac",
+  "driverSha256": "98e82a79451f07d47e3ba0abd41c77bf5622ddefc7e6c925b144a2a77e7a2cca",
+  "pinsSha256": "19591961383cbff7ac72f58be0355484d4b4b50eacca63f33a0a24ee5f6f8565",
+  "preflightResultSha256": "55cbca59c05c27a32985220c3ab2b87962c73e522bfa273f2aa77b453289b499",
+  "preflightControllerSha256": "8d8308a0e74d33cc686a3b9df862d74a161c386d08786a6ad118a012c2ef097e",
+  "preflightRunId": "39408805687",
+  "combinedPlanApproved": true,
+  "combinedPlanSha256": "c50331189c23e145508388dfdca1c0aa113e9bb3fdd9500a00801f106a9c1474",
+  "measurementApproved": true,
+  "measurementControllerSha256": "5119c114087c14069242892add83636f40ffb7794fa8140f0dea99b1e2864806",
+  "authority": "Standing owner authorization for accepted Network canary using separate enforced hosted lane; normal external-action review still required."
+}
