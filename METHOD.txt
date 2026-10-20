@@ -1,0 +1,70 @@
+Issue943: exclusive owned trust placement, focused current-source qualification
+
+This method was prepared with admission false. It requires an independently reviewed
+exact payload and separate root admission before any hosted push or execution.
+No local product execution, namespace probe or privileged provisioning is authorized
+by this preparation artifact.
+
+The pinned public production base is c9dbae23b3d3f9753fc27a993479040b6b2735cd.
+The source payloads correspond to local DCO candidate
+c50d6fa0291fc01f4827f2ab1549b200314453ab. The hosted worker checks out the public
+base and applies the exact two-file patch; a control-branch commit is not candidate
+source identity. This base is a pin, not a claim about latest upstream main.
+
+Changed prerequisite and retained failures
+The preceding metadata-only observation on run39478360050 measured root-owned
+mode0755 for / and /usr, but mode0777 for /usr/share and stopped at the unchanged
+parent-trust predicate. That failure proves only the observed parent metadata.
+No provisioning, namespace capability or product test passed in that observation.
+Earlier unsafe-system-keyring and keyring_parent_identity failures remain preserved.
+Fresh hosted worker metadata still must be measured and validated.
+
+The revised helper creates a new exclusive /issue943-authenticated-keyring-<run-id>
+directory directly below a revalidated trusted root descriptor. The inherited run
+identity must be strict decimal. Root0:0 ownership, mode0755 and stable descriptor
+identity are required. Existing names, unsafe root/parent identity, substitution,
+partial writes and any disagreement hold. Existing /usr/share, system keyrings and
+other directories are not repaired, chmodded, chowned or reused.
+
+The same authenticated public3607-byte Ubuntu keyring is created exclusively as
+ubuntu-archive-keyring.gpg inside that run-owned directory. The existing SHA256 and
+complete public-key fingerprint authentication remain required. The directory and
+keyring remain confined to the disposable hosted VM lifetime. This is reviewed
+trust placement, not a host-security override or a general permission change.
+
+All subsequent gates remain: signed current Ubuntu release and package indexes,
+exact package/deb/ELF hashes and identities, absent-only exclusive ELF installation
+without package maintainer scripts, root-owned system tools, and the original real
+Bubblewrap user/network namespace capability probe before source build/tests.
+Any unavailable gate stops the campaign. No namespace or enforcement flags change.
+
+Exact finite campaign
+Use one fresh standard GitHub-hosted ubuntu-24.04 nonroot worker, exact branch push,
+attempt1, contents read only, immutable action pins, no persisted Git credentials.
+Initial and first compilation capacity30GiB; target reuse8GiB; running floor4GiB.
+Workflow120minutes; controller6900seconds; first test/build command4200seconds and
+later commands1800seconds; each selected case60seconds, each group15minutes;
+zero retries, one test thread, Cargo jobs2. These are stop bounds, not a fit estimate.
+No SDK deletion or host configuration changes are used to satisfy resource gates.
+
+The unchanged ordinary repository just test wrapper creates a disposable test
+profile. Inherited HOME/CODEX_HOME presence and sandbox markers are preserved.
+Known skip-triggering inherited controls hold; selected JUnit/body skips, retries,
+wrong binaries, missing cases, incomplete captures or surviving owned children do
+not qualify. Synthetic auth and loopback mocks only; no provider/operator secrets.
+
+After all setup and namespace gates: fetch the same pinned Rust1.99.1/tool/V8 inputs,
+run full ordinary just fmt with unchanged-source gating, then locked dependency
+fetch. Keep the identical final regression fixture on baseline and candidate.
+Baseline restores original production and runs14lib controls plus6integration
+cases: require19passes and exactly the held-note count assertion at
+issue_874.rs:406. Setup/compile or other control failures are not the expected red.
+Restore candidate production, check scoped formatting and ordinary focused Clippy,
+then require the same20cases to pass. All source snapshots, bounded full transcripts,
+JUnit and four stage binary identities remain required; binary changes are checked.
+
+Public artifacts are normalized disposable hosted outputs and bounded qualification
+binaries. Operator receipts, private paths and environment exports are excluded.
+Every failure is retained as unqualified. No automatic rerun or unchanged retry.
+This is focused automated proof only: no true-TUI, code-blind, human-test or release
+readiness claim. Fresh upstream/overlap and merge sequencing remain root-owned.

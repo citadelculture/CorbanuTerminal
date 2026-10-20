@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "authenticatedKeyringSha256": "80a36b0a6de2f69f49d2df75ef473ccde121e9e190b9ea01d20a4f63778d5c31",
+  "bubblewrapPinsSha256": "6aed14f70eda83a81a81b8aedf382270c5a11ec7630c658767f76e2c9370d941",
+  "bubblewrapSetupSha256": "a0858ad5c75c1d668aaf83b0075a9e048aecb2c84fbb18172792cf3d6c99d784",
+  "controllerSha256": "f16f59ca4a654012595fc7f14be1529e6c905b2cac7327efb161c90495e14fe8",
+  "exclusiveInstallerSha256": "b51aab11599a67ff53b618b2e64084e1a8be6fc6452929064797fad7ceba6d36",
+  "keyringProvisionerSha256": "cbc9ac93f2f5b9f8253ee135edcc475652a05fc6b21c0e63d4c7ede11a4e163e",
+  "schema": "issue943-owned-trust-admission-v1",
+  "scope": "Exact reviewed exclusive owned keyring placement and unchanged focused20-case paired qualification on pinned public c9d; no existing path repair, host override or release gate waiver.",
+  "sourceManifestSha256": "875de510e6bccc7fce77b6c15b93260489db7c5807d29cceb6457461efaa907f",
+  "toolsPinsSha256": "f8b7516351efb0a5eedf06b2b2a8006f67dcad632818611961840715b3ec4a30",
+  "workflowSha256": "863cd23d9f22ee9f0d2b2477dab9e53478fa6003581536e634745b13d299572e"
+}
