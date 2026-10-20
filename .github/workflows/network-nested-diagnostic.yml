@@ -1,0 +1,38 @@
+name: Network synthetic nested-containment diagnostic
+on:
+  push:
+    branches: [codex/network-nested-containment-diagnostic-v1-20261020]
+permissions:
+  contents: read
+concurrency:
+  group: network-nested-containment-diagnostic-v1
+  cancel-in-progress: false
+jobs:
+  diagnostic:
+    if: github.repository == 'citadelculture/CorbanuTerminal' && github.run_attempt == 1
+    runs-on: macos-15
+    timeout-minutes: 5
+    steps:
+      - name: Read exact public control commit
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          ref: ${{ github.sha }}
+          path: control
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Synthetic diagnostic only; no build or canary
+        shell: bash
+        run: |
+          set -euo pipefail
+          /usr/bin/python3 -I -B control/run-synthetic-diagnostic-v1.py \
+            --dispatch --pins-sha256 f48a8fb0910d594bb77a435a1078af8e5d9636435dff1421ebafc23f2e604362 \
+            --output "$GITHUB_WORKSPACE/diagnostic-evidence"
+      - name: Retain bounded synthetic evidence only
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: network-nested-diagnostic-${{ github.run_id }}
+          path: diagnostic-evidence
+          if-no-files-found: warn
+          retention-days: 14
+          include-hidden-files: false

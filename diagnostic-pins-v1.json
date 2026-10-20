@@ -1,0 +1,31 @@
+{
+  "files": {
+    "bounded-command-original.py": "d23b502cd0e19314e11f1aad38ee28698d95479ed58b0e59c83074c5eed38de4",
+    "measurement-profile-original.py": "2c8b3b22abe07c979452821ace078a281aea973f444063cda6c5e670bd08a9e1",
+    "run-synthetic-diagnostic-v1.py": "a5d10ccee2313ca7855c688a2c15e79a6de64baa7b280a3f3778c28ec1d69a28",
+    "synthetic-nested-seatbelt-probe-v1.py": "a5bec1c91f24e73fd86401c7df5921fea3c0cf29ba9f8c1a9530257cf0c02d00"
+  },
+  "limits": {
+    "buildInvocations": 0,
+    "canaryInvocations": 0,
+    "probeSeconds": 20,
+    "productBodies": 0,
+    "wholeSeconds": 120,
+    "workflowMinutes": 5
+  },
+  "originalMeasurementProfileSha256": "c6c0842b87e9c5496e48aba0506565cd90472e98ad92d14741538c1e883e38f1",
+  "qualification": false,
+  "schema": "network-synthetic-diagnostic-pins-v1",
+  "sourceCommit": "78dd811d6e3718140c938ad4839968d9995fd5ac",
+  "sourceEvidence": {
+    "source/apple-xnu-ptrace.h": "fdbffcc0ca828b8762debf196df7441e4085d3916838a8ccdedda2ec3bd52ce8",
+    "source/codex-rs__network-proxy__src__credential_broker.rs": "5e30ad978781be7bf47ed14440cc1c691560b771264997aef70a930c8f103cb8",
+    "source/codex-rs__network-proxy__src__credential_broker__isolated.rs": "717dc46ec4c06a650c72d51cdd71b2633ef60c94236fbf9362ef0c5e25e2f337",
+    "source/codex-rs__network-proxy__src__credential_broker__isolated__client.rs": "994a7d9fccd500e0eebb7af8fbe5a26cc08d13f072281d142671b9f3e2b9c7b9",
+    "source/codex-rs__network-proxy__src__credential_broker__isolated__server.rs": "fa6e80c1cf10eaf9fcf5a787e79130cd9d93b8e6880dd34da72d0ce1f13b292a",
+    "source/codex-rs__network-proxy__src__credential_broker__isolated_tests.rs": "ed06c7b7737a70eb7c5e893d1b7b3d722f759aa6ce2c6fd1c12b2fbe253be89f",
+    "source/codex-rs__process-hardening__src__broker_containment.rs": "645ff2e1cad9bd89a1cf676f31e420c8c51593cb564608fd36f209fce953f8f2",
+    "source/codex-rs__process-hardening__src__lib.rs": "9d208ce72fb78dd3d26a4369cc0b1699b0a3d77f5c9d3853083395a615dfd4be",
+    "source/scripts__security_credential_canary.py": "dac51ad02bfbde1a4d4d70c5a4ed564cba41c64cf47b59ae5090fd398a1ea05a"
+  }
+}

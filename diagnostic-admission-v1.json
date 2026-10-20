@@ -1,0 +1,6 @@
+{
+  "diagnosticOnlyApproved": true,
+  "canaryApproved": false,
+  "buildApproved": false,
+  "pinsSha256": "f48a8fb0910d594bb77a435a1078af8e5d9636435dff1421ebafc23f2e604362"
+}
