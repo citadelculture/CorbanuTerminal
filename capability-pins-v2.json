@@ -1,0 +1,20 @@
+{
+  "canaryReady": false,
+  "code": {
+    "bounded-command-v2.py": "1367bcd85031c8c9d5f6ed0c921dd13b8e17035df5fe83e069f18e65c21b5f05",
+    "capability-controller-v2.py": "ce39c781690b80ee2919b5495f563d15172607cb45386a88a2a179fd0a9c7b03",
+    "child-bootstrap-v2.py": "27d116dc8d1c3a2650f688b16546589df7f0027f7b9a205980e756ccac97ac28",
+    "mach-fixture-v1.py": "49cd4ff5fbf50c02ef05cb192c889cf4848e00af8ae38676aa55e089131a4c48",
+    "measurement-fixture-v1.py": "adb6bb593905b9a5fce47f7d41d9863646fc6ca9d61dc5a9fd8f245ea19003d3",
+    "synthetic-nested-seatbelt-probe-v1.py": "a5bec1c91f24e73fd86401c7df5921fea3c0cf29ba9f8c1a9530257cf0c02d00"
+  },
+  "route": {
+    "attempt": 1,
+    "branch": "refs/heads/codex/network-uid-pf-capability-v2-20261020",
+    "repository": "citadelculture/CorbanuTerminal",
+    "runner": "macos-15"
+  },
+  "schema": "network-uid-pf-pins-v2",
+  "scope": "synthetic-capability-only",
+  "sourcePin": "78dd811d6e3718140c938ad4839968d9995fd5ac"
+}

@@ -1,0 +1,38 @@
+name: Synthetic UID and PF capability only
+on:
+  push:
+    branches: [codex/network-uid-pf-capability-v2-20261020]
+permissions:
+  contents: read
+concurrency:
+  group: network-uid-pf-capability-v2
+  cancel-in-progress: false
+jobs:
+  capability:
+    if: github.repository == 'citadelculture/CorbanuTerminal' && github.run_attempt == 1
+    runs-on: macos-15
+    timeout-minutes: 8
+    steps:
+      - name: Exact public control source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          ref: ${{ github.sha }}
+          path: control
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Reviewed synthetic capability only
+        shell: bash
+        run: |
+          set -euo pipefail
+          /usr/bin/python3 -I -B control/capability-controller-v2.py \
+            --dispatch --pins-sha256 5a5739d8e8072c7748408523e0e202627fc7216fa5474a5f8a3a3d5b3263f92d \
+            --output "$GITHUB_WORKSPACE/capability-evidence"
+      - name: Bounded synthetic evidence
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: network-uid-pf-capability-${{ github.run_id }}
+          path: capability-evidence
+          if-no-files-found: warn
+          retention-days: 14
+          include-hidden-files: false
