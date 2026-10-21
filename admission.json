@@ -1,0 +1,8 @@
+{
+  "approved": true,
+  "controllerSha256": "48b59a06aa3f0e8f91a03b3555b9e2a3877df5d3cbff00eebfeb93d66aa62a3e",
+  "sourceManifestSha256": "096f7a44f13da00a50f2e85a15bf7748f6a23666cd19775bfcce2a2d141446bd",
+  "toolsPinsSha256": "2b9c6ffed5fd37327e7681e6146823240e8f2e6f9c7bf7b3ee5de8a8898125e1",
+  "workflowSha256": "265a997bc0c78914c3d534076f4c48c0f28509215593914a5b7cd88f7f6f0903",
+  "scope": "One exact fixture-corrected internal paired qualification only after root integration and normal admission. Prior five review passes spent; no reset or human/functional gate waiver. Functional/TUI OPEN."
+}
