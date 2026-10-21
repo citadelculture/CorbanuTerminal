@@ -1,0 +1,6 @@
+{
+  "approved": true,
+  "packetManifestSha256": "0d600c904f3aaaca941685422597b24c345a2f58acd19d2d9427727a93a8f15b",
+  "reviewReceiptSha256": "9f3473ebc83290502cf616da36d0c3db0d514b9060cee7a3643befd54431c9bc",
+  "reason": "Root separately admits PR951 base a88b55ded5dea23e272db5133b1e93e001e11438 plus exact patch SHA256 6b7f4136ce32e491644c87eb20743a0801532a4a5702cd7b5d311f1b01996420; exact source/tool/tree binding handoff SHA256 ec56088fc1987a63ca4082a3b716cbbd3e7afe29e82692e89b459ddec1909832. Shared pass3 CLEAR covers cleanup code only; Issue1240 HOLD_UPSTREAM_OVERLAP remains. PR951 uses its own 23 source inputs, 28,573-blob tree and official Rust 1.95.0/rustfmt 1.9.0 archive pins; no Issue1240 source/tool equivalence is claimed. Full formatting only; no native qualification or automatic source admission."
+}

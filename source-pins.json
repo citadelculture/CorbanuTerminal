@@ -1,0 +1,71 @@
+{
+  "allowedChangedFiles": [
+    "codex-rs/tui/src/security/preflight.rs",
+    "codex-rs/tui/src/security/preflight_tests.rs"
+  ],
+  "base": "a88b55ded5dea23e272db5133b1e93e001e11438",
+  "baseFiles": {
+    ".codex/skills/corbanu-terminal-development/SKILL.md": "aae866dc7c03ef742e61dac57413de9b194b28fb1051471939eb1c85bd10c9c8",
+    ".gitattributes": "e76969bd69081bc89eb638432a123b87d4682b49c00134147effe5eb5131f76e",
+    "AGENTS.md": "fd296fe6adebcebf9d9b70a9c2634e684bb72915196e0f4ebf9b1994924e1d0b",
+    "codex-rs/.cargo/config.toml": "b8ae1cea341beb2d4a3c8fb81f97a96f4aee1fd53f769c57f140dfe949806a80",
+    "codex-rs/AGENTS.md": "8770b8bde8ddaf5f404090afb3f2251aca06bca5cfc5707ec42ae3a7490ce47a",
+    "codex-rs/Cargo.lock": "3c62ca2fdc1d9fcc4b234dcf3ee6d0fd824faaa2e06aca8022ff418e1e051d9c",
+    "codex-rs/Cargo.toml": "24c73d8f872aa27c08ff1b080b57f70e05147566bdf79b80aace7e4998544752",
+    "codex-rs/rust-toolchain.toml": "570656042681cfd8795403a455baf9a33035331a07db0645e866bbcea89a3d64",
+    "codex-rs/rustfmt.toml": "384d5d8a1366a86cd6fc01aecde2b0a5806a9e77073ff53abd97b4f6cad94d1c",
+    "codex-rs/tui/AGENTS.md": "bfa859952fd8e12654e109d48ee3f7dbbe10961353cc3e50a15857ff7d93dffa",
+    "codex-rs/tui/Cargo.toml": "f2e82674e1baf4884c4519004a9bc40c8822bba773864351e8dd333706fbd2be",
+    "codex-rs/tui/src/security/preflight.rs": "57e2d8690a55282748650c3d233d567331ed878a1b66b6302dc1c41d44b7f37c",
+    "codex-rs/tui/src/security/preflight_tests.rs": "2e6ec0b8b2d6b2e2c6092d5144c3ebd694fa051105a6cb8f724341c513d9d2bf",
+    "docs/corbanu-product-spec.md": "5075bb5cc6f6ddf55f0592df7083531f68e82737b4d0446cc6891c77ff34ec7d",
+    "docs/development/test-isolation.md": "1a5c54c42d74e08c2a98ea6fc8217e05e15c43b2f6b40f679c6388090514cfd0",
+    "justfile": "ce2e815f90284ebc8c8812c9f94b63e78d9a3db5271c3416979d46499cdbb512",
+    "scripts/format.py": "d930139145ba3e80a188c1b5734aa7fee6bad5687e610cb58bda016216a2f37d",
+    "scripts/just-shell.py": "444d6b328d44abf6453b77b6acce2a0c881fc162ff30b20f352c85067797fbe9",
+    "scripts/pyproject.toml": "2c9c022b99b0b576c3b45773a39f8aa6396f044016432e9bb42669554b3bfb78",
+    "scripts/uv.lock": "6b8e7a82d1a4f4c5d59ce57cf8be472ea031c6fb0a905506258d434132b3c99c",
+    "sdk/python/pyproject.toml": "be995a21d1761e30295016a77d6d227778558ac68da2d37cdec69685a4691a23",
+    "sdk/python/uv.lock": "5d289bda71a7a22394a7c42cea17f49e6317d265ed5ed0c9c8bad8f2412e6bbc",
+    "tools/buildifier": "818bfc01e21fceb0d83ddaf4614531418ea763e25499f7f9fd03c7a853948fe6"
+  },
+  "baseGitLsTreeBytes": 3913458,
+  "baseGitLsTreeCommand": [
+    "git",
+    "ls-tree",
+    "-r",
+    "-z",
+    "--full-tree",
+    "HEAD"
+  ],
+  "baseGitLsTreeSha256": "019506cfffbde5a70d969bf58349031274b4454524c5013ecc3129ad94d0d552",
+  "baseTree": "a901cdd629ad24fbe68dac18d85d9d506c17b4d6",
+  "candidateFiles": {
+    "codex-rs/tui/src/security/preflight.rs": "40e797956f7cf8d8bb88ecf9a10b38a8f6cf36e1396580604f3153c7fa282e3f",
+    "codex-rs/tui/src/security/preflight_tests.rs": "d1dcf915733893acd68690d8dd3fcc230fa6e29ee363215a0684833337de742b"
+  },
+  "classification": "Format-only exact PR951 follow-up candidate; no native tests, behavior, latency or performance qualification.",
+  "patchSha256": "6b7f4136ce32e491644c87eb20743a0801532a4a5702cd7b5d311f1b01996420",
+  "repository": "https://github.com/CorbanuCore/CorbanuTerminal",
+  "schema": "pr951-format-only-source-v1",
+  "symlinks": [
+    {
+      "blob": "d24842f3cdcf2e447f9a7a26fa387ad63f5c4b91",
+      "mode": "120000",
+      "path": "codex-rs/vendor/bubblewrap/LICENSE",
+      "targetBytes": 7,
+      "targetSha256": "400d38e5cfee181230373a8b02d38f50271a5bf62c62410382efddb8e8b19e22"
+    }
+  ],
+  "treeMetadata": {
+    "directoryCount": 5047,
+    "endpoint": "https://api.github.com/repos/CorbanuCore/CorbanuTerminal/git/trees/a901cdd629ad24fbe68dac18d85d9d506c17b4d6?recursive=1",
+    "entryCount": 33620,
+    "otherEntryCount": 0,
+    "regularFileCount": 28572,
+    "sha256": "655bb3aa24b20691e8d7ecdef87636e6fdfea484bb29a08cad42ca23ccc259e5",
+    "submoduleCount": 0,
+    "symlinkCount": 1,
+    "truncated": false
+  }
+}

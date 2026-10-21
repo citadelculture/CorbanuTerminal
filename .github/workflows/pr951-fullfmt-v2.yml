@@ -1,0 +1,46 @@
+name: PR951 launch re-audit full formatting v2
+on:
+  push:
+    branches: [codex/pr951-fullfmt-v2-20261021]
+permissions:
+  contents: read
+concurrency:
+  group: pr951-fullfmt-v2
+  cancel-in-progress: false
+jobs:
+  format:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Check out exact method commit
+        timeout-minutes: 5
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          path: method
+          persist-credentials: false
+          fetch-depth: 1
+          submodules: false
+          lfs: false
+      - name: Check out exact public source
+        timeout-minutes: 5
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: CorbanuCore/CorbanuTerminal
+          ref: a88b55ded5dea23e272db5133b1e93e001e11438
+          path: subject
+          persist-credentials: false
+          fetch-depth: 1
+          submodules: false
+          lfs: false
+      - name: Run admitted format-only controller
+        timeout-minutes: 30
+        run: python3 method/controller.py
+      - name: Retain audited raw formatter and source evidence
+        if: always()
+        timeout-minutes: 5
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: pr951-fullfmt-v2-${{ github.run_id }}-${{ github.run_attempt }}
+          path: pr951-format-evidence/
+          if-no-files-found: error
+          retention-days: 14
