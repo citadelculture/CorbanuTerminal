@@ -1,0 +1,151 @@
+diff --git a/codex-rs/core/src/security/tainted_action/git_config.rs b/codex-rs/core/src/security/tainted_action/git_config.rs
+index f4bde325ae22be0e1fb54aad7f397994052394ec..379bdaa3f29db99145b48bed0071dbfd61565559 100644
+--- a/codex-rs/core/src/security/tainted_action/git_config.rs
++++ b/codex-rs/core/src/security/tainted_action/git_config.rs
+@@ -8,37 +8,47 @@
+ use super::outputs;
+ use super::work;
+ 
+-fn is_git(word: &str) -> bool {
+-    basename(word).eq_ignore_ascii_case("git") || git_helpers::git_name(word).is_some()
+-}
+-
+-/// Find `config`, sharing Git's global value-option boundaries. Unknown
+-/// options are not a reason to stop checking. Stop at the next Git word so
+-/// the caller's per-word scan never rescans a later invocation (#1102).
+-fn config_args(args: &[String]) -> Option<&[String]> {
++enum ConfigArgs<'a> {
++    Found(&'a [String]),
++    NotConfig,
++    Uncertain,
++}
++
++/// Find `config`, sharing Git's global value-option boundaries. Only plain
++/// Git lets the caller restart with the same suffix. A dashed-helper-looking
++/// path or option value cannot safely end this check without asking.
++fn config_args(args: &[String]) -> ConfigArgs<'_> {
+     let mut at = 0;
+     while let Some(word) = args.get(at) {
+         work::step();
+-        if is_git(word) {
+-            return None;
++        let takes_value = code_variables::GIT_VALUE_OPTIONS.contains(&word.as_str())
++            || matches!(word.as_str(), "-c" | "--config-env");
++        let boundary = if takes_value {
++            args.get(at + 1)
++        } else {
++            Some(word)
++        };
++        if let Some(boundary) = boundary {
++            let git_name = git_helpers::git_name(boundary);
++            if basename(boundary).eq_ignore_ascii_case("git") || git_name == Some(None) {
++                return ConfigArgs::NotConfig;
++            }
++            if git_name.is_some() {
++                return ConfigArgs::Uncertain;
++            }
+         }
+         if word == "config" {
+-            return Some(&args[at + 1..]);
+-        }
+-        if code_variables::GIT_VALUE_OPTIONS.contains(&word.as_str())
+-            || matches!(word.as_str(), "-c" | "--config-env")
+-        {
+-            if args.get(at + 1).is_some_and(|value| is_git(value)) {
+-                return None;
+-            }
++            return ConfigArgs::Found(&args[at + 1..]);
++        }
++        if takes_value {
+             at += 2;
+         } else if word.starts_with('-') {
+             at += 1;
+         } else {
+-            return None;
+-        }
+-    }
+-    None
++            return ConfigArgs::NotConfig;
++        }
++    }
++    ConfigArgs::NotConfig
+ }
+ 
+ /// Local config writes, sharing work across all Git words in a command.
+@@ -71,8 +81,9 @@
+             Some("config") => args,
+             Some(_) => return false,
+             None => match config_args(args) {
+-                Some(args) => args,
+-                None => return false,
++                ConfigArgs::Found(args) => args,
++                ConfigArgs::NotConfig => return false,
++                ConfigArgs::Uncertain => return true,
+             },
+         };
+         let mut at = words.len() - args.len();
+@@ -138,9 +149,8 @@
+                 }
+                 continue;
+             }
+-            if is_git(word) {
+-                break false;
+-            }
++            // At the key position, a Git-looking word is still a key. The
++            // suffix memo keeps overlapping invocations linear.
+             // After any option, Git uses legacy key/value syntax. Only the
+             // first argument can select a subcommand such as `unset`.
+             if options && first {
+diff --git a/codex-rs/core/src/security/tainted_action_tests.rs b/codex-rs/core/src/security/tainted_action_tests.rs
+index ab5092ed09915ddf47e590852af55a79b1d22075..d517a10c0aa019325fb240866a23b8cfa7f15f47 100644
+--- a/codex-rs/core/src/security/tainted_action_tests.rs
++++ b/codex-rs/core/src/security/tainted_action_tests.rs
+@@ -4366,3 +4366,48 @@
+         );
+     }
+ }
++
++#[test]
++#[cfg_attr(
++    windows,
++    ignore = "Unix fixtures (POSIX paths and shell syntax); Windows coverage is #691"
++)]
++fn issue_1161_git_looking_keys_and_option_values_do_not_hide_writes() {
++    for command in [
++        "git config filter.a/git-x.clean 'sh -c evil'",
++        "git config diff.a/git-x.textconv 'sh -c evil'",
++        "git config remote.a/git-x.uploadpack 'sh -c evil'",
++        "git-config filter.a/git-x.clean 'sh -c evil'",
++        "git -C /tmp/git-x config filter.a.clean 'sh -c evil'",
++        "git --work-tree /src/git-tools config filter.a.clean 'sh -c evil'",
++        "git -c color.ui=/a/git-y config filter.a.clean 'sh -c evil'",
++        "git --work-tree=../git-x config sequence.editor 'sh -c evil'",
++        "git config includeIf.gitdir:/tmp/git-x.path /tmp/evil.cfg",
++        "git config 'credential.https://github.com/git-lfs.helper' /tmp/payload",
++    ] {
++        assert_eq!(
++            script(command),
++            Some(ProtectedActionKind::Persistence),
++            "{command}"
++        );
++    }
++}
++
++#[test]
++#[cfg_attr(
++    windows,
++    ignore = "Unix fixtures (POSIX paths and shell syntax); Windows coverage is #691"
++)]
++fn issue_1161_git_looking_global_values_keep_scans_linear() {
++    for unit in [
++        "-C git ",
++        "-C /tmp/git-x ",
++        "--work-tree=../git-wt ",
++        "-c color.ui=/a/git-y ",
++    ] {
++        work::assert_linear(unit, |scale| {
++            let line = format!("git {}config filter.a.clean marker", unit.repeat(400 * scale));
++            assert_eq!(script(&line), Some(ProtectedActionKind::Persistence));
++        });
++    }
++}

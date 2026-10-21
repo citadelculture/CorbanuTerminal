@@ -1,0 +1,9 @@
+{
+  "approved": true,
+  "packetManifestSha256": "f65709397466b01e35311c3188b2fd27368aeef661dda4a22274d5280f0eee54",
+  "reviewReceiptSha256": "9f3473ebc83290502cf616da36d0c3db0d514b9060cee7a3643befd54431c9bc",
+  "subjectSourcePinsSha256": "e6965693fb26dff1929efa6c95e50adb78ffca44a9b1210d2aaf1a111be5447c",
+  "rootAdmissionSha256": "50025c5983790a9f70ad794c4376e966f415d5f6edffb030d5a5b83934650550",
+  "reason": "Root admits exact owned PR1161 head and two maintainer-requested overlays after fresh public source/authority/destination checks under October21 standing consent. Unchanged successful PR1226 formatter runtime; no native claim or review budget reset.",
+  "sharedReviewScope": "Existing shared cleanup framework only; original Issue1240 execution/overlap hold remains unchanged. PR1161 round-3 correction source and packet are separately root-admitted."
+}
