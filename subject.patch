@@ -1,0 +1,90 @@
+diff --git a/codex-rs/core/src/security/protected_surface/read_denials_907_tests.rs b/codex-rs/core/src/security/protected_surface/read_denials_907_tests.rs
+--- a/codex-rs/core/src/security/protected_surface/read_denials_907_tests.rs
++++ b/codex-rs/core/src/security/protected_surface/read_denials_907_tests.rs
+@@ -5,6 +5,7 @@
+ //! #907: what [`ReadDenials::apply`] costs in filesystem walks.
+ 
+ use super::*;
++#[cfg(debug_assertions)]
+ use codex_protocol::permissions::effective_path_normalizations_on_this_thread;
+ use std::time::Duration;
+ use std::time::Instant;
+@@ -16,6 +17,7 @@
+ /// A Corbanu home and a git project in a temporary folder, and the
+ /// session's denials for a workspace-write profile there (the user's real
+ /// home is read as `for_turn` reads it).
++#[cfg(debug_assertions)]
+ fn session() -> (tempfile::TempDir, ReadDenials, PermissionProfile) {
+     let dir = tempfile::tempdir().unwrap();
+     let root = dir.path().canonicalize().unwrap();
+@@ -43,6 +45,7 @@
+ 
+ /// Filesystem normalizations one `apply` makes, with the counts it is
+ /// bounded by: the applied policy's entries and the read-only paths.
++#[cfg(debug_assertions)]
+ fn normalizations(denials: &ReadDenials, profile: &PermissionProfile) -> (u64, usize, usize) {
+     let before = effective_path_normalizations_on_this_thread();
+     let applied = denials.apply(profile).unwrap();
+@@ -53,12 +56,15 @@
+ }
+ 
+ #[test]
++#[cfg(debug_assertions)]
+ fn issue_907_apply_normalizes_the_policy_entries_once_not_per_path() {
+     let (_dir, denials, profile) = session();
+     let (count, entries, paths) = normalizations(&denials, &profile);
+     eprintln!("#907 apply: {count} normalizations, {entries} entries, {paths} read-only paths");
+     assert!(paths > 5, "{paths}");
+-    let bound = 4 * (entries + paths) as u64;
++    // #918: tighten the existing linear ceiling without pinning a platform's
++    // exact count or treating normalization calls as syscall/latency evidence.
++    let bound = 3 * (entries + paths) as u64;
+     assert!(
+         count <= bound,
+         "apply normalized {count} paths (bound {bound}): {entries} entries x {paths} paths"
+@@ -68,6 +74,7 @@
+ /// Run by hand for the #907 measurements:
+ /// `cargo test -p codex-core --lib issue_907_measure -- --ignored --nocapture`.
+ #[test]
++#[cfg(debug_assertions)]
+ #[ignore = "measurement, run by hand"]
+ fn issue_907_measure_apply_latency() {
+     let (_dir, denials, profile) = session();
+diff --git a/codex-rs/protocol/src/permissions.rs b/codex-rs/protocol/src/permissions.rs
+--- a/codex-rs/protocol/src/permissions.rs
++++ b/codex-rs/protocol/src/permissions.rs
+@@ -2564,6 +2564,7 @@
+     roots
+ }
+ 
++#[cfg(any(test, debug_assertions))]
+ thread_local! {
+     static EFFECTIVE_PATH_NORMALIZATIONS: std::cell::Cell<u64> = const { std::cell::Cell::new(0) };
+ }
+@@ -2571,12 +2572,15 @@
+ /// #907: how many paths this thread has normalized with filesystem calls
+ /// (each walks the path's ancestors, then resolves the first that exists),
+ /// so tests can bound what a policy check costs. Instrumentation only.
++/// Available in debug builds and this crate's unit tests, not release libraries.
++#[cfg(any(test, debug_assertions))]
+ #[doc(hidden)]
+ pub fn effective_path_normalizations_on_this_thread() -> u64 {
+     EFFECTIVE_PATH_NORMALIZATIONS.with(std::cell::Cell::get)
+ }
+ 
+ fn normalize_effective_absolute_path(path: AbsolutePathBuf) -> AbsolutePathBuf {
++    #[cfg(any(test, debug_assertions))]
+     EFFECTIVE_PATH_NORMALIZATIONS.with(|count| count.set(count.get() + 1));
+     let raw_path = path.to_path_buf();
+     for ancestor in raw_path.ancestors() {
+diff --git a/codex-rs/protocol/src/permissions/effective_writes.rs b/codex-rs/protocol/src/permissions/effective_writes.rs
+--- a/codex-rs/protocol/src/permissions/effective_writes.rs
++++ b/codex-rs/protocol/src/permissions/effective_writes.rs
+@@ -16,6 +16,7 @@
+ /// (one filesystem walk each), and its roots reached through a nested link
+ /// found, the first time a check needs them instead of once per path. The
+ /// filesystem is read then, so build one per check of a set of paths.
++/// The lazy caches use [`OnceCell`], so this view is not [`Sync`].
+ pub struct EffectiveWrites<'a> {
+     policy: &'a FileSystemSandboxPolicy,
+     cwd: PathBuf,

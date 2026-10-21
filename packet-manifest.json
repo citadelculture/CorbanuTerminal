@@ -1,0 +1,55 @@
+{
+  "files": [
+    {
+      "bytes": 1480,
+      "path": ".github/workflows/pr1004-fullfmt-v2.yml",
+      "sha256": "4ae540080419c21b88d48218678b5002260a16139f84b646de995ece38a218cf"
+    },
+    {
+      "bytes": 8771,
+      "path": "METHOD.md",
+      "sha256": "6ea6492ea4f3c1d5f44011742a230a0ee8dfae01aafc607d2f45fcb42ef742e7"
+    },
+    {
+      "bytes": 5238,
+      "path": "cleanup_controls.py",
+      "sha256": "17f82c9bec443b63fb4c1e13e00debddb597e5e6acb83bd7ab9ad9445ea5d392"
+    },
+    {
+      "bytes": 15227,
+      "path": "controller.py",
+      "sha256": "549165ac0879dff895890cfac1c4ee14c511c95418d5e1fceda375ec1015aac8"
+    },
+    {
+      "bytes": 4905,
+      "path": "evidence.py",
+      "sha256": "f5baecf4ace8885910bb485e1270a42d77604f09109f24bd4c67060e8ff4446d"
+    },
+    {
+      "bytes": 14649,
+      "path": "pure_controls.py",
+      "sha256": "0aa5c1693326424449b22df50add28abb89f72a9d1e22165d6c62d3c09664204"
+    },
+    {
+      "bytes": 5172,
+      "path": "source-pins.json",
+      "sha256": "fddbfd06364783a512c197877d6e46ab1e756451b2b0e7706a0750a745259c97"
+    },
+    {
+      "bytes": 4267,
+      "path": "subject.patch",
+      "sha256": "1d16905ff2c7197e25c6c5378bbbca18401cb1d1495145eb52a9713c8d4e1e82"
+    },
+    {
+      "bytes": 7827,
+      "path": "tool-pins.json",
+      "sha256": "ec3b21aba1677315b17c77ed9abfb55ddfc2ae9216889b97b57223c0628d6cde"
+    },
+    {
+      "bytes": 18164,
+      "path": "worker.py",
+      "sha256": "1f3c4a45ec5a0731bb8b2e61495111bb22c3dc27733d564c9c83c3fbf742cc6e"
+    }
+  ],
+  "schema": "pr1004-format-cleanup-packet-manifest-v2"
+}
