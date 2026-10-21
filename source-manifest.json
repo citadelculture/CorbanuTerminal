@@ -1,0 +1,124 @@
+{
+  "schema": "issue1048-stale-note-hosted-source-v3",
+  "baseCommit": "522deafb85b8faf400e45290d7290cc04e0d4e22",
+  "formatState": "FINAL_FORMAT_RECONCILED",
+  "formattedFixtureFreezeSha256": "95b63a61cd690a998a377d84dbca6f59ea455be01ce7fc0d598a795aa3314c2e",
+  "files": [
+    {
+      "path": "codex-rs/core/src/tools/orchestrator.rs",
+      "newFile": false,
+      "originalSha256": "136c33cce84df98fa96ed64a218383bbe6c18c2d745396be31650c3692fb76ee",
+      "payload": "payload/orchestrator.rs",
+      "candidateSha256": "36d960a82909cde9f726a6b6ea031dde281da932346ea505e0aec177589ebfa6",
+      "baselinePayload": "payload/orchestrator.baseline.rs",
+      "baselineSha256": "4565240ac1e71c95b10940a9f6f83c52c74b604733506bcfeefe9047fc884142"
+    },
+    {
+      "path": "codex-rs/core/src/tools/orchestrator_namespace_note_tests.rs",
+      "newFile": true,
+      "originalSha256": null,
+      "payload": "payload/orchestrator_namespace_note_tests.rs",
+      "candidateSha256": "2d32b3595b08f1d0f714e1129428187ffb1247ee46e99f92ad6a75cccebb4f61",
+      "baselinePayload": "payload/orchestrator_namespace_note_tests.baseline.rs",
+      "baselineSha256": "2d32b3595b08f1d0f714e1129428187ffb1247ee46e99f92ad6a75cccebb4f61"
+    }
+  ],
+  "sourceModules": {
+    "codex-rs/core/src/tools/orchestrator_namespace_note_tests.rs": "tools::orchestrator::namespace_note_tests",
+    "codex-rs/core/src/security/user_namespaces_tests.rs": "security::user_namespaces::tests"
+  },
+  "caseSourceKinds": {
+    "codex-rs/core/src/tools/orchestrator_namespace_note_tests.rs": "payload",
+    "codex-rs/core/src/security/user_namespaces_tests.rs": "checkout"
+  },
+  "candidatePatchSha256": "c2de789544202004a2178edea926fb4637117dac905a8e0a904cc8bffbcaca48",
+  "sourcePreparationSha256": "ad3a349a63561652ba4d7d52f64978c1016d98260520b82ea802650e61efd0f6",
+  "sourceReviewSha256": "449becd73c8da2085aed55682a58d4cabcf9c942450f8866a4e05b4fa40b6ee2",
+  "selectedCases": [
+    "tools::orchestrator::namespace_note_tests::issue_1048_stale_round_leaves_no_allowed_run_note",
+    "tools::orchestrator::namespace_note_tests::issue_1048_redecided_round_warns_again_and_records_only_the_run",
+    "tools::orchestrator::namespace_note_tests::issue_1048_unchanged_round_consumes_its_one_allowed_run_note",
+    "security::user_namespaces::tests::issue_826_the_rule_follows_the_protected_levels",
+    "security::user_namespaces::tests::issue_826_only_a_refused_namespace_under_the_rule_is_explained",
+    "security::user_namespaces::tests::d27_allowed_runs_are_known_by_thread_turn_and_call_once",
+    "security::user_namespaces::tests::d48_allowed_only_while_nothing_changed_since_the_warning"
+  ],
+  "sourceCases": [
+    "tools::orchestrator::namespace_note_tests::issue_1048_stale_round_leaves_no_allowed_run_note",
+    "tools::orchestrator::namespace_note_tests::issue_1048_redecided_round_warns_again_and_records_only_the_run",
+    "tools::orchestrator::namespace_note_tests::issue_1048_unchanged_round_consumes_its_one_allowed_run_note",
+    "security::user_namespaces::tests::issue_826_the_rule_follows_the_protected_levels",
+    "security::user_namespaces::tests::issue_826_only_a_refused_namespace_under_the_rule_is_explained",
+    "security::user_namespaces::tests::d27_allowed_runs_are_known_by_thread_turn_and_call_once",
+    "security::user_namespaces::tests::d48_allowed_only_while_nothing_changed_since_the_warning"
+  ],
+  "sourceCaseCount": 7,
+  "redCases": [
+    {
+      "name": "tools::orchestrator::namespace_note_tests::issue_1048_stale_round_leaves_no_allowed_run_note",
+      "assertionKind": "std_assert_custom",
+      "panicLine": 276,
+      "sourcePath": "core/src/tools/orchestrator_namespace_note_tests.rs",
+      "siteRegex": "(?:^|[ /])core/src/tools/orchestrator_namespace_note_tests\\.rs:276:[0-9]+",
+      "messageRegex": "(?m)^a\\ stale\\ or\\ already\\-consumed\\ allowance\\ must\\ not\\ hide\\ a\\ later\\ denial$",
+      "customMessage": "a stale or already-consumed allowance must not hide a later denial"
+    },
+    {
+      "name": "tools::orchestrator::namespace_note_tests::issue_1048_redecided_round_warns_again_and_records_only_the_run",
+      "assertionKind": "std_assert_custom",
+      "panicLine": 276,
+      "sourcePath": "core/src/tools/orchestrator_namespace_note_tests.rs",
+      "siteRegex": "(?:^|[ /])core/src/tools/orchestrator_namespace_note_tests\\.rs:276:[0-9]+",
+      "messageRegex": "(?m)^a\\ stale\\ or\\ already\\-consumed\\ allowance\\ must\\ not\\ hide\\ a\\ later\\ denial$",
+      "customMessage": "a stale or already-consumed allowance must not hide a later denial"
+    }
+  ],
+  "baselineExpected": [
+    7,
+    5,
+    2
+  ],
+  "candidateExpected": [
+    7,
+    7,
+    0
+  ],
+  "scope": "Explanation-note lifecycle only; no permission/policy or message change. Focused synthetic draft evidence; functional/TUI gate remains OPEN.",
+  "baselineLimitation": "Original production plus the same separate test/Linux module attributes and identical final new fixture; no instrumentation.",
+  "actualRustResults": null,
+  "fullSuiteQualification": false,
+  "interactiveQualification": false,
+  "patch": {
+    "path": "payload/change.patch",
+    "sha256": "c2de789544202004a2178edea926fb4637117dac905a8e0a904cc8bffbcaca48"
+  },
+  "baselinePatch": {
+    "path": "payload/baseline-fixture.patch",
+    "sha256": "c7b79e34670c3cde1c4abc0be13aa3631533572ae62674c7b8859b9288ed1a74"
+  },
+  "sourceTransitionPatch": {
+    "path": "payload/fixture-source-transition.patch",
+    "sha256": "faacfabd5f1ca56f53260f7a588d4fd52939a847ac9e33c28bb077e707e09862"
+  },
+  "sourceReviewScope": "Historical v3 source review only. All five prior review passes remain spent. V5 is an evidence-backed equivalent module-CFG implementation correction, proven by a dependency-free Clippy metadata probe and full formatter, not a new opinion or product qualification.",
+  "candidateSourceCommit": "9911c2b63d9908124d5b3924c0f5c526d0a60a97",
+  "historicalRuns": [
+    {
+      "id": 39534049472,
+      "baselinePass": 5,
+      "baselinePreconditionFailure": 2,
+      "intendedOracleFailure": 0,
+      "candidateExecuted": false
+    },
+    {
+      "id": 39537480273,
+      "baselinePass": 5,
+      "baselineIntendedOracleFailure": 2,
+      "failureCode": "scoped-clippy_nonzero",
+      "fixtureLintErrors": 15,
+      "candidateExecuted": false,
+      "qualified": false
+    }
+  ],
+  "correction": "Equivalent cfg(all(test, target_os=\"linux\")) split into separate test/Linux attributes only; fixture and production function bodies unchanged."
+}

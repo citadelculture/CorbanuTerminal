@@ -1,0 +1,8 @@
+{
+  "approved": true,
+  "controllerSha256": "4436b36f70c072c28d656f99df6a2063c00f98fcf4309d2989c2d96080feb241",
+  "sourceManifestSha256": "8a24345e20d4a109cf8f01bdef1164faa29a5803d8e8bfb6dade6fef35dca974",
+  "toolsPinsSha256": "2b9c6ffed5fd37327e7681e6146823240e8f2e6f9c7bf7b3ee5de8a8898125e1",
+  "workflowSha256": "b88be174a011aa1fdcaa1ecf66d65f7ee241013b8af2f996cc159c78fcbfa7d1",
+  "scope": "One exact CFG-corrected paired internal qualification after root integration and normal admission. Five prior opinion passes remain spent; functional/TUI OPEN."
+}
