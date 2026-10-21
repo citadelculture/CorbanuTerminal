@@ -1,0 +1,10 @@
+{
+  "approved": true,
+  "controllerSha256": "782bab71b13c5ba95ce8d1ac7cf6400628471eb3bd1b45fdda50fdbd4f394062",
+  "issue": 732,
+  "reviewBindingPending": false,
+  "scope": "Five-case ordinary debug paired qualification only; no sandbox-isolation or functional/TUI approval.",
+  "sourceManifestSha256": "a17c15995a9362838b3900ef58f15785ad5f85a2e7bc13db120d4028d49a0f9c",
+  "toolsPinsSha256": "5749707cc768bb3ff8f81445366ab520141dfa8889d52389cfa30f39020bbce4",
+  "workflowSha256": "5ce7f05e9829d1f52bd8d6d5df56905a9ab028828e4edb2485b6436dc17a0795"
+}

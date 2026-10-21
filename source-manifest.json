@@ -1,0 +1,140 @@
+{
+  "schema": "issue732-top-level-globs-hosted-source-v1",
+  "baseCommit": "aa35e3f93658aacd7483040f71f354010ac9c23a",
+  "formatState": "SCOPED_RUSTFMT_CHECKED_FULL_FMT_PENDING",
+  "preparedFixtureFreezeSha256": "63aad6e2a746cfc763b5c8f5ba31810200f36ec3ce501a77c7fd35a3923ca9c2",
+  "candidatePatchSha256": "6e9ad53e3786627455bbfe0aba7ed9eba6125d9dcc172304a1f581e730c16575",
+  "sourcePreparationSha256": "140a8ed2d2352e11e04c827a6e47357f91b718d2164bf1a259808d63656b578f",
+  "sourceReviewSha256": "e7e7983f490121f872a38bbe0c01f506bbf6e829e5b57bb1df6c5dfba61461a7",
+  "sourceModules": {
+    "codex-rs/linux-sandbox/src/bwrap_glob_depth_tests.rs": "bwrap::glob_depth_tests",
+    "codex-rs/linux-sandbox/src/bwrap.rs": "bwrap::tests"
+  },
+  "caseSourceKinds": {
+    "codex-rs/linux-sandbox/src/bwrap_glob_depth_tests.rs": "payload",
+    "codex-rs/linux-sandbox/src/bwrap.rs": "payload"
+  },
+  "files": [
+    {
+      "path": "codex-rs/linux-sandbox/src/bwrap.rs",
+      "newFile": false,
+      "originalSha256": "7ab665928e5d57ce756c1abe5e6638de0ba82d1b9100dad3636c7b223f24ce4f",
+      "candidateSha256": "4a6b6d69e380f04ebac579751d0d1b429692d7ef16e8ccb7ab373720d8ac7b4f",
+      "baselineSha256": "570e6902c940727dce4d816aa12073885027c7c0ca479e6024b84d19243df8d9",
+      "payload": "payload/bwrap.rs",
+      "baselinePayload": "payload/bwrap.baseline.rs"
+    },
+    {
+      "path": "codex-rs/linux-sandbox/src/bwrap_glob_depth_tests.rs",
+      "newFile": true,
+      "originalSha256": null,
+      "candidateSha256": "12a4fdf15d31299c601ce1f86f629302e005a60d4d3e49cf156adf62203ba1a7",
+      "baselineSha256": "12a4fdf15d31299c601ce1f86f629302e005a60d4d3e49cf156adf62203ba1a7",
+      "payload": "payload/bwrap_glob_depth_tests.rs",
+      "baselinePayload": "payload/bwrap_glob_depth_tests.baseline.rs"
+    }
+  ],
+  "selectedCases": [
+    "bwrap::glob_depth_tests::issue_732_leaf_database_glob_stays_shallow_beside_recursive_globs",
+    "bwrap::glob_depth_tests::issue_732_leaf_database_glob_does_not_enter_unreadable_children",
+    "bwrap::glob_depth_tests::issue_732_explicit_recursive_database_glob_keeps_its_depth",
+    "bwrap::tests::root_prefix_unreadable_globs_are_too_broad_for_linux_expansion",
+    "bwrap::tests::unclosed_character_classes_are_escaped_for_ripgrep"
+  ],
+  "redCases": [
+    {
+      "name": "bwrap::glob_depth_tests::issue_732_leaf_database_glob_stays_shallow_beside_recursive_globs",
+      "assertionKind": "pretty_assert_custom",
+      "panicLine": 59,
+      "sourcePath": "linux-sandbox/src/bwrap_glob_depth_tests.rs",
+      "siteRegex": "(?:^|[ /])linux\\-sandbox/src/bwrap_glob_depth_tests\\.rs:59:[0-9]+",
+      "messageRegex": "(?m)^assertion\\ failed:\\ `\\(left\\ ==\\ right\\)`:\\ leaf\\ database\\ patterns\\ must\\ stay\\ at\\ their\\ declared\\ folder$",
+      "customMessage": "leaf database patterns must stay at their declared folder"
+    },
+    {
+      "name": "bwrap::glob_depth_tests::issue_732_leaf_database_glob_does_not_enter_unreadable_children",
+      "assertionKind": "std_assert_custom",
+      "panicLine": 105,
+      "sourcePath": "linux-sandbox/src/bwrap_glob_depth_tests.rs",
+      "siteRegex": "(?:^|[ /])linux\\-sandbox/src/bwrap_glob_depth_tests\\.rs:105:[0-9]+",
+      "messageRegex": "(?m)^a\\ leaf\\ database\\ scan\\ must\\ not\\ enter\\ an\\ unreadable\\ child: \\[.*\\]$",
+      "customMessage": "a leaf database scan must not enter an unreadable child:"
+    }
+  ],
+  "sourceCases": [
+    "bwrap::glob_depth_tests::issue_732_leaf_database_glob_stays_shallow_beside_recursive_globs",
+    "bwrap::glob_depth_tests::issue_732_leaf_database_glob_does_not_enter_unreadable_children",
+    "bwrap::glob_depth_tests::issue_732_explicit_recursive_database_glob_keeps_its_depth",
+    "bwrap::tests::default_unreadable_glob_scan_has_no_depth_cap",
+    "bwrap::tests::full_disk_write_full_network_returns_unwrapped_command",
+    "bwrap::tests::full_disk_write_proxy_only_keeps_full_filesystem_but_unshares_network",
+    "bwrap::tests::full_disk_write_with_unreadable_glob_still_wraps_and_masks_match",
+    "bwrap::tests::restricted_policy_chdirs_to_canonical_command_cwd",
+    "bwrap::tests::symlinked_writable_roots_bind_real_target_and_remap_carveouts",
+    "bwrap::tests::symlinked_writable_roots_mask_denials_spelled_by_the_target",
+    "bwrap::tests::denials_spelled_through_a_read_only_link_mask_the_target",
+    "bwrap::tests::restricted_reads_mask_denials_below_a_linked_read_only_root",
+    "bwrap::tests::restricted_reads_mask_a_linked_root_inside_a_denied_folder",
+    "bwrap::tests::denials_through_links_mask_once_and_keep_writable_links",
+    "bwrap::tests::writable_roots_under_symlinked_ancestors_bind_real_target",
+    "bwrap::tests::protected_symlinked_directory_subpaths_fail_closed",
+    "bwrap::tests::symlinked_writable_roots_nested_symlink_escape_paths_fail_closed",
+    "bwrap::tests::registry_protection_precedes_denied_parent_mask",
+    "bwrap::tests::missing_read_only_subpath_uses_empty_file_bind_data",
+    "bwrap::tests::transient_empty_preserved_file_uses_empty_file_bind_data",
+    "bwrap::tests::missing_child_git_under_parent_repo_is_mounted_read_only",
+    "bwrap::tests::symlinked_missing_child_git_under_parent_repo_mounts_effective_path_read_only",
+    "bwrap::tests::ignores_missing_writable_roots",
+    "bwrap::tests::full_write_root_bind_is_followed_by_minimal_dev",
+    "bwrap::tests::writable_symlink_to_filesystem_root_is_bound_first",
+    "bwrap::tests::symlinked_root_inside_another_root_reapplies_its_read_only_paths",
+    "bwrap::tests::pinned_writable_roots_are_bound_from_checked_folders",
+    "bwrap::tests::writable_link_to_protected_git_keeps_it_read_only",
+    "bwrap::tests::denial_spelled_through_a_link_survives_later_binds_of_its_target",
+    "bwrap::tests::full_write_root_and_link_to_root_keep_protections_outside_workspaces",
+    "bwrap::tests::missing_project_root_metadata_carveouts_use_metadata_path_masks",
+    "bwrap::tests::missing_user_project_root_subpath_rules_are_still_enforced",
+    "bwrap::tests::full_write_root_with_denials_creates_nothing_at_the_filesystem_root",
+    "bwrap::tests::mounts_dev_before_writable_dev_binds",
+    "bwrap::tests::restricted_read_only_uses_scoped_read_roots_instead_of_erroring",
+    "bwrap::tests::restricted_read_only_with_platform_defaults_includes_usr_when_present",
+    "bwrap::tests::split_policy_reapplies_unreadable_carveouts_after_writable_binds",
+    "bwrap::tests::split_policy_reenables_nested_writable_subpaths_after_read_only_parent",
+    "bwrap::tests::split_policy_reenables_writable_subpaths_after_unreadable_parent",
+    "bwrap::tests::split_policy_reenables_writable_files_after_unreadable_parent",
+    "bwrap::tests::split_policy_reenables_nested_writable_roots_after_unreadable_parent",
+    "bwrap::tests::split_policy_masks_root_read_directory_carveouts",
+    "bwrap::tests::split_policy_masks_root_read_file_carveouts",
+    "bwrap::tests::every_masked_file_gets_its_own_null_descriptor",
+    "bwrap::tests::unreadable_globs_expand_existing_matches_with_configured_depth",
+    "bwrap::tests::credential_globs_leave_templates_readable",
+    "bwrap::tests::unreadable_globs_add_canonical_targets_for_symlink_matches",
+    "bwrap::tests::root_prefix_unreadable_globs_are_too_broad_for_linux_expansion",
+    "bwrap::tests::unclosed_character_classes_are_escaped_for_ripgrep",
+    "bwrap::tests::folders_above_protected_paths_are_pinned_before_their_masks",
+    "bwrap::tests::unmovable_paths_pin_the_real_folder_and_the_folders_above_a_link",
+    "bwrap::tests::missing_denied_path_below_read_only_folder_gets_a_snapshot",
+    "bwrap::tests::missing_denied_paths_sharing_a_missing_folder_mask_it_once",
+    "bwrap::tests::missing_denied_path_is_masked_again_after_a_nested_writable_bind",
+    "bwrap::tests::missing_read_only_path_below_read_only_folder_is_left_to_the_folder",
+    "bwrap::tests::issue_506_unlistable_directory_is_rebuilt_without_listing",
+    "bwrap::tests::issue_506_full_write_with_an_unlistable_directory_is_wrapped",
+    "bwrap::tests::issue_506_unlistable_home_under_a_writable_root_stays_unlistable",
+    "bwrap::tests::issue_506_unlistable_home_under_a_symlinked_readable_root"
+  ],
+  "sourceCaseCount": 59,
+  "patch": {
+    "path": "payload/change.patch",
+    "sha256": "6e9ad53e3786627455bbfe0aba7ed9eba6125d9dcc172304a1f581e730c16575"
+  },
+  "baselinePatch": {
+    "path": "payload/baseline-fixture.patch",
+    "sha256": "d9e17829ce26e48fc0378d1b72ce088405819d7e99e58cf56bc7b5752f69474d"
+  },
+  "sourceTransitionPatch": {
+    "path": "payload/fixture-source-transition.patch",
+    "sha256": "87e85125348b0354dceb146b47291338f06a81af4bf070deec8daa1b25e0a9e4"
+  },
+  "baselineAdaptation": "Original production logic plus a mechanical scanner-function extraction and identical sibling test module. It is not an unmodified-base binary. The ordinary entry point still invokes ripgrep_files; the fallback is directly injected into that same grouping path without mutating PATH.",
+  "scope": "Five library cases only. All other cases are filter exclusions. No bubblewrap/mount/namespace execution, credential access, full suite or security end-to-end claim."
+}

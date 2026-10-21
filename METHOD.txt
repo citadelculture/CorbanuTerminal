@@ -1,0 +1,71 @@
+Issue732: focused Linux top-level glob qualification (inert until root admission)
+
+Public demand: https://github.com/CorbanuCore/CorbanuTerminal/issues/732
+Pinned public base: aa35e3f93658aacd7483040f71f354010ac9c23a.
+Contributor report, not a maintainer assignment or an earning/eligibility claim.
+
+Only five codex-linux-sandbox library cases execute through the unchanged
+repository `just test` wrapper. Three new file-listing cases use owned TempDirs,
+real rg and the existing globset fallback, plus two unchanged parser controls.
+The paired baseline retains original grouping/depth behavior with a mechanical
+scanner-function extraction and the identical sibling test module. It is not an
+unmodified-base binary. Both scanners run before each new regression assertion.
+
+Expected baseline, not an observed result: two specific assertion failures and
+three controls passing. Expected candidate: five passes. The first red site is a
+pretty_assertions equality at bwrap_glob_depth_tests.rs:59 with the exact custom
+message; the second is a standard assertion at line105. Missing rg, root uid,
+failed unreadable-child precondition, compile/setup failure, wrong assertion,
+missing test, in-body skip, retry, timeout or incomplete output cannot count as
+red/green qualification. All nonselected tests are filter exclusions, not passes.
+
+The fixed own-fork push route uses a fresh GitHub-hosted ubuntu-24.04 worker,
+non-root real/effective UID, attempt1, contents:read and persist-credentials:false.
+No workflow_dispatch, secrets, deployment or source-PR workflow is included.
+Before other tool downloads or build, the controller acquires official ripgrep
+15.2.0 as its first hash-pinned archive in the task-owned directory. It verifies
+the owned executable selected by the unchanged task-local PATH, copied binary
+hash and exact version. No runner-provided rg or host installation is used. The unreadable-child body independently
+asserts that its owned directory actually refuses read_dir; it restores that
+owned mode through RAII. No bwrap launch, mount, namespace, account, credential
+store or application CLI execution is selected.
+
+The ordinary wrapper creates its disposable profile and denies native keyring
+use in the debug lane. The controller preserves inherited HOME/CODEX_HOME and
+sandbox-marker presence/values; it does not clear a host denial. Provider/Git
+credentials are not carried into child environments. This is ordinary-test
+hygiene, not proof of OS security isolation or full product behavior.
+
+The independent full public checkout and candidate patch are hash-bound. Each
+variant runs full ordinary `just fmt` before tests; any formatter delta is
+preserved and holds before Rust qualification. Local scoped rustfmt is not full
+formatting. Candidate scoped fmt and focused ordinary `just clippy` also must
+pass. The ordinary test command is `just test -p codex-linux-sandbox --lib
+--locked --offline` plus the fixed exact five-case nextest filter/profile.
+No raw cargo test, release profile or debug-assertion override is used. This
+package does not trigger the wrapper's four helper-binary prebuild, but its core
+dev-dependency means the first compilation can still be substantial.
+
+Tools: exact inherited official Rust1.99.1, just1.58.0, nextest0.9.146, uv0.11.3,
+DotSlash0.5.9 and matching Linux V8 archive/binding hashes. Formatter subtools
+are governed by pinned uv locks and the repository's buildifier manifest.
+Acquisition is public-only, bounded, HTTPS, zero retries; cargo fetch is locked
+before offline tests. No global toolchain/config/cache mutation is required.
+
+Bounds: job120min; controller6900sec; initial and first compile30GiB free;
+target reuse8GiB; running stop4GiB. One owned target reused across paired stages.
+Per-case60sec, test threads1, cargo jobs2, retries0. Each stdout/stderr16MiB and
+JUnit16MiB; truncation is explicitly incomplete. Raw hashes and complete normalized
+public streams/session records bind exact commands, exits and JUnit/log identities.
+Only public runner data is exported, not local operator logs or environment dumps.
+Rejected JUnit and formatting deltas are preserved. Process cleanup and exited
+orphan reaping use the unchanged bounded supervisor; a live descendant holds.
+Qualification binaries: streaming hashes, <=2GiB each and <=4GiB total, with
+projected two-copy space plus4GiB floor; separate bounded binary artifact.
+
+Admission starts false. Root owns source/method acceptance and any later push.
+No run ID or successful Rust outcome is asserted here. Focused results would not
+constitute whole-suite, end-to-end security, TUI or human functional readiness.
+This is a distinct732 method implementation, not another1048 opinion review.
+
+Version 2 prerequisite correction: the first v1 hosted campaign stopped at ripgrep_prerequisite_missing after 13 commands, with zero Rust test bodies. This successor downloads official ripgrep 15.2.0 into the existing task-owned downloads directory, checks its exact SHA-256 and byte bound, extracts through the unchanged safe extractor, copies only rg into the existing owned bin directory, then requires non-root uid/euid and that exact owned executable hash/version before acquiring remaining tools. No host/global PATH or profile change. Source, paired fixtures, five cases, assertions, inherited sandbox controls and resource/capture/cleanup gates are unchanged. This is a changed-method second campaign, not an unchanged rerun. Earlier failure remains unqualified. Review history is retained; this delta requires reserved pass 4 and does not reset the five-pass budget. Admission is false pending root review and publication.

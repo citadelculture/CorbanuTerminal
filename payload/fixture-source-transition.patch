@@ -1,0 +1,43 @@
+diff --git a/codex-rs/linux-sandbox/src/bwrap.rs b/codex-rs/linux-sandbox/src/bwrap.rs
+index 0cbcaad3ee1632ecb00c1208a31b519ec958e12d..35c87351ae77c5e9eff3da3c654f5ba52dc7e43a 100644
+--- a/codex-rs/linux-sandbox/src/bwrap.rs
++++ b/codex-rs/linux-sandbox/src/bwrap.rs
+@@ -1446,15 +1446,25 @@ fn expand_unreadable_globs_with_scanner(
+     // leave out the template names (#442, Travis 2026-10-12), which other
+     // globs still cover.
+     let rule_roots = credential_rule_roots(patterns);
+-    let mut patterns_by_search_root: BTreeMap<(AbsolutePathBuf, bool), Vec<String>> =
++    let mut patterns_by_search_root: BTreeMap<(AbsolutePathBuf, bool, Option<usize>), Vec<String>> =
+         BTreeMap::new();
+     for pattern in patterns {
+         if let Some((search_root, glob)) = split_pattern_for_ripgrep(pattern, cwd)
+             && search_root.as_path().is_dir()
+         {
+             let credential = credential_glob_exempts_templates(pattern, &rule_roots);
++            // #732: a leaf glob such as `<database-folder>/*.sqlite*` cannot
++            // match below that folder. Do not walk unrelated child folders:
++            // rg otherwise matches the basename recursively, and either
++            // scanner can fail on an unreadable child. Keep recursive globs
++            // in a separate scan so they retain their configured depth.
++            let scan_depth = if !glob.contains('/') && !glob.contains("**") {
++                Some(max_depth.unwrap_or(1).min(1))
++            } else {
++                max_depth
++            };
+             patterns_by_search_root
+-                .entry((search_root, credential))
++                .entry((search_root, credential, scan_depth))
+                 .or_default()
+                 .push(glob);
+         }
+@@ -1464,8 +1474,8 @@ fn expand_unreadable_globs_with_scanner(
+     // overlay needs the resolved target to prevent a readable symlink path from
+     // bypassing an unreadable glob match.
+     let mut expanded_paths = BTreeSet::new();
+-    for ((search_root, credential), globs) in patterns_by_search_root {
+-        for path in scan_files(search_root.as_path(), &globs, max_depth)? {
++    for ((search_root, credential, scan_depth), globs) in patterns_by_search_root {
++        for path in scan_files(search_root.as_path(), &globs, scan_depth)? {
+             if credential
+                 && path
+                     .as_path()
