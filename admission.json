@@ -1,0 +1,18 @@
+{
+  "schema": "issue1177-hosted-admission-v2",
+  "approved": true,
+  "reviewReceiptSha256": "3d74d9e8653a3ba449fbb452776f15ca5008082a2c865033025e297250c33002",
+  "sourceHandoffSha256": "ad283024703b690c6402751deacddaeab183f38b9e0df285a775ac66341ccdc3",
+  "files": {
+    "controller.py": "2b799781614054b846530511edd48f8ee28ffa9059d3d413fa1603ad230989d5",
+    "worker.py": "e41034a3daa2ce2d3a6c50e71dfb26ba79c665cebf7565eac1ec745bb484a1c1",
+    "boundary_probe.py": "0788a722b5a7e223947a2651424ac81d6beed33f7a746a3246672ca79ae0e8bc",
+    "Dockerfile": "edd2e6ab7522d69e1252564a65b57a5f46a1651acc275fed44f6915d348270a1",
+    "tools-pins.json": "b43c388c62a264e52999003b3efabc0db3cf2a633867c98e113c784b3584331d",
+    "source-manifest.json": "80d5da9f24716d38bf3ac0a38f7ae894afc2b78f9b62f742d564eda52786204b",
+    "change.patch": "910d5e94edda09622c49a4c709562df39db5e3e1f301b9f6d56af29721bda08e",
+    "METHOD.txt": "4b585ca6639245ed7c28cbafb0da84708cfc6c2ac42c6c16861af573f31602a1",
+    ".github/workflows/issue1177-mailbox-readiness-v2.yml": "d2b3f761ce56f88f9b885524077f9c5e4314bd0f3bfa1369df41c78c98097b73"
+  },
+  "reason": "Bounded changed-method recovery and inert-reader readiness confirmed by combined pass4; actual qualification pending."
+}

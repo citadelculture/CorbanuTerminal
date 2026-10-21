@@ -1,0 +1,289 @@
+diff --git a/codex-rs/core/src/test_support.rs b/codex-rs/core/src/test_support.rs
+index 170a053498e7a744ae058df261f53222b1b33366..871dfc84eda6864b2fb17fa612f5012734d40057 100644
+--- a/codex-rs/core/src/test_support.rs
++++ b/codex-rs/core/src/test_support.rs
+@@ -29,6 +29,7 @@ use codex_protocol::openai_models::ModelPreset;
+ use codex_protocol::protocol::SessionSource;
+ use once_cell::sync::Lazy;
+ 
++use crate::CodexThread;
+ use crate::ThreadManager;
+ use crate::config::Config;
+ use crate::responses_metadata::CodexResponsesMetadata;
+@@ -61,6 +62,11 @@ pub fn set_thread_manager_test_mode(enabled: bool) {
+     thread_manager::set_thread_manager_test_mode_for_tests(enabled);
+ }
+ 
++/// Reports mail delivered to the session's in-memory queue, not just persisted in its database.
++pub async fn has_pending_mailbox_items(thread: &CodexThread) -> bool {
++    thread.session.input_queue.has_pending_mailbox_items().await
++}
++
+ /// #888: skill discovery in this process skips the user-home skills root
+ /// (`$HOME/.agents/skills`), so a developer's own skills never reach a test.
+ pub fn ignore_user_home_skills(ignore: bool) {
+diff --git a/codex-rs/core/tests/suite/subagent_notifications.rs b/codex-rs/core/tests/suite/subagent_notifications.rs
+index ca91d2605412527c1c991a1a666b76744d733dc5..48b84bf6b595b8d9d1b63bb73e094fa4e96f38a9 100644
+--- a/codex-rs/core/tests/suite/subagent_notifications.rs
++++ b/codex-rs/core/tests/suite/subagent_notifications.rs
+@@ -2,6 +2,7 @@ use anyhow::Result;
+ use codex_core::StartThreadOptions;
+ use codex_core::ThreadConfigSnapshot;
+ use codex_core::config::AgentRoleConfig;
++use codex_core::test_support::has_pending_mailbox_items;
+ use codex_features::Feature;
+ use codex_models_manager::bundled_models_response;
+ use codex_protocol::ThreadId;
+@@ -56,6 +57,9 @@ use tracing::Level;
+ use tracing_test::internal::MockWriter;
+ use wiremock::MockServer;
+ 
++#[path = "subagent_notifications_readiness_tests.rs"]
++mod readiness_tests;
++
+ /// #349: how long a test waits for something that must happen (a request,
+ /// a status, a rollout line). Generous so a loaded runner can't fail a wait
+ /// that succeeds a moment later; a passing wait returns as soon as it holds.
+@@ -891,6 +895,17 @@ async fn subagent_stop_replaces_stop_and_skips_internal_subagents() -> Result<()
+     Ok(())
+ }
+ 
++async fn wait_for_parent_mailbox(test: &TestCodex) -> Result<()> {
++    // A persisted mailbox row can precede delivery to the session's input queue.
++    tokio::time::timeout(POSITIVE_WAIT, async {
++        while !has_pending_mailbox_items(&test.codex).await {
++            sleep(Duration::from_millis(10)).await;
++        }
++    })
++    .await?;
++    Ok(())
++}
++
+ #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+ async fn subagent_notification_is_included_without_wait() -> Result<()> {
+     skip_if_no_network!(Ok(()));
+@@ -911,21 +926,7 @@ async fn subagent_notification_is_included_without_wait() -> Result<()> {
+         }
+     })
+     .await?;
+-    let state_db = test.codex.state_db().expect("mailbox state db");
+-    tokio::time::timeout(POSITIVE_WAIT, async {
+-        loop {
+-            if !state_db
+-                .list_recoverable_agent_messages(test.session_configured.thread_id)
+-                .await
+-                .expect("parent mailbox")
+-                .is_empty()
+-            {
+-                break;
+-            }
+-            sleep(Duration::from_millis(10)).await;
+-        }
+-    })
+-    .await?;
++    wait_for_parent_mailbox(&test).await?;
+ 
+     let turn2 = mount_sse_once_match(
+         &server,
+@@ -941,6 +942,7 @@ async fn subagent_notification_is_included_without_wait() -> Result<()> {
+ 
+     let turn2_requests = wait_for_requests(&turn2).await?;
+     assert!(turn2_requests.iter().any(has_subagent_notification));
++    eprintln!("ISSUE1177_EXECUTED:original_without_wait");
+ 
+     Ok(())
+ }
+@@ -1012,6 +1014,7 @@ async fn direct_operator_turn_in_spawned_child_does_not_notify_parent() -> Resul
+         .ok_or_else(|| anyhow::anyhow!("expected parent rollout path"))?;
+     let parent_rollout = tokio::fs::read_to_string(parent_rollout_path).await?;
+     assert!(!parent_rollout.contains(DIRECT_CHILD_RESULT));
++    eprintln!("ISSUE1177_EXECUTED:direct_operator_no_notification");
+ 
+     Ok(())
+ }
+diff --git a/codex-rs/core/tests/suite/subagent_notifications_readiness_tests.rs b/codex-rs/core/tests/suite/subagent_notifications_readiness_tests.rs
+new file mode 100644
+index 0000000000000000000000000000000000000000..7b77ed81aebcdf72d42baa33c248d3fbdb98e0d0
+--- /dev/null
++++ b/codex-rs/core/tests/suite/subagent_notifications_readiness_tests.rs
+@@ -0,0 +1,180 @@
++use super::*;
++use codex_protocol::AgentPath;
++use codex_protocol::protocol::AgentMessageKind;
++use codex_protocol::protocol::InterAgentCommunication;
++use codex_state::AgentMailboxAdmission;
++use codex_state::AgentMailboxMessage;
++use codex_state::AgentMailboxPhase;
++
++const SEED_PROMPT: &str = "issue1177 control turn one";
++const RESULT_TEXT: &str = "issue1177 controlled terminal result";
++const MESSAGE_ID: &str = "issue1177-controlled-result";
++
++async fn parent_with_persisted_result(
++    server: &MockServer,
++) -> Result<(TestCodex, InterAgentCommunication)> {
++    mount_sse_once_match(
++        server,
++        |request: &wiremock::Request| body_contains(request, SEED_PROMPT),
++        sse(vec![
++            ev_response_created("issue1177-seed"),
++            ev_assistant_message("issue1177-seed-message", "parent ready"),
++            ev_completed("issue1177-seed"),
++        ]),
++    )
++    .await;
++    let test = test_codex()
++        .with_config(|config| {
++            config
++                .features
++                .enable(Feature::Collab)
++                .expect("enable collab");
++            config
++                .features
++                .enable(Feature::MultiAgentV2)
++                .expect("enable v2");
++        })
++        .build_with_auto_env(server)
++        .await?;
++    test.submit_turn(SEED_PROMPT).await?;
++    let mut communication = InterAgentCommunication::new(
++        AgentPath::try_from("/root/worker").expect("worker path should parse"),
++        AgentPath::root(),
++        Vec::new(),
++        RESULT_TEXT.to_string(),
++        /*trigger_turn*/ false,
++    )
++    .with_kind(AgentMessageKind::TerminalResult)
++    .with_message_id(MESSAGE_ID);
++    communication.created_at_ms = Some(1_000);
++    let state_db = test.codex.state_db().expect("mailbox state db");
++    assert_eq!(
++        state_db
++            .admit_agent_message(
++                test.session_configured.thread_id,
++                &communication,
++                /*now_ms*/ 1_000
++            )
++            .await?,
++        AgentMailboxAdmission::Inserted
++    );
++    assert!(
++        state_db
++            .transition_agent_message(
++                MESSAGE_ID,
++                AgentMailboxPhase::Admitted,
++                AgentMailboxPhase::Ready,
++                /*now_ms*/ 1_001
++            )
++            .await?
++    );
++    assert_eq!(
++        state_db
++            .list_recoverable_agent_messages(test.session_configured.thread_id)
++            .await?,
++        vec![AgentMailboxMessage {
++            recipient_thread_id: test.session_configured.thread_id,
++            communication: communication.clone(),
++            phase: AgentMailboxPhase::Ready,
++            attempt_id: None,
++            created_at_ms: 1_000,
++            updated_at_ms: 1_001,
++        }]
++    );
++    assert!(!has_pending_mailbox_items(&test.codex).await);
++    Ok((test, communication))
++}
++
++async fn capture_control_turn_two(
++    test: &TestCodex,
++    server: &MockServer,
++) -> Result<Vec<ResponsesRequest>> {
++    let turn2 = mount_sse_once_match(
++        server,
++        |request: &wiremock::Request| body_contains(request, TURN_2_NO_WAIT_PROMPT),
++        sse(vec![
++            ev_response_created("issue1177-turn2"),
++            ev_assistant_message("issue1177-turn2-message", "control complete"),
++            ev_completed("issue1177-turn2"),
++        ]),
++    )
++    .await;
++    test.submit_turn(TURN_2_NO_WAIT_PROMPT).await?;
++    let requests = wait_for_requests(&turn2).await?;
++    assert!(
++        requests
++            .iter()
++            .all(|request| request.body_contains_text(TURN_2_NO_WAIT_PROMPT))
++    );
++    Ok(requests)
++}
++
++#[tokio::test(flavor = "multi_thread", worker_threads = 2)]
++async fn persisted_row_waits_for_delivery_then_reaches_turn_two() -> Result<()> {
++    skip_if_no_network!(Ok(()));
++    let server = start_mock_server().await;
++    let (test, communication) = parent_with_persisted_result(&server).await?;
++    let readiness = wait_for_parent_mailbox(&test);
++    tokio::pin!(readiness);
++    // Hold delivery while observing the exact shared wait. This is a bounded
++    // no-delivery phase, not a sleep used as evidence that mail has arrived.
++    assert!(
++        tokio::time::timeout(Duration::from_millis(50), readiness.as_mut())
++            .await
++            .is_err()
++    );
++    assert!(!has_pending_mailbox_items(&test.codex).await);
++    test.codex
++        .submit(Op::InterAgentCommunication { communication })
++        .await?;
++    readiness.await?;
++    assert!(has_pending_mailbox_items(&test.codex).await);
++    let turn2_requests = capture_control_turn_two(&test, &server).await?;
++    assert!(turn2_requests.iter().any(has_subagent_notification));
++    assert!(
++        turn2_requests
++            .iter()
++            .any(|request| request.body_contains_text(RESULT_TEXT))
++    );
++    eprintln!("ISSUE1177_EXECUTED:controlled_delivery_gap");
++    Ok(())
++}
++
++#[tokio::test(flavor = "multi_thread", worker_threads = 2)]
++async fn undelivered_row_times_out_and_turn_two_oracle_rejects() -> Result<()> {
++    skip_if_no_network!(Ok(()));
++    let server = start_mock_server().await;
++    let (test, communication) = parent_with_persisted_result(&server).await?;
++    // No delivery operation or background sender is created in this case.
++    let started = Instant::now();
++    let error = wait_for_parent_mailbox(&test)
++        .await
++        .expect_err("undelivered mail must time out");
++    assert!(
++        error
++            .downcast_ref::<tokio::time::error::Elapsed>()
++            .is_some()
++    );
++    assert!(started.elapsed() >= POSITIVE_WAIT);
++    assert!(!has_pending_mailbox_items(&test.codex).await);
++    let rows = test
++        .codex
++        .state_db()
++        .expect("mailbox state db")
++        .list_recoverable_agent_messages(test.session_configured.thread_id)
++        .await?;
++    assert_eq!(rows.len(), 1);
++    assert_eq!(rows[0].communication, communication);
++    assert_eq!(rows[0].phase, AgentMailboxPhase::Ready);
++    // The failed delivery attempt stays failed. This separate oracle check
++    // deliberately observes turn two without delivering the persisted result.
++    let turn2_requests = capture_control_turn_two(&test, &server).await?;
++    assert!(!turn2_requests.iter().any(has_subagent_notification));
++    assert!(
++        !turn2_requests
++            .iter()
++            .any(|request| request.body_contains_text(RESULT_TEXT))
++    );
++    eprintln!("ISSUE1177_EXECUTED:undelivered_timeout_and_oracle_rejection");
++    Ok(())
++}

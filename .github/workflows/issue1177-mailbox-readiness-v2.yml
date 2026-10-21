@@ -1,0 +1,74 @@
+name: Issue1177 mailbox readiness ordinary integration v2
+
+on:
+  push:
+    branches: [codex/issue1177-mailbox-readiness-ci-v2-20261021]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: issue1177-mailbox-readiness-v2-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  qualify:
+    if: github.repository == 'citadelculture/CorbanuTerminal' && github.run_attempt == 1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 145
+    steps:
+      - name: Capacity before acquisition
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I -B - <<'PY'
+          import json, pathlib, shutil, sys
+          free = shutil.disk_usage('.').free
+          memory = int(pathlib.Path('/proc/meminfo').read_text().split('MemTotal:')[1].split()[0])*1024
+          result = {'freeBytes': free, 'minimumFreeBytes': 30*1024**3,
+                    'memoryBytes': memory, 'minimumMemoryBytes': 12*1024**3,
+                    'passed': free >= 30*1024**3 and memory >= 12*1024**3,
+                    'builds': 0, 'testBodiesExecuted': 0}
+          pathlib.Path('initial-resource-evidence').mkdir()
+          pathlib.Path('initial-resource-evidence/resource.json').write_text(json.dumps(result, indent=2)+'\n')
+          print('RESOURCE_READY' if result['passed'] else 'RESOURCE_HOLD')
+          sys.exit(0 if result['passed'] else 1)
+          PY
+      - name: Checkout exact reviewed control commit
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: ${{ github.sha }}
+          path: control
+          fetch-depth: 1
+          persist-credentials: false
+          submodules: false
+          lfs: false
+      - name: Independently checkout public source base
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          repository: CorbanuCore/CorbanuTerminal
+          ref: ba6c3672dca365f950ffd2babc92b93e4df3c065
+          path: source
+          fetch-depth: 1
+          persist-credentials: false
+          submodules: false
+          lfs: false
+      - name: Bounded acquisition and one isolated ordinary campaign
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I -B control/controller.py --dispatch \
+            --source "$GITHUB_WORKSPACE/source" \
+            --control "$GITHUB_WORKSPACE/control" \
+            --output "$GITHUB_WORKSPACE/public-evidence"
+      - name: Preserve bounded normalized evidence
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: issue1177-mailbox-readiness-v2-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            initial-resource-evidence/
+            public-evidence/
+          if-no-files-found: warn
+          include-hidden-files: false
+          retention-days: 14

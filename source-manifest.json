@@ -1,0 +1,66 @@
+{
+  "schema": "issue1177-hosted-source-v1",
+  "baseCommit": "ba6c3672dca365f950ffd2babc92b93e4df3c065",
+  "baseTree": "a779ca6df37229d4b21f2955d9801d4e3cd91cbb",
+  "patchSha256": "910d5e94edda09622c49a4c709562df39db5e3e1f301b9f6d56af29721bda08e",
+  "sourceHandoffSha256": "ad283024703b690c6402751deacddaeab183f38b9e0df285a775ac66341ccdc3",
+  "sourceManifestSha256": "06798bb613068402b3f6a184230533a3750eb7aeb582ea536005d01b6e74db68",
+  "fullFormatResultSha256": "818296fc1a989f0c3c7656a5d56a3a067ca93684bba70b65ce5c24df34eec01e",
+  "fullFormatState": "PASSED_UNCHANGED",
+  "files": [
+    {
+      "path": "codex-rs/core/src/test_support.rs",
+      "originalSha256": "16ca53ee305dc9cf15ea1ef5d71587fde9c505161d8a2109b7201ff8e20fa13a",
+      "candidateSha256": "652f0b8b6e2ce3fbea8e0270032d83508d4f14ee198244ade6e47d9fd57e1f43"
+    },
+    {
+      "path": "codex-rs/core/tests/suite/subagent_notifications.rs",
+      "originalSha256": "5e9a81a0a6c024bb76b712646a1b86ea17e6ab7c1677d70cda75bb4478503684",
+      "candidateSha256": "d1cd23774475a9a026f19ff5777a1d4856da17d0027dacbaed6622e6247205ef"
+    },
+    {
+      "path": "codex-rs/core/tests/suite/subagent_notifications_readiness_tests.rs",
+      "originalSha256": null,
+      "candidateSha256": "38ae118acb8beadb58d4a6b0b3ee107528fc316bbe3a1a8a283d0770d778d2c0"
+    }
+  ],
+  "selectedCases": [
+    {
+      "package": "codex-core",
+      "binary": "all",
+      "name": "suite::subagent_notifications::subagent_notification_is_included_without_wait",
+      "requiredEndMarker": "ISSUE1177_EXECUTED:original_without_wait",
+      "expectedTestOutcome": "PASS",
+      "allowedAttempts": 1
+    },
+    {
+      "package": "codex-core",
+      "binary": "all",
+      "name": "suite::subagent_notifications::direct_operator_turn_in_spawned_child_does_not_notify_parent",
+      "requiredEndMarker": "ISSUE1177_EXECUTED:direct_operator_no_notification",
+      "expectedTestOutcome": "PASS",
+      "allowedAttempts": 1
+    },
+    {
+      "package": "codex-core",
+      "binary": "all",
+      "name": "suite::subagent_notifications::readiness_tests::persisted_row_waits_for_delivery_then_reaches_turn_two",
+      "requiredEndMarker": "ISSUE1177_EXECUTED:controlled_delivery_gap",
+      "expectedTestOutcome": "PASS",
+      "allowedAttempts": 1
+    },
+    {
+      "package": "codex-core",
+      "binary": "all",
+      "name": "suite::subagent_notifications::readiness_tests::undelivered_row_times_out_and_turn_two_oracle_rejects",
+      "requiredEndMarker": "ISSUE1177_EXECUTED:undelivered_timeout_and_oracle_rejection",
+      "expectedTestOutcome": "PASS",
+      "allowedAttempts": 1
+    }
+  ],
+  "intentCaseCount": 5,
+  "readinessSeconds": 20,
+  "heldDeliveryMilliseconds": 50,
+  "baselineRedClaim": false,
+  "actualBodiesExecuted": 0
+}
