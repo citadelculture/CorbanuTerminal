@@ -1,0 +1,61 @@
+name: Socket temporary directory Python components
+on:
+  push:
+    branches:
+      - codex/short-owned-socket-tmp-python-v1-20261021
+permissions:
+  contents: read
+jobs:
+  python-components:
+    name: Python components (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            platform: linux
+          - os: windows-2025
+            platform: win32
+    steps:
+      - name: Read exact dispatched source bytes
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        env:
+          GIT_CONFIG_COUNT: '1'
+          GIT_CONFIG_KEY_0: core.autocrlf
+          GIT_CONFIG_VALUE_0: 'false'
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /source/scripts/isolated_rust_tests.py
+            /source/scripts/test_isolated_rust_tests.py
+            /method/acceptance_probe.py
+            /method/hosted_validation.py
+      - name: Use exact Python runtime version
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.13.7'
+          architecture: x64
+          check-latest: false
+          allow-prereleases: false
+          freethreaded: false
+      - name: Run bounded Python component validation
+        shell: python
+        run: |
+          import subprocess, sys
+          raise SystemExit(subprocess.call([sys.executable, 'method/hosted_validation.py', '${{ matrix.platform }}']))
+      - name: Retain actual results and all captured stdout and stderr
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: socket-temp-python-${{ matrix.platform }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: results/
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 6
+          overwrite: false
+          include-hidden-files: false
