@@ -1,0 +1,469 @@
+--- a/codex-rs/app-server/tests/suite/v2/thread_agent_message.rs
++++ b/codex-rs/app-server/tests/suite/v2/thread_agent_message.rs
+@@ -140,6 +140,10 @@
+     let request_json = serde_json::to_string(&requests[0].input())?;
+     assert!(request_json.contains("Inspect the provider-neutral boundary."));
+     assert!(
++        !request_json.contains("Sender: /root (thread"),
++        "same-tree messages keep their existing sender label"
++    );
++    assert!(
+         !request_json.contains("message-stable-1") && !request_json.contains("assignment-stable-1"),
+         "transport identities must not be copied into model-visible task text"
+     );
+@@ -269,7 +273,7 @@
+         .await?;
+     timeout(DEFAULT_TIMEOUT, app.initialize()).await??;
+     let mut roots = Vec::new();
+-    for _ in 0..2 {
++    for _ in 0..3 {
+         let request = app
+             .send_thread_start_request(ThreadStartParams {
+                 model: Some("mock-model".to_string()),
+@@ -283,10 +287,10 @@
+         .await??;
+         roots.push(to_response::<ThreadStartResponse>(response)?.thread);
+     }
+-    let (source, target) = (&roots[0], &roots[1]);
+-
+-    let send = |message_id: &str, content: &str, trigger_turn: bool| ThreadAgentMessageParams {
+-        source_thread_id: source.id.clone(),
++    let (source, other_source, target) = (&roots[0], &roots[1], &roots[2]);
++
++    let send = |source_id: &str, message_id: &str, content: &str, trigger_turn: bool| ThreadAgentMessageParams {
++        source_thread_id: source_id.to_string(),
+         target_thread_id: target.id.clone(),
+         message_id: Some(message_id.to_string()),
+         assignment_id: Some(message_id.to_string()),
+@@ -298,6 +302,7 @@
+         .send_raw_request(
+             "thread/sendAgentMessage",
+             Some(serde_json::to_value(send(
++                &source.id,
+                 "held-1176",
+                 "held task for another root 1176",
+                 /*trigger_turn*/ false,
+@@ -323,6 +328,7 @@
+         .send_raw_request(
+             "thread/sendAgentMessage",
+             Some(serde_json::to_value(send(
++                &other_source.id,
+                 "task-1176",
+                 "agent task for another root 1176",
+                 /*trigger_turn*/ true,
+@@ -357,6 +363,24 @@
+         );
+     }
+     assert!(input.contains("<inter_agent_message "), "{input}");
++    for (sender, task) in [
++        (source, "held task for another root 1176"),
++        (other_source, "agent task for another root 1176"),
++    ] {
++        let sender_id = &sender.id;
++        let expected = format!("Sender: /root (thread {sender_id})\n\n{task}");
++        assert!(
++            user_texts.iter().any(|text| text.contains(&expected)),
++            "the mailbox must identify the actual sending root: {input}"
++        );
++    }
++    let target_id = &target.id;
++    assert!(
++        !user_texts
++            .iter()
++            .any(|text| text.contains(&format!("Sender: /root (thread {target_id})"))),
++        "the recipient must not be labelled as the sender: {input}"
++    );
+     Ok(())
+ }
+ 
+--- a/codex-rs/core/src/codex_thread.rs
++++ b/codex-rs/core/src/codex_thread.rs
+@@ -412,6 +412,7 @@
+             .session_source
+             .get_agent_path()
+             .unwrap_or_else(codex_protocol::AgentPath::root);
++        let mut sender_thread_id = None;
+         let recipient = match control.ensure_agent_known(target_thread_id) {
+             Ok(target) => target.agent_path.ok_or_else(|| {
+                 CodexErr::InvalidRequest(format!(
+@@ -432,6 +433,9 @@
+             // thread's tree does not know it. A task for it still goes to its mailbox, as
+             // inter-agent data like any other agent message, never as the person's input.
+             Err(_) if control.is_loaded_root_thread(target_thread_id).await => {
++                // Paths are local to each tree. Preserve the routing path and
++                // identify this sender separately in the recipient's context.
++                sender_thread_id = Some(self.session.thread_id());
+                 codex_protocol::AgentPath::root()
+             }
+             Err(err) => return Err(err),
+@@ -450,6 +454,7 @@
+             content,
+             effective_trigger_turn,
+         );
++        communication.sender_thread_id = sender_thread_id;
+         if let Some(message_id) = message_id {
+             communication.message_id = Some(message_id);
+         }
+--- a/codex-rs/protocol/src/protocol.rs
++++ b/codex-rs/protocol/src/protocol.rs
+@@ -775,6 +775,11 @@
+     #[ts(optional)]
+     pub created_at_ms: Option<i64>,
+     pub author: AgentPath,
++    /// Actual sending thread for a message delivered outside its agent tree.
++    /// This qualifies model-visible context without changing either routing path.
++    #[serde(default, skip_serializing_if = "Option::is_none")]
++    #[ts(optional)]
++    pub sender_thread_id: Option<ThreadId>,
+     pub recipient: AgentPath,
+     #[serde(default)]
+     pub other_recipients: Vec<AgentPath>,
+@@ -810,6 +815,7 @@
+             }),
+             created_at_ms: Some(chrono::Utc::now().timestamp_millis()),
+             author,
++            sender_thread_id: None,
+             recipient,
+             other_recipients,
+             content,
+@@ -838,6 +844,7 @@
+             }),
+             created_at_ms: Some(chrono::Utc::now().timestamp_millis()),
+             author,
++            sender_thread_id: None,
+             recipient,
+             other_recipients,
+             content: String::new(),
+@@ -906,6 +913,10 @@
+     }
+ 
+     pub fn to_model_input_item(&self) -> ResponseItem {
++        let sender = match &self.sender_thread_id {
++            Some(thread_id) => format!("{} (thread {thread_id})", self.author),
++            None => self.author.to_string(),
++        };
+         let content = match &self.encrypted_content {
+             Some(encrypted_content) => {
+                 let message_type = if self.trigger_turn {
+@@ -916,8 +927,8 @@
+                 vec![
+                     AgentMessageInputContent::InputText {
+                         text: format!(
+-                            "Message Type: {message_type}\nTask name: {}\nSender: {}\nPayload:\n",
+-                            self.recipient, self.author
++                            "Message Type: {message_type}\nTask name: {}\nSender: {sender}\nPayload:\n",
++                            self.recipient
+                         ),
+                     },
+                     AgentMessageInputContent::EncryptedContent {
+@@ -926,7 +937,11 @@
+                 ]
+             }
+             None => vec![AgentMessageInputContent::InputText {
+-                text: self.content.clone(),
++                text: if self.sender_thread_id.is_some() {
++                    format!("Sender: {sender}\n\n{}", self.content)
++                } else {
++                    self.content.clone()
++                },
+             }],
+         };
+         ResponseItem::AgentMessage {
+@@ -4888,6 +4903,7 @@
+             kind: Some(AgentMessageKind::Assignment),
+             created_at_ms: Some(1_000),
+             author: AgentPath::root(),
++            sender_thread_id: None,
+             recipient: AgentPath::root().join("reviewer").expect("recipient path"),
+             other_recipients: vec![AgentPath::root().join("worker").expect("recipient path")],
+             content: "review the diff".to_string(),
+@@ -4917,13 +4933,14 @@
+     #[test]
+     fn inter_agent_communication_enforces_one_canonical_body_limit() {
+         let recipient = AgentPath::root().join("worker").expect("recipient path");
+-        let at_limit = InterAgentCommunication::new(
++        let mut at_limit = InterAgentCommunication::new(
+             AgentPath::root(),
+             recipient.clone(),
+             Vec::new(),
+             "x".repeat(MAX_AGENT_MESSAGE_BYTES),
+             /*trigger_turn*/ true,
+         );
++        at_limit.sender_thread_id = Some(ThreadId::new());
+         assert_eq!(at_limit.validate_mailbox_body(), Ok(()));
+ 
+         let over_limit = InterAgentCommunication::new(
+@@ -4939,6 +4956,107 @@
+                 "agent message is {} bytes; maximum is {MAX_AGENT_MESSAGE_BYTES} bytes",
+                 MAX_AGENT_MESSAGE_BYTES + 1
+             ))
++        );
++    }
++
++    #[test]
++    fn inter_agent_communication_cross_tree_sender_is_distinct_without_changing_routing() {
++        for sender_id in [
++            "00000000-0000-0000-0000-000000000001",
++            "00000000-0000-0000-0000-000000000002",
++        ] {
++            let mut communication = InterAgentCommunication::new(
++                AgentPath::root(),
++                AgentPath::root(),
++                Vec::new(),
++                "review the diff".to_string(),
++                /*trigger_turn*/ true,
++            );
++            communication.sender_thread_id = Some(ThreadId::from_string(sender_id).expect("thread"));
++            let original = communication.clone();
++            assert_eq!(
++                communication.to_model_input_item(),
++                ResponseItem::AgentMessage {
++                    id: None,
++                    author: "/root".to_string(),
++                    recipient: "/root".to_string(),
++                    content: vec![AgentMessageInputContent::InputText {
++                        text: format!("Sender: /root (thread {sender_id})\n\nreview the diff"),
++                    }],
++                    internal_chat_message_metadata_passthrough: None,
++                }
++            );
++            assert_eq!(communication, original);
++            assert_eq!(
++                serde_json::from_str::<InterAgentCommunication>(
++                    &serde_json::to_string(&communication).expect("serialize")
++                )
++                .expect("deserialize"),
++                original
++            );
++        }
++    }
++
++    #[test]
++    fn inter_agent_communication_legacy_message_keeps_original_model_text() {
++        let value = serde_json::json!({
++            "author": "/root/worker",
++            "recipient": "/root",
++            "content": "legacy message",
++            "trigger_turn": false
++        });
++        let communication: InterAgentCommunication =
++            serde_json::from_value(value).expect("legacy message");
++        assert_eq!(communication.sender_thread_id, None);
++        assert_eq!(
++            communication.to_model_input_item(),
++            ResponseItem::AgentMessage {
++                id: None,
++                author: "/root/worker".to_string(),
++                recipient: "/root".to_string(),
++                content: vec![AgentMessageInputContent::InputText {
++                    text: "legacy message".to_string(),
++                }],
++                internal_chat_message_metadata_passthrough: None,
++            }
++        );
++        assert!(
++            serde_json::to_value(&communication)
++                .expect("serialize")
++                .get("sender_thread_id")
++                .is_none()
++        );
++    }
++
++    #[test]
++    fn inter_agent_communication_cross_tree_encrypted_sender_keeps_canonical_author() {
++        let sender_id = "00000000-0000-0000-0000-000000000001";
++        let mut communication = InterAgentCommunication::new_encrypted(
++            AgentPath::root().join("worker").expect("author path"),
++            AgentPath::root(),
++            Vec::new(),
++            "encrypted payload".to_string(),
++            /*trigger_turn*/ false,
++        );
++        communication.sender_thread_id = Some(ThreadId::from_string(sender_id).expect("thread"));
++        assert_eq!(
++            communication.to_model_input_item(),
++            ResponseItem::AgentMessage {
++                id: None,
++                author: "/root/worker".to_string(),
++                recipient: "/root".to_string(),
++                content: vec![
++                    AgentMessageInputContent::InputText {
++                        text: format!(
++                            "Message Type: MESSAGE\nTask name: /root\nSender: /root/worker (thread {sender_id})\nPayload:\n"
++                        ),
++                    },
++                    AgentMessageInputContent::EncryptedContent {
++                        encrypted_content: "encrypted payload".to_string(),
++                    },
++                ],
++                internal_chat_message_metadata_passthrough: None,
++            }
+         );
+     }
+ 
+--- a/codex-rs/state/src/runtime/agent_mailbox.rs
++++ b/codex-rs/state/src/runtime/agent_mailbox.rs
+@@ -286,8 +286,9 @@
+ /// A server-generated observation timestamp is not part of a logical message's identity.
+ ///
+ /// Clients retry with the stable message ID and semantic payload; they are not required to
+-/// persist a timestamp that the server generated on their behalf. Every field that can alter
+-/// routing, model-visible content, delivery behavior, or attribution remains collision-checked.
++/// persist a timestamp that the server generated on their behalf. A stored message without
++/// sending-thread context can also be retried with that optional context after an upgrade.
++/// Known sender identities and all canonical routing, body, and delivery fields remain checked.
+ fn same_logical_message(
+     stored: &InterAgentCommunication,
+     incoming: &InterAgentCommunication,
+@@ -296,6 +297,12 @@
+     let mut incoming = incoming.clone();
+     stored.created_at_ms = None;
+     incoming.created_at_ms = None;
++    // Older mailbox payloads have no sending-thread attribution. Accept a retry
++    // with that new context without rewriting the stored message. Once stored,
++    // a known sender remains part of identity, including when a retry omits it.
++    if stored.sender_thread_id.is_none() {
++        incoming.sender_thread_id = None;
++    }
+     stored == incoming
+ }
+ 
+--- a/codex-rs/state/src/runtime/agent_mailbox_tests.rs
++++ b/codex-rs/state/src/runtime/agent_mailbox_tests.rs
+@@ -191,3 +191,110 @@
+             .contains("conflicts with a different message")
+     );
+ }
++
++#[tokio::test]
++async fn mailbox_legacy_retry_accepts_sender_context_without_rewriting_message() {
++    let runtime = StateRuntime::init_for_testing(
++        test_support::unique_temp_dir(),
++        "test-provider".to_string(),
++    )
++    .await
++    .expect("state runtime");
++    let recipient = ThreadId::new();
++    let legacy = communication("legacy-message");
++    assert!(
++        serde_json::to_value(&legacy)
++            .expect("legacy payload")
++            .get("sender_thread_id")
++            .is_none()
++    );
++    runtime
++        .admit_agent_message(recipient, &legacy, /*now_ms*/ 1_000)
++        .await
++        .expect("legacy admission");
++    let stored_before = runtime
++        .get_agent_message("legacy-message")
++        .await
++        .expect("lookup")
++        .expect("stored message");
++    let mut retry = legacy.clone();
++    retry.sender_thread_id = Some(ThreadId::new());
++    retry.created_at_ms = Some(9_999);
++    assert_eq!(
++        runtime
++            .admit_agent_message(recipient, &retry, /*now_ms*/ 1_001)
++            .await
++            .expect("retry with sending-thread context"),
++        AgentMailboxAdmission::Existing(AgentMailboxPhase::Admitted)
++    );
++    assert_eq!(
++        runtime
++            .get_agent_message("legacy-message")
++            .await
++            .expect("lookup")
++            .expect("stored message"),
++        stored_before
++    );
++
++    retry.content = "different work".to_string();
++    let error = runtime
++        .admit_agent_message(recipient, &retry, /*now_ms*/ 1_002)
++        .await
++        .expect_err("new sender context must not hide a changed body");
++    assert!(
++        error
++            .to_string()
++            .contains("conflicts with a different message")
++    );
++}
++
++#[tokio::test]
++async fn mailbox_known_sender_identity_remains_collision_checked() {
++    let runtime = StateRuntime::init_for_testing(
++        test_support::unique_temp_dir(),
++        "test-provider".to_string(),
++    )
++    .await
++    .expect("state runtime");
++    let recipient = ThreadId::new();
++    let mut message = communication("attributed-message");
++    message.sender_thread_id = Some(ThreadId::new());
++    runtime
++        .admit_agent_message(recipient, &message, /*now_ms*/ 1_000)
++        .await
++        .expect("first admission");
++    assert_eq!(
++        runtime
++            .admit_agent_message(recipient, &message, /*now_ms*/ 1_001)
++            .await
++            .expect("same known sender retry"),
++        AgentMailboxAdmission::Existing(AgentMailboxPhase::Admitted)
++    );
++
++    let mut other_sender = message.clone();
++    other_sender.sender_thread_id = Some(ThreadId::new());
++    let mut missing_sender = message.clone();
++    missing_sender.sender_thread_id = None;
++    let mut changed_body = message.clone();
++    changed_body.content = "different work".to_string();
++    for conflicting in [other_sender, missing_sender, changed_body] {
++        let error = runtime
++            .admit_agent_message(recipient, &conflicting, /*now_ms*/ 1_002)
++            .await
++            .expect_err("known attribution and canonical body must remain checked");
++        assert!(
++            error
++                .to_string()
++                .contains("conflicts with a different message")
++        );
++    }
++    assert_eq!(
++        runtime
++            .get_agent_message("attributed-message")
++            .await
++            .expect("lookup")
++            .expect("stored message")
++            .communication,
++        message
++    );
++}
+--- a/codex-rs/tui/src/app/tests/dispatch_integration.rs
++++ b/codex-rs/tui/src/app/tests/dispatch_integration.rs
+@@ -748,7 +748,8 @@
+         );
+         assert!(
+             serialized.contains(&format!(
+-                "<inter_agent_message sender=\\\"/root\\\" recipient=\\\"/root\\\">\\n{agent_task}\\n</inter_agent_message>"
++                "<inter_agent_message sender=\\\"/root\\\" recipient=\\\"/root\\\">\\nSender: /root (thread {})\\n\\n{agent_task}\\n</inter_agent_message>",
++                fixture.root
+             )),
+             "{serialized}"
+         );
+@@ -1692,9 +1693,10 @@
+         );
+         assert!(
+             pending_agent_message_text(&request).contains("pf1176 agent queued")
+-                || serialized.contains(
+-                    "<inter_agent_message sender=\\\"/root\\\" recipient=\\\"/root\\\">\\npf1176 agent queued\\n</inter_agent_message>"
+-                ),
++                || serialized.contains(&format!(
++                    "<inter_agent_message sender=\\\"/root\\\" recipient=\\\"/root\\\">\\nSender: /root (thread {})\\n\\npf1176 agent queued\\n</inter_agent_message>",
++                    fixture.root
++                )),
+             "{serialized}"
+         );
+         assert!(

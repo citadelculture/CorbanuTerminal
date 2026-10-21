@@ -1,0 +1,70 @@
+{
+  "files": [
+    {
+      "bytes": 1539,
+      "path": ".github/workflows/issue1248-native-stagea-v1.yml",
+      "sha256": "eaa12b226863e92832d52227eff72fded22836ebe5e8811e8bd22197c417e30a"
+    },
+    {
+      "bytes": 9270,
+      "path": "METHOD.txt",
+      "sha256": "1cf87b97e52a1ebe53063aa1a1e2c7f1f9a6468792ec3ea696195e560f316c0a"
+    },
+    {
+      "bytes": 5244,
+      "path": "cleanup_controls.py",
+      "sha256": "3fd3c2d0201c419b62f3ee036e94d3974cb26e9d59bed0a2679fb2ffa7efd7f8"
+    },
+    {
+      "bytes": 17480,
+      "path": "controller.py",
+      "sha256": "6601df2ad1b4fdf16c4956f6367ff9d546ba7e7134d61be10ce2529e1b83fe7b"
+    },
+    {
+      "bytes": 23567,
+      "path": "evidence.py",
+      "sha256": "3623886cde12f3416d6c12fdf77298a349bebed57d73a1d505b9b3d074654ec2"
+    },
+    {
+      "bytes": 19947,
+      "path": "evidence_controls.py",
+      "sha256": "2fa6cc9480f87ce5cfb788693eb418d49f67f7fe70bca644bebef5fbcdb0ba6c"
+    },
+    {
+      "bytes": 21351,
+      "path": "native.py",
+      "sha256": "d4880a37d001b510e98a4cd1065c69b574589c049af6517a7092acaad7779801"
+    },
+    {
+      "bytes": 17421,
+      "path": "native_controls.py",
+      "sha256": "7b44eba92a830347325d0979d2f40968f6dccaf11be4f706b3959a997cb7a003"
+    },
+    {
+      "bytes": 15285,
+      "path": "pure_controls.py",
+      "sha256": "ba7d4651f40d4fe2e64e2ebfbc54347e1bffc4bd4d07017e79dafd376740da5a"
+    },
+    {
+      "bytes": 90243,
+      "path": "source-pins.json",
+      "sha256": "708c124880939f9d1eb98d51e503099d4ab8188f813c4946f71f8f7d9e115e7a"
+    },
+    {
+      "bytes": 18806,
+      "path": "subject.patch",
+      "sha256": "7925176c12743b2b3375ec37680cdfdfe6519b5d304c5b1df2c512517198f376"
+    },
+    {
+      "bytes": 8626,
+      "path": "tool-pins.json",
+      "sha256": "527dacb448d45f461b2ffb9d470ead826d8aed2d136dbac10d4ef4ed5a08a133"
+    },
+    {
+      "bytes": 26077,
+      "path": "worker.py",
+      "sha256": "77e080d46692a45f40632208f9ff4f90ec4d040cd199f7939a90aa190ced1d6d"
+    }
+  ],
+  "schema": "issue1248-native-stagea-packet-v2"
+}

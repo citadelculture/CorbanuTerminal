@@ -1,0 +1,176 @@
+{
+  "captured_at": "2026-10-21T16:19:14.178835+00:00",
+  "downloads": [
+    {
+      "archive_layout_status": "Expected official installer layout; require root/install.sh and exact components file after digest verification, before installation.",
+      "bytes": 84098960,
+      "component_file_must_equal": "rustc",
+      "installer": "install.sh",
+      "installer_args": [
+        "--prefix={owned_prefix}",
+        "--disable-ldconfig"
+      ],
+      "kind": "rust-component",
+      "member": "install.sh",
+      "name": "rustc",
+      "root": "rustc-1.99.1-x86_64-unknown-linux-gnu",
+      "sha256": "2ff05ff9c08a90861e7f6e4065b40a8b87463b4576186fd613871c3e37f2091f",
+      "url": "https://static.rust-lang.org/dist/2026-10-15/rustc-1.99.1-x86_64-unknown-linux-gnu.tar.xz",
+      "version": "1.99.1"
+    },
+    {
+      "archive_layout_status": "Expected official installer layout; require root/install.sh and exact components file after digest verification, before installation.",
+      "bytes": 31563228,
+      "component_file_must_equal": "rust-std-x86_64-unknown-linux-gnu",
+      "installer": "install.sh",
+      "installer_args": [
+        "--prefix={owned_prefix}",
+        "--disable-ldconfig"
+      ],
+      "kind": "rust-component",
+      "member": "install.sh",
+      "name": "rust-std",
+      "root": "rust-std-1.99.1-x86_64-unknown-linux-gnu",
+      "sha256": "109b074225bf5b9ea3820890876bfdf4ed161adbfaf94b2b4b5984c85ee5d958",
+      "url": "https://static.rust-lang.org/dist/2026-10-15/rust-std-1.99.1-x86_64-unknown-linux-gnu.tar.xz",
+      "version": "1.99.1"
+    },
+    {
+      "archive_layout_status": "Expected official installer layout; require root/install.sh and exact components file after digest verification, before installation.",
+      "bytes": 10954816,
+      "component_file_must_equal": "cargo",
+      "installer": "install.sh",
+      "installer_args": [
+        "--prefix={owned_prefix}",
+        "--disable-ldconfig"
+      ],
+      "kind": "rust-component",
+      "member": "install.sh",
+      "name": "cargo",
+      "root": "cargo-1.99.1-x86_64-unknown-linux-gnu",
+      "sha256": "53f3521949404d595efb06a55c12c5658d4ed1c75566f33d3d514eaebe70bd8a",
+      "url": "https://static.rust-lang.org/dist/2026-10-15/cargo-1.99.1-x86_64-unknown-linux-gnu.tar.xz",
+      "version": "1.99.1"
+    },
+    {
+      "archive_layout_status": "Expected official installer layout; require root/install.sh and exact components file after digest verification, before installation.",
+      "bytes": 2488800,
+      "component_file_must_equal": "rustfmt-preview",
+      "installer": "install.sh",
+      "installer_args": [
+        "--prefix={owned_prefix}",
+        "--disable-ldconfig"
+      ],
+      "kind": "rust-component",
+      "member": "install.sh",
+      "name": "rustfmt-preview",
+      "root": "rustfmt-1.99.1-x86_64-unknown-linux-gnu",
+      "sha256": "e3b36c4c7ec3486c059d8067ff48787676612007123aad7a4e8ec12c48ee9ba2",
+      "url": "https://static.rust-lang.org/dist/2026-10-15/rustfmt-1.99.1-x86_64-unknown-linux-gnu.tar.xz",
+      "version": "1.99.1"
+    },
+    {
+      "archive_layout_status": "Expected member path, not inspected in this metadata-only preparation. After SHA verification and safe extraction, require exactly one matching regular executable basename; record actual relative path and fail on ambiguity.",
+      "bytes": 2529009,
+      "executable": "just",
+      "kind": "tar",
+      "member": "just",
+      "name": "just",
+      "release_asset_id": 500509978,
+      "root": ".",
+      "sha256": "4a5cc2f53e6f0f8c59092a6cc38291eb729d46a7dd95d3ae582008881b84931d",
+      "url": "https://github.com/casey/just/releases/download/1.58.0/just-1.58.0-x86_64-unknown-linux-musl.tar.gz",
+      "version": "1.58.0"
+    },
+    {
+      "archive_layout_status": "Expected member path, not inspected in this metadata-only preparation. After SHA verification and safe extraction, require exactly one matching regular executable basename; record actual relative path and fail on ambiguity.",
+      "bytes": 23914165,
+      "executable": "uv",
+      "kind": "tar",
+      "member": "uv",
+      "name": "uv",
+      "release_asset_id": 386561626,
+      "root": "uv-x86_64-unknown-linux-gnu",
+      "sha256": "c0f3236f146e55472663cfbcc9be3042a9f1092275bbe3fe2a56a6cbfd3da5ce",
+      "url": "https://github.com/astral-sh/uv/releases/download/0.11.3/uv-x86_64-unknown-linux-gnu.tar.gz",
+      "version": "0.11.3"
+    },
+    {
+      "archive_layout_status": "Expected member path, not inspected in this metadata-only preparation. After SHA verification and safe extraction, require exactly one matching regular executable basename; record actual relative path and fail on ambiguity.",
+      "bytes": 842816,
+      "executable": "dotslash",
+      "kind": "tar",
+      "member": "dotslash",
+      "name": "dotslash",
+      "release_asset_id": 392789557,
+      "root": ".",
+      "sha256": "4c75c6eb7890ae35993b962073f6d9bbe78b42b81a5691303ad70f63bfbf7196",
+      "url": "https://github.com/facebook/dotslash/releases/download/v0.5.9/dotslash-linux-musl.x86_64.v0.5.9.tar.gz",
+      "version": "0.5.9"
+    },
+    {
+      "name": "cargo-nextest",
+      "version": "0.9.146",
+      "kind": "tar",
+      "member": "cargo-nextest",
+      "executable": "cargo-nextest",
+      "bytes": 12055550,
+      "sha256": "682c21b777c333e96fd532e114d3a5a894e0729ab88d94c0a9f20f8419695428",
+      "url": "https://github.com/nextest-rs/nextest/releases/download/cargo-nextest-0.9.146/cargo-nextest-0.9.146-x86_64-unknown-linux-gnu.tar.gz",
+      "release_asset_id": 579609342
+    }
+  ],
+  "expected_tool_versions": {
+    "rustfmt": {
+      "official_manifest_version": "1.10.0",
+      "prefix_boundary": "The next character must be end-of-line or a hyphen introducing official channel/commit information; do not accept 1.10.01.",
+      "status": "Source-derived expected output, not an observed binary invocation.",
+      "version_prefix": "rustfmt 1.10.0"
+    }
+  },
+  "install_contract": {
+    "native_execution_performed": false,
+    "prefix": "dedicated owned tool prefix",
+    "root_and_components_file": "Expected portable layout requires exact verification after digest-checked safe extraction. No docs component selected.",
+    "rust_args": [
+      "--prefix={owned_prefix}",
+      "--disable-ldconfig"
+    ],
+    "rustup_used": false
+  },
+  "installed_rust_components": [
+    "rustc",
+    "rust-std",
+    "cargo",
+    "rustfmt-preview"
+  ],
+  "runtime_gates": [
+    "Verify archive/binary hashes and byte sizes before using them.",
+    "Safely extract with path/link/special-member bounds, then require expected member and exact components identity.",
+    "Use explicit owned Rust/Cargo executables and retain exact installed executable hashes and version outputs.",
+    "Full formatting may acquire public pinned formatter dependencies. A separately admitted native extension may then fetch public Cargo.lock dependencies and run only the exact ordinary debug phases; no such native approval exists here.",
+    "Require the explicit owned rustfmt executable to report version prefix rustfmt 1.10.0 with an exact version boundary; record complete actual output. Archive layouts remain expected until verified at acquisition.",
+    "Do not treat formatter admission as native execution approval.",
+    "Native phase requires separately reviewed source, command, prerequisite, resource, evidence and cleanup bindings."
+  ],
+  "rust_component_download_bytes": 129105804,
+  "rust_manifest_date": "2026-10-15",
+  "schema_version": "issue1248-native-stagea-tools-v1",
+  "scope": "Seven proven formatter archives plus official Nextest0.9.146; no archive acquired here. Full ordinary GNU protocol debug tests need the runner C/C++ toolchain preflight as separately specified.",
+  "source_toolchain": {
+    "bytes": 78,
+    "components": [
+      "clippy",
+      "rustfmt",
+      "rust-src"
+    ],
+    "relative_path": "codex-rs/rust-toolchain.toml",
+    "sha256": "913d7e9d7adcd7abfeb0c4554c39a5a57c3cf84a694bc6a6aeae038a1f6ae33b"
+  },
+  "source_toolchain_component_note": "The unchanged source also requests clippy and rust-src for development. This format-only method directly installs only the four components needed by cargo fmt; it does not invoke rustup or assert a complete product toolchain.",
+  "status": "PROPOSED_NATIVE_SUPPLEMENT_NOT_ADMITTED",
+  "subject_base": "31b9f3cad898914803503e5282cabd4e8ce5f860",
+  "target": "x86_64-unknown-linux-gnu",
+  "total_download_bytes": 168447344,
+  "originalFormatterPinsPreservedAt": "work/tasknode-runs/oct21-pr1161-git-looking-fullfmt-1940/public-packet-v1/tool-pins.json"
+}

@@ -1,0 +1,10 @@
+{
+  "approved": true,
+  "packetManifestSha256": "d50cab67c6c36ab6c38cfd4908cabfc7a2e6aa2aa11055a1dc0122e8f0ee264b",
+  "reviewReceiptSha256": "a1b3c276150d795bed4979cd09eb999cfffd47232239e38227e6378e993921d6",
+  "subjectSourcePinsSha256": "708c124880939f9d1eb98d51e503099d4ab8188f813c4946f71f8f7d9e115e7a",
+  "rootAdmissionSha256": "f2a35315954a66dc23ca38f81faa25ed2b7f4b441d66a72363ea7166f0411424",
+  "methodKind": "native-schema-stage-a",
+  "sourceReviewDisposition": "hold-awaiting-generated-schema",
+  "reason": "Root execution-only admission of corrected v2 after objective F1 canonical-policy closure. Preserved v1 independent HOLD and shared method ledger 5/5; no independent CLEAR or extra opinion claimed. Reviewed containment is unchanged. Exact source remains 31b9; current-main integration, actual semantic schema validation, source pass2 and final product tests remain open. Normal external-action approval remains required."
+}

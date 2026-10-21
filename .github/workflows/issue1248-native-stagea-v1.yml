@@ -1,0 +1,46 @@
+name: Issue1248 bounded native schema Stage A v1
+on:
+  push:
+    branches: [codex/issue1248-native-stagea-v1-20261021]
+permissions:
+  contents: read
+concurrency:
+  group: issue1248-native-stagea-v1
+  cancel-in-progress: false
+jobs:
+  generate-and-format:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - name: Check out exact method commit
+        timeout-minutes: 2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          path: method
+          persist-credentials: false
+          fetch-depth: 1
+          submodules: false
+          lfs: false
+      - name: Check out exact public source
+        timeout-minutes: 2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: CorbanuCore/CorbanuTerminal
+          ref: 31b9f3cad898914803503e5282cabd4e8ce5f860
+          path: subject
+          persist-credentials: false
+          fetch-depth: 1
+          submodules: false
+          lfs: false
+      - name: Run separately admitted native Stage A controller
+        timeout-minutes: 110
+        run: python3 method/controller.py
+      - name: Retain audited raw schema and native evidence
+        if: always()
+        timeout-minutes: 5
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: issue1248-native-stagea-v1-${{ github.run_id }}-${{ github.run_attempt }}
+          path: issue1248-stagea-evidence/
+          if-no-files-found: error
+          retention-days: 14
