@@ -1,0 +1,131 @@
+Issue1177: one bounded ordinary integration campaign, preparation v1
+
+This package is inert until the exact source, method and public payload are
+reviewed and admission.json is explicitly set to approved with the reviewed
+file hashes. Preparation neither publishes nor dispatches. It grants no host
+sandbox override and does not revive any previously denied packet/action.
+
+Source and scope
+The source-manifest binds public base ba6c3672dca365f950ffd2babc92b93e4df3c065
+and the fully formatted three-file test-only readiness patch. Merged PR1178's
+POSITIVE_WAIT=20s and PID fix remain unchanged. The shared readiness predicate
+is read-only. There are four selected integration bodies for five frozen intent
+cases; no natural baseline flake reproduction, stress run or full-suite claim.
+
+Host and acquisition
+Only first-attempt push on the named branch of citadelculture/CorbanuTerminal
+may dispatch on a fresh GitHub-hosted Ubuntu24.04 x86_64 runner. Actions checkout
+and upload are immutable commit pins. The exact public source base is checked
+out separately without stored credentials. Only the nine approved payload files
+plus admission are copied into a read-only control mount; checkout .git and any
+other files are excluded from that mount. Source .git must have no credential,
+extra-header, includes, hooks, fsmonitor or shared object alternate configuration.
+
+The native image derives from the pinned official Ubuntu linux/amd64 manifest
+sha256:a2d43bffc46670d7108bb3c0468c67c5557c4c92e83e1e34cbff1322ad1b94dc.
+Signed Ubuntu apt metadata resolves public compiler/linker, Python3.12+, Git,
+curl, pkg-config, libcap/SSL/zlib headers, clang, cmake, bubblewrap and ripgrep.
+The sole built image ID, installed package versions and native executable hashes
+are recorded before any Cargo build. No native package install occurs during
+qualification. A resolution/build failure stops the run; no version fallback.
+
+A nonroot preparation container downloads exact hash-pinned Rust1.99.1 (cargo,
+rustc, std, fmt, Clippy, src), Just1.58.0, Nextest0.9.146, uv0.11.3, DotSlash0.5.9
+and the official Codex V8 150.4.0 archive and binding. Hashes/URLs derive from
+official metadata previously pinned for the approved1048 public package. This
+reuse is a tool-source binding only; the earlier uncontained run proves none of
+this method's containment. Public source's DotSlash manifest verifies buildifier.
+Frozen uv locks populate only Ruff formatter dependencies. cargo fetch --locked
+for x86_64-unknown-linux-gnu fills registry/git caches, without building product
+code. Every acquired cache/tool file is hashed for the offline worker handoff.
+
+Runtime compartment and controls
+The final worker uses that same exact image with network=none, read-only rootfs,
+private PID/IPC/network namespaces, all capabilities dropped, no-new-privileges,
+512 pids, two CPUs, 12GiB memory/no swap, owned writable public source/cache/target,
+and a fresh owned HOME. There is no Docker socket, runner credential directory,
+native credential bus or host profile mount. A synthetic host canary and live
+host listener are deliberately outside all mounts. Its address is selected only
+from the unique IPv4 default-route device; unrelated Docker bridge addresses do
+not participate. Multiple default-route devices or addresses stop the run.
+Controller proves the actual
+listener responds before and after the campaign; actual worker and child must
+fail reaching it and link-local metadata, while IPv4 and IPv6 loopback round
+trips and owned writes succeed. Worker and child must have distinct host PID/net
+namespace identities, only lo, and no direct or /proc-host-root canary visibility.
+The exact Docker configuration is independently inspected before start.
+
+HOME=/owned/home is the dedicated container identity from image creation, never
+an operator HOME reassignment. Any inherited live profile alias stops dispatch.
+Every inherited CODEX sandbox marker is preserved byte-for-byte in both workers;
+a network-disabled marker stops qualification without clearing it. Ordinary just
+test itself creates and removes its disposable CODEX_HOME and scratch. The host
+container identity is not the owner's host test environment.
+
+Bounded order
+Initial host free space and pre-fresh-build free space must each be >=30GiB.
+Host memory must be >=12GiB. Stop at <10GiB remaining during commands. Resource
+failure stops successors without cleaning unrelated caches or rerunning.
+CARGO_BUILD_JOBS=2, CARGO_INCREMENTAL=0 and dev/test debug info0 are explicit;
+debug assertions remain true. The unchanged ordinary wrapper builds all bins
+in four helper packages: eight CLI binaries, two wallet daemons, five rmcp test
+servers and one code-mode V8 host. All16 exact executable hashes are recorded.
+
+Acquisition is bounded to1500s; native image preparation900s. The final worker
+is bounded to5500s. It verifies cache/source bindings and positive/negative
+controls, then full just fmt (600s) before final tests. Formatter changes stop
+the run; no automatic refreeze. Offline cargo metadata resolves dependencies.
+Compile-only is exactly ordinary just test -p codex-core --test all --locked
+--offline -E none() --no-tests pass --retries0 (2700s). The wrapper's injected
+--no-fail-fast remains; --no-run is not used because it conflicts. A zero test
+selection is only compilation evidence and satisfies none of the intent cases.
+Nonmutating just clippy -p codex-core --locked --offline -- -D warnings (1800s)
+precedes one four-body ordinary just test run (300s, one thread, retries0).
+The owned nextest report profile inherits local, preserving its 2x30s timeout,
+and adds JUnit body capture. Original source/lock/config files are never rewritten
+to tune nextest. Source and lock bindings are checked after every build/test stage.
+
+Result oracle and retention
+Require four distinct codex-core::all execution records, four matching passing
+JUnit cases, each exact final assertion marker exactly once, no selected skip,
+retry, timeout, body-skip message, missing output or unexpected executed case.
+The negative control's expected20s expiry and rejected turn-two oracle remains
+an expected no-delivery result inside its passing test, never a delivery claim.
+Map all five intent cases explicitly. Qualification also requires final positive
+and negative boundaries, unchanged host canary and complete cleanup.
+
+Each phase captures separate stdout/stderr and merged output, exits, times,
+arguments, byte counts and SHA256. Per-stream limit32MiB, campaign raw total256MiB,
+normalized public export16MiB. Bound overflow remains failure, never a truncated
+pass. Only normalized diagnostics and structured JSON may upload: owned/source
+paths are replaced, environment and startup/backtrace lines explicitly redacted,
+secret-shaped output or unexpected operator home paths stop export. Redaction
+counts and normalized/raw hashes are retained. JUnit is captured before outcome
+classification on success or failure: text and attributes are normalized in a
+parsed XML tree, then XML-escaped on serialization. Incomplete XML is retained
+as a clearly marked normalized .xml.partial diagnostic, never a passing report.
+Original/normalized hashes, byte counts, completeness and parseability are stored.
+Host raw output, child environments, raw JUnit, caches, binaries and actual
+operator receipts are never uploaded.
+Raw captures stay only on the ephemeral runner; durable raw reconstruction is
+not claimed. Normalized complete captures retain compiler/test failure diagnostics
+without an unchanged replay. Artifact retention is14days.
+
+Worker subreaper tracks owned descendant birth identities, reaps exited orphans,
+and terminates only its own descendants on timeout/failure. Any residual child
+blocks qualification. Exact names and run/controller labels are recorded before
+create so an ambiguous create outcome can be reconciled. Exact owned containers
+are removed and their absence is confirmed before shared HOME/scratch deletion.
+If absence cannot be proven, HOME/scratch remain and qualification fails. The
+host listener is stopped and the synthetic canary removed. A cleanup or export
+failure is recorded separately from the original failure. Unsafe or unlisted
+partial exports are withheld without preventing a safe host-result receipt.
+Source, raw captures
+and qualification binaries remain on the ephemeral runner until runner disposal.
+
+Unproven until one admitted run
+The new image's apt resolution, actual >=30GiB cold-build headroom, Rust/native/V8
+link compatibility, ordinary integration startup and all containment probes are
+runtime admission gates, not preparation successes. Missing prerequisites or a
+denied gate stops the exact run with no fallback, rerun, flag clearing or claim
+that the earlier1048 core-lib run qualifies this integration lane.

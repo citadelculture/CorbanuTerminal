@@ -1,0 +1,18 @@
+{
+  "schema": "issue1177-hosted-admission-v1",
+  "approved": true,
+  "reviewReceiptSha256": "21c32921e576aa936f6c82383bdb018fe8c6b49782f5efad7dbf6b1a5fb2d1d8",
+  "sourceHandoffSha256": "ad283024703b690c6402751deacddaeab183f38b9e0df285a775ac66341ccdc3",
+  "files": {
+    "controller.py": "4b7ba25c01910e1b2bc5be96259fe4dc7420220dd3df3b75d950d39955542efa",
+    "worker.py": "b5b755cd4387bf07eca758bb56daf75955a36f3102cb8ca448aa02e1f33117c8",
+    "boundary_probe.py": "0788a722b5a7e223947a2651424ac81d6beed33f7a746a3246672ca79ae0e8bc",
+    "Dockerfile": "edd2e6ab7522d69e1252564a65b57a5f46a1651acc275fed44f6915d348270a1",
+    "tools-pins.json": "b43c388c62a264e52999003b3efabc0db3cf2a633867c98e113c784b3584331d",
+    "source-manifest.json": "80d5da9f24716d38bf3ac0a38f7ae894afc2b78f9b62f742d564eda52786204b",
+    "change.patch": "910d5e94edda09622c49a4c709562df39db5e3e1f301b9f6d56af29721bda08e",
+    "METHOD.txt": "867b3dcabf9b33cbc54bbcbc110a8a2183bfa75b4a7d819e8bdea4e7e9c53bea",
+    ".github/workflows/issue1177-mailbox-readiness-v1.yml": "4eced57185881b7e6d65ed41a1cc1d87e046b51fe3dfb1d294a6e2f509ec566b"
+  },
+  "reason": "Root admits this exact public test-only source and bounded hosted method under standing owner authorization after independent combined pass3. Runtime gates remain mandatory and unproven."
+}
