@@ -1,0 +1,85 @@
+diff --git a/codex-rs/tui/src/chatwidget/tokens.rs b/codex-rs/tui/src/chatwidget/tokens.rs
+--- a/codex-rs/tui/src/chatwidget/tokens.rs
++++ b/codex-rs/tui/src/chatwidget/tokens.rs
+@@ -1510,17 +1510,14 @@
+ /// alias, is its operator's.
+ fn operator(id: &str) -> &str {
+     use codex_model_provider_info as ids;
+-    match id {
++    match ids::canonical_provider_id(id) {
+         ids::ZAI_ANTHROPIC_PROVIDER_ID => ids::ZAI_PROVIDER_ID,
+         ids::OPENROUTER_ANTHROPIC_PROVIDER_ID => ids::OPENROUTER_PROVIDER_ID,
+         ids::BASETEN_ANTHROPIC_PROVIDER_ID => ids::BASETEN_PROVIDER_ID,
+         ids::VERCEL_ANTHROPIC_PROVIDER_ID | ids::VERCEL_ANTHROPIC_FAST_PROVIDER_ID => {
+             ids::VERCEL_PROVIDER_ID
+         }
+-        ids::PFTERMINAL_PLAN_ANTHROPIC_PROVIDER_ID
+-        | ids::CORBANU_PLAN_PROVIDER_ID
+-        | ids::CORBANU_PLAN_ANTHROPIC_PROVIDER_ID
+-        | ids::CORBANU_TERMINAL_PLAN_PROVIDER_ID => ids::PFTERMINAL_PLAN_PROVIDER_ID,
++        ids::PFTERMINAL_PLAN_ANTHROPIC_PROVIDER_ID => ids::PFTERMINAL_PLAN_PROVIDER_ID,
+         other => other,
+     }
+ }
+diff --git a/codex-rs/tui/src/chatwidget/tokens_tests.rs b/codex-rs/tui/src/chatwidget/tokens_tests.rs
+--- a/codex-rs/tui/src/chatwidget/tokens_tests.rs
++++ b/codex-rs/tui/src/chatwidget/tokens_tests.rs
+@@ -2660,6 +2660,58 @@
+ }
+ 
+ #[test]
++fn accounting_operator_preserves_alias_wire_and_custom_route_identity() {
++    let cases = [
++        ("corbanu-plan", "pfterminal-plan"),
++        ("corbanu-terminal-plan", "pfterminal-plan"),
++        ("corbanu-plan-anthropic", "pfterminal-plan"),
++        ("pfterminal-plan-anthropic", "pfterminal-plan"),
++        ("zai-anthropic", "zai"),
++        ("openrouter-anthropic", "openrouter"),
++        ("baseten-anthropic", "baseten"),
++        ("vercel-anthropic", "vercel"),
++        ("vercel-anthropic-fast", "vercel"),
++        ("pfterminal-plan", "pfterminal-plan"),
++        ("openai", "openai"),
++        ("anthropic", "anthropic"),
++    ];
++    let actual = cases.map(|(route, _)| (route, operator(route)));
++    assert_eq!(actual, cases);
++
++    // Custom IDs remain exact: sharing alias normalization must not start
++    // treating different case, whitespace, or similar names as built-ins.
++    let mut custom = vec![String::new(), "private/自分のモデル".to_string()];
++    for (route, _) in cases {
++        custom.extend([
++            route.to_uppercase(),
++            format!(" {route}"),
++            format!("{route} "),
++            format!("{route}-custom"),
++        ]);
++    }
++    let unchanged = custom.iter().map(String::as_str).collect::<Vec<_>>();
++    let actual = custom
++        .iter()
++        .map(|route| operator(route))
++        .collect::<Vec<_>>();
++    assert_eq!(actual, unchanged);
++}
++
++#[test]
++fn accounting_model_names_resolve_corbanu_alias_routes() {
++    let slug = "corbanu/deepseek-v4.1-flash";
++    let routes = [
++        "pfterminal-plan",
++        "pfterminal-plan-anthropic",
++        "corbanu-plan",
++        "corbanu-terminal-plan",
++        "corbanu-plan-anthropic",
++    ];
++    let actual = routes.map(|route| model_name(route, slug));
++    assert_eq!(actual, ["DeepSeek V4.1 Flash"; 5]);
++}
++
++#[test]
+ fn accounting_inspect_plain_wording_counts_attempts_and_names_every_route() {
+     let mut first = quote();
+     first.all_buckets_priced = None;
