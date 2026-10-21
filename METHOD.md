@@ -1,0 +1,35 @@
+# Issue1240 full formatting only
+
+This inert packet applies the exact two-file Bash user-home candidate to public CorbanuCore/CorbanuTerminal commit `d7684fae8fc74a90ecb8b558c1144ec0c44d04ee`, then runs the unchanged repository command `just fmt`. It does not compile product code, run native tests, or qualify Windows behavior. The candidate addresses the Bash portion of Issue1240; it does not close the broader cmd/PowerShell issue.
+
+## Admission and route
+
+The packet remains disabled by `admission.json`. Root may activate only the exact manifest after the independent Issue1240 method pass 2 is clear, binding its immutable receipt SHA256. Admission activation changes only that JSON in a separate publication copy; the reviewed inert packet remains preserved. Root must freshly verify demand, overlap and destination-branch absence before the normal reviewed push.
+
+The single route is a first push to `citadelculture/CorbanuTerminal`, branch `codex/issue1240-fullfmt-v1-20261021`, workflow `.github/workflows/issue1240-fullfmt-v1.yml`. The controller rejects other routes, non-first run numbers, repeated attempts, root UID/eUID, unexpected image/architecture, changed method HEAD, manifest bytes or source pins. Exact actual commit/run identity is recorded at execution. There is no manual dispatch or unchanged retry route.
+
+## Source and tools
+
+Both checkout actions are pinned and use `persist-credentials: false`. The public source checkout is depth 1 at the exact commit, with no LFS or submodules. The worker verifies the Git commit/tree, exact complete recursive Git tree bytes, all 23 selected source/policy/formatter inputs, and the complete tracked filesystem before and after patching and formatting. Typed snapshots cover all 34,885 regular files and both tracked symlinks. Every regular file is hashed; modes, inventory and symlink identity must remain unchanged. Only the two candidate paths may change content.
+
+Both symlinks are checked by lstat/readlink against exact Git mode/blob/target-byte-count/hash pins. Their target text is never published and targets are never dereferenced, opened or exported. This includes the known unrelated external QA fixture. No generic external-link permission is introduced. The complete ordinary formatter retains its source layout.
+
+The seven explicit archives total 156,391,794 bytes: Rust 1.99.1 rustc/std/cargo/rustfmt, Just 1.58.0, uv 0.11.3 and DotSlash 0.5.9. Each URL, exact size and SHA256 is pinned, checked before safe bounded extraction, then layout/component identity and installed versions/hashes are checked. The source development toolchain also lists Clippy/rust-src; this narrow workload installs only the four components required for cargo fmt directly, without rustup. No Bazel, Nextest, Clippy, rust-src or product toolchain expansion is performed. Just 1.58.0 matches the prior successful formatter method; the maintained CI setup currently pins 1.51.0.
+
+`just fmt` invokes the unchanged Just, Rust, Buildifier, SDK Python and scripts Python formatting groups. Public formatter dependencies remain governed by the pinned source DotSlash descriptor and frozen uv lockfiles. Cargo networking is disabled and its separate metadata target is checked for only bounded `.rustc_info.json` metadata, never compiled output. The worker does not invoke cargo fetch/build/test, Bazel or a product binary.
+
+## Runtime boundaries
+
+The disposable Ubuntu 24.04 x86_64 worker has a fresh owned HOME, temporary directory, Cargo home, uv cache, XDG cache and tool prefix. Only a strict system-path/locale environment and inherited `CODEX_SANDBOX*` controls are forwarded; every such control is retained byte-for-byte. No account token, credentials, SSH agent, global Cargo/Git configuration or owner-host state is forwarded. The worker uses no sudo or host socket. Network access is the ordinary disposable runner's public dependency access; this method makes no network-isolation claim. Source and installed formatter executables are reviewed public inputs, not a sandbox escape test.
+
+Admission requires 8 GiB available on the disposable filesystem, with a continuous 2 GiB floor. The controller grants 1500 seconds for all worker acquisition/install/version/source/formatter work, then reserves 300 seconds within its 30-minute step for process cleanup and evidence export. The 45-minute job budgets two 5-minute checkouts, that 30-minute step and a 5-minute upload. Full formatting alone has a 600-second command deadline. Archive expansion is bounded to 2 GiB/50,000 entries per archive; aggregate raw logs are 64 MiB and evidence 128 MiB. These workload-specific disposable-host limits do not change the owner-host 28 GiB formatter or 30 GiB native-build reserves.
+
+All worker descendants start in one owned process group. The controller polls time, free space and evidence bounds; on completion or failure it reconciles and terminates only that group, reaps the child and requires group absence. Unknown/failed cleanup cannot complete. It removes only its owned temporary/tool state after confirmed child cleanup, preserving failure separately from cleanup errors. Checked-out public source and ignored formatter virtual environments remain on the disposable runner until VM disposal; they are not claimed to be independently removed. No shared cache or owner checkout is modified.
+
+## Durable evidence and interpretation
+
+The upload contains only the explicit audited evidence allowlist: exact raw command logs, separate normalized log copies, actual tool/download identities, command exits/times, base/candidate/formatted/final copies of the two source files, complete typed tree hash inventories and canonical candidate/formatted/formatter-delta patches. The controller independently takes a final tree and selected-file snapshot after owned processes are gone and compares it with the worker's successful post-format snapshot. The result records actual cleanup, resource failures and whether formatter output changed either candidate file. Root must inspect any formatter delta and adopt those exact bytes before product publication.
+
+Every retained file has size/SHA256 accounting. Raw bytes remain authoritative; normalized logs are convenience copies with their own hashes. Export rejects unlisted, nonregular, oversized or privacy-pattern-bearing data. Any withheld export prevents completion, while preserving a safe failure receipt and raw hash/byte count where available. Withheld data is ephemeral and has no claimed durable reconstruction. Environment dumps, bulk runner files and symlink target content are excluded. Synthetic public fixture paths and disposable-runner paths are not owner-private data.
+
+A completed formatter result is only formatting evidence on this exact pinned source. Native Windows test bodies remain unexecuted. The maintained PR native Windows Bazel job can later supply that evidence; its actual attempts, cases, failures/skips and source head must be reconciled. Offline controls here exercise toy inputs and mocked cleanup/deadline/export paths; they are not formatter or product execution.

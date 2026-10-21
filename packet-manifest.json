@@ -1,0 +1,50 @@
+{
+  "files": [
+    {
+      "bytes": 1491,
+      "path": ".github/workflows/issue1240-fullfmt-v1.yml",
+      "sha256": "8d4508eed5fbafcd18443e65be464d3220c9f5ebc08be36cc576595a1514c5df"
+    },
+    {
+      "bytes": 7106,
+      "path": "METHOD.md",
+      "sha256": "06609eca5b39e6b2155f3b0acf85d3be9accae6f548b58aaf99ceb90a9b16262"
+    },
+    {
+      "bytes": 11710,
+      "path": "controller.py",
+      "sha256": "669d26a3b01225729a473249610bb29404153f49d6623d1539c7df10f4510edb"
+    },
+    {
+      "bytes": 4905,
+      "path": "evidence.py",
+      "sha256": "f5baecf4ace8885910bb485e1270a42d77604f09109f24bd4c67060e8ff4446d"
+    },
+    {
+      "bytes": 14655,
+      "path": "pure_controls.py",
+      "sha256": "4b48e3a58e13cfc16eee8c5f0b38732a95dc536ae09e741a6326f4c6d7dd3616"
+    },
+    {
+      "bytes": 4445,
+      "path": "source-pins.json",
+      "sha256": "e610f6833aa0402a312921da30aed32b136a0384bfcbee0fde0c6b25e2a6efcd"
+    },
+    {
+      "bytes": 4098,
+      "path": "subject.patch",
+      "sha256": "7cb026a7e821243e8c1ec122952eb383220e43aa328a93609589ba811823fccd"
+    },
+    {
+      "bytes": 7830,
+      "path": "tool-pins.json",
+      "sha256": "be2b3dfb34132915ff8d7c99331956c01c64d8f61dc0b57aa6f09deaf29a718b"
+    },
+    {
+      "bytes": 18167,
+      "path": "worker.py",
+      "sha256": "a7f0525fa391a769815dd73930e1eedb81b10933c69773b8c91e84c30ff405b9"
+    }
+  ],
+  "schema": "issue1240-format-packet-manifest-v1"
+}

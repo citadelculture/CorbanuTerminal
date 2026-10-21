@@ -1,0 +1,6 @@
+{
+  "approved": true,
+  "packetManifestSha256": "7e18d09f94bdd5928bb892549a655266324caf89b292d032bef055f901cc388a",
+  "reviewReceiptSha256": "bd46fb679c44a700b1ff3800f2664db7edfd785973bff24051468ec48209e4a9",
+  "reason": "Root admits the exact Issue1240 method-pass2-reviewed bounded full just fmt stage only; native Windows/product qualification is not admitted."
+}

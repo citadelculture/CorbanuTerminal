@@ -1,0 +1,123 @@
+diff --git a/codex-rs/core/src/security/tainted_action/paths.rs b/codex-rs/core/src/security/tainted_action/paths.rs
+--- a/codex-rs/core/src/security/tainted_action/paths.rs
++++ b/codex-rs/core/src/security/tainted_action/paths.rs
+@@ -205,7 +205,9 @@
+                 word = format!("{}/{user}{tail}", parent.to_string_lossy());
+             }
+         }
+-        if word.starts_with('/') || cwd.is_empty() {
++        // Home expansion can produce a native Windows drive path. It is
++        // already absolute, even though it does not start with a slash.
++        if word.starts_with('/') || Path::new(&word).is_absolute() || cwd.is_empty() {
+             normalize_path(&word)
+         } else {
+             normalize_path(&format!("{cwd}/{word}"))
+diff --git a/codex-rs/core/src/security/tainted_action_tests.rs b/codex-rs/core/src/security/tainted_action_tests.rs
+--- a/codex-rs/core/src/security/tainted_action_tests.rs
++++ b/codex-rs/core/src/security/tainted_action_tests.rs
+@@ -3882,3 +3882,105 @@
+         });
+     }
+ }
++
++// #1240: these are classifier inputs, never commands to execute. The fixture
++// uses native Windows absolute paths so it also exercises PathUri validation.
++#[test]
++#[cfg(windows)]
++fn issue_1240_windows_home_expansions_protect_persistence_writes() {
++    for command in [
++        "echo x >> ~/.bashrc",
++        "printf x > $HOME/.bash_profile",
++        "echo x > ~/.config/fish/config.fish",
++    ] {
++        assert_eq!(
++            classify_with(
++                &shell_in(r"C:\work", &["bash", "-lc", command]),
++                Path::new(r"C:\Users\fixture\.corbanu"),
++                Some(Path::new(r"C:\Users\fixture")),
++            ),
++            Some(ProtectedActionKind::Persistence),
++            "{command}",
++        );
++    }
++}
++
++#[test]
++#[cfg(windows)]
++fn issue_1240_windows_home_expansions_protect_user_credentials() {
++    for command in ["cat ~/.docker/config.json", "cat $HOME/.azure/accessTokens.json"] {
++        assert_eq!(
++            classify_with(
++                &shell_in(r"C:\work", &["bash", "-lc", command]),
++                Path::new(r"C:\Users\fixture\.corbanu"),
++                Some(Path::new(r"C:\Users\fixture")),
++            ),
++            Some(ProtectedActionKind::Credentials),
++            "{command}",
++        );
++    }
++}
++
++#[test]
++#[cfg(windows)]
++fn issue_1240_windows_home_rules_leave_ordinary_actions_unprotected() {
++    for command in [
++        "cat ~/.bashrc",
++        "echo x > notes.txt",
++        "echo x > .bashrc",
++        "cat .docker/config.json",
++        "echo x > ~/.cache/notes.txt",
++    ] {
++        assert_eq!(
++            classify_with(
++                &shell_in(r"C:\work", &["bash", "-lc", command]),
++                Path::new(r"C:\Users\fixture\.corbanu"),
++                Some(Path::new(r"C:\Users\fixture")),
++            ),
++            None,
++            "{command}",
++        );
++    }
++}
++
++#[test]
++#[cfg(windows)]
++fn issue_1240_windows_home_resolution_keeps_absolute_and_relative_boundaries() {
++    for (user_home, cwd, command, expected) in [
++        (
++            r"D:\Users\fixture",
++            r"C:\work",
++            "echo x >> ~/.bashrc",
++            Some(ProtectedActionKind::Persistence),
++        ),
++        (
++            "D:/Users/fixture",
++            r"C:\work",
++            "echo x >> $HOME/.bashrc",
++            Some(ProtectedActionKind::Persistence),
++        ),
++        (
++            r"C:\Users\fixture",
++            r"C:\Users\fixture",
++            "echo x >> .bashrc",
++            Some(ProtectedActionKind::Persistence),
++        ),
++        (
++            r"C:\Users\fixture",
++            r"C:\work",
++            "echo x >> C:.bashrc",
++            None,
++        ),
++    ] {
++        let home = Path::new(user_home).join(".corbanu");
++        assert_eq!(
++            classify_with(
++                &shell_in(cwd, &["bash", "-lc", command]),
++                &home,
++                Some(Path::new(user_home)),
++            ),
++            expected,
++            "{user_home}: {cwd}: {command}",
++        );
++    }
++}
