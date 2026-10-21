@@ -1,0 +1,119 @@
+{
+  "addedRegularFiles": {
+    "codex-rs/protocol/src/permissions/effective_reads.rs": {
+      "blob": "3c761e04229180d7d156130d7bad7a9c76a2e208",
+      "bytes": 2522,
+      "mode": "100644",
+      "sha256": "f85dd9bcbd0f7c6467efdad88ec8b68e4ab027d2b4f56d85fa48bb869726096e"
+    },
+    "codex-rs/protocol/src/permissions/effective_reads_tests.rs": {
+      "blob": "8040885624f0927f933d8bf55525bf6da40a3d99",
+      "bytes": 15836,
+      "mode": "100644",
+      "sha256": "933f1d75041b8f37d65aaf17ad2a2d753e8c6e40706f7e575c7bac94b9979748"
+    }
+  },
+  "allowedChangedFiles": [
+    "codex-rs/protocol/src/permissions.rs",
+    "codex-rs/protocol/src/permissions/effective_reads.rs",
+    "codex-rs/protocol/src/permissions/effective_reads_tests.rs",
+    "codex-rs/tui/src/security/preflight.rs",
+    "codex-rs/tui/src/security/preflight_tests.rs"
+  ],
+  "base": "b0586a0ca4c1e74d3d89f79b73339811ef7c6875",
+  "baseFiles": {
+    ".codex/skills/corbanu-terminal-development/SKILL.md": "aae866dc7c03ef742e61dac57413de9b194b28fb1051471939eb1c85bd10c9c8",
+    ".gitattributes": "e76969bd69081bc89eb638432a123b87d4682b49c00134147effe5eb5131f76e",
+    "AGENTS.md": "4b6aa2003bb1b01c3313f1155e3e5e35516ec217da794d3bf3920ed483bbe608",
+    "codex-rs/.cargo/config.toml": "b8ae1cea341beb2d4a3c8fb81f97a96f4aee1fd53f769c57f140dfe949806a80",
+    "codex-rs/AGENTS.md": "8770b8bde8ddaf5f404090afb3f2251aca06bca5cfc5707ec42ae3a7490ce47a",
+    "codex-rs/Cargo.lock": "9bf3331a78a43b8d7489875db26d199d97f018f0e78cefefa928d09a306478bb",
+    "codex-rs/Cargo.toml": "3184d6b3a34c0e311a052c7bb7094809ae64364a7efd586e557e33a0544a2666",
+    "codex-rs/protocol/Cargo.toml": "dd12f9ee4fe998108968dbfabe2a4ae1b5cd40343268021a83f2897b1e2c60f8",
+    "codex-rs/protocol/src/permissions.rs": "bea8b77518b0097faa127b44449e03d959a6b8cbd5e7b9565e8c602f826f6b10",
+    "codex-rs/rust-toolchain.toml": "913d7e9d7adcd7abfeb0c4554c39a5a57c3cf84a694bc6a6aeae038a1f6ae33b",
+    "codex-rs/rustfmt.toml": "384d5d8a1366a86cd6fc01aecde2b0a5806a9e77073ff53abd97b4f6cad94d1c",
+    "codex-rs/tui/AGENTS.md": "bfa859952fd8e12654e109d48ee3f7dbbe10961353cc3e50a15857ff7d93dffa",
+    "codex-rs/tui/Cargo.toml": "f2e82674e1baf4884c4519004a9bc40c8822bba773864351e8dd333706fbd2be",
+    "codex-rs/tui/src/security/preflight.rs": "1b3fb37ece8a65f8b1316272ab9374bb47c99552ed503d924238db0519cef85a",
+    "codex-rs/tui/src/security/preflight_tests.rs": "cedd1b6802343e2781535743464a1a9aa8fbe6a03a5ac7fdccb88cc819a1fe20",
+    "docs/corbanu-product-spec.md": "5075bb5cc6f6ddf55f0592df7083531f68e82737b4d0446cc6891c77ff34ec7d",
+    "docs/development/test-isolation.md": "1a5c54c42d74e08c2a98ea6fc8217e05e15c43b2f6b40f679c6388090514cfd0",
+    "justfile": "c4286cfea7819dd7e062a7402ca8db8517cfd5790de32e7b68626c25d966438c",
+    "scripts/format.py": "d930139145ba3e80a188c1b5734aa7fee6bad5687e610cb58bda016216a2f37d",
+    "scripts/just-shell.py": "444d6b328d44abf6453b77b6acce2a0c881fc162ff30b20f352c85067797fbe9",
+    "scripts/pyproject.toml": "2c9c022b99b0b576c3b45773a39f8aa6396f044016432e9bb42669554b3bfb78",
+    "scripts/uv.lock": "6b8e7a82d1a4f4c5d59ce57cf8be472ea031c6fb0a905506258d434132b3c99c",
+    "sdk/python/pyproject.toml": "be995a21d1761e30295016a77d6d227778558ac68da2d37cdec69685a4691a23",
+    "sdk/python/uv.lock": "5d289bda71a7a22394a7c42cea17f49e6317d265ed5ed0c9c8bad8f2412e6bbc",
+    "tools/buildifier": "818bfc01e21fceb0d83ddaf4614531418ea763e25499f7f9fd03c7a853948fe6"
+  },
+  "baseGitLsTreeBytes": 4902537,
+  "baseGitLsTreeCommand": [
+    "git",
+    "ls-tree",
+    "-r",
+    "-z",
+    "--full-tree",
+    "HEAD"
+  ],
+  "baseGitLsTreeSha256": "4150a11b3bc84b2251c9c20ba8b1a9f713d48745bf4d268b6f8abe90496e0127",
+  "baseTree": "d2b004632e0ac9272a7d46e4f018de9fadf12aed",
+  "candidateFiles": {
+    "codex-rs/protocol/src/permissions.rs": "7bac009c7d1a433cad39139d25ad3274a006a6d2747b3e4118165022808764a2",
+    "codex-rs/protocol/src/permissions/effective_reads.rs": "f85dd9bcbd0f7c6467efdad88ec8b68e4ab027d2b4f56d85fa48bb869726096e",
+    "codex-rs/protocol/src/permissions/effective_reads_tests.rs": "933f1d75041b8f37d65aaf17ad2a2d753e8c6e40706f7e575c7bac94b9979748",
+    "codex-rs/tui/src/security/preflight.rs": "2e86079a71cea0e8f520744a5cad12bfee785ef03add8047df0640bbe9e944f5",
+    "codex-rs/tui/src/security/preflight_tests.rs": "9b43e18b569e98febdc6a80a359cff6abc5b27292bb9f6e52b508e31bfe0871e"
+  },
+  "candidateGitTree": "07a5eacbd49cb66bf502653810ee6b2b9fe01057",
+  "candidatePublicCommit": null,
+  "candidatePublicTree": null,
+  "classification": "Format-only exact public main plus five-file standard plain-merge candidate, including two explicitly pinned added regular files. No native or behavioral qualification.",
+  "patchSha256": "56301be6eed22fd21984c4cc24b2b98caef3079e5a8f24127f246461f4bca457",
+  "repository": "https://github.com/CorbanuCore/CorbanuTerminal",
+  "schema": "pr951-format-only-source-v1",
+  "sourceModel": {
+    "baseIsPublicMain": true,
+    "baselineAbsentPaths": [
+      "codex-rs/protocol/src/permissions/effective_reads.rs",
+      "codex-rs/protocol/src/permissions/effective_reads_tests.rs"
+    ],
+    "candidatePaths": [
+      "codex-rs/protocol/src/permissions.rs",
+      "codex-rs/protocol/src/permissions/effective_reads.rs",
+      "codex-rs/protocol/src/permissions/effective_reads_tests.rs",
+      "codex-rs/tui/src/security/preflight.rs",
+      "codex-rs/tui/src/security/preflight_tests.rs"
+    ],
+    "currentMainRebindReceiptSha256": "b1a0d65d77422de0b222b1dcc8cf71b5e90fc6b23b617dc64a93da31005e8d5c",
+    "plainMergeTree": "07a5eacbd49cb66bf502653810ee6b2b9fe01057",
+    "priorPRHead": "08c8889509faad26328f362a751857a7ccf8198f",
+    "sourceHandoffSha256": "a446f559d5e6652917e42678108001e264f8cba43a0b0906771577fb3432a3bc"
+  },
+  "symlinks": [
+    {
+      "blob": "d24842f3cdcf2e447f9a7a26fa387ad63f5c4b91",
+      "mode": "120000",
+      "path": "codex-rs/vendor/bubblewrap/LICENSE",
+      "targetBytes": 7,
+      "targetSha256": "400d38e5cfee181230373a8b02d38f50271a5bf62c62410382efddb8e8b19e22"
+    },
+    {
+      "blob": "f569ef7de30a885cdc1b9a0ccae8424ca19087a9",
+      "mode": "120000",
+      "path": "qa/security-levels/milestones/moderate-localmodel-20261020/runs/R01/collected/fixture/workspace/link-creds",
+      "targetBytes": 29,
+      "targetSha256": "cd2467ca3f30d674eae0faf252abb30d7bf1a2742d1e1689e9389b12b2653e93"
+    }
+  ],
+  "treeMetadata": {
+    "otherEntryCount": 0,
+    "regularFileCount": 34886,
+    "source": "exact git ls-tree -r -z --full-tree of fetched public commit; all leaf entries pinned by bytes and SHA256",
+    "submoduleCount": 0,
+    "symlinkCount": 2,
+    "trackedLeafCount": 34888,
+    "truncated": false
+  }
+}

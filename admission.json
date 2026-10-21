@@ -1,0 +1,10 @@
+{
+  "approved": true,
+  "packetManifestSha256": "871607c7f747442c0ac0be26edfc99cd566175d16c20506688a5f80461af93c8",
+  "reviewReceiptSha256": "305ee48442de7de69a28bfb035dfaa4da0d1628067faa3d26702b303b586f164",
+  "sharedCleanupReviewSha256": "9f3473ebc83290502cf616da36d0c3db0d514b9060cee7a3643befd54431c9bc",
+  "subjectSourcePinsSha256": "b601b2942d58b81d9037a23103facd770bda3ca06d1fc33fcd804b605d28fa76",
+  "rootAdmissionSha256": "129d02598cd98a9fbb2e19434ddf3ad5a238ebb72a6fba63f9aac1f85b96b2bd",
+  "reason": "Root admits exact frozen b058 PR951 plain merge subject after fresh head/demand/main-scope/destination checks and exact independent changed-method pass4 CLEAR. Formatting only; no native qualification. All previous failures and original Issue1240 hold preserved. Standing owner consent covers this public-safe owned-fork packet.",
+  "scope": "Exact PR951 added-regular-file format-only method pass4 plus separate root subject/eligibility admission. Shared cleanup review alone does not admit PR951. Original Issue1240 overlap hold and all prior failed runs remain unchanged."
+}

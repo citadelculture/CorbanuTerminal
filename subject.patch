@@ -1,0 +1,807 @@
+diff --git a/codex-rs/protocol/src/permissions.rs b/codex-rs/protocol/src/permissions.rs
+index 4306d804bf226a666275478a81b887ad8c8565c3..539cbb49d6aa1840676444a34b6459447e2cf9f4 100644
+--- a/codex-rs/protocol/src/permissions.rs
++++ b/codex-rs/protocol/src/permissions.rs
+@@ -19,9 +19,15 @@ use crate::protocol::NetworkAccess;
+ use crate::protocol::SandboxPolicy;
+ use crate::protocol::WritableRoot;
+ 
++mod effective_reads;
++pub use effective_reads::EffectiveReads;
+ mod effective_writes;
+ pub use effective_writes::EffectiveWrites;
+ 
++#[cfg(test)]
++#[path = "permissions/effective_reads_tests.rs"]
++mod effective_reads_tests;
++
+ const PROTECTED_METADATA_GIT_PATH_NAME: &str = ".git";
+ const PROTECTED_METADATA_AGENTS_PATH_NAME: &str = ".agents";
+ const PROTECTED_METADATA_CODEX_PATH_NAME: &str = ".codex";
+@@ -1202,25 +1208,15 @@ impl FileSystemSandboxPolicy {
+     /// This does not model a sandbox's own clauses; on macOS use
+     /// `codex_sandboxing::seatbelt::seatbelt_allows_file_read` (#488).
+     pub fn can_read_effective_path_with_cwd(&self, path: &Path, cwd: &Path) -> bool {
+-        match self.kind {
+-            FileSystemSandboxKind::Unrestricted | FileSystemSandboxKind::ExternalSandbox => {
+-                return true;
+-            }
+-            FileSystemSandboxKind::Restricted => {}
+-        }
+-        let Some(path) = resolve_candidate_path(path, cwd) else {
+-            return false;
+-        };
+-        let path = normalize_effective_absolute_path(path);
+-        self.resolved_entries_with_cwd(cwd)
+-            .into_iter()
+-            .map(|entry| ResolvedFileSystemEntry {
+-                path: normalize_effective_absolute_path(entry.path),
+-                access: entry.access,
+-            })
+-            .filter(|entry| path.as_path().starts_with(entry.path.as_path()))
+-            .max_by_key(resolved_entry_precedence)
+-            .is_some_and(|entry| entry.access.can_read())
++        self.effective_reads_with_cwd(cwd)
++            .can_read_effective_path(path)
++    }
++
++    /// Issue918: effective-read checks for one set of paths, with the resolved
++    /// entries normalized once on first use. Build a fresh view for each set;
++    /// it is not a persistent cache or an atomic filesystem snapshot.
++    pub fn effective_reads_with_cwd<'a>(&'a self, cwd: &'a Path) -> EffectiveReads<'a> {
++        EffectiveReads::new(self, cwd)
+     }
+ 
+     /// Like [`Self::can_write_path_with_cwd`], with the policy's paths and
+diff --git a/codex-rs/protocol/src/permissions/effective_reads.rs b/codex-rs/protocol/src/permissions/effective_reads.rs
+new file mode 100644
+index 0000000000000000000000000000000000000000..3c761e04229180d7d156130d7bad7a9c76a2e208
+--- /dev/null
++++ b/codex-rs/protocol/src/permissions/effective_reads.rs
+@@ -0,0 +1,65 @@
++//! Issue918: effective read checks for one set of paths under a policy and cwd.
++
++use std::cell::OnceCell;
++use std::path::Path;
++
++use super::FileSystemSandboxKind;
++use super::FileSystemSandboxPolicy;
++use super::ResolvedFileSystemEntry;
++use super::normalize_effective_absolute_path;
++use super::resolve_candidate_path;
++use super::resolved_entry_precedence;
++
++/// [`FileSystemSandboxPolicy::can_read_effective_path_with_cwd`] for many
++/// paths in one working folder. The resolved policy entries are normalized
++/// on the first check that needs them, rather than for every queried path.
++///
++/// Build one for each check of a set of paths: filesystem observations are
++/// cached within that set, not across independent checks or launches. This
++/// is not an atomic filesystem snapshot and does not model sandbox clauses
++/// or globs. Like `EffectiveWrites`, its lazy `OnceCell` is not `Sync`.
++pub struct EffectiveReads<'a> {
++    policy: &'a FileSystemSandboxPolicy,
++    cwd: &'a Path,
++    entries: OnceCell<Vec<ResolvedFileSystemEntry>>,
++}
++
++impl<'a> EffectiveReads<'a> {
++    pub(super) fn new(policy: &'a FileSystemSandboxPolicy, cwd: &'a Path) -> Self {
++        Self {
++            policy,
++            cwd,
++            entries: OnceCell::new(),
++        }
++    }
++
++    /// The existing effective-read verdict, reusing this set's normalized
++    /// policy entries. Each candidate path is still normalized separately.
++    pub fn can_read_effective_path(&self, path: &Path) -> bool {
++        match self.policy.kind {
++            FileSystemSandboxKind::Unrestricted | FileSystemSandboxKind::ExternalSandbox => {
++                return true;
++            }
++            FileSystemSandboxKind::Restricted => {}
++        }
++        let Some(path) = resolve_candidate_path(path, self.cwd) else {
++            return false;
++        };
++        let path = normalize_effective_absolute_path(path);
++        self.entries
++            .get_or_init(|| {
++                self.policy
++                    .resolved_entries_with_cwd(self.cwd)
++                    .into_iter()
++                    .map(|entry| ResolvedFileSystemEntry {
++                        path: normalize_effective_absolute_path(entry.path),
++                        access: entry.access,
++                    })
++                    .collect()
++            })
++            .iter()
++            .filter(|entry| path.as_path().starts_with(entry.path.as_path()))
++            .max_by_key(|entry| resolved_entry_precedence(entry))
++            .is_some_and(|entry| entry.access.can_read())
++    }
++}
+diff --git a/codex-rs/protocol/src/permissions/effective_reads_tests.rs b/codex-rs/protocol/src/permissions/effective_reads_tests.rs
+new file mode 100644
+index 0000000000000000000000000000000000000000..8040885624f0927f933d8bf55525bf6da40a3d99
+--- /dev/null
++++ b/codex-rs/protocol/src/permissions/effective_reads_tests.rs
+@@ -0,0 +1,433 @@
++//! Issue918: native read verdicts and normalization work on synthetic paths.
++
++use super::*;
++use pretty_assertions::assert_eq;
++
++// Frozen from 78dd811d's can_read_effective_path_with_cwd. Only the method
++// name/receiver are adapted: the algorithm below replaces `self` with `policy`.
++fn reference_read(policy: &FileSystemSandboxPolicy, path: &Path, cwd: &Path) -> bool {
++    match policy.kind {
++        FileSystemSandboxKind::Unrestricted | FileSystemSandboxKind::ExternalSandbox => {
++            return true;
++        }
++        FileSystemSandboxKind::Restricted => {}
++    }
++    let Some(path) = resolve_candidate_path(path, cwd) else {
++        return false;
++    };
++    let path = normalize_effective_absolute_path(path);
++    policy
++        .resolved_entries_with_cwd(cwd)
++        .into_iter()
++        .map(|entry| ResolvedFileSystemEntry {
++            path: normalize_effective_absolute_path(entry.path),
++            access: entry.access,
++        })
++        .filter(|entry| path.as_path().starts_with(entry.path.as_path()))
++        .max_by_key(resolved_entry_precedence)
++        .is_some_and(|entry| entry.access.can_read())
++}
++
++fn entry(path: &Path, access: FileSystemAccessMode) -> FileSystemSandboxEntry {
++    FileSystemSandboxEntry::new(
++        FileSystemPath::Path {
++            path: AbsolutePathBuf::from_absolute_path(path).unwrap(),
++        },
++        access,
++    )
++}
++
++fn special(value: FileSystemSpecialPath, access: FileSystemAccessMode) -> FileSystemSandboxEntry {
++    FileSystemSandboxEntry::new(FileSystemPath::Special { value }, access)
++}
++
++struct Fixture {
++    _directory: tempfile::TempDir,
++    written: PathBuf,
++    real: PathBuf,
++}
++
++impl Fixture {
++    fn new() -> Self {
++        // Exercise the real /tmp -> /private/tmp top-level alias on macOS.
++        #[cfg(target_os = "macos")]
++        let directory = tempfile::tempdir_in("/tmp").unwrap();
++        #[cfg(not(target_os = "macos"))]
++        let directory = tempfile::tempdir().unwrap();
++        let written = directory.path().to_path_buf();
++        let real = written.canonicalize().unwrap();
++        for name in [
++            "ws/open",
++            "ws/denied/deeper",
++            "outside",
++            "ws/.git",
++            "ws/tie",
++        ] {
++            std::fs::create_dir_all(real.join(name)).unwrap();
++        }
++        std::fs::write(real.join("ws/open/file"), "synthetic").unwrap();
++        #[cfg(unix)]
++        {
++            std::os::unix::fs::symlink(real.join("outside"), real.join("ws/nested")).unwrap();
++            std::os::unix::fs::symlink(real.join("missing"), real.join("dangling")).unwrap();
++        }
++        Self {
++            _directory: directory,
++            written,
++            real,
++        }
++    }
++
++    fn paths(&self) -> Vec<PathBuf> {
++        let mut paths = Vec::new();
++        for base in [&self.written, &self.real] {
++            for tail in [
++                "",
++                "ws",
++                "ws/open/file",
++                "ws/open/missing",
++                "ws/denied/file",
++                "ws/denied/deeper/file",
++                "ws/tie/file",
++                "ws/.git/config",
++                "ws/nested/file",
++                "outside/file",
++                "missing/deep/file",
++                "dangling/file",
++                "ws/../outside/file",
++            ] {
++                paths.push(base.join(tail));
++            }
++        }
++        paths.extend(
++            [
++                "",
++                ".",
++                "open/file",
++                "denied/file",
++                "../outside/file",
++                "missing/file",
++                "bad\0path",
++            ]
++            .into_iter()
++            .map(PathBuf::from),
++        );
++        paths
++    }
++
++    fn policies(&self) -> Vec<(&'static str, FileSystemSandboxPolicy)> {
++        use FileSystemAccessMode::Deny;
++        use FileSystemAccessMode::Read;
++        use FileSystemAccessMode::Write;
++        let root = || special(FileSystemSpecialPath::Root, Read);
++        let tied = vec![
++            root(),
++            entry(&self.real.join("ws/tie"), Read),
++            entry(&self.real.join("ws/tie"), Deny),
++            entry(&self.real.join("ws/tie"), Write),
++        ];
++        let mut reversed = tied.clone();
++        reversed.reverse();
++        vec![
++            ("unrestricted", FileSystemSandboxPolicy::unrestricted()),
++            ("external", FileSystemSandboxPolicy::external_sandbox()),
++            ("empty", FileSystemSandboxPolicy::restricted(Vec::new())),
++            (
++                "read-root",
++                FileSystemSandboxPolicy::restricted(vec![root()]),
++            ),
++            (
++                "deny-root",
++                FileSystemSandboxPolicy::restricted(vec![special(
++                    FileSystemSpecialPath::Root,
++                    Deny,
++                )]),
++            ),
++            (
++                "nested-precedence",
++                FileSystemSandboxPolicy::restricted(vec![
++                    root(),
++                    entry(&self.real.join("ws/denied"), Deny),
++                    entry(&self.real.join("ws/denied/deeper"), Write),
++                ]),
++            ),
++            ("ties", FileSystemSandboxPolicy::restricted(tied)),
++            (
++                "reversed-ties",
++                FileSystemSandboxPolicy::restricted(reversed),
++            ),
++            (
++                "duplicate-denial",
++                FileSystemSandboxPolicy::restricted(vec![
++                    root(),
++                    entry(&self.real.join("ws/denied"), Deny),
++                    entry(&self.real.join("ws/denied"), Deny),
++                ]),
++            ),
++            (
++                "missing-denial",
++                FileSystemSandboxPolicy::restricted(vec![
++                    root(),
++                    entry(&self.real.join("missing"), Deny),
++                ]),
++            ),
++            (
++                "alias-ties",
++                FileSystemSandboxPolicy::restricted(vec![
++                    root(),
++                    entry(&self.written.join("ws/tie"), Read),
++                    entry(&self.real.join("ws/tie"), Deny),
++                ]),
++            ),
++            (
++                "nested-link",
++                FileSystemSandboxPolicy::restricted(vec![
++                    root(),
++                    entry(&self.real.join("ws/nested"), Deny),
++                    entry(&self.real.join("outside"), Write),
++                ]),
++            ),
++            (
++                "workspace",
++                FileSystemSandboxPolicy::workspace_write(
++                    &[AbsolutePathBuf::from_absolute_path(self.real.join("ws")).unwrap()],
++                    /*exclude_tmpdir_env_var*/ true,
++                    /*exclude_slash_tmp*/ true,
++                ),
++            ),
++            (
++                "special-and-glob",
++                FileSystemSandboxPolicy::restricted(vec![
++                    special(FileSystemSpecialPath::Minimal, Read),
++                    special(
++                        FileSystemSpecialPath::project_roots(/*subpath*/ None),
++                        Write,
++                    ),
++                    special(
++                        FileSystemSpecialPath::project_roots(Some("denied".to_string())),
++                        Deny,
++                    ),
++                    special(FileSystemSpecialPath::Tmpdir, Read),
++                    special(FileSystemSpecialPath::SlashTmp, Read),
++                    special(
++                        FileSystemSpecialPath::Unknown {
++                            path: ":future".to_string(),
++                            subpath: None,
++                        },
++                        Write,
++                    ),
++                    FileSystemSandboxEntry::new(
++                        FileSystemPath::GlobPattern {
++                            pattern: self.real.join("**/*.key").to_string_lossy().into_owned(),
++                        },
++                        Deny,
++                    ),
++                    FileSystemSandboxEntry::deny_directory_listing(
++                        &AbsolutePathBuf::from_absolute_path(self.real.join("outside")).unwrap(),
++                    ),
++                ]),
++            ),
++        ]
++    }
++
++    fn cwds(&self) -> Vec<PathBuf> {
++        vec![
++            self.real.join("ws"),
++            self.written.join("ws"),
++            self.real.join("outside"),
++            self.real.join("missing/cwd"),
++            PathBuf::from("relative-cwd"),
++        ]
++    }
++}
++
++#[test]
++fn issue918_baseline_current_reads_match_frozen_reference() {
++    let fixture = Fixture::new();
++    let paths = fixture.paths();
++    let mut answers = [0usize; 2];
++    let mut comparisons = 0;
++    for (name, policy) in fixture.policies() {
++        for cwd in fixture.cwds() {
++            let expected: Vec<_> = paths
++                .iter()
++                .map(|path| reference_read(&policy, path, &cwd))
++                .collect();
++            let actual: Vec<_> = paths
++                .iter()
++                .map(|path| policy.can_read_effective_path_with_cwd(path, &cwd))
++                .collect();
++            assert_eq!(actual, expected, "{name}");
++            for verdict in actual {
++                answers[usize::from(verdict)] += 1;
++                comparisons += 1;
++            }
++        }
++    }
++    assert!(answers.iter().all(|count| *count > 100));
++    println!(
++        "ISSUE918_BASELINE_MATRIX comparisons={comparisons} denied={} readable={} alias_exercised={}",
++        answers[0],
++        answers[1],
++        fixture.written != fixture.real
++    );
++}
++
++#[test]
++fn issue918_baseline_repeats_entry_normalization_per_path() {
++    let fixture = Fixture::new();
++    let cwd = fixture.real.join("ws");
++    let policy = FileSystemSandboxPolicy::restricted(vec![
++        special(FileSystemSpecialPath::Root, FileSystemAccessMode::Read),
++        entry(&fixture.real.join("ws/denied"), FileSystemAccessMode::Deny),
++        entry(
++            &fixture.real.join("ws/denied/deeper"),
++            FileSystemAccessMode::Write,
++        ),
++        entry(&fixture.real.join("missing"), FileSystemAccessMode::Deny),
++    ]);
++    let paths = fixture.paths();
++    let entries = policy.resolved_entries_with_cwd(&cwd).len() as u64;
++    let before = effective_path_normalizations_on_this_thread();
++    let verdicts: Vec<_> = paths
++        .iter()
++        .map(|path| policy.can_read_effective_path_with_cwd(path, &cwd))
++        .collect();
++    let observed = effective_path_normalizations_on_this_thread() - before;
++    assert_eq!(observed, (entries + 1) * paths.len() as u64);
++    assert_eq!(
++        verdicts,
++        paths
++            .iter()
++            .map(|path| reference_read(&policy, path, &cwd))
++            .collect::<Vec<_>>()
++    );
++    println!(
++        "ISSUE918_BASELINE_WORK entries={entries} paths={} walks={observed}",
++        paths.len()
++    );
++}
++
++#[test]
++fn issue918_reused_reads_match_every_reference_verdict() {
++    let fixture = Fixture::new();
++    let paths = fixture.paths();
++    for (name, policy) in fixture.policies() {
++        for (cwd_case, cwd) in fixture.cwds().into_iter().enumerate() {
++            let reads = policy.effective_reads_with_cwd(&cwd);
++            let expected: Vec<_> = paths
++                .iter()
++                .map(|path| reference_read(&policy, path, &cwd))
++                .collect();
++            let actual: Vec<_> = paths
++                .iter()
++                .map(|path| reads.can_read_effective_path(path))
++                .collect();
++            assert_eq!(actual, expected, "{name}, cwd case {cwd_case}");
++            let bits = |verdicts: &[bool]| {
++                verdicts
++                    .iter()
++                    .map(|yes| if *yes { '1' } else { '0' })
++                    .collect::<String>()
++            };
++            println!(
++                "ISSUE918_EQ policy={name};cwd_case={cwd_case};expected={};actual={}",
++                bits(&expected),
++                bits(&actual)
++            );
++        }
++    }
++}
++
++#[test]
++fn issue918_entries_normalized_once_per_fresh_path_set() {
++    let fixture = Fixture::new();
++    let cwd = fixture.real.join("ws");
++    let policy = FileSystemSandboxPolicy::restricted(vec![
++        special(FileSystemSpecialPath::Root, FileSystemAccessMode::Read),
++        entry(&fixture.real.join("ws/denied"), FileSystemAccessMode::Deny),
++        entry(
++            &fixture.real.join("ws/denied/deeper"),
++            FileSystemAccessMode::Write,
++        ),
++        entry(&fixture.real.join("missing"), FileSystemAccessMode::Deny),
++    ]);
++    let paths = fixture.paths();
++    let entries = policy.resolved_entries_with_cwd(&cwd).len() as u64;
++    let before = effective_path_normalizations_on_this_thread();
++    let expected: Vec<_> = paths
++        .iter()
++        .map(|path| policy.can_read_effective_path_with_cwd(path, &cwd))
++        .collect();
++    let old_walks = effective_path_normalizations_on_this_thread() - before;
++    assert_eq!(old_walks, (entries + 1) * paths.len() as u64);
++    for set in 0..2 {
++        let before = effective_path_normalizations_on_this_thread();
++        let reads = policy.effective_reads_with_cwd(&cwd);
++        assert_eq!(effective_path_normalizations_on_this_thread(), before);
++        let actual: Vec<_> = paths
++            .iter()
++            .map(|path| reads.can_read_effective_path(path))
++            .collect();
++        let walks = effective_path_normalizations_on_this_thread() - before;
++        assert_eq!(actual, expected);
++        assert_eq!(walks, entries + paths.len() as u64);
++        println!(
++            "ISSUE918_WORK set={set} entries={entries} paths={} old_walks={old_walks} batched_walks={walks}",
++            paths.len()
++        );
++    }
++}
++
++#[test]
++fn issue918_fast_paths_and_distinct_cwds_preserve_the_contract() {
++    let fixture = Fixture::new();
++    for policy in [
++        FileSystemSandboxPolicy::unrestricted(),
++        FileSystemSandboxPolicy::external_sandbox(),
++    ] {
++        let before = effective_path_normalizations_on_this_thread();
++        let reads = policy.effective_reads_with_cwd(Path::new("relative-cwd"));
++        for path in fixture.paths() {
++            assert!(reads.can_read_effective_path(&path));
++        }
++        assert_eq!(effective_path_normalizations_on_this_thread(), before);
++    }
++    let policy = FileSystemSandboxPolicy::restricted(vec![
++        special(FileSystemSpecialPath::Root, FileSystemAccessMode::Deny),
++        special(
++            FileSystemSpecialPath::project_roots(/*subpath*/ None),
++            FileSystemAccessMode::Read,
++        ),
++    ]);
++    // AbsolutePathBuf::from_absolute_path absolutizes a relative cwd; it is
++    // not the checked constructor that rejects one. Preserve that behavior.
++    let cwd = Path::new("relative-cwd");
++    let path = Path::new("relative-path");
++    let before = effective_path_normalizations_on_this_thread();
++    let expected = reference_read(&policy, path, cwd);
++    let reference_walks = effective_path_normalizations_on_this_thread() - before;
++    let before = effective_path_normalizations_on_this_thread();
++    let actual = policy
++        .effective_reads_with_cwd(cwd)
++        .can_read_effective_path(path);
++    let actual_walks = effective_path_normalizations_on_this_thread() - before;
++    assert_eq!((actual, actual_walks), (expected, reference_walks));
++    println!(
++        "ISSUE918_RELATIVE_CWD expected={expected} actual={actual} reference_walks={reference_walks} actual_walks={actual_walks}"
++    );
++    let cwd = fixture.real.join("ws");
++    let other = fixture.real.join("outside");
++    let path = cwd.join("open/file");
++    assert_eq!(
++        (
++            policy
++                .effective_reads_with_cwd(&cwd)
++                .can_read_effective_path(&path),
++            policy
++                .effective_reads_with_cwd(&other)
++                .can_read_effective_path(&path)
++        ),
++        (true, false)
++    );
++}
+diff --git a/codex-rs/tui/src/security/preflight.rs b/codex-rs/tui/src/security/preflight.rs
+index 59610150fa25e957b9d4aacb3d1806c7b25eb26d..60a6715aae85490b7b57015f3bd7078859ea50f2 100644
+--- a/codex-rs/tui/src/security/preflight.rs
++++ b/codex-rs/tui/src/security/preflight.rs
+@@ -308,6 +308,15 @@ pub(crate) fn verify_database_folder(config: &Config) -> Vec<String> {
+ 
+ /// Every isolated path must be unreadable to agent commands.
+ pub(crate) fn verify_isolation(config: &Config, paths: &[PathBuf]) -> Vec<String> {
++    isolation_failures(config, paths)
++        .into_iter()
++        .map(|(_, line)| line)
++        .collect()
++}
++
++/// Keep uncovered paths paired with their diagnostics, in input order, so
++/// launch can identify config layers without rebuilding the read view per path.
++fn isolation_failures<'a>(config: &Config, paths: &'a [PathBuf]) -> Vec<(&'a PathBuf, String)> {
+     let policy = config.permissions.file_system_sandbox_policy();
+     let cwd = config.cwd.as_path();
+     let codex_home = config.codex_home.as_path();
+@@ -326,7 +335,9 @@ pub(crate) fn verify_isolation(config: &Config, paths: &[PathBuf]) -> Vec<String
+     // workspace opened through `/tmp` spells its paths unlike the launch
+     // that denied them.
+     #[cfg(not(target_os = "macos"))]
+-    let readable = |path: &Path| policy.can_read_effective_path_with_cwd(path, cwd);
++    let reads = policy.effective_reads_with_cwd(cwd);
++    #[cfg(not(target_os = "macos"))]
++    let readable = |path: &Path| reads.can_read_effective_path(path);
+     paths
+         .iter()
+         .filter(|path| {
+@@ -342,14 +353,30 @@ pub(crate) fn verify_isolation(config: &Config, paths: &[PathBuf]) -> Vec<String
+             !covered
+         })
+         .map(|path| {
+-            format!(
+-                "Isolation: agent commands can still read {}",
+-                path.display()
++            (
++                path,
++                format!(
++                    "Isolation: agent commands can still read {}",
++                    path.display()
++                ),
+             )
+         })
+         .collect()
+ }
+ 
++/// The isolation phase of launch's audit checks the complete inventory as one
++/// set, then preserves each path's existing config-layer diagnostic.
++fn launch_isolation_blockers(
++    config: &Config,
++    paths: &[PathBuf],
++    layers: &[PathBuf],
++) -> Vec<String> {
++    isolation_failures(config, paths)
++        .into_iter()
++        .map(|(path, line)| not_denied_at_launch(&line, layers.contains(path)))
++        .collect()
++}
++
+ /// Launch-time re-audit. Writes `activated_at` on the first clean launch.
+ pub(crate) fn audit_at_launch(codex_home: &Path, config: &Config) -> Boundary {
+     let receipt = match load_receipt(codex_home) {
+@@ -371,17 +398,11 @@ pub(crate) fn audit_at_launch(codex_home: &Path, config: &Config) -> Boundary {
+         .iter()
+         .filter_map(|layer| layer.path.clone())
+         .collect::<Vec<_>>();
+-    blockers.extend(
+-        preflight
+-            .inventory
+-            .isolation_paths()
+-            .iter()
+-            .flat_map(|path| {
+-                verify_isolation(config, std::slice::from_ref(path))
+-                    .into_iter()
+-                    .map(|line| not_denied_at_launch(&line, layers.contains(path)))
+-            }),
+-    );
++    blockers.extend(launch_isolation_blockers(
++        config,
++        &preflight.inventory.isolation_paths(),
++        &layers,
++    ));
+     if !blockers.is_empty() {
+         return Boundary::NotClean { blockers };
+     }
+diff --git a/codex-rs/tui/src/security/preflight_tests.rs b/codex-rs/tui/src/security/preflight_tests.rs
+index e985ac29b673c7a5155681bb9a6340e17717f926..d239dfc58b651424acfe4bf35136d06669e497f1 100644
+--- a/codex-rs/tui/src/security/preflight_tests.rs
++++ b/codex-rs/tui/src/security/preflight_tests.rs
+@@ -214,3 +214,149 @@ fn sec_444_undenied_config_layer_is_not_called_missing_at_start() {
+     let file = super::not_denied_at_launch(line, /*config_layer*/ false);
+     assert!(file.contains("it was not there when Corbanu Terminal started"));
+ }
++
++// Only owned fixture roots enter this launch-audit phase. Calling the whole
++// audit would also inventory the process home and environment.
++async fn launch_isolation_config(home: &Path, cwd: &Path, denied: &[PathBuf]) -> Config {
++    use crate::legacy_core::config::ConfigBuilder;
++    use crate::legacy_core::config::ConfigOverrides;
++
++    let mut filesystem = toml::map::Map::new();
++    for path in [home, cwd] {
++        filesystem.insert(
++            path.to_str().unwrap().to_string(),
++            toml::Value::String("read".to_string()),
++        );
++    }
++    for path in denied {
++        filesystem.insert(
++            path.to_str().unwrap().to_string(),
++            toml::Value::String("deny".to_string()),
++        );
++    }
++    let mut network = toml::map::Map::new();
++    network.insert("enabled".to_string(), toml::Value::Boolean(false));
++    let mut profile = toml::map::Map::new();
++    profile.insert("filesystem".to_string(), toml::Value::Table(filesystem));
++    profile.insert("network".to_string(), toml::Value::Table(network));
++    ConfigBuilder::default()
++        .codex_home(home.to_path_buf())
++        .harness_overrides(ConfigOverrides {
++            cwd: Some(cwd.to_path_buf()),
++            default_permissions: Some("launch-audit-fixture".to_string()),
++            ..Default::default()
++        })
++        .cli_overrides(vec![(
++            "permissions.launch-audit-fixture".to_string(),
++            toml::Value::Table(profile),
++        )])
++        .loader_overrides(codex_config::LoaderOverrides::without_managed_config_for_tests())
++        .build()
++        .await
++        .unwrap()
++}
++
++#[tokio::test]
++async fn issue_951_launch_isolation_batch_preserves_messages_and_order() {
++    let home = tempfile::tempdir().unwrap();
++    let cwd = tempfile::tempdir().unwrap();
++    let denied = cwd.path().join("denied");
++    std::fs::create_dir(&denied).unwrap();
++    let database_pattern = database_glob(home.path());
++    let config = launch_isolation_config(
++        home.path(),
++        cwd.path(),
++        &[denied.clone(), database_pattern.clone()],
++    )
++    .await;
++    let ordinary = cwd.path().join("ordinary.key");
++    let layer = cwd.path().join("config.toml");
++    let unmatched_pattern = cwd.path().join("other-db").join("*.sqlite*");
++    let literal_glob_syntax = cwd.path().join("literal[1]");
++    let covered_database = home.path().join("state_5.sqlite-wal");
++    let paths = vec![
++        ordinary.clone(),
++        denied.join("secret.key"),
++        layer.clone(),
++        database_pattern,
++        covered_database,
++        unmatched_pattern.clone(),
++        ordinary.clone(),
++        literal_glob_syntax.clone(),
++    ];
++    let layers = vec![layer.clone()];
++    let missing = |path: &Path| {
++        format!(
++            "Isolation: agent commands can still read {}; it was not there when Corbanu Terminal started (another folder, or a new file). Remove it, or restart from the folder that holds it",
++            path.display()
++        )
++    };
++    let expected = vec![
++        missing(&ordinary),
++        format!(
++            "Isolation: agent commands can still read {}; this config file holds a secret, and config files are read only after the sandbox is set up, so it was not denied. Move the secret into the vault (or remove it) and restart",
++            layer.display()
++        ),
++        missing(&unmatched_pattern),
++        missing(&ordinary),
++        missing(&literal_glob_syntax),
++    ];
++    assert_eq!(
++        launch_isolation_blockers(&config, &paths, &layers),
++        expected
++    );
++    // This reference retains the old caller's per-path verdicts and wording.
++    let singleton_messages = paths
++        .iter()
++        .flat_map(|path| {
++            verify_isolation(&config, std::slice::from_ref(path))
++                .into_iter()
++                .map(|line| not_denied_at_launch(&line, layers.contains(path)))
++        })
++        .collect::<Vec<_>>();
++    assert_eq!(
++        launch_isolation_blockers(&config, &paths, &layers),
++        singleton_messages
++    );
++    assert_eq!(
++        launch_isolation_blockers(&config, &[], &layers),
++        Vec::<String>::new()
++    );
++    assert_eq!(
++        launch_isolation_blockers(&config, &[denied.join("another.key")], &layers),
++        Vec::<String>::new()
++    );
++}
++
++// macOS deliberately keeps the Seatbelt verdict path. The normalization
++// counter is available to dependent debug tests, including after PR1004.
++#[cfg(all(debug_assertions, not(target_os = "macos")))]
++#[tokio::test]
++async fn issue_951_launch_isolation_prepares_one_effective_read_set() {
++    use codex_protocol::permissions::effective_path_normalizations_on_this_thread;
++
++    let home = tempfile::tempdir().unwrap();
++    let cwd = tempfile::tempdir().unwrap();
++    let denied = (0..20)
++        .map(|index| cwd.path().join(format!("denied-{index}")))
++        .collect::<Vec<_>>();
++    for path in &denied {
++        std::fs::create_dir(path).unwrap();
++    }
++    let config = launch_isolation_config(home.path(), cwd.path(), &denied).await;
++    let paths = (0..32)
++        .map(|index| cwd.path().join(format!("readable-{index}.key")))
++        .collect::<Vec<_>>();
++
++    // Measure the actual policy cost instead of assuming how profile entries
++    // expand. All counter reads and calls stay on this thread, with no await.
++    let before = effective_path_normalizations_on_this_thread();
++    assert_eq!(verify_isolation(&config, &paths[..1]).len(), 1);
++    let singleton_cost = effective_path_normalizations_on_this_thread() - before;
++    assert!(singleton_cost > 1, "fixture must normalize policy entries");
++    let before = effective_path_normalizations_on_this_thread();
++    let blockers = launch_isolation_blockers(&config, &paths, &[]);
++    let batch_cost = effective_path_normalizations_on_this_thread() - before;
++    assert_eq!(blockers.len(), paths.len());
++    assert_eq!(batch_cost, singleton_cost - 1 + paths.len() as u64);
++}
