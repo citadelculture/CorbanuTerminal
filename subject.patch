@@ -1,0 +1,105 @@
+diff --git a/codex-rs/Cargo.lock b/codex-rs/Cargo.lock
+index 072ad62d2bb50054a0dc76177900fdd38c8c79b3..b5ced810d30e5137b1814a5ad3efadd3091183a6 100644
+--- a/codex-rs/Cargo.lock
++++ b/codex-rs/Cargo.lock
+@@ -3591,6 +3591,7 @@ dependencies = [
+  "landlock",
+  "libc",
+  "pretty_assertions",
++ "rustix 1.1.4",
+  "seccompiler",
+  "serde",
+  "serde_json",
+diff --git a/codex-rs/linux-sandbox/Cargo.toml b/codex-rs/linux-sandbox/Cargo.toml
+index e926d4289b55f75cb861e9b47653df115614f4f4..c6557e2eb31d85ceb98e364363097024529f7893 100644
+--- a/codex-rs/linux-sandbox/Cargo.toml
++++ b/codex-rs/linux-sandbox/Cargo.toml
+@@ -26,6 +26,7 @@ codex-utils-absolute-path = { workspace = true }
+ globset = { workspace = true }
+ landlock = { workspace = true }
+ libc = { workspace = true }
++rustix = { version = "1.1.4", features = ["fs"] }
+ seccompiler = { workspace = true }
+ serde = { workspace = true, features = ["derive"] }
+ serde_json = { workspace = true }
+diff --git a/codex-rs/linux-sandbox/src/placeholder_journal.rs b/codex-rs/linux-sandbox/src/placeholder_journal.rs
+index 0bf6c2a56b91d82ce3fa72e2cc041f1b1b5df0f3..02bfa2b79bf3e7c22ee66e5ef5a50defba549c84 100644
+--- a/codex-rs/linux-sandbox/src/placeholder_journal.rs
++++ b/codex-rs/linux-sandbox/src/placeholder_journal.rs
+@@ -596,10 +596,10 @@ fn mount_points_for_processes(
+         // mountinfo paths are relative to the process's root. Processes in
+         // one mount namespace can have different roots (for example, chroot).
+         // When either identity is unavailable, read the view without deduping.
+-        if let (Ok(namespace), Ok(root)) = (
++        if let (Ok(namespace), Some((device, inode))) = (
+             std::fs::read_link(dir.join("ns/mnt")),
+-            std::fs::metadata(dir.join("root")),
+-        ) && !seen.insert((namespace, root.dev(), root.ino()))
++            cached_root_identity(&dir.join("root")),
++        ) && !seen.insert((namespace, device, inode))
+         {
+             continue;
+         }
+@@ -625,6 +625,36 @@ fn mount_points_for_processes(
+     Some(points)
+ }
+ 
++/// Read the process root's identity without requesting a filesystem sync.
++/// An unavailable inode is not a deduplication key: its mount view is scanned.
++fn cached_root_identity(root: &Path) -> Option<(u64, u64)> {
++    let root = CString::new(root.as_os_str().as_bytes()).ok()?;
++    let mut status = std::mem::MaybeUninit::<rustix::fs::Statx>::zeroed();
++    // Use the portable statx layout, but call the kernel directly so an old
++    // libc cannot emulate an unsupported statx with a synchronizing stat.
++    // SAFETY: root is NUL-terminated and status points to a full writable
++    // statx buffer. Only the known INO mask is requested.
++    if unsafe {
++        libc::syscall(
++            libc::SYS_statx,
++            libc::AT_FDCWD,
++            root.as_ptr(),
++            rustix::fs::AtFlags::STATX_DONT_SYNC.bits(),
++            rustix::fs::StatxFlags::INO.bits(),
++            status.as_mut_ptr(),
++        )
++    } != 0
++    {
++        return None;
++    }
++    // SAFETY: the buffer was zero-initialized and statx completed successfully.
++    let status = unsafe { status.assume_init() };
++    (status.stx_mask & rustix::fs::StatxFlags::INO.bits() != 0).then_some((
++        rustix::fs::makedev(status.stx_dev_major, status.stx_dev_minor),
++        status.stx_ino,
++    ))
++}
++
+ /// A mount point as `mountinfo` writes it (space, tab, newline and
+ /// backslash as three octal digits after a backslash).
+ fn unescape_mount_point(point: &[u8]) -> Vec<u8> {
+diff --git a/codex-rs/linux-sandbox/src/placeholder_journal_tests.rs b/codex-rs/linux-sandbox/src/placeholder_journal_tests.rs
+index 519c0f33e69696d8ff1f7936caad197b83d5a68d..2c34612bb514a427959b37684747dce0313d2c47 100644
+--- a/codex-rs/linux-sandbox/src/placeholder_journal_tests.rs
++++ b/codex-rs/linux-sandbox/src/placeholder_journal_tests.rs
+@@ -586,6 +586,21 @@ fn write_mount_view(process: &Path, namespace: &str, root: &Path, point: &str) {
+     .expect("mountinfo");
+ }
+ 
++#[test]
++fn cached_root_identity_follows_the_process_root_link() {
++    let temp = tempfile::TempDir::new().expect("tempdir");
++    let root = temp.path().join("root");
++    std::fs::create_dir(&root).expect("root");
++    let process = temp.path().join("101");
++    write_mount_view(&process, "mnt:[1]", &root, "/root-mount");
++    let expected = std::fs::metadata(&root).expect("root identity");
++
++    assert_eq!(
++        cached_root_identity(&process.join("root")),
++        Some((expected.dev(), expected.ino())),
++    );
++}
++
+ #[test]
+ fn different_roots_in_one_mount_namespace_are_all_scanned() {
+     let temp = tempfile::TempDir::new().expect("tempdir");

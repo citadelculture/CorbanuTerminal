@@ -1,0 +1,6 @@
+{
+  "approved": true,
+  "packetManifestSha256": "f92b77cd3ca3d0af6f4c43a5369ed893b7c8e74a25eb769cf611069b5dfa5b47",
+  "reviewReceiptSha256": "9fef96854c06487b30da2258d99b09a5f996ef872bde865e770ae6c78290f4d2",
+  "reason": "Root admits the exact pass5-reviewed bounded lock-generation/full-format/lock-check stage only; product GNU/musl qualification is not admitted."
+}

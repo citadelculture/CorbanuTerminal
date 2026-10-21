@@ -1,0 +1,51 @@
+{
+  "schema": "pr1116-lock-packet-manifest-v2",
+  "files": [
+    {
+      "path": ".github/workflows/pr1116-statx-bazel-lock-v2.yml",
+      "bytes": 1356,
+      "sha256": "7c3a7da4259f2705c4bf46773c46d971e887514e0b55403d3584c21e388bfeee"
+    },
+    {
+      "path": "METHOD.md",
+      "bytes": 7939,
+      "sha256": "49e6fb5f5e2ad5eed011d3a457b3df33cddde9dd2910e398a87653d5b834b1bb"
+    },
+    {
+      "path": "bazel.py",
+      "bytes": 1635,
+      "sha256": "20e06796d7b0ebbf1d1c8b83834e9c20f9c92f2bee9de4dcd417bfd4623439f2"
+    },
+    {
+      "path": "controller.py",
+      "bytes": 9144,
+      "sha256": "31c34035bb31e620ebeb2f39984015587c5d0000742441f26da4080c667a3364"
+    },
+    {
+      "path": "pure_controls.py",
+      "bytes": 6642,
+      "sha256": "397fea2f5248a474cd065df611216e9a7f3fa0de2b8aa87f787af7f25852db41"
+    },
+    {
+      "path": "source-pins.json",
+      "bytes": 5323,
+      "sha256": "bff7060299e977863bfb5c24cede68c0b386b9e6fd9cc964b34c83e337a701f8"
+    },
+    {
+      "path": "subject.patch",
+      "bytes": 4685,
+      "sha256": "980ece21f8142a3768560bc07f3471989f75d4b79abe2cfe8f86f3c91049f8b9"
+    },
+    {
+      "path": "tool-pins.json",
+      "bytes": 9182,
+      "sha256": "96ce34fd7b8ca589c9a307d4e78e57c7252a50b8c46e271d78e9cba656373157"
+    },
+    {
+      "path": "worker.py",
+      "bytes": 13639,
+      "sha256": "3afee2f1ae418bee9c028a18dcd23e17fa8b61c3fa2554bedb323e7f43e8b14c"
+    }
+  ],
+  "admissionExclusion": "Root may fill admission.json after normal review, binding this manifest SHA and actual review receipt; manifest excludes itself and admission to avoid a circular hash."
+}

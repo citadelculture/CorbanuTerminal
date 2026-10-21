@@ -1,0 +1,42 @@
+name: PR1116 statx follow-up lock preparation v2
+on:
+  push:
+    branches: [codex/pr1116-statx-bazel-lock-v2-20261021]
+permissions:
+  contents: read
+concurrency:
+  group: pr1116-statx-bazel-lock-v2
+  cancel-in-progress: false
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Check out exact method commit
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          path: method
+          persist-credentials: false
+          fetch-depth: 1
+          submodules: false
+          lfs: false
+      - name: Check out pinned public subject
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: CorbanuCore/CorbanuTerminal
+          ref: 7a20f703f8eb96e4b9bc902ad55b881f6253ebbe
+          path: subject
+          persist-credentials: false
+          fetch-depth: 1
+          submodules: false
+          lfs: false
+      - name: Run admitted bounded lock preparation
+        run: python3 method/controller.py
+      - name: Retain actual lock and formatter evidence
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: pr1116-statx-lock-preparation-v2
+          path: pr1116-lock-evidence/
+          if-no-files-found: error
+          retention-days: 14

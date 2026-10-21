@@ -1,0 +1,72 @@
+{
+  "base": "7a20f703f8eb96e4b9bc902ad55b881f6253ebbe",
+  "repository": "https://github.com/CorbanuCore/CorbanuTerminal",
+  "patchSha256": "980ece21f8142a3768560bc07f3471989f75d4b79abe2cfe8f86f3c91049f8b9",
+  "baseFiles": {
+    ".bazelrc": "f4899e1594a54c7a233d0f6ea014ab5bc7c0a54b0d5e15f48474025b090e8cbe",
+    ".bazelversion": "cdecb300baad839a6f62791229f551a4fa33f3cbdca08e378dc976466354e778",
+    ".github/actions/setup-bazel-ci/action.yml": "9a07bd9e6a3ac1c65163dc6ac95bf23d481e52755a0d9cc26828c57b64ff0bf2",
+    ".github/actions/setup-ci/action.yml": "cef6b87a463c78813f9ba0c0dac8cc451a8be9b9ca218f5130f057af3801904a",
+    ".github/scripts/run_bazel_with_buildbuddy.py": "9bde86d11cfd4271dadc0b942d6b2d2cd90c59600b7e807b66a14eb49b5e1fff",
+    ".github/workflows/bazel.yml": "35fef75919c489a366d869d7e4a0feef1e4827be402e2c62699f5bfecfe66599",
+    ".github/workflows/blocking-ci.yml": "e9938ebe144019628c714d886f5220765f4eb499d52f399a6dca008c09e2a23c",
+    ".github/workflows/rust-ci-core-security.yml": "84f4162811148db5f0971be40a0f8cf1987cba0df5e02a5aafc05cacbe38ff9d",
+    ".github/workflows/rust-ci.yml": "4c297922648fc512bc962a3ff44742761bf9af7194a7466d6ea249255a223d64",
+    "AGENTS.md": "4b6aa2003bb1b01c3313f1155e3e5e35516ec217da794d3bf3920ed483bbe608",
+    "MODULE.bazel": "058f7f5ccdac32547ef5221219a3034f2a5f22052ae5c48dfca66e1c2f47026a",
+    "MODULE.bazel.lock": "55708654b30ae4719d400ead9f0da048150d86d9bb310102cd7a5dbd8b7276e3",
+    "codex-rs/.config/nextest.toml": "830c64fd157ef4bb618626c4f7aaf3de986b488289eb28ed352ff0a21e29c110",
+    "codex-rs/AGENTS.md": "8770b8bde8ddaf5f404090afb3f2251aca06bca5cfc5707ec42ae3a7490ce47a",
+    "codex-rs/Cargo.lock": "9bf3331a78a43b8d7489875db26d199d97f018f0e78cefefa928d09a306478bb",
+    "codex-rs/Cargo.toml": "3184d6b3a34c0e311a052c7bb7094809ae64364a7efd586e557e33a0544a2666",
+    "codex-rs/linux-sandbox/BUILD.bazel": "9a54d0a6b2e100d7ee2aa42288fe267b9ae44b22e4726b279231a6ffa6d51a3a",
+    "codex-rs/linux-sandbox/Cargo.toml": "7d95a666464513755f4512ccd1b8cabbc23ca4d8a60017efd37069603aebf2ae",
+    "codex-rs/linux-sandbox/src/placeholder_journal.rs": "ed4fd8a4b9b310a335ef65711d8f8246a044f53189fc0a6dcfaaf6a81dd4ddad",
+    "codex-rs/linux-sandbox/src/placeholder_journal_tests.rs": "b0d3c6ed9187c309e8b477759816307d45d01d10b8c08d9143b7dae5a1f3fba6",
+    "codex-rs/rust-toolchain.toml": "913d7e9d7adcd7abfeb0c4554c39a5a57c3cf84a694bc6a6aeae038a1f6ae33b",
+    "docs/development/test-isolation.md": "1a5c54c42d74e08c2a98ea6fc8217e05e15c43b2f6b40f679c6388090514cfd0",
+    "justfile": "c4286cfea7819dd7e062a7402ca8db8517cfd5790de32e7b68626c25d966438c",
+    "scripts/check-module-bazel-lock.sh": "a6c3842bb9c884ebd31dd79b99949e7c66b0f82a594dda87797013db572dc180",
+    "scripts/format.py": "d930139145ba3e80a188c1b5734aa7fee6bad5687e610cb58bda016216a2f37d",
+    "scripts/isolated_rust_tests.py": "2376d36fae0943cbbf4a0caf58109b0dece03cb226983d1276216adc90d2447c",
+    "scripts/just-shell.py": "444d6b328d44abf6453b77b6acce2a0c881fc162ff30b20f352c85067797fbe9",
+    "scripts/pyproject.toml": "2c9c022b99b0b576c3b45773a39f8aa6396f044016432e9bb42669554b3bfb78",
+    "scripts/uv.lock": "6b8e7a82d1a4f4c5d59ce57cf8be472ea031c6fb0a905506258d434132b3c99c",
+    "sdk/python/pyproject.toml": "be995a21d1761e30295016a77d6d227778558ac68da2d37cdec69685a4691a23",
+    "sdk/python/uv.lock": "5d289bda71a7a22394a7c42cea17f49e6317d265ed5ed0c9c8bad8f2412e6bbc",
+    "tools/buildifier": "818bfc01e21fceb0d83ddaf4614531418ea763e25499f7f9fd03c7a853948fe6"
+  },
+  "candidateFiles": {
+    "codex-rs/Cargo.lock": "dfa51f8f790b4bf0ca2bc96d8e215c84752e8005ab0ec9068a20eb3ac1c9079c",
+    "codex-rs/linux-sandbox/Cargo.toml": "35c1136d9cb65087d2a9803f7944f570d13c84635ed26932aa2c231c483d4a68",
+    "codex-rs/linux-sandbox/src/placeholder_journal.rs": "b50085e5789f947a65f12591de0a3ed33f3e7b52951ae016f5d27a54856df44e",
+    "codex-rs/linux-sandbox/src/placeholder_journal_tests.rs": "06bad342a7647a1e7639612e5ce39c46578738677d33b6f04dba02470a3e6ba5"
+  },
+  "schema": "pr1116-lock-source-v2",
+  "allowedChangedFiles": [
+    "MODULE.bazel.lock",
+    "codex-rs/Cargo.lock",
+    "codex-rs/linux-sandbox/Cargo.toml",
+    "codex-rs/linux-sandbox/src/placeholder_journal.rs",
+    "codex-rs/linux-sandbox/src/placeholder_journal_tests.rs"
+  ],
+  "symlinks": [
+    {
+      "blob": "d24842f3cdcf2e447f9a7a26fa387ad63f5c4b91",
+      "mode": "120000",
+      "path": "codex-rs/vendor/bubblewrap/LICENSE",
+      "targetBytes": 7,
+      "targetSha256": "400d38e5cfee181230373a8b02d38f50271a5bf62c62410382efddb8e8b19e22"
+    },
+    {
+      "blob": "f569ef7de30a885cdc1b9a0ccae8424ca19087a9",
+      "mode": "120000",
+      "path": "qa/security-levels/milestones/moderate-localmodel-20261020/runs/R01/collected/fixture/workspace/link-creds",
+      "targetBytes": 29,
+      "targetSha256": "cd2467ca3f30d674eae0faf252abb30d7bf1a2742d1e1689e9389b12b2653e93"
+    }
+  ],
+  "classification": "Optional unpaid statx follow-up after PR1116 merge; distinct from Issue1056 item2 and PR1238.",
+  "adoptionGate": "Base7a20 is actual PR1116 merge. Fresh preflight found no same-scope overlap; main has advanced only in unrelated Windows-test files. Root must recheck source/overlap and admit this exact new packet before dispatch.",
+  "layoutReceiptSha256": "f2eb1203e60815329be4bffaa22070ef6c09e62b6f441e2b866924ca24e96863"
+}
