@@ -1,0 +1,27 @@
+diff --git a/codex-rs/linux-sandbox/src/placeholder_journal.rs b/codex-rs/linux-sandbox/src/placeholder_journal.rs
+--- a/codex-rs/linux-sandbox/src/placeholder_journal.rs
++++ b/codex-rs/linux-sandbox/src/placeholder_journal.rs
+@@ -595,9 +595,8 @@
+         if !std::fs::metadata(&dir).is_ok_and(|metadata| metadata.uid() == euid) {
+             continue;
+         }
+-        if let Ok(namespace) = std::fs::read_link(dir.join("ns/mnt"))
+-            && !seen.insert(namespace)
+-        {
++        let namespace = std::fs::read_link(dir.join("ns/mnt")).ok();
++        if namespace.as_ref().is_some_and(|key| seen.contains(key)) {
+             continue;
+         }
+         let mounts = match read_mountinfo(&dir.join("mountinfo")) {
+@@ -612,6 +611,11 @@
+             }
+             Err(_) => return None,
+         };
++        // A process may exit after its namespace was read. Only a successful
++        // mountinfo read can stand in for the namespace's remaining processes.
++        if let Some(namespace) = namespace {
++            seen.insert(namespace);
++        }
+         points.extend(
+             mounts
+                 .split(|byte| *byte == b'\n')

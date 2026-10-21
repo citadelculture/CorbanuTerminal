@@ -1,0 +1,128 @@
+Issue1056 mountinfo read-before-seen: one-shot ordinary Linux debug qualification
+
+STATUS AND SCOPE
+This packet is inert: admission.json is false. It prepares an audited hosted
+campaign; it contains no claim that Rust compilation or tests have succeeded.
+Publication/execution requires the final exact manifest's root admission after
+independent method review and ordinary external approval. Source review is
+separate. No review-budget reset or implicit qualification is asserted.
+
+The public source is CorbanuCore/CorbanuTerminal at
+3b56e6952e3e85fc0b940ee319b7a19d344a6ff5. Source/input hashes, three complete
+patches and exact selected case names are in source-pins.json. The instrumented
+baseline adds a private deterministic reader seam and the two test bodies to
+the old ordering. It is not the unmodified public base. The candidate changes
+only the reviewed journal helper and tests. No TUI, release, native credential,
+full integration suite, or whole-Issue1056 completion claim follows from this
+campaign. Internal-only TUI/code-blind stages were disposed by the coordinator.
+
+ONE-SHOT ROUTE AND RESOURCE BOUNDS
+The push-only workflow is restricted to the own-account repository
+citadelculture/CorbanuTerminal and the unique branch
+codex/issue1056-mountinfo-linux-v1-20261021. Workflow run number and attempt must
+both be 1. The controller records actual head/run/workflow identity. There is
+no workflow_dispatch path or automatic rerun. Both actions checkouts disable
+credential persistence; the public source checkout is clean and exactly pinned.
+
+The environment is a fresh disposable Ubuntu 24.04 x86_64 GitHub VM. No owner
+host build occurs. This uses the ordinary repository library-test lane, not an
+arbitrary hostile-code sandbox or a bwrap/network-namespace override. An exclusive
+synthetic UID/GID 21056 has no sudo entitlement, uses fresh owned HOME, Cargo,
+Git, uv and DotSlash state, receives no runner/action/inference credentials, and
+preserves inherited CODEX_SANDBOX/CODEX_SANDBOX_NETWORK_DISABLED markers exactly.
+The controller requires real/effective nonzero identity before any tests. This
+prevents the inherited root-only early return from masquerading as an executed
+read-only-directory body. Global/system Git config and credential helpers are
+isolated; SSH and interactive Git prompting are disabled.
+
+Initial available disk must be at least 32 GiB, and each fresh compile requires
+14 GiB. Continuous guards hold at 6 GiB free or 256 MiB available RAM; total RAM
+must be at least 7 GiB. Build jobs 2, incremental 0, dev/test debug symbols 0;
+the unchanged ordinary wrapper still forces debug assertions and native-keyring
+suppression. Baseline and candidate targets start empty and are separate. Only
+public dependency download caches are shared, never compiled workspace outputs.
+Selected binaries are preserved, never discarded to manufacture free space.
+
+The 160-minute workflow contains one shared 8400-second host work budget, followed
+by a 300-second cleanup/export budget. This leaves 900 seconds for checkout and
+artifact upload. Each apt call is capped at 600 seconds and also the shared
+remaining budget; worker receives at most 8100 seconds from that same remaining
+budget. The host terminates/reconciles the worker on expiry. Each compile is
+capped at 3000 seconds; each selected run at 300 seconds. Lesser provisioning
+phases have explicit caps. Maximum phase caps are not additive extensions of the
+shared deadline. All test retries are 0. Any capacity/deadline failure is retained;
+there is no automatic replay. Fresh capacity and build duration remain runtime
+admission facts, not proven by this preparation.
+
+PINNED PROVISIONING AND ORDINARY COMMANDS
+Tool-pins.json binds official public download URLs, SHA256 and byte sizes for
+six Rust 1.99.1 components, Just 1.58.0, Nextest 0.9.146, uv 0.11.3 and DotSlash 0.5.9.
+Safe archive extraction rejects escaping/special members; exact expected binary
+paths and Rust component identity are checked after verified download. Tool
+installation is under the owned prefix and does not change global toolchains.
+Signed Ubuntu system packages are acquired separately and actual versions saved.
+Public Cargo sources are exact lockfile pins; no private registry is provisioned.
+
+cargo fetch --locked --target x86_64-unknown-linux-gnu, uv frozen formatter
+synchronization and pinned DotSlash buildifier acquisition precede offline work.
+A separate metadata target may contain only .rustc_info.json; any compiled output
+holds. The actual Linux normal/build closure including root dev dependencies is
+recorded; unexpected v8 requires a changed acquisition method and stops here.
+The selected linux-sandbox package does not trigger wrapper sibling-helper
+builds. The shared codex-core dependency can still be expensive to compile.
+
+Both instrumented baseline and candidate run full ordinary just fmt offline,
+with complete tracked-file hashes before/after required unchanged. The candidate
+already passed full formatting during source preparation. No format mutation is
+accepted silently. The frozen source/input pins are checked again after tests.
+
+Compile-only uses the unchanged wrapper, not raw cargo test:
+just test -p codex-linux-sandbox --lib --locked --offline --test-threads 2
+  --retries 0 --success-output immediate --failure-output immediate
+  -E 'none()' --no-tests pass
+This avoids --no-run conflicting with the wrapper's --no-fail-fast argument.
+Zero selected tests at compile time are preparation only.
+
+The same ordinary command with exact test(=...) expressions then runs:
+* Instrumented baseline: exactly 2 bodies; expected regression FAIL and control
+  PASS, Nextest exit 100. The first NotFound assertion aborts the regression's
+  loop; this is one observed failing body, not three separate baseline reds.
+* Candidate focus: exactly 2 PASS bodies.
+* Candidate module: exactly 24 PASS bodies, including all 22 existing bodies.
+The expected baseline panic is placeholder_journal_tests.rs:622: with assertion
+failed, bound to the exact failed case's direct JUnit failure/system-out/system-err
+capture AND the campaign log. Unrelated combined text cannot supply the oracle.
+Nextest progress is parsed before Summary with exact binary/name/counts, optional
+validated ordinals, and no duplicate/conflicting execution rows. JUnit independently
+agrees, with no error/skipped/flaky/rerun nodes. All selected logs reject body-skip,
+retry and native-prompt markers. A compile error or missing body is never a red.
+
+EVIDENCE, CLEANUP AND LIMITS
+Each command captures stdout, stderr and combined output under a 64 MiB aggregate
+capture limit. Selected synthetic-user raw logs and original JUnit are audited
+for secret/owner-private path/environment-dump patterns before publication, then
+retained byte-for-byte alongside normalized copies. Synthetic /tmp paths are
+public campaign paths. Original/normalized hashes and byte counts are recorded.
+JUnit is retained before outcome classification, including test failures; any
+retention failure blocks qualification. No raw environment dump, controller
+startup stack, Cargo cache, user HOME, or bulk runner filesystem is uploaded.
+Unsafe captures are withheld with hash/count evidence and qualification held.
+
+The host stages evidence outside artifact globs, audits types/content/selected
+raw paths, and only copies safe files to upload. Separate artifacts preserve
+exact ELF qualification executables for baseline and candidate; both artifacts
+are retained 14 days. Longer retention requires explicit later preservation.
+Signed-package setup logs are normalized; runner startup diagnostics are hashes
+and byte counts only. Other raw/cache/source files survive only until VM disposal.
+
+Each phase reaps direct children and exclusive-UID descendants. Cleanup errors
+are separate from the original failure and block qualification. Synthetic HOME
+and scratch are removed only after confirmed process absence. The host finally
+reconciles the owned UID even after worker failure and preserves safe receipts
+when cleanup, export, or result parsing fails. An unwritable filesystem receives
+only a small safe stdout fallback, never a raw exception or stack. No unsafe
+staging files are in upload paths. No shared runner stores are deleted.
+
+pure_controls.py contains only synthetic offline parser, archive, retention,
+deadline and injected-error checks. Passing those controls is method evidence,
+not Rust compilation or product-test evidence.

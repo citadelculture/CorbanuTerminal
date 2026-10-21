@@ -1,0 +1,7 @@
+{
+  "approved": true,
+  "packetManifestSha256": "8730182e0bc8096c444638f2fa9c083ffeb1d805a9e2de74730ee959188bc51f",
+  "reason": "Root admits this exact independently reviewed one-shot ordinary Linux library campaign under the owner standing Tasknode consent. Public-safe source and synthetic evidence only; actual product qualification remains pending. Normal publication review still applies.",
+  "reviewReceiptSha256": "694216a624e8ac883f8d99a8b48b44c28f35ba7bb839b67003e93ea03f219673",
+  "schema": "issue1056-exact-packet-admission-v1"
+}

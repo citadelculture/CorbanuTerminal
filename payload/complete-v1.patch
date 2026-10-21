@@ -1,0 +1,132 @@
+diff --git a/codex-rs/linux-sandbox/src/placeholder_journal.rs b/codex-rs/linux-sandbox/src/placeholder_journal.rs
+--- a/codex-rs/linux-sandbox/src/placeholder_journal.rs
++++ b/codex-rs/linux-sandbox/src/placeholder_journal.rs
+@@ -567,29 +567,39 @@
+ /// The mount points in the mount namespaces of this user's processes, or
+ /// `None` when they cannot all be read.
+ fn mount_points() -> Option<HashSet<Vec<u8>>> {
+-    let processes = std::fs::read_dir("/proc").ok()?;
++    mount_points_for_processes(
++        std::fs::read_dir("/proc")
++            .ok()?
++            .flatten()
++            .map(|process| process.path()),
++        |path| std::fs::read(path),
++    )
++}
++
++fn mount_points_for_processes(
++    processes: impl Iterator<Item = PathBuf>,
++    mut read_mountinfo: impl FnMut(&Path) -> io::Result<Vec<u8>>,
++) -> Option<HashSet<Vec<u8>>> {
+     // SAFETY: `geteuid` has no preconditions.
+     let euid = unsafe { libc::geteuid() };
+     let mut seen = HashSet::new();
+     let mut points = HashSet::new();
+-    for process in processes.flatten() {
+-        if !process
++    for dir in processes {
++        if !dir
+             .file_name()
+-            .to_str()
++            .and_then(|name| name.to_str())
+             .is_some_and(|name| name.bytes().all(|byte| byte.is_ascii_digit()))
+         {
+             continue;
+         }
+-        let dir = process.path();
+         if !std::fs::metadata(&dir).is_ok_and(|metadata| metadata.uid() == euid) {
+             continue;
+         }
+-        if let Ok(namespace) = std::fs::read_link(dir.join("ns/mnt"))
+-            && !seen.insert(namespace)
+-        {
++        let namespace = std::fs::read_link(dir.join("ns/mnt")).ok();
++        if namespace.as_ref().is_some_and(|key| seen.contains(key)) {
+             continue;
+         }
+-        let mounts = match std::fs::read(dir.join("mountinfo")) {
++        let mounts = match read_mountinfo(&dir.join("mountinfo")) {
+             Ok(mounts) => mounts,
+             // The process has ended, or is ending (no mount namespace any
+             // more: `EINVAL`, as for a zombie).
+@@ -601,6 +611,11 @@
+             }
+             Err(_) => return None,
+         };
++        // A process may exit after its namespace was read. Only a successful
++        // mountinfo read can stand in for the namespace's remaining processes.
++        if let Some(namespace) = namespace {
++            seen.insert(namespace);
++        }
+         points.extend(
+             mounts
+                 .split(|byte| *byte == b'\n')
+diff --git a/codex-rs/linux-sandbox/src/placeholder_journal_tests.rs b/codex-rs/linux-sandbox/src/placeholder_journal_tests.rs
+--- a/codex-rs/linux-sandbox/src/placeholder_journal_tests.rs
++++ b/codex-rs/linux-sandbox/src/placeholder_journal_tests.rs
+@@ -583,6 +583,64 @@
+     assert!(!mounted_anywhere(&[dir.path()]));
+ }
+ 
++fn process_in_mount_namespace(base: &Path, pid: &str) -> PathBuf {
++    let process = base.join(pid);
++    std::fs::create_dir_all(process.join("ns")).expect("process namespace folder");
++    std::os::unix::fs::symlink("mnt:[1]", process.join("ns/mnt")).expect("namespace link");
++    process
++}
++
++#[test]
++fn an_exited_process_does_not_hide_a_later_mount_view() {
++    for error in [
++        io::Error::from(io::ErrorKind::NotFound),
++        io::Error::from_raw_os_error(libc::ESRCH),
++        io::Error::from_raw_os_error(libc::EINVAL),
++    ] {
++        let temp = tempfile::TempDir::new().expect("tempdir");
++        let exited = process_in_mount_namespace(temp.path(), "101");
++        let live = process_in_mount_namespace(temp.path(), "102");
++        let duplicate = process_in_mount_namespace(temp.path(), "103");
++        let exited_mountinfo = exited.join("mountinfo");
++        let live_mountinfo = live.join("mountinfo");
++        let mut exit_error = Some(error);
++        let mut reads = Vec::new();
++
++        let points = mount_points_for_processes([exited, live, duplicate].into_iter(), |path| {
++            reads.push(path.to_path_buf());
++            if path == exited_mountinfo.as_path() {
++                return Err(exit_error.take().expect("first process read once"));
++            }
++            assert_eq!(
++                path,
++                live_mountinfo.as_path(),
++                "a successful view is deduplicated"
++            );
++            Ok(b"1 0 0:1 / /held-mount rw - tmpfs tmpfs rw\n".to_vec())
++        });
++
++        assert_eq!(points, Some(HashSet::from([b"/held-mount".to_vec()])));
++        assert_eq!(reads, vec![exited_mountinfo, live_mountinfo]);
++    }
++}
++
++#[test]
++fn a_mountinfo_read_error_still_fails_closed() {
++    let temp = tempfile::TempDir::new().expect("tempdir");
++    let first = process_in_mount_namespace(temp.path(), "101");
++    let later = process_in_mount_namespace(temp.path(), "102");
++    let expected_read = first.join("mountinfo");
++    let mut reads = Vec::new();
++
++    let points = mount_points_for_processes([first, later].into_iter(), |path| {
++        reads.push(path.to_path_buf());
++        Err(io::Error::from(io::ErrorKind::PermissionDenied))
++    });
++
++    assert_eq!(points, None);
++    assert_eq!(reads, vec![expected_read]);
++}
++
+ #[test]
+ fn a_held_lock_leaves_the_run_without_the_record() {
+     let mut setup = Setup::new();

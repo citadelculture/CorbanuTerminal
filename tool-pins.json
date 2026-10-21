@@ -1,0 +1,278 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-10-21T14:35:44.605568+00:00",
+  "status": "public metadata and static installation preparation only; no tool archives downloaded, installed or executed",
+  "subject_base": "3b56e6952e3e85fc0b940ee319b7a19d344a6ff5",
+  "target": "x86_64-unknown-linux-gnu",
+  "downloads": [
+    {
+      "name": "rustc",
+      "version": "1.99.1",
+      "url": "https://static.rust-lang.org/dist/2026-10-15/rustc-1.99.1-x86_64-unknown-linux-gnu.tar.xz",
+      "sha256": "2ff05ff9c08a90861e7f6e4065b40a8b87463b4576186fd613871c3e37f2091f",
+      "bytes": 84098960,
+      "kind": "rust-component",
+      "root": "rustc-1.99.1-x86_64-unknown-linux-gnu",
+      "installer": "install.sh",
+      "installer_args": [
+        "--prefix={owned_prefix}",
+        "--disable-ldconfig"
+      ],
+      "component_file_must_equal": "rustc",
+      "member": "install.sh",
+      "archive_layout_status": "Expected official installer layout; require root/install.sh and exact components file after digest verification, before installation."
+    },
+    {
+      "name": "rust-std",
+      "version": "1.99.1",
+      "url": "https://static.rust-lang.org/dist/2026-10-15/rust-std-1.99.1-x86_64-unknown-linux-gnu.tar.xz",
+      "sha256": "109b074225bf5b9ea3820890876bfdf4ed161adbfaf94b2b4b5984c85ee5d958",
+      "bytes": 31563228,
+      "kind": "rust-component",
+      "root": "rust-std-1.99.1-x86_64-unknown-linux-gnu",
+      "installer": "install.sh",
+      "installer_args": [
+        "--prefix={owned_prefix}",
+        "--disable-ldconfig"
+      ],
+      "component_file_must_equal": "rust-std-x86_64-unknown-linux-gnu",
+      "member": "install.sh",
+      "archive_layout_status": "Expected official installer layout; require root/install.sh and exact components file after digest verification, before installation."
+    },
+    {
+      "name": "cargo",
+      "version": "1.99.1",
+      "url": "https://static.rust-lang.org/dist/2026-10-15/cargo-1.99.1-x86_64-unknown-linux-gnu.tar.xz",
+      "sha256": "53f3521949404d595efb06a55c12c5658d4ed1c75566f33d3d514eaebe70bd8a",
+      "bytes": 10954816,
+      "kind": "rust-component",
+      "root": "cargo-1.99.1-x86_64-unknown-linux-gnu",
+      "installer": "install.sh",
+      "installer_args": [
+        "--prefix={owned_prefix}",
+        "--disable-ldconfig"
+      ],
+      "component_file_must_equal": "cargo",
+      "member": "install.sh",
+      "archive_layout_status": "Expected official installer layout; require root/install.sh and exact components file after digest verification, before installation."
+    },
+    {
+      "name": "rustfmt-preview",
+      "version": "1.99.1",
+      "url": "https://static.rust-lang.org/dist/2026-10-15/rustfmt-1.99.1-x86_64-unknown-linux-gnu.tar.xz",
+      "sha256": "e3b36c4c7ec3486c059d8067ff48787676612007123aad7a4e8ec12c48ee9ba2",
+      "bytes": 2488800,
+      "kind": "rust-component",
+      "root": "rustfmt-1.99.1-x86_64-unknown-linux-gnu",
+      "installer": "install.sh",
+      "installer_args": [
+        "--prefix={owned_prefix}",
+        "--disable-ldconfig"
+      ],
+      "component_file_must_equal": "rustfmt-preview",
+      "member": "install.sh",
+      "archive_layout_status": "Expected official installer layout; require root/install.sh and exact components file after digest verification, before installation."
+    },
+    {
+      "name": "clippy-preview",
+      "version": "1.99.1",
+      "url": "https://static.rust-lang.org/dist/2026-10-15/clippy-1.99.1-x86_64-unknown-linux-gnu.tar.xz",
+      "sha256": "458339712a058e52cc4522ff9ef8b59cd1ea1340312216cd94194c464a3f6dc5",
+      "bytes": 5254436,
+      "kind": "rust-component",
+      "root": "clippy-1.99.1-x86_64-unknown-linux-gnu",
+      "installer": "install.sh",
+      "installer_args": [
+        "--prefix={owned_prefix}",
+        "--disable-ldconfig"
+      ],
+      "component_file_must_equal": "clippy-preview",
+      "member": "install.sh",
+      "archive_layout_status": "Expected official installer layout; require root/install.sh and exact components file after digest verification, before installation."
+    },
+    {
+      "name": "rust-src",
+      "version": "1.99.1",
+      "url": "https://static.rust-lang.org/dist/2026-10-15/rust-src-1.99.1.tar.xz",
+      "sha256": "e485a88c45db546b73571df7bebfcb4454ba4fb552c492e25fc5b00eeb5bf22d",
+      "bytes": 5863216,
+      "kind": "rust-component",
+      "root": "rust-src-1.99.1",
+      "installer": "install.sh",
+      "installer_args": [
+        "--prefix={owned_prefix}",
+        "--disable-ldconfig"
+      ],
+      "component_file_must_equal": "rust-src",
+      "member": "install.sh",
+      "archive_layout_status": "Expected official installer layout; require root/install.sh and exact components file after digest verification, before installation."
+    },
+    {
+      "name": "just",
+      "version": "1.58.0",
+      "url": "https://github.com/casey/just/releases/download/1.58.0/just-1.58.0-x86_64-unknown-linux-musl.tar.gz",
+      "sha256": "4a5cc2f53e6f0f8c59092a6cc38291eb729d46a7dd95d3ae582008881b84931d",
+      "bytes": 2529009,
+      "kind": "tar",
+      "root": ".",
+      "member": "just",
+      "executable": "just",
+      "archive_layout_status": "Expected member path, not inspected in this metadata-only preparation. After SHA verification and safe extraction, require exactly one matching regular executable basename; record actual relative path and fail on ambiguity.",
+      "release_asset_id": 500509978
+    },
+    {
+      "name": "cargo-nextest",
+      "version": "0.9.146",
+      "url": "https://github.com/nextest-rs/nextest/releases/download/cargo-nextest-0.9.146/cargo-nextest-0.9.146-x86_64-unknown-linux-gnu.tar.gz",
+      "sha256": "682c21b777c333e96fd532e114d3a5a894e0729ab88d94c0a9f20f8419695428",
+      "bytes": 12055550,
+      "kind": "tar",
+      "root": ".",
+      "member": "cargo-nextest",
+      "executable": "cargo-nextest",
+      "archive_layout_status": "Expected member path, not inspected in this metadata-only preparation. After SHA verification and safe extraction, require exactly one matching regular executable basename; record actual relative path and fail on ambiguity.",
+      "release_asset_id": 579609342
+    },
+    {
+      "name": "uv",
+      "version": "0.11.3",
+      "url": "https://github.com/astral-sh/uv/releases/download/0.11.3/uv-x86_64-unknown-linux-gnu.tar.gz",
+      "sha256": "c0f3236f146e55472663cfbcc9be3042a9f1092275bbe3fe2a56a6cbfd3da5ce",
+      "bytes": 23914165,
+      "kind": "tar",
+      "root": "uv-x86_64-unknown-linux-gnu",
+      "member": "uv",
+      "executable": "uv",
+      "archive_layout_status": "Expected member path, not inspected in this metadata-only preparation. After SHA verification and safe extraction, require exactly one matching regular executable basename; record actual relative path and fail on ambiguity.",
+      "release_asset_id": 386561626
+    },
+    {
+      "name": "dotslash",
+      "version": "0.5.9",
+      "url": "https://github.com/facebook/dotslash/releases/download/v0.5.9/dotslash-linux-musl.x86_64.v0.5.9.tar.gz",
+      "sha256": "4c75c6eb7890ae35993b962073f6d9bbe78b42b81a5691303ad70f63bfbf7196",
+      "bytes": 842816,
+      "kind": "tar",
+      "root": ".",
+      "member": "dotslash",
+      "executable": "dotslash",
+      "archive_layout_status": "Expected member path, not inspected in this metadata-only preparation. After SHA verification and safe extraction, require exactly one matching regular executable basename; record actual relative path and fail on ambiguity.",
+      "release_asset_id": 392789557
+    }
+  ],
+  "total_download_bytes": 179564996,
+  "rust_component_download_bytes": 140223456,
+  "formatter_transitive_dependencies": [
+    {
+      "name": "buildifier",
+      "version": "8.5.1",
+      "url": "https://github.com/bazelbuild/buildtools/releases/download/v8.5.1/buildifier-linux-amd64",
+      "sha256": "887377fc64d23a850f4d18a077b5db05b19913f4b99b270d193f3c7334b5a9a7",
+      "bytes": 7757842,
+      "provisioning": "Keep ordinary dotslash tools/buildifier invocation; repository descriptor performs its digest/size verification."
+    },
+    {
+      "name": "ruff",
+      "project": "scripts",
+      "version": "0.15.13",
+      "url": "https://files.pythonhosted.org/packages/e8/31/bf1a0803d077e679cfeee5f2f67290a0fa79c7385b5d9a8c17b9db2c48f0/ruff-0.15.13-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "cc411dfebe5eebe55ce041c6ae080eb7668955e866daa2fbb16692a784f1c4ca",
+      "bytes": 11434486,
+      "provisioning": "Use existing uv run --frozen per project; do not unify the two independently locked versions."
+    },
+    {
+      "name": "ruff",
+      "project": "sdk/python",
+      "version": "0.15.12",
+      "url": "https://files.pythonhosted.org/packages/e8/39/c61d193b8a1daaa8977f7dea9e8d8ba866e02ea7b65d32f6861693aa4c12/ruff-0.15.12-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "83b2f4f2f3b1026b5fb449b467d9264bf22067b600f7b6f41fc5958909f449d0",
+      "bytes": 11344088,
+      "provisioning": "Use existing uv run --frozen per project; do not unify the two independently locked versions."
+    }
+  ],
+  "source_inputs": [
+    {
+      "path": "codex-rs/rust-toolchain.toml",
+      "sha256": "913d7e9d7adcd7abfeb0c4554c39a5a57c3cf84a694bc6a6aeae038a1f6ae33b"
+    },
+    {
+      "path": "justfile",
+      "sha256": "7d668a298669ad859d874755520d3e3114c0cce2786cd4cc1bb22e2dd22e404f"
+    },
+    {
+      "path": "scripts/format.py",
+      "sha256": "d930139145ba3e80a188c1b5734aa7fee6bad5687e610cb58bda016216a2f37d"
+    },
+    {
+      "path": "scripts/pyproject.toml",
+      "sha256": "2c9c022b99b0b576c3b45773a39f8aa6396f044016432e9bb42669554b3bfb78"
+    },
+    {
+      "path": "scripts/uv.lock",
+      "sha256": "6b8e7a82d1a4f4c5d59ce57cf8be472ea031c6fb0a905506258d434132b3c99c"
+    },
+    {
+      "path": "sdk/python/pyproject.toml",
+      "sha256": "be995a21d1761e30295016a77d6d227778558ac68da2d37cdec69685a4691a23"
+    },
+    {
+      "path": "sdk/python/uv.lock",
+      "sha256": "5d289bda71a7a22394a7c42cea17f49e6317d265ed5ed0c9c8bad8f2412e6bbc"
+    },
+    {
+      "path": "tools/buildifier",
+      "sha256": "818bfc01e21fceb0d83ddaf4614531418ea763e25499f7f9fd03c7a853948fe6"
+    }
+  ],
+  "install_contract": {
+    "owned_prefix": "Use a fresh owned absolute prefix, with every Rust component installed into that same prefix in listed order. No sudo, rustup or host-wide configuration.",
+    "rust_command": [
+      "sh",
+      "{extracted_root}/install.sh",
+      "--prefix={owned_prefix}",
+      "--disable-ldconfig"
+    ],
+    "no_docs": "Individual selected component archives contain no rust-docs component. Require their components files to match component_file_must_equal; do not install arbitrary extra components.",
+    "expected_binaries": [
+      "bin/rustc",
+      "bin/rustdoc",
+      "bin/cargo",
+      "bin/rustfmt",
+      "bin/cargo-fmt",
+      "bin/clippy-driver",
+      "bin/cargo-clippy"
+    ],
+    "expected_source": "lib/rustlib/src/rust/library",
+    "explicit_path": "Prepend owned_prefix/bin before all inherited tool paths. Invoke owned_prefix/bin/cargo explicitly. Set RUSTC and RUSTDOC to the installed real binaries and require command lookup of rustc, cargo, rustfmt, cargo-fmt and cargo-clippy to resolve under owned_prefix/bin. Record rustc --print sysroot and actual tool versions before any build.",
+    "archive_safety": "Before executing install.sh, verify exact bytes/SHA, reject absolute or escaping member paths, reject links resolving outside extraction root, and retain internal links only if the safe extractor supports them. Abort on missing/ambiguous expected executable or components. No filename-only fallback bypasses digest checks.",
+    "python": "Ubuntu 24.04 system Python 3.12 satisfies both project >=3.10 requirements; set ordinary formatter launcher to python3 and use that interpreter for uv environments, with no separate Python download.",
+    "native_tests": "No native compilation/execution happened in this prerequisite preparation. Runner must independently prove resolved normal/build closure excludes v8 before compiling; no RustyV8 download is provisioned."
+  },
+  "alternate_full_rust_archive": {
+    "url": "https://static.rust-lang.org/dist/2026-10-15/rust-1.99.1-x86_64-unknown-linux-gnu.tar.xz",
+    "sha256": "231fcae47ee950621374725b5fc3b5441d2fbda2955ac45dd7dc816d8876cfe7",
+    "bytes": 210515736,
+    "not_selected": true,
+    "reason": "Explicit components avoid documentation and unrelated bundled tools. Official dist source includes rustfmt and Clippy in combined installer; rust-src still requires its separate archive."
+  },
+  "official_source_proof": [
+    {
+      "url": "https://github.com/rust-lang/rust/blob/1.99.1/src/bootstrap/src/core/build_steps/dist.rs",
+      "file": "rust-dist-1.99.1.rs",
+      "sha256": "255192cd69adb1bfdb27efb848f08df82d1c332e99b000f70b2ee46d264a686d",
+      "lines": "1185-1195 rust-src installation path; 1547-1560 Clippy binaries; 1822-1831 rustfmt and cargo-fmt; 1868-1927 combined installer"
+    },
+    {
+      "url": "https://github.com/rust-lang/rust/blob/1.99.1/src/tools/rust-installer/install-template.sh",
+      "file": "rust-install-template-1.99.1.sh",
+      "sha256": "a7e58d6671dcf7aa3593dcecbf96b49d006b9ef5cce1440d2d6709ea443c1e1d",
+      "lines": "789-813 prefix, component and ldconfig options; 865-934 component validation"
+    }
+  ],
+  "remaining_runtime_gates": [
+    "Archive digests, sizes and member/component layout must be checked after approved downloads; no archive layout or installed version is claimed executed here.",
+    "Fresh owned prefix must resolve all Rust commands to installed binaries, avoiding rustup shims.",
+    "Main runner must prove selected ordinary target dependency closure excludes v8 before compilation.",
+    "Ordinary full formatter must retain source hashes; any source delta prevents qualifying unchanged candidate."
+  ]
+}

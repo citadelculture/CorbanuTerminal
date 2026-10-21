@@ -1,0 +1,191 @@
+{
+  "base": "3b56e6952e3e85fc0b940ee319b7a19d344a6ff5",
+  "baselineFailureLocation": "placeholder_journal_tests.rs:622:",
+  "candidateFormatterAlreadyPassed": true,
+  "expectedBaselineFailure": "placeholder_journal::tests::an_exited_process_does_not_hide_a_later_mount_view",
+  "focusedCases": [
+    "placeholder_journal::tests::an_exited_process_does_not_hide_a_later_mount_view",
+    "placeholder_journal::tests::a_mountinfo_read_error_still_fails_closed"
+  ],
+  "fullModuleCases": [
+    "placeholder_journal::tests::a_record_round_trips_and_one_not_written_by_this_version_is_not_read",
+    "placeholder_journal::tests::a_run_is_live_until_it_ends_its_boot_ends_or_its_pid_is_reused",
+    "placeholder_journal::tests::a_placeholder_a_run_made_and_left_is_removed",
+    "placeholder_journal::tests::a_persons_own_empty_read_only_file_at_that_path_is_kept",
+    "placeholder_journal::tests::a_placeholder_filled_replaced_or_changed_since_is_kept",
+    "placeholder_journal::tests::a_placeholder_a_live_run_uses_is_kept_until_it_ends",
+    "placeholder_journal::tests::a_pending_placeholder_is_never_removed",
+    "placeholder_journal::tests::removal_does_not_follow_a_link_above_the_placeholder",
+    "placeholder_journal::tests::a_run_records_and_makes_its_placeholders_then_finishes",
+    "placeholder_journal::tests::a_record_folder_of_another_kind_is_not_used",
+    "placeholder_journal::tests::an_unreadable_record_of_a_live_run_keeps_every_placeholder",
+    "placeholder_journal::tests::a_mount_point_in_any_of_this_users_namespaces_is_found",
+    "placeholder_journal::tests::an_exited_process_does_not_hide_a_later_mount_view",
+    "placeholder_journal::tests::a_mountinfo_read_error_still_fails_closed",
+    "placeholder_journal::tests::a_held_lock_leaves_the_run_without_the_record",
+    "placeholder_journal::tests::the_record_folder_is_found_through_another_path_to_it",
+    "placeholder_journal::tests::a_placeholder_folder_holding_another_of_the_runs_placeholders_is_removed",
+    "placeholder_journal::tests::a_read_only_record_folder_keeps_no_record",
+    "placeholder_journal::tests::a_path_another_run_made_is_recorded_as_used_and_nothing_else",
+    "placeholder_journal::tests::a_child_of_a_pending_placeholder_folder_is_recorded_as_used",
+    "placeholder_journal::tests::a_path_another_run_was_about_to_make_is_recorded_as_used",
+    "placeholder_journal::tests::a_changed_placeholder_stays_recorded_after_the_run",
+    "placeholder_journal::tests::another_runs_recorded_placeholder_is_named_as_one",
+    "placeholder_journal::tests::a_replaced_or_changed_placeholder_is_recorded_otherwise"
+  ],
+  "inputs": {
+    ".codex/skills/corbanu-terminal-development/SKILL.md": {
+      "bytes": 2352,
+      "sha256": "aae866dc7c03ef742e61dac57413de9b194b28fb1051471939eb1c85bd10c9c8"
+    },
+    "AGENTS.md": {
+      "bytes": 25763,
+      "sha256": "4b6aa2003bb1b01c3313f1155e3e5e35516ec217da794d3bf3920ed483bbe608"
+    },
+    "codex-rs/.cargo/config.toml": {
+      "bytes": 634,
+      "sha256": "b8ae1cea341beb2d4a3c8fb81f97a96f4aee1fd53f769c57f140dfe949806a80"
+    },
+    "codex-rs/.config/nextest.toml": {
+      "bytes": 5257,
+      "sha256": "830c64fd157ef4bb618626c4f7aaf3de986b488289eb28ed352ff0a21e29c110"
+    },
+    "codex-rs/AGENTS.md": {
+      "bytes": 11769,
+      "sha256": "8770b8bde8ddaf5f404090afb3f2251aca06bca5cfc5707ec42ae3a7490ce47a"
+    },
+    "codex-rs/Cargo.lock": {
+      "bytes": 394669,
+      "sha256": "9bf3331a78a43b8d7489875db26d199d97f018f0e78cefefa928d09a306478bb"
+    },
+    "codex-rs/Cargo.toml": {
+      "bytes": 22426,
+      "sha256": "3184d6b3a34c0e311a052c7bb7094809ae64364a7efd586e557e33a0544a2666"
+    },
+    "codex-rs/code-mode/Cargo.toml": {
+      "bytes": 813,
+      "sha256": "e94b40d7541baf4fc372529d8cfa72a506e55799f42e17969b8ef314d530ccbe"
+    },
+    "codex-rs/core/Cargo.toml": {
+      "bytes": 7213,
+      "sha256": "9f1dbf31a50915de436cc0c37c2ab905ce920051285f4919aae9970ab3848a9f"
+    },
+    "codex-rs/linux-sandbox/Cargo.toml": {
+      "bytes": 1142,
+      "sha256": "7d95a666464513755f4512ccd1b8cabbc23ca4d8a60017efd37069603aebf2ae"
+    },
+    "codex-rs/linux-sandbox/build.rs": {
+      "bytes": 77,
+      "sha256": "9a58f252be8ae4baabc9ebc1db9f9923d1a9345cd44bce3ce7b76c94942743bb"
+    },
+    "codex-rs/linux-sandbox/src/lib.rs": {
+      "bytes": 997,
+      "sha256": "0cab886ecbfa1c3c3cba053e2fd4938eb7c502107481efcebb5dacdb0733c8dd"
+    },
+    "codex-rs/rust-toolchain.toml": {
+      "bytes": 78,
+      "sha256": "913d7e9d7adcd7abfeb0c4554c39a5a57c3cf84a694bc6a6aeae038a1f6ae33b"
+    },
+    "docs/corbanu-product-spec.md": {
+      "bytes": 59230,
+      "sha256": "5075bb5cc6f6ddf55f0592df7083531f68e82737b4d0446cc6891c77ff34ec7d"
+    },
+    "docs/development/test-isolation.md": {
+      "bytes": 4289,
+      "sha256": "1a5c54c42d74e08c2a98ea6fc8217e05e15c43b2f6b40f679c6388090514cfd0"
+    },
+    "justfile": {
+      "bytes": 7465,
+      "sha256": "7d668a298669ad859d874755520d3e3114c0cce2786cd4cc1bb22e2dd22e404f"
+    },
+    "scripts/format.py": {
+      "bytes": 6057,
+      "sha256": "d930139145ba3e80a188c1b5734aa7fee6bad5687e610cb58bda016216a2f37d"
+    },
+    "scripts/isolated_rust_tests.py": {
+      "bytes": 6645,
+      "sha256": "2376d36fae0943cbbf4a0caf58109b0dece03cb226983d1276216adc90d2447c"
+    },
+    "scripts/just-shell.py": {
+      "bytes": 2030,
+      "sha256": "444d6b328d44abf6453b77b6acce2a0c881fc162ff30b20f352c85067797fbe9"
+    },
+    "scripts/pyproject.toml": {
+      "bytes": 442,
+      "sha256": "2c9c022b99b0b576c3b45773a39f8aa6396f044016432e9bb42669554b3bfb78"
+    },
+    "scripts/uv.lock": {
+      "bytes": 6220,
+      "sha256": "6b8e7a82d1a4f4c5d59ce57cf8be472ea031c6fb0a905506258d434132b3c99c"
+    },
+    "sdk/python/pyproject.toml": {
+      "bytes": 1831,
+      "sha256": "be995a21d1761e30295016a77d6d227778558ac68da2d37cdec69685a4691a23"
+    },
+    "sdk/python/uv.lock": {
+      "bytes": 140708,
+      "sha256": "5d289bda71a7a22394a7c42cea17f49e6317d265ed5ed0c9c8bad8f2412e6bbc"
+    },
+    "tools/buildifier": {
+      "bytes": 2172,
+      "sha256": "818bfc01e21fceb0d83ddaf4614531418ea763e25499f7f9fd03c7a853948fe6"
+    }
+  },
+  "instrumentedBaselineIsNotUnmodifiedBase": true,
+  "patches": {
+    "baseline-to-candidate-v1.patch": {
+      "bytes": 1160,
+      "sha256": "76edb087b861062f48a20074946356cd10cdfacd5679c843c3d521b30b4933ec"
+    },
+    "complete-v1.patch": {
+      "bytes": 5279,
+      "sha256": "f4250d14037bb871cbf1e31661e85e3f82fd083ad5ef52283831a0da00bee700"
+    },
+    "instrumented-baseline-v1.patch": {
+      "bytes": 4618,
+      "sha256": "78606c0d05d72169335a2c31388a17807f24cb1769370b8dad4bc5fc06f799d7"
+    }
+  },
+  "publicCargoSources": [
+    "git+https://github.com/dzbarsky/rules_rust?rev=b56cbaa8465e74127f1ea216f813cd377295ad81#b56cbaa8465e74127f1ea216f813cd377295ad81",
+    "git+https://github.com/helix-editor/nucleo.git?rev=4253de9faabb4e5c6d81d946a5e35a90f87347ee#4253de9faabb4e5c6d81d946a5e35a90f87347ee",
+    "git+https://github.com/openai-oss-forks/crossterm?rev=f69a4a0499f2fdc7d5d222df32373ffffe9ba3f5#f69a4a0499f2fdc7d5d222df32373ffffe9ba3f5",
+    "git+https://github.com/openai-oss-forks/tokio-tungstenite?rev=0e5b2d73aa18dd9f0a50ee9ff199d5aef7594186#0e5b2d73aa18dd9f0a50ee9ff199d5aef7594186",
+    "git+https://github.com/openai-oss-forks/tungstenite-rs?rev=4fffad30fe373adbdcffab9545e9e9bf4f2fc19f#4fffad30fe373adbdcffab9545e9e9bf4f2fc19f",
+    "registry+https://github.com/rust-lang/crates.io-index"
+  ],
+  "repository": "CorbanuCore/CorbanuTerminal",
+  "schema": "issue1056-source-pins-v1",
+  "trees": {
+    "candidate-v1": {
+      "codex-rs/linux-sandbox/src/placeholder_journal.rs": {
+        "bytes": 55992,
+        "sha256": "8551cc8ab385ee3ae99dc8add9da36e3ac630c089a0003d3f73511d9ed80e98c"
+      },
+      "codex-rs/linux-sandbox/src/placeholder_journal_tests.rs": {
+        "bytes": 34307,
+        "sha256": "584cb0c50fbdf0425f0da8019683bc1a5e3250c67580e8a339d7dadeacc92bba"
+      }
+    },
+    "instrumented-baseline-v1": {
+      "codex-rs/linux-sandbox/src/placeholder_journal.rs": {
+        "bytes": 55723,
+        "sha256": "814a761e22e72dea6206786306d6130a0b0e070ea0f19750faa1fac9ffcf769e"
+      },
+      "codex-rs/linux-sandbox/src/placeholder_journal_tests.rs": {
+        "bytes": 34307,
+        "sha256": "584cb0c50fbdf0425f0da8019683bc1a5e3250c67580e8a339d7dadeacc92bba"
+      }
+    },
+    "source-main": {
+      "codex-rs/linux-sandbox/src/placeholder_journal.rs": {
+        "bytes": 55432,
+        "sha256": "3fb374f0f91a7a2b425b0218d2d18f23a6994969a76feebbe996b777560e32e5"
+      },
+      "codex-rs/linux-sandbox/src/placeholder_journal_tests.rs": {
+        "bytes": 32035,
+        "sha256": "2a5adf126dc5589aec4cc316fb613f0837c9297e828397226a4b8ba531d8bdcb"
+      }
+    }
+  }
+}

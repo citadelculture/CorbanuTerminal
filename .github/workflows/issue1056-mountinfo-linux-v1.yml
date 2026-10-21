@@ -1,0 +1,52 @@
+name: Issue1056 mountinfo Linux v1
+on:
+  push:
+    branches: [codex/issue1056-mountinfo-linux-v1-20261021]
+permissions:
+  contents: read
+concurrency:
+  group: issue1056-mountinfo-linux-v1
+  cancel-in-progress: false
+jobs:
+  qualify:
+    if: github.repository == 'citadelculture/CorbanuTerminal'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 160
+    steps:
+      - name: Checkout exact control commit
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          path: control
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Checkout pinned public source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: CorbanuCore/CorbanuTerminal
+          ref: 3b56e6952e3e85fc0b940ee319b7a19d344a6ff5
+          path: upstream
+          persist-credentials: false
+          fetch-depth: 1
+      - name: One-shot admitted ordinary debug campaign
+        shell: bash
+        run: python3 -I -B control/launch.py
+      - name: Preserve normalized evidence on every outcome
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: issue1056-linux-v1-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            issue1056-evidence/**
+            !issue1056-evidence/binaries/**
+          if-no-files-found: warn
+          retention-days: 14
+          compression-level: 6
+      - name: Preserve exact qualification executables
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: issue1056-linux-v1-binaries-${{ github.run_id }}-${{ github.run_attempt }}
+          path: issue1056-evidence/binaries/**
+          if-no-files-found: warn
+          retention-days: 14
+          compression-level: 0

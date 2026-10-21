@@ -1,0 +1,71 @@
+{
+  "excludes": [
+    "packet-manifest.json",
+    "admission.json"
+  ],
+  "files": [
+    {
+      "bytes": 1864,
+      "path": ".github/workflows/issue1056-mountinfo-linux-v1.yml",
+      "sha256": "86f7e84d491c8f14d4b949c9458315f3d8aaf5e0d5f3729bc06d6d26f37e0e66"
+    },
+    {
+      "bytes": 8473,
+      "path": "METHOD.txt",
+      "sha256": "43975ff8ab7ea7f983593d2ee01a2707b1c05c2e7abb2906bfe398d6ca6ea7ae"
+    },
+    {
+      "bytes": 5698,
+      "path": "evidence.py",
+      "sha256": "57c5f546d83116e91ec61c4565f2dd0e7ab9073b97fe01413ec05fc532d0042b"
+    },
+    {
+      "bytes": 15427,
+      "path": "host.py",
+      "sha256": "4600e93d6fde1e9ff921ffa7bad1dc85c1319ba3a6353c7ad62a58880575483d"
+    },
+    {
+      "bytes": 237,
+      "path": "launch.py",
+      "sha256": "6d0e62182419ed1cffb9cacd5406061bd3f8b96c03d62fd9a5f651fc5e02b0cd"
+    },
+    {
+      "bytes": 1160,
+      "path": "payload/baseline-to-candidate-v1.patch",
+      "sha256": "76edb087b861062f48a20074946356cd10cdfacd5679c843c3d521b30b4933ec"
+    },
+    {
+      "bytes": 5279,
+      "path": "payload/complete-v1.patch",
+      "sha256": "f4250d14037bb871cbf1e31661e85e3f82fd083ad5ef52283831a0da00bee700"
+    },
+    {
+      "bytes": 4618,
+      "path": "payload/instrumented-baseline-v1.patch",
+      "sha256": "78606c0d05d72169335a2c31388a17807f24cb1769370b8dad4bc5fc06f799d7"
+    },
+    {
+      "bytes": 22234,
+      "path": "pure_controls.py",
+      "sha256": "8beab77a74ffe653bba86ca268f2a36562228973b6fb68a2e2ba3f77a9e6149c"
+    },
+    {
+      "bytes": 8735,
+      "path": "source-pins.json",
+      "sha256": "04baa205df49cb44bc1cc28ba476ef3454aa2f9551d84c3d47ce5401ace86f51"
+    },
+    {
+      "bytes": 13929,
+      "path": "tool-pins.json",
+      "sha256": "e8f80be86816a2d354184c3376b315cc7dbb34886d79ae7e7562880c97050392"
+    },
+    {
+      "bytes": 29265,
+      "path": "worker.py",
+      "sha256": "27a13f8692ede25526de9ac961b2820f297f0f154b5bca312d7dfb8b8c623dc3"
+    }
+  ],
+  "qualified": false,
+  "schema": "issue1056-public-packet-manifest-v1",
+  "sourceBase": "3b56e6952e3e85fc0b940ee319b7a19d344a6ff5"
+}
