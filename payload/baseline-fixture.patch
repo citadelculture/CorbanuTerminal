@@ -1,0 +1,267 @@
+diff --git a/codex-rs/core/src/agent/control_tests.rs b/codex-rs/core/src/agent/control_tests.rs
+index ddb5e6d916471e308243a21aca357ac6f003b3f6..91f3e9e25f84ef5946cfc9e3aa4216ff272b3de3 100644
+--- a/codex-rs/core/src/agent/control_tests.rs
++++ b/codex-rs/core/src/agent/control_tests.rs
+@@ -5839,3 +5839,30 @@ async fn pf_30_s02_child_result_reaches_the_parent_as_agent_data() {
+         ))
+     );
+ }
++
++/// The returned guard owns the cwd for every consumer after helper return (#1157).
++#[tokio::test]
++async fn issue_1157_agent_config_keeps_the_owned_working_folder() {
++    let (home, config) = test_config().await;
++    assert_eq!(
++        config.cwd.as_path(),
++        home.path(),
++        "returned config must use the owned working folder"
++    );
++    let cwd = config.cwd.to_path_buf();
++    std::fs::write(cwd.join("after-return"), "owned").expect("cwd survives helper return");
++    assert_eq!(
++        std::fs::read_to_string(cwd.join("after-return")).unwrap(),
++        "owned"
++    );
++    drop(config);
++    assert!(
++        cwd.exists(),
++        "the returned owner still holds the working folder"
++    );
++    drop(home);
++    assert!(
++        !cwd.exists(),
++        "the returned owner cleans up the working folder"
++    );
++}
+diff --git a/codex-rs/core/src/agents_md_tests.rs b/codex-rs/core/src/agents_md_tests.rs
+index 8bb628d9da7fcfdfa0e048d87471c5573b776535..cd939b09518eb51fecda6997c51f3856e4d3b99a 100644
+--- a/codex-rs/core/src/agents_md_tests.rs
++++ b/codex-rs/core/src/agents_md_tests.rs
+@@ -1636,3 +1636,157 @@ fn create_skill(codex_home: PathBuf, name: &str, description: &str) {
+     let content = format!("---\nname: {name}\ndescription: {description}\n---\n\n# Body\n");
+     fs::write(skill_dir.join("SKILL.md"), content).unwrap();
+ }
++
++/// The loader must see the fixture cwd, not only a Config.cwd reassignment
++/// after it has already inspected the process working folder (#1157).
++#[tokio::test]
++async fn issue_1157_default_helper_loads_the_owned_working_folder() {
++    let root = TempDir::new().expect("working folder");
++    let project = root.path().join(".codex");
++    fs::create_dir(&project).expect("project folder");
++    fs::write(project.join("config.toml"), "model = \"fixture-model\"\n").expect("project config");
++    let config = make_config(&root, /*limit*/ 1024, /*instructions*/ None).await;
++    let project = AbsolutePathBuf::from_absolute_path(project).expect("absolute project folder");
++    let layer = config
++        .config_layer_stack
++        .get_layers(
++            codex_config::ConfigLayerStackOrdering::HighestPrecedenceFirst,
++            /*include_disabled*/ true,
++        )
++        .into_iter()
++        .find(|layer| {
++            matches!(&layer.name, ConfigLayerSource::Project { dot_codex_folder } if dot_codex_folder == &project)
++        });
++    assert!(
++        layer.is_some(),
++        "the loader must inspect the owned working folder"
++    );
++    let layer = layer.expect("checked inspected project layer");
++    assert!(
++        layer.is_disabled(),
++        "the inspected project remains untrusted"
++    );
++    assert!(
++        layer
++            .disabled_reason
++            .as_deref()
++            .is_some_and(|reason| !reason.is_empty()),
++        "the inspected project has a reason for remaining disabled"
++    );
++    assert_eq!(
++        layer.config.get("model").and_then(TomlValue::as_str),
++        Some("fixture-model")
++    );
++    assert_ne!(
++        config
++            .config_layer_stack
++            .effective_config()
++            .get("model")
++            .and_then(TomlValue::as_str),
++        Some("fixture-model"),
++        "inspecting an untrusted project must not apply its model"
++    );
++    assert_eq!(config.cwd, root.abs());
++    let cwd = root.path().to_path_buf();
++    fs::write(cwd.join("after-return"), "owned").expect("cwd survives helper return");
++    assert_eq!(
++        fs::read_to_string(cwd.join("after-return")).unwrap(),
++        "owned"
++    );
++    let home = config.codex_home.to_path_buf();
++    fs::write(home.join("after-return"), "owned").expect("config home survives helper return");
++    assert_eq!(
++        fs::read_to_string(home.join("after-return")).unwrap(),
++        "owned"
++    );
++    drop(config);
++    assert!(
++        !home.exists(),
++        "the fixture-owned config home is cleaned up"
++    );
++    drop(root);
++    assert!(
++        !cwd.exists(),
++        "the caller-owned working folder is cleaned up"
++    );
++}
++
++/// The loader must see the fixture cwd, not only a Config.cwd reassignment
++/// after it has already inspected the process working folder (#1157).
++#[tokio::test]
++async fn issue_1157_project_markers_helper_loads_the_owned_working_folder() {
++    let root = TempDir::new().expect("working folder");
++    let project = root.path().join(".codex");
++    fs::create_dir(&project).expect("project folder");
++    fs::write(project.join("config.toml"), "model = \"fixture-model\"\n").expect("project config");
++    let config = make_config_with_project_root_markers(
++        &root,
++        /*limit*/ 1024,
++        /*instructions*/ None,
++        &[".fixture-root"],
++    )
++    .await;
++    let project = AbsolutePathBuf::from_absolute_path(project).expect("absolute project folder");
++    let layer = config
++        .config_layer_stack
++        .get_layers(
++            codex_config::ConfigLayerStackOrdering::HighestPrecedenceFirst,
++            /*include_disabled*/ true,
++        )
++        .into_iter()
++        .find(|layer| {
++            matches!(&layer.name, ConfigLayerSource::Project { dot_codex_folder } if dot_codex_folder == &project)
++        });
++    assert!(
++        layer.is_some(),
++        "the loader must inspect the owned working folder"
++    );
++    let layer = layer.expect("checked inspected project layer");
++    assert!(
++        layer.is_disabled(),
++        "the inspected project remains untrusted"
++    );
++    assert!(
++        layer
++            .disabled_reason
++            .as_deref()
++            .is_some_and(|reason| !reason.is_empty()),
++        "the inspected project has a reason for remaining disabled"
++    );
++    assert_eq!(
++        layer.config.get("model").and_then(TomlValue::as_str),
++        Some("fixture-model")
++    );
++    assert_ne!(
++        config
++            .config_layer_stack
++            .effective_config()
++            .get("model")
++            .and_then(TomlValue::as_str),
++        Some("fixture-model"),
++        "inspecting an untrusted project must not apply its model"
++    );
++    assert_eq!(config.cwd, root.abs());
++    let cwd = root.path().to_path_buf();
++    fs::write(cwd.join("after-return"), "owned").expect("cwd survives helper return");
++    assert_eq!(
++        fs::read_to_string(cwd.join("after-return")).unwrap(),
++        "owned"
++    );
++    let home = config.codex_home.to_path_buf();
++    fs::write(home.join("after-return"), "owned").expect("config home survives helper return");
++    assert_eq!(
++        fs::read_to_string(home.join("after-return")).unwrap(),
++        "owned"
++    );
++    drop(config);
++    assert!(
++        !home.exists(),
++        "the fixture-owned config home is cleaned up"
++    );
++    drop(root);
++    assert!(
++        !cwd.exists(),
++        "the caller-owned working folder is cleaned up"
++    );
++}
+diff --git a/codex-rs/core/src/exec_policy_tests.rs b/codex-rs/core/src/exec_policy_tests.rs
+index 2ad65dc3554e3d90755c0b53a76c0df1423f171b..6eea2116d5092a1e37e0a5704ef3e89ef851f0a0 100644
+--- a/codex-rs/core/src/exec_policy_tests.rs
++++ b/codex-rs/core/src/exec_policy_tests.rs
+@@ -2990,3 +2990,30 @@ prefix_rule(pattern=["python3", "src/notes.py", "list"], decision="allow")
+     )
+     .await;
+ }
++
++/// The returned guard owns the cwd for every consumer after helper return (#1157).
++#[tokio::test]
++async fn issue_1157_exec_policy_config_keeps_the_owned_working_folder() {
++    let (home, config) = test_config().await;
++    assert_eq!(
++        config.cwd.as_path(),
++        home.path(),
++        "returned config must use the owned working folder"
++    );
++    let cwd = config.cwd.to_path_buf();
++    std::fs::write(cwd.join("after-return"), "owned").expect("cwd survives helper return");
++    assert_eq!(
++        std::fs::read_to_string(cwd.join("after-return")).unwrap(),
++        "owned"
++    );
++    drop(config);
++    assert!(
++        cwd.exists(),
++        "the returned owner still holds the working folder"
++    );
++    drop(home);
++    assert!(
++        !cwd.exists(),
++        "the returned owner cleans up the working folder"
++    );
++}
+diff --git a/codex-rs/core/src/security/refusal_notice_tests.rs b/codex-rs/core/src/security/refusal_notice_tests.rs
+index 72532e06ef89b5ff5865293e28239c8c720b778b..2f582eb8dab8357cfb3af9b76857616e94759ef7 100644
+--- a/codex-rs/core/src/security/refusal_notice_tests.rs
++++ b/codex-rs/core/src/security/refusal_notice_tests.rs
+@@ -167,3 +167,30 @@ fn sec_439_aggressive_instructions_name_web_search_and_the_way_forward() {
+         assert!(AGGRESSIVE_INSTRUCTIONS.contains(expected), "{expected}");
+     }
+ }
++
++/// The returned guard owns the cwd for every consumer after helper return (#1157).
++#[tokio::test]
++async fn issue_1157_refusal_config_keeps_the_owned_working_folder() {
++    let (home, config) = config(/*marker*/ false).await;
++    assert_eq!(
++        config.cwd.as_path(),
++        home.path(),
++        "returned config must use the owned working folder"
++    );
++    let cwd = config.cwd.to_path_buf();
++    std::fs::write(cwd.join("after-return"), "owned").expect("cwd survives helper return");
++    assert_eq!(
++        std::fs::read_to_string(cwd.join("after-return")).unwrap(),
++        "owned"
++    );
++    drop(config);
++    assert!(
++        cwd.exists(),
++        "the returned owner still holds the working folder"
++    );
++    drop(home);
++    assert!(
++        !cwd.exists(),
++        "the returned owner cleans up the working folder"
++    );
++}

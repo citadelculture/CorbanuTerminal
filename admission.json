@@ -1,0 +1,9 @@
+{
+  "schema": "issue1157-hosted-admission-v2",
+  "approved": true,
+  "controllerSha256": "95c91800a207df4514cd26f8a099f4f460642fb41c9dcc1dbeb27cc12b0124b4",
+  "sourceManifestSha256": "757f699604be3f9cf7fb92807b0866c8177c65c6f12e6306f5b25af721c45303",
+  "toolsPinsSha256": "8aa14923376208d0349a009cb30eb88341e487a0afd20d55deddf806f330fea2",
+  "workflowSha256": "58976b9255639e18a52c3c6b9b216015c6110c156757bc8dce0e2e1a195e3322",
+  "status": "FINAL_RECOVERY_SOURCE_BOUND_PENDING_METHOD_REVIEW_ROOT_ADMISSION"
+}
