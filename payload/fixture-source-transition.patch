@@ -1,0 +1,392 @@
+diff --git a/codex-rs/core/src/agent/control_tests.rs b/codex-rs/core/src/agent/control_tests.rs
+index 91f3e9e25f84ef5946cfc9e3aa4216ff272b3de3..18b809207df985d00e0293dc2bd91bf21c941875 100644
+--- a/codex-rs/core/src/agent/control_tests.rs
++++ b/codex-rs/core/src/agent/control_tests.rs
+@@ -79,6 +79,10 @@ async fn test_config_with_cli_overrides(
+     }
+     let config = ConfigBuilder::without_managed_config_for_tests()
+         .codex_home(home.path().to_path_buf())
++        .harness_overrides(crate::config::ConfigOverrides {
++            cwd: Some(home.path().to_path_buf()),
++            ..Default::default()
++        })
+         .cli_overrides(cli_overrides)
+         .build()
+         .await
+@@ -210,11 +214,11 @@ fn spawn_agent_call(call_id: &str) -> ResponseItem {
+ }
+ 
+ struct AgentControlHarness {
+-    _home: TempDir,
+     config: Config,
+     state_db: Option<StateDbHandle>,
+     manager: ThreadManager,
+     control: AgentControl,
++    _home: TempDir,
+ }
+ 
+ impl AgentControlHarness {
+diff --git a/codex-rs/core/src/agents_md_tests.rs b/codex-rs/core/src/agents_md_tests.rs
+index d54b688b8ad2304eb00daf9c858c0fc76ae39808..6f4e4e349aa6843e7803cc6eb3bf8624f69545d1 100644
+--- a/codex-rs/core/src/agents_md_tests.rs
++++ b/codex-rs/core/src/agents_md_tests.rs
+@@ -281,6 +281,7 @@ impl ExecutorFileSystem for FailingFileSystem {
+ struct TestConfig {
+     config: Config,
+     user_instructions: Option<UserInstructions>,
++    _codex_home: TempDir,
+ }
+ 
+ impl Deref for TestConfig {
+@@ -449,11 +450,14 @@ async fn make_config(root: &TempDir, limit: usize, instructions: Option<&str>) -
+     let codex_home = TempDir::new().unwrap();
+     let mut config = ConfigBuilder::default()
+         .codex_home(codex_home.path().to_path_buf())
++        .harness_overrides(crate::config::ConfigOverrides {
++            cwd: Some(root.path().to_path_buf()),
++            ..Default::default()
++        })
+         .build()
+         .await
+         .expect("defaults for test should always succeed");
+ 
+-    config.cwd = root.abs();
+     config.project_doc_max_bytes = limit;
+ 
+     let user_instructions = instructions.map(|text| UserInstructions {
+@@ -463,6 +467,7 @@ async fn make_config(root: &TempDir, limit: usize, instructions: Option<&str>) -
+     TestConfig {
+         config,
+         user_instructions,
++        _codex_home: codex_home,
+     }
+ }
+ 
+@@ -498,12 +503,15 @@ async fn make_config_with_project_root_markers(
+     )];
+     let mut config = ConfigBuilder::default()
+         .codex_home(codex_home.path().to_path_buf())
++        .harness_overrides(crate::config::ConfigOverrides {
++            cwd: Some(root.path().to_path_buf()),
++            ..Default::default()
++        })
+         .cli_overrides(cli_overrides)
+         .build()
+         .await
+         .expect("defaults for test should always succeed");
+ 
+-    config.cwd = root.abs();
+     config.project_doc_max_bytes = limit;
+     let user_instructions = instructions.map(|text| UserInstructions {
+         text: text.to_owned(),
+@@ -512,6 +520,7 @@ async fn make_config_with_project_root_markers(
+     TestConfig {
+         config,
+         user_instructions,
++        _codex_home: codex_home,
+     }
+ }
+ 
+diff --git a/codex-rs/core/src/connectors_tests.rs b/codex-rs/core/src/connectors_tests.rs
+index 37aedcce6388a25b445c518584822b6e778ecb9a..9f71e095f2e6855f0a7298c469dd51ae331043c8 100644
+--- a/codex-rs/core/src/connectors_tests.rs
++++ b/codex-rs/core/src/connectors_tests.rs
+@@ -219,6 +219,10 @@ async fn refresh_accessible_connectors_cache_from_mcp_tools_writes_latest_instal
+     let codex_home = tempdir().expect("tempdir should succeed");
+     let mut config = ConfigBuilder::default()
+         .codex_home(codex_home.path().to_path_buf())
++        .harness_overrides(crate::config::ConfigOverrides {
++            cwd: Some(codex_home.path().to_path_buf()),
++            ..Default::default()
++        })
+         .build()
+         .await
+         .expect("config should load");
+@@ -365,6 +369,10 @@ approvals_reviewer = "{app}"
+         .expect("write config");
+         let config = ConfigBuilder::default()
+             .codex_home(codex_home.path().to_path_buf())
++            .harness_overrides(crate::config::ConfigOverrides {
++                cwd: Some(codex_home.path().to_path_buf()),
++                ..Default::default()
++            })
+             .build()
+             .await
+             .expect("config should build");
+@@ -407,6 +415,10 @@ approvals_reviewer = "user"
+     .expect("write config");
+     let config = ConfigBuilder::default()
+         .codex_home(codex_home.path().to_path_buf())
++        .harness_overrides(crate::config::ConfigOverrides {
++            cwd: Some(codex_home.path().to_path_buf()),
++            ..Default::default()
++        })
+         .cloud_config_bundle(
+             CloudConfigBundleFixture::loader_with_enterprise_requirement(
+                 r#"allowed_approvals_reviewers = ["auto_review"]"#,
+@@ -437,6 +449,10 @@ approvals_reviewer = "user"
+     .expect("write config");
+     let config = ConfigBuilder::default()
+         .codex_home(codex_home.path().to_path_buf())
++        .harness_overrides(crate::config::ConfigOverrides {
++            cwd: Some(codex_home.path().to_path_buf()),
++            ..Default::default()
++        })
+         .cloud_config_bundle(
+             CloudConfigBundleFixture::loader_with_enterprise_requirement(
+                 r#"allowed_approvals_reviewers = ["auto_review"]"#,
+@@ -507,6 +523,10 @@ discoverables = [
+     .expect("write config");
+     let config = ConfigBuilder::default()
+         .codex_home(codex_home.path().to_path_buf())
++        .harness_overrides(crate::config::ConfigOverrides {
++            cwd: Some(codex_home.path().to_path_buf()),
++            ..Default::default()
++        })
+         .build()
+         .await
+         .expect("config should load");
+@@ -536,6 +556,10 @@ disabled_tools = [
+     .expect("write config");
+     let config = ConfigBuilder::default()
+         .codex_home(codex_home.path().to_path_buf())
++        .harness_overrides(crate::config::ConfigOverrides {
++            cwd: Some(codex_home.path().to_path_buf()),
++            ..Default::default()
++        })
+         .build()
+         .await
+         .expect("config should load");
+@@ -564,6 +588,10 @@ discoverables = [
+     .expect("write config");
+     let config = ConfigBuilder::default()
+         .codex_home(codex_home.path().to_path_buf())
++        .harness_overrides(crate::config::ConfigOverrides {
++            cwd: Some(codex_home.path().to_path_buf()),
++            ..Default::default()
++        })
+         .build()
+         .await
+         .expect("config should load");
+@@ -601,6 +629,10 @@ apps = true
+     .expect("write config");
+     let config = ConfigBuilder::default()
+         .codex_home(codex_home.path().to_path_buf())
++        .harness_overrides(crate::config::ConfigOverrides {
++            cwd: Some(codex_home.path().to_path_buf()),
++            ..Default::default()
++        })
+         .build()
+         .await
+         .expect("config should load");
+diff --git a/codex-rs/core/src/exec_policy_tests.rs b/codex-rs/core/src/exec_policy_tests.rs
+index 6eea2116d5092a1e37e0a5704ef3e89ef851f0a0..cccdd7787429d0b4c9393bd2b37c94adae9548e5 100644
+--- a/codex-rs/core/src/exec_policy_tests.rs
++++ b/codex-rs/core/src/exec_policy_tests.rs
+@@ -110,6 +110,10 @@ async fn test_config() -> (TempDir, Config) {
+     let home = TempDir::new().expect("create temp dir");
+     let config = ConfigBuilder::without_managed_config_for_tests()
+         .codex_home(home.path().to_path_buf())
++        .harness_overrides(crate::config::ConfigOverrides {
++            cwd: Some(home.path().to_path_buf()),
++            ..Default::default()
++        })
+         .build()
+         .await
+         .expect("load default test config");
+diff --git a/codex-rs/core/src/mcp_tool_call_tests.rs b/codex-rs/core/src/mcp_tool_call_tests.rs
+index 00513791b86356341cb74bb295078ea836965a99..53c2bb12cee7ac494e036a0db3846053d89c6236 100644
+--- a/codex-rs/core/src/mcp_tool_call_tests.rs
++++ b/codex-rs/core/src/mcp_tool_call_tests.rs
+@@ -1948,6 +1948,10 @@ async fn persist_codex_app_tool_approval_writes_tool_override() {
+     let tmp = tempdir().expect("tempdir");
+     let config = ConfigBuilder::default()
+         .codex_home(tmp.path().to_path_buf())
++        .harness_overrides(crate::config::ConfigOverrides {
++            cwd: Some(tmp.path().to_path_buf()),
++            ..Default::default()
++        })
+         .build()
+         .await
+         .expect("load config");
+@@ -1998,6 +2002,10 @@ async fn persist_custom_mcp_tool_approval_writes_tool_override() {
+     .expect("seed config");
+     let config = ConfigBuilder::default()
+         .codex_home(tmp.path().to_path_buf())
++        .harness_overrides(crate::config::ConfigOverrides {
++            cwd: Some(tmp.path().to_path_buf()),
++            ..Default::default()
++        })
+         .build()
+         .await
+         .expect("load config");
+@@ -2040,6 +2048,10 @@ approval_mode = "prompt"
+     .expect("seed config");
+     let config = ConfigBuilder::default()
+         .codex_home(tmp.path().to_path_buf())
++        .harness_overrides(crate::config::ConfigOverrides {
++            cwd: Some(tmp.path().to_path_buf()),
++            ..Default::default()
++        })
+         .build()
+         .await
+         .expect("load config");
+@@ -2062,6 +2074,7 @@ approval_mode = "prompt"
+ 
+ #[tokio::test]
+ async fn custom_mcp_tool_approval_mode_uses_plugin_mcp_policy() {
++    let cwd = tempdir().expect("working folder");
+     let (session, mut turn_context) = make_session_and_context().await;
+     let codex_home = session.codex_home().await;
+     write_sample_plugin_mcp(codex_home.as_path());
+@@ -2084,6 +2097,10 @@ approval_mode = "approve"
+     .expect("seed config");
+     let config = ConfigBuilder::default()
+         .codex_home(codex_home.to_path_buf())
++        .harness_overrides(crate::config::ConfigOverrides {
++            cwd: Some(cwd.path().to_path_buf()),
++            ..Default::default()
++        })
+         .build()
+         .await
+         .expect("load config");
+@@ -2102,6 +2119,7 @@ approval_mode = "approve"
+ 
+ #[tokio::test]
+ async fn custom_mcp_tool_approval_mode_uses_updated_plugin_mcp_policy_after_cache_warm() {
++    let cwd = tempdir().expect("working folder");
+     let (session, mut turn_context) = make_session_and_context().await;
+     let codex_home = session.codex_home().await;
+     write_sample_plugin_mcp(codex_home.as_path());
+@@ -2118,6 +2136,10 @@ enabled = true
+     .expect("seed config");
+     let initial_config = ConfigBuilder::default()
+         .codex_home(codex_home.to_path_buf())
++        .harness_overrides(crate::config::ConfigOverrides {
++            cwd: Some(cwd.path().to_path_buf()),
++            ..Default::default()
++        })
+         .build()
+         .await
+         .expect("load initial config");
+@@ -2142,6 +2164,10 @@ approval_mode = "approve"
+     .expect("update config");
+     let updated_config = ConfigBuilder::default()
+         .codex_home(codex_home.to_path_buf())
++        .harness_overrides(crate::config::ConfigOverrides {
++            cwd: Some(cwd.path().to_path_buf()),
++            ..Default::default()
++        })
+         .build()
+         .await
+         .expect("load updated config");
+@@ -2200,6 +2226,7 @@ async fn maybe_persist_mcp_tool_approval_reloads_session_config() {
+ 
+ #[tokio::test]
+ async fn maybe_persist_mcp_tool_approval_reloads_session_config_for_custom_server() {
++    let cwd = tempdir().expect("working folder");
+     let (session, mut turn_context) = make_session_and_context().await;
+     let codex_home = session.codex_home().await;
+     std::fs::create_dir_all(&codex_home).expect("create codex home");
+@@ -2210,6 +2237,10 @@ async fn maybe_persist_mcp_tool_approval_reloads_session_config_for_custom_serve
+     .expect("seed config");
+     let config = ConfigBuilder::without_managed_config_for_tests()
+         .codex_home(codex_home.clone().to_path_buf())
++        .harness_overrides(crate::config::ConfigOverrides {
++            cwd: Some(cwd.path().to_path_buf()),
++            ..Default::default()
++        })
+         .build()
+         .await
+         .expect("load config");
+@@ -2254,6 +2285,7 @@ async fn maybe_persist_mcp_tool_approval_reloads_session_config_for_custom_serve
+ 
+ #[tokio::test]
+ async fn maybe_persist_mcp_tool_approval_writes_plugin_mcp_policy() {
++    let cwd = tempdir().expect("working folder");
+     let (session, mut turn_context) = make_session_and_context().await;
+     let codex_home = session.codex_home().await;
+     write_sample_plugin_mcp(codex_home.as_path());
+@@ -2270,6 +2302,10 @@ enabled = true
+     .expect("seed config");
+     let config = ConfigBuilder::default()
+         .codex_home(codex_home.to_path_buf())
++        .harness_overrides(crate::config::ConfigOverrides {
++            cwd: Some(cwd.path().to_path_buf()),
++            ..Default::default()
++        })
+         .build()
+         .await
+         .expect("load config");
+diff --git a/codex-rs/core/src/mcp_tool_exposure_test.rs b/codex-rs/core/src/mcp_tool_exposure_test.rs
+index 8a7a6b4230a3d43a306260d1c15857b236c3d82e..76e82001934e487903f3a4f86af84a16153332be 100644
+--- a/codex-rs/core/src/mcp_tool_exposure_test.rs
++++ b/codex-rs/core/src/mcp_tool_exposure_test.rs
+@@ -217,6 +217,10 @@ enabled = true
+     .expect("write config");
+     let config = ConfigBuilder::default()
+         .codex_home(codex_home.path().to_path_buf())
++        .harness_overrides(crate::config::ConfigOverrides {
++            cwd: Some(codex_home.path().to_path_buf()),
++            ..Default::default()
++        })
+         .build()
+         .await
+         .expect("config should build");
+diff --git a/codex-rs/core/src/model_broker_auth_tests.rs b/codex-rs/core/src/model_broker_auth_tests.rs
+index 97a0a08acbb607a3846e545d2d65367e0fcc4418..18b547cc074dfbf0043ac193898b337508edb218 100644
+--- a/codex-rs/core/src/model_broker_auth_tests.rs
++++ b/codex-rs/core/src/model_broker_auth_tests.rs
+@@ -545,6 +545,10 @@ async fn sec_391_config_load_applies_the_aggressive_default() {
+         }
+         let config = ConfigBuilder::default()
+             .codex_home(home.path().to_path_buf())
++            .harness_overrides(crate::config::ConfigOverrides {
++                cwd: Some(home.path().to_path_buf()),
++                ..Default::default()
++            })
+             .cli_overrides(cli)
+             .loader_overrides(LoaderOverrides::without_managed_config_for_tests())
+             .build()
+diff --git a/codex-rs/core/src/security/refusal_notice_tests.rs b/codex-rs/core/src/security/refusal_notice_tests.rs
+index 2f582eb8dab8357cfb3af9b76857616e94759ef7..9a272ed895dedb33539524b4615e88ee509e9e30 100644
+--- a/codex-rs/core/src/security/refusal_notice_tests.rs
++++ b/codex-rs/core/src/security/refusal_notice_tests.rs
+@@ -17,6 +17,10 @@ async fn config(marker: bool) -> (tempfile::TempDir, Config) {
+     }
+     let config = crate::config::ConfigBuilder::without_managed_config_for_tests()
+         .codex_home(home.path().to_path_buf())
++        .harness_overrides(crate::config::ConfigOverrides {
++            cwd: Some(home.path().to_path_buf()),
++            ..Default::default()
++        })
+         .cli_overrides(overrides)
+         .build()
+         .await
+diff --git a/codex-rs/core/src/thread_manager_tests.rs b/codex-rs/core/src/thread_manager_tests.rs
+index 7091a70d29f91c89d176554e8331fcc009f0e49e..a35a30de3beae19e7e31038a7af77f224f76cd58 100644
+--- a/codex-rs/core/src/thread_manager_tests.rs
++++ b/codex-rs/core/src/thread_manager_tests.rs
+@@ -2992,6 +2992,7 @@ async fn named_chatgpt_account_loads_in_a_session_on_a_third_party_provider() {
+             ("features.named_accounts".to_string(), true.into()),
+         ])
+         .harness_overrides(crate::config::ConfigOverrides {
++            cwd: Some(home.path().to_path_buf()),
+             provider_account: Some("openai:work".to_string()),
+             ..Default::default()
+         })
+diff --git a/codex-rs/core/src/tools/handlers/multi_agents_tests.rs b/codex-rs/core/src/tools/handlers/multi_agents_tests.rs
+index a41b838bf637a366b77ba9328ea180904db8928a..48a5fd38272c506855bee9160f3881443cc08cfc 100644
+--- a/codex-rs/core/src/tools/handlers/multi_agents_tests.rs
++++ b/codex-rs/core/src/tools/handlers/multi_agents_tests.rs
+@@ -6958,6 +6958,10 @@ async fn tui_aggressive_permissions(
+     }
+     let config = crate::config::ConfigBuilder::without_managed_config_for_tests()
+         .codex_home(codex_home.to_path_buf())
++        .harness_overrides(crate::config::ConfigOverrides {
++            cwd: Some(codex_home.to_path_buf()),
++            ..Default::default()
++        })
+         .cli_overrides(overrides)
+         .build()
+         .await
