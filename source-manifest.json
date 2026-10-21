@@ -1,0 +1,65 @@
+{
+  "baseCommit": "c9dbae23b3d3f9753fc27a993479040b6b2735cd",
+  "caseGroups": {
+    "integration": [
+      "suite::issue_874::issue_874_planted_git_links_and_rebase_steps_are_reported",
+      "suite::issue_874::issue_874_approval_does_not_lift_the_rules_while_a_finding_stands",
+      "suite::issue_874::issue_943_held_note_is_sent_once_when_approval_and_retry_are_held",
+      "suite::issue_874::issue_874_a_standing_finding_keeps_user_namespaces_denied",
+      "suite::issue_874::issue_874_a_standing_finding_keeps_d48_known_tools_denied",
+      "suite::issue_874::issue_943_a_command_in_another_repository_is_checked"
+    ],
+    "orchestrator": [
+      "tools::orchestrator::tests::issue_540_retry_leaves_the_sandbox_only_where_a_person_approves_it",
+      "tools::orchestrator::tests::issue_826_user_namespace_rule_joins_sandboxed_profiles_only",
+      "tools::orchestrator::tests::linux_sandbox_startup_failure_is_classified_narrowly",
+      "tools::orchestrator::tests::on_request_sandbox_startup_retry_requires_prior_approval",
+      "tools::orchestrator::stale_tests::issue_1001_approval_before_a_transition_is_asked_again",
+      "tools::orchestrator::stale_tests::issue_1001_approval_without_a_transition_runs_as_before",
+      "tools::orchestrator::stale_tests::issue_1001_approval_stale_every_time_is_refused",
+      "tools::orchestrator::stale_tests::issue_1001_approval_before_aggressive_is_switched_on_is_refused",
+      "tools::orchestrator::stale_tests::issue_1001_retry_approved_before_a_transition_is_not_run",
+      "tools::orchestrator::stale_tests::issue_1001_unprompted_retry_after_a_transition_is_not_run",
+      "tools::orchestrator::stale_tests::issue_1001_stale_approval_with_permissions_is_refused",
+      "tools::orchestrator::stale_tests::issue_1057_grants_read_before_a_transition_are_not_used",
+      "tools::orchestrator::stale_tests::issue_1057_aggressive_switched_on_after_the_handler_is_refused",
+      "tools::orchestrator::stale_tests::issue_1057_handler_window_controls"
+    ]
+  },
+  "files": [
+    {
+      "candidateSha256": "3432c1a5878710e0ca8fac278a27059874f5dc3452a83531275a8614483c302a",
+      "originalSha256": "136c33cce84df98fa96ed64a218383bbe6c18c2d745396be31650c3692fb76ee",
+      "path": "codex-rs/core/src/tools/orchestrator.rs",
+      "payload": "payload/orchestrator.rs"
+    },
+    {
+      "candidateSha256": "2f013f2a0a6b5bfac76d0218c61625145298ab1b3888764b0aa2c3b2c12bfe8e",
+      "originalSha256": "c9707c7f62feaedd983ac63b020ee3fed0f7b4bfb7601e8a272313a1299dce0b",
+      "path": "codex-rs/core/tests/suite/issue_874.rs",
+      "payload": "payload/issue_874.rs"
+    }
+  ],
+  "fixtureFreezeSha256": "1fb26125478402ba64995ca157b60c5c84e1318e898997f27c41264504b5cbe9",
+  "nativeAndHostOverrideHoldsPreserved": true,
+  "patch": {
+    "path": "payload/change.patch",
+    "sha256": "6c25e2f8f1b93616f6fc14e45f5801278b2e3f00b3dd83d6d6b1e74bbc958a8e"
+  },
+  "redCases": [
+    {
+      "forbiddenPatterns": [
+        "planted=false:",
+        "planted=true: asked="
+      ],
+      "name": "suite::issue_874::issue_943_held_note_is_sent_once_when_approval_and_retry_are_held",
+      "panicLine": 406,
+      "requiredPatterns": [
+        "assertion failed:",
+        "planted=true: expected 1 held-back note\\(s\\), got 2"
+      ]
+    }
+  ],
+  "schema": "issue943-hosted-source-v1",
+  "sourceMethodSha256": "cf56120c9a64f7c6a2b3694e27ff2390b67a4d1e7ece1017bcfdf3427dc0ea05"
+}

@@ -1,0 +1,73 @@
+{
+  "bootstrap": {
+    "bytes": 3607,
+    "keyringSha256": "80a36b0a6de2f69f49d2df75ef473ccde121e9e190b9ea01d20a4f63778d5c31",
+    "method": "Canonical documented first-use full fingerprints plus exact public keyring SHA256, exclusive new root-owned mode0444 file, unchanged gpgv signed archive/package/ELF chain.",
+    "officialDocs": [
+      "https://documentation.ubuntu.com/security/software-integrity/image-verification/",
+      "https://documentation.ubuntu.com/security/software-integrity/archive-verification/"
+    ],
+    "officialKeyringUrl": "https://archive.ubuntu.com/ubuntu/project/ubuntu-archive-keyring.gpg",
+    "originalKeyringUntouched": true,
+    "primaryFingerprints": [
+      "790BC7277767219C42C86F933B4FE6ACC0B21F32",
+      "843938DF228D22F7B3742BC0D94AA3F0EFE21092",
+      "F6ECB3762474EDA9D21B7022871920D1991BC93C"
+    ],
+    "reviewSha256": "ca1c65260b1bdab5acbbef164c278b7f72bc6f63a2ceddeab370b98807edb028",
+    "trustLimit": "Official HTTPS fingerprint bootstrap; no offline web-of-trust or actual provisioning success claim."
+  },
+  "candidateCommit": "c50d6fa0291fc01f4827f2ab1549b200314453ab",
+  "candidateCommitReceiptSha256": "4be8b950c2c7a075eb597b0cdfd75044e5742755c7403709f6eee9f031691eac",
+  "candidateCommitStatus": "Locally prepared DCO candidate, unpublished; runtime checks out public base and applies exact verified patch.",
+  "candidatePublished": false,
+  "canonicalCommitMessage": "fix(core): emit the held Git protection note once per tool call\n\nPreserve approval and retry holds while sharing the warning emission state across stale approval rounds. Add coverage for both planted findings and an unheld control.\n\nIssue: #943 item 3\nSigned-off-by: citadelculture <209115483+citadelculture@users.noreply.github.com>\n\n",
+  "currentSourceHandoffSha256": "0b9a83f34240fc3b980d17ff4cd805ced6aad0e9b759c4a2c837dc7bf2137be5",
+  "demand": "Contributor report requests held-back note sent once when approval and refused retry share a command; no maintainer assignment claim.",
+  "fixtureSha256": "1fb26125478402ba64995ca157b60c5c84e1318e898997f27c41264504b5cbe9",
+  "fullFormat": {
+    "childExitCode": 0,
+    "command": [
+      "just",
+      "fmt"
+    ],
+    "controllerExitCode": 0,
+    "localLogsNotUploaded": true,
+    "receiptSha256": "e1a009a1250bc19ef83e9301982178d079ba3fc6a8a521d6d8b444c5ae67ef73",
+    "sourceUnchanged": true
+  },
+  "issue": "https://github.com/CorbanuCore/CorbanuTerminal/issues/943",
+  "item": 3,
+  "pinnedPublicBase": "c9dbae23b3d3f9753fc27a993479040b6b2735cd",
+  "priorFailure": {
+    "qualificationCarried": false,
+    "reconciliationSha256": "05b26c6342e29cb43fb7c1c045d4a055f701172052e44e163fa6b553ae670c1b",
+    "runUrl": "https://github.com/citadelculture/CorbanuTerminal/actions/runs/39460974362",
+    "state": "Failed before acquisition or product tests; original public keyring root0/group0/regular3607B but mode0777, so strict trust predicate rejected it.",
+    "unsafeKeyringContentRead": false
+  },
+  "schema": "issue943-authenticated-current-public-provenance-v3",
+  "scopeLimits": [
+    "No prior behavior qualification applies to this rebased source.",
+    "Exact20 focused cases only; no full suite, native incident, true TUI, code-blind or repository release/human-test readiness claim.",
+    "Coordinator orchestrator.rs final-review merge sequencing remains external; fresh main/overlap needed before PR.",
+    "Protected reads/approvals/stale transitions unchanged; warning-once state only.",
+    "All setup, trust, namespace, skip, output, cleanup and resource gates remain mandatory."
+  ],
+  "sourceFiles": [
+    {
+      "candidateSha256": "3432c1a5878710e0ca8fac278a27059874f5dc3452a83531275a8614483c302a",
+      "originalSha256": "136c33cce84df98fa96ed64a218383bbe6c18c2d745396be31650c3692fb76ee",
+      "path": "codex-rs/core/src/tools/orchestrator.rs",
+      "payload": "payload/orchestrator.rs"
+    },
+    {
+      "candidateSha256": "2f013f2a0a6b5bfac76d0218c61625145298ab1b3888764b0aa2c3b2c12bfe8e",
+      "originalSha256": "c9707c7f62feaedd983ac63b020ee3fed0f7b4bfb7601e8a272313a1299dce0b",
+      "path": "codex-rs/core/tests/suite/issue_874.rs",
+      "payload": "payload/issue_874.rs"
+    }
+  ],
+  "sourceMethodSha256": "cf56120c9a64f7c6a2b3694e27ff2390b67a4d1e7ece1017bcfdf3427dc0ea05",
+  "sourceRepository": "CorbanuCore/CorbanuTerminal"
+}
