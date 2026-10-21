@@ -1,0 +1,103 @@
+{
+  "schema": "issue1048-stale-note-hosted-source-v1",
+  "baseCommit": "522deafb85b8faf400e45290d7290cc04e0d4e22",
+  "formatState": "FINAL_FORMAT_RECONCILED",
+  "formattedFixtureFreezeSha256": "cfd4533de46ecd2958f5dbef261a767d2255ca8906dc4349da3360ab6bd04347",
+  "files": [
+    {
+      "path": "codex-rs/core/src/tools/orchestrator.rs",
+      "newFile": false,
+      "originalSha256": "136c33cce84df98fa96ed64a218383bbe6c18c2d745396be31650c3692fb76ee",
+      "payload": "payload/orchestrator.rs",
+      "candidateSha256": "39ab9aa79b2a448cbc08cbd1090c1de9f35a7478d91fc81fd87e5d3b7e52bf81",
+      "baselinePayload": "payload/orchestrator.baseline.rs",
+      "baselineSha256": "350d038c2381c4b23cf6851f48464177688cce398b7e685aefa958055f8e024f"
+    },
+    {
+      "path": "codex-rs/core/src/tools/orchestrator_namespace_note_tests.rs",
+      "newFile": true,
+      "originalSha256": null,
+      "payload": "payload/orchestrator_namespace_note_tests.rs",
+      "candidateSha256": "bda34e0fee13f4770e982974a51419e7adb71747db8649a4538b5a3591e7231f",
+      "baselinePayload": "payload/orchestrator_namespace_note_tests.baseline.rs",
+      "baselineSha256": "bda34e0fee13f4770e982974a51419e7adb71747db8649a4538b5a3591e7231f"
+    }
+  ],
+  "sourceModules": {
+    "codex-rs/core/src/tools/orchestrator_namespace_note_tests.rs": "tools::orchestrator::namespace_note_tests",
+    "codex-rs/core/src/security/user_namespaces_tests.rs": "security::user_namespaces::tests"
+  },
+  "caseSourceKinds": {
+    "codex-rs/core/src/tools/orchestrator_namespace_note_tests.rs": "payload",
+    "codex-rs/core/src/security/user_namespaces_tests.rs": "checkout"
+  },
+  "candidatePatchSha256": "c97f0127005255553efd65550d67fc1b30a8dcd13aad42aa5150d6aafec888ff",
+  "sourcePreparationSha256": "d9d4169d736490d5a955687c14dbdbc0ecf6f58873af2bcb51ad710e18919f1a",
+  "sourceReviewSha256": "449becd73c8da2085aed55682a58d4cabcf9c942450f8866a4e05b4fa40b6ee2",
+  "selectedCases": [
+    "tools::orchestrator::namespace_note_tests::issue_1048_stale_round_leaves_no_allowed_run_note",
+    "tools::orchestrator::namespace_note_tests::issue_1048_redecided_round_warns_again_and_records_only_the_run",
+    "tools::orchestrator::namespace_note_tests::issue_1048_unchanged_round_consumes_its_one_allowed_run_note",
+    "security::user_namespaces::tests::issue_826_the_rule_follows_the_protected_levels",
+    "security::user_namespaces::tests::issue_826_only_a_refused_namespace_under_the_rule_is_explained",
+    "security::user_namespaces::tests::d27_allowed_runs_are_known_by_thread_turn_and_call_once",
+    "security::user_namespaces::tests::d48_allowed_only_while_nothing_changed_since_the_warning"
+  ],
+  "sourceCases": [
+    "tools::orchestrator::namespace_note_tests::issue_1048_stale_round_leaves_no_allowed_run_note",
+    "tools::orchestrator::namespace_note_tests::issue_1048_redecided_round_warns_again_and_records_only_the_run",
+    "tools::orchestrator::namespace_note_tests::issue_1048_unchanged_round_consumes_its_one_allowed_run_note",
+    "security::user_namespaces::tests::issue_826_the_rule_follows_the_protected_levels",
+    "security::user_namespaces::tests::issue_826_only_a_refused_namespace_under_the_rule_is_explained",
+    "security::user_namespaces::tests::d27_allowed_runs_are_known_by_thread_turn_and_call_once",
+    "security::user_namespaces::tests::d48_allowed_only_while_nothing_changed_since_the_warning"
+  ],
+  "sourceCaseCount": 7,
+  "redCases": [
+    {
+      "name": "tools::orchestrator::namespace_note_tests::issue_1048_stale_round_leaves_no_allowed_run_note",
+      "assertionKind": "std_assert_custom",
+      "panicLine": 247,
+      "sourcePath": "core/src/tools/orchestrator_namespace_note_tests.rs",
+      "siteRegex": "(?:^|[ /])core/src/tools/orchestrator_namespace_note_tests\\.rs:247:[0-9]+",
+      "messageRegex": "(?m)^a\\ stale\\ or\\ already\\-consumed\\ allowance\\ must\\ not\\ hide\\ a\\ later\\ denial$",
+      "customMessage": "a stale or already-consumed allowance must not hide a later denial"
+    },
+    {
+      "name": "tools::orchestrator::namespace_note_tests::issue_1048_redecided_round_warns_again_and_records_only_the_run",
+      "assertionKind": "std_assert_custom",
+      "panicLine": 247,
+      "sourcePath": "core/src/tools/orchestrator_namespace_note_tests.rs",
+      "siteRegex": "(?:^|[ /])core/src/tools/orchestrator_namespace_note_tests\\.rs:247:[0-9]+",
+      "messageRegex": "(?m)^a\\ stale\\ or\\ already\\-consumed\\ allowance\\ must\\ not\\ hide\\ a\\ later\\ denial$",
+      "customMessage": "a stale or already-consumed allowance must not hide a later denial"
+    }
+  ],
+  "baselineExpected": [
+    7,
+    5,
+    2
+  ],
+  "candidateExpected": [
+    7,
+    7,
+    0
+  ],
+  "scope": "Explanation-note lifecycle only; no permission/policy or message change. Focused synthetic draft evidence; functional/TUI gate remains OPEN.",
+  "baselineLimitation": "Original production plus same Linux module declaration and identical final new fixture; no instrumentation.",
+  "actualRustResults": null,
+  "fullSuiteQualification": false,
+  "interactiveQualification": false,
+  "patch": {
+    "path": "payload/change.patch",
+    "sha256": "c97f0127005255553efd65550d67fc1b30a8dcd13aad42aa5150d6aafec888ff"
+  },
+  "baselinePatch": {
+    "path": "payload/baseline-fixture.patch",
+    "sha256": "f87bcb5ac116b86d3e488f088dc324d100c54c9a41866ac2da18e4e30646d1f7"
+  },
+  "sourceTransitionPatch": {
+    "path": "payload/fixture-source-transition.patch",
+    "sha256": "891293ad2814fb2a330f673dd82e2d21bb6820c0145dd84f54d13ba28287b4cf"
+  }
+}

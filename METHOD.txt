@@ -1,0 +1,67 @@
+Issue1048 focused synthetic stale-round bookkeeping qualification
+
+The final corrected v3 source and matching review are bound. This package remains
+inert until independent method review and root admission. The held v2 source is
+not admitted. No result exists yet.
+
+One fresh nonroot GitHub-hosted Ubuntu 24.04 job checks out the exact public
+base 522deafb85b8faf400e45290d7290cc04e0d4e22 independently of its control branch.
+Only the seven fixed codex-core library tests in the source manifest may run.
+The three new tests use the orchestrator with a synthetic ToolRuntime. Four
+existing user_namespaces controls are retained. Tests use actual Session and
+policy bookkeeping; this is not a computation-only or native-isolation claim.
+The input /usr/bin/unshare is never executed by the synthetic runtime. Ordinary
+known-tool path resolution may inspect it, so the standard Linux source/tool
+environment remains a prerequisite, not an assumed capability success.
+
+Both variants receive the identical final new fixture and Linux-only module
+declaration. Baseline retains the original production logic; candidate moves
+the existing allowed-run note after the final stale-round check. The new fixture
+must be absent in the public checkout. After applying the verified candidate
+patch, Git intent-to-add exposes only that exact new file to all unchanged
+whole-diff and unexpected-untracked-file checks. The independently pinned
+existing control file is included in test-source inventory, never modified.
+
+The baseline must execute all seven selected bodies: two named tests must fail
+at their exact final std-assert source site with the exact custom denial-note
+message; five controls must pass. Setup/compile errors, earlier assertions,
+missing or excluded selected cases, retries, timeouts and body-skip output hold
+qualification. Candidate must execute all seven and pass. Predictions are not
+results. A shared assertion helper means failure text alone does not identify
+the case: JUnit identity, log identity, ordinal, status and totals must agree.
+
+The controller uses the unchanged repository just test wrapper, codex-core
+--lib, --locked --offline, exact equality filter, one test thread, zero retries,
+60-second per-test termination and no-tests=fail. The wrapper's normal sibling
+helper builds remain. No raw cargo test or release/debug-assertion override is
+allowed. HOME, CODEX_HOME and inherited CODEX sandbox markers preserve value
+and presence; only the repository wrapper creates its disposable profile. The
+fresh runner gets task-owned Cargo/formatter/target directories and no inherited
+provider/Git credential environment. Native-keyring denial remains enabled.
+
+Both variants run full ordinary just fmt and must remain byte-identical to their
+frozen source. Candidate also runs cargo fmt -p codex-core -- --check and focused
+just clippy -p codex-core --lib --locked --offline -- -D warnings. Locked public
+dependency acquisition precedes red; no network retry or fallback version is
+added. One owned target is retained across red and green.
+
+Resource bounds remain: 120-minute job, 6900-second controller deadline,
+30 GiB before checkout/acquisition and first red compilation, 8 GiB for reused
+target stages and Clippy, 4 GiB running stop floor. Each stdout/stderr stream
+has a 16 MiB cap; truncation cannot qualify. JUnit is retained before source or
+outcome rejection, and unexpected failures are preserved. Qualification binaries
+are streaming-hashed, at most 2 GiB each and 4 GiB total, with projected two-copy
+space plus the 4 GiB floor checked before copying. Only those binaries and
+complete normalized public-run evidence are eligible for the two fixed artifacts.
+
+Owned-process subreaping, identity-aware cleanup, source gates and captured
+command/session/hash exports are inherited unchanged. The synthetic orphan
+preflight occurs after workflow checkouts and before controller repository
+commands or tool acquisition. It is not a product or capability qualification.
+
+Scope is explanation-note lifecycle repair and focused synthetic draft evidence.
+The real-key TUI and independently enforced code-blind functional gate remains
+OPEN. No full suite, whole security boundary, interactive workflow, release,
+merge readiness, eligibility or reward success is asserted. The existing five
+review allowance is not reset: source passes 1/2, intent design 3, hosted method
+4, executed evidence 5. Root alone owns later admission, push and result review.

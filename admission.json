@@ -1,0 +1,8 @@
+{
+  "approved": true,
+  "controllerSha256": "ab3983976626118a0b93e2609a457e1c279b35ac1184f1b0c9e3d0fbde5cb064",
+  "sourceManifestSha256": "f28f990833ce1b257b7504a203c5e9b38d68f9f8a387e6ee440168d84d35b508",
+  "toolsPinsSha256": "ef3369934ea44910074181af8176cd4cff8c51e7b45e3b5351fa5f73603c19ab",
+  "workflowSha256": "b46dbd16fce089cab286f8ffe4ff1097454a08ed88d4a9b28c73ff4abe681e1a",
+  "scope": "One exact hosted paired qualification only after independent method review and root admission. No actual results; functional/TUI gate OPEN."
+}
