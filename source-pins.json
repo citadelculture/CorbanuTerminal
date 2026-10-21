@@ -1,0 +1,89 @@
+{
+  "allowedChangedFiles": [
+    "codex-rs/tui/src/chatwidget/tokens.rs",
+    "codex-rs/tui/src/chatwidget/tokens_tests.rs"
+  ],
+  "base": "f2a4ddb52a29176d470722781b4c6bdaa0fd7e9a",
+  "baseFiles": {
+    ".codex/skills/corbanu-terminal-development/SKILL.md": "aae866dc7c03ef742e61dac57413de9b194b28fb1051471939eb1c85bd10c9c8",
+    ".gitattributes": "e76969bd69081bc89eb638432a123b87d4682b49c00134147effe5eb5131f76e",
+    "AGENTS.md": "4b6aa2003bb1b01c3313f1155e3e5e35516ec217da794d3bf3920ed483bbe608",
+    "codex-rs/.cargo/config.toml": "b8ae1cea341beb2d4a3c8fb81f97a96f4aee1fd53f769c57f140dfe949806a80",
+    "codex-rs/AGENTS.md": "8770b8bde8ddaf5f404090afb3f2251aca06bca5cfc5707ec42ae3a7490ce47a",
+    "codex-rs/Cargo.lock": "9bf3331a78a43b8d7489875db26d199d97f018f0e78cefefa928d09a306478bb",
+    "codex-rs/Cargo.toml": "3184d6b3a34c0e311a052c7bb7094809ae64364a7efd586e557e33a0544a2666",
+    "codex-rs/rust-toolchain.toml": "913d7e9d7adcd7abfeb0c4554c39a5a57c3cf84a694bc6a6aeae038a1f6ae33b",
+    "codex-rs/rustfmt.toml": "384d5d8a1366a86cd6fc01aecde2b0a5806a9e77073ff53abd97b4f6cad94d1c",
+    "codex-rs/tui/AGENTS.md": "bfa859952fd8e12654e109d48ee3f7dbbe10961353cc3e50a15857ff7d93dffa",
+    "codex-rs/tui/Cargo.toml": "f2e82674e1baf4884c4519004a9bc40c8822bba773864351e8dd333706fbd2be",
+    "codex-rs/tui/src/chatwidget/tokens.rs": "ee70f2e0b1952aa41bb9faf4b72abca1d4117b74772cba9d38eb112318e1e2b6",
+    "codex-rs/tui/src/chatwidget/tokens_tests.rs": "f8fd7aa90408ad8c3fa42fdf8f02c9942ba8f10163fd57a8e666e8e10062da6a",
+    "docs/corbanu-product-spec.md": "5075bb5cc6f6ddf55f0592df7083531f68e82737b4d0446cc6891c77ff34ec7d",
+    "docs/development/test-isolation.md": "1a5c54c42d74e08c2a98ea6fc8217e05e15c43b2f6b40f679c6388090514cfd0",
+    "justfile": "c4286cfea7819dd7e062a7402ca8db8517cfd5790de32e7b68626c25d966438c",
+    "scripts/format.py": "d930139145ba3e80a188c1b5734aa7fee6bad5687e610cb58bda016216a2f37d",
+    "scripts/just-shell.py": "444d6b328d44abf6453b77b6acce2a0c881fc162ff30b20f352c85067797fbe9",
+    "scripts/pyproject.toml": "2c9c022b99b0b576c3b45773a39f8aa6396f044016432e9bb42669554b3bfb78",
+    "scripts/uv.lock": "6b8e7a82d1a4f4c5d59ce57cf8be472ea031c6fb0a905506258d434132b3c99c",
+    "sdk/python/pyproject.toml": "be995a21d1761e30295016a77d6d227778558ac68da2d37cdec69685a4691a23",
+    "sdk/python/uv.lock": "5d289bda71a7a22394a7c42cea17f49e6317d265ed5ed0c9c8bad8f2412e6bbc",
+    "tools/buildifier": "818bfc01e21fceb0d83ddaf4614531418ea763e25499f7f9fd03c7a853948fe6"
+  },
+  "baseGitLsTreeBytes": 4902537,
+  "baseGitLsTreeCommand": [
+    "git",
+    "ls-tree",
+    "-r",
+    "-z",
+    "--full-tree",
+    "HEAD"
+  ],
+  "baseGitLsTreeSha256": "51db73d5f46a76af5936761e358e0c106d1df2a59aabf0f3d888b62abe4a7f0f",
+  "baseTree": "e78c4581ae1d97c55a0eec59f1c0e33ec8ba15a3",
+  "candidateFiles": {
+    "codex-rs/tui/src/chatwidget/tokens.rs": "d4f8030166fd0c5f3e40eb3ac7531d170a2b628694f05087b184b5300d037657",
+    "codex-rs/tui/src/chatwidget/tokens_tests.rs": "eee92cfa8fe33c87581687efdb086c3a09de6e250c55f7f13680866b5a7c7d6e"
+  },
+  "candidatePublicCommit": null,
+  "candidatePublicTree": null,
+  "classification": "Format-only exact pinned current main plus two prepared PR1210 overlays; not an already published merge. No native or behavioral qualification.",
+  "patchSha256": "448e15d3f7c6491d02e7f9cad7af634e31406ea75315c04f7ee30ecdaaafae13",
+  "repository": "https://github.com/CorbanuCore/CorbanuTerminal",
+  "schema": "pr1210-format-only-source-v1",
+  "sourceModel": {
+    "authorSourceBindingSha256": "8b4432be43c0751989adf4f7a5ce5e0b3459620c276b298f273bdcac4a7800f2",
+    "baseIsPublicMain": true,
+    "overlaysOnly": [
+      "codex-rs/tui/src/chatwidget/tokens.rs",
+      "codex-rs/tui/src/chatwidget/tokens_tests.rs"
+    ],
+    "priorPRHead": "29fe026fb9f34897f1be9da73f33ee4ce5f49889"
+  },
+  "symlinks": [
+    {
+      "blob": "d24842f3cdcf2e447f9a7a26fa387ad63f5c4b91",
+      "mode": "120000",
+      "path": "codex-rs/vendor/bubblewrap/LICENSE",
+      "targetBytes": 7,
+      "targetSha256": "400d38e5cfee181230373a8b02d38f50271a5bf62c62410382efddb8e8b19e22"
+    },
+    {
+      "blob": "f569ef7de30a885cdc1b9a0ccae8424ca19087a9",
+      "mode": "120000",
+      "path": "qa/security-levels/milestones/moderate-localmodel-20261020/runs/R01/collected/fixture/workspace/link-creds",
+      "targetBytes": 29,
+      "targetSha256": "cd2467ca3f30d674eae0faf252abb30d7bf1a2742d1e1689e9389b12b2653e93"
+    }
+  ],
+  "treeMetadata": {
+    "directoryCount": 6412,
+    "endpoint": "https://api.github.com/repos/CorbanuCore/CorbanuTerminal/git/trees/e78c4581ae1d97c55a0eec59f1c0e33ec8ba15a3?recursive=1",
+    "entryCount": 41300,
+    "otherEntryCount": 0,
+    "regularFileCount": 34886,
+    "sha256": "1470370947b66a9d330f190aff29ded5f6edba1200f6921142057a9f6a8107dd",
+    "submoduleCount": 0,
+    "symlinkCount": 2,
+    "truncated": false
+  }
+}

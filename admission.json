@@ -1,0 +1,9 @@
+{
+  "approved": true,
+  "packetManifestSha256": "67e02117ba390b0af0d2644ca13d9291663cd6bdc92a8b088b3db001cee35ead",
+  "reviewReceiptSha256": "9f3473ebc83290502cf616da36d0c3db0d514b9060cee7a3643befd54431c9bc",
+  "subjectSourcePinsSha256": "17c86a854d7b1a2cbde4587e4c44c72065bdb669078a475eb548cd7277adc5b8",
+  "rootAdmissionSha256": "534c89859b5845458670d59c44daf08a3b10235bc1fe6288951fd4d726c967f2",
+  "reason": "Root admits exact PR1210 public main plus two prepared source overlays and unchanged successful full-formatter cleanup framework, after fresh source/demand and absent destination verification. Formatting only; native tests remain unqualified. Publication still uses normal approval review.",
+  "sharedReviewScope": "Existing shared cleanup framework only; original Issue1240 execution/overlap hold remains unchanged. PR1210 source and packet are separately root-admitted."
+}
