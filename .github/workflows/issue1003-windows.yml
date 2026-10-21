@@ -1,0 +1,98 @@
+name: Issue 1003 Windows lock tests
+
+# Publish ONLY with runner.py on the isolated orphan branch described in the handoff.
+on:
+  push:
+    branches: [qualification/issue1003-windows-20261021]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: issue1003-windows-qualification
+  cancel-in-progress: false
+
+jobs:
+  lock-tests:
+    if: github.repository == 'citadelculture/CorbanuTerminal'
+    runs-on: windows-2022
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Preserve source bytes and support Windows paths
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.longpaths true
+
+      - name: Check out this method
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: ${{ github.sha }}
+          path: method
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: Check out the exact published subject
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          repository: citadelculture/CorbanuTerminal
+          ref: bbe1baa51bbebc2e52afe64b348c2d6810f37c33
+          path: subject
+          persist-credentials: false
+          fetch-depth: 1
+
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: '3.13.0'
+
+      - uses: dtolnay/rust-toolchain@d124f86f28ff42855784ff3319f48ac182c248f8 # 1.99.1
+        with:
+          toolchain: '1.99.1'
+          targets: x86_64-pc-windows-msvc
+
+      - name: Install exact public releases after SHA256 verification
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $tools = @(
+            @{name='just'; exe='just.exe'; bytes=2252404; sha='759f16fb7aa17c5c8b9594b6d4a8c1a6630dfd042cf2b3ff84841454d3d188dc'; url='https://github.com/casey/just/releases/download/1.58.0/just-1.58.0-x86_64-pc-windows-msvc.zip'},
+            @{name='nextest'; exe='cargo-nextest.exe'; bytes=7692668; sha='0fa689815c8157e4633225b6b173184b3d546eb6ffb754c3d0e6ea5973284a20'; url='https://github.com/nextest-rs/nextest/releases/download/cargo-nextest-0.9.146/cargo-nextest-0.9.146-x86_64-pc-windows-msvc.zip'}
+          )
+          $root = Join-Path $env:RUNNER_TEMP 'issue1003-tools'
+          New-Item -ItemType Directory -Path $root | Out-Null
+          foreach ($tool in $tools) {
+            $archive = Join-Path $root ($tool.name + '.zip')
+            Invoke-WebRequest -Uri $tool.url -OutFile $archive
+            if ((Get-Item $archive).Length -ne $tool.bytes) { throw 'Release length mismatch' }
+            $actual = (Get-FileHash $archive -Algorithm SHA256).Hash.ToLowerInvariant()
+            if ($actual -ne $tool.sha) { throw 'Release SHA256 mismatch' }
+            Write-Output "$($tool.name) release verified: $actual"
+            $destination = Join-Path $root $tool.name
+            Expand-Archive -Path $archive -DestinationPath $destination
+            $executables = @(Get-ChildItem -Path $destination -Recurse -File -Filter $tool.exe)
+            if ($executables.Count -ne 1) { throw 'Expected one release executable' }
+            $executables[0].DirectoryName | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          }
+
+      - name: Run the ordinary isolated debug tests and reconcile evidence
+        env:
+          CARGO_BUILD_JOBS: '2'
+          CARGO_INCREMENTAL: '0'
+          CARGO_PROFILE_DEV_DEBUG: '0'
+          CARGO_PROFILE_TEST_DEBUG: '0'
+          CARGO_NET_GIT_FETCH_WITH_CLI: 'true'
+          CARGO_TERM_COLOR: never
+          PYTHONUTF8: '1'
+        run: |
+          python method/runner.py --subject subject --out evidence
+          exit $LASTEXITCODE
+
+      - name: Preserve qualification evidence even on failure
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: issue1003-windows-bbe1baa-${{ github.run_id }}-${{ github.run_attempt }}
+          path: evidence/
+          if-no-files-found: error
+          retention-days: 14
