@@ -1,0 +1,22 @@
+{
+  "canaryReady": false,
+  "code": {
+    "account-observation-v1.py": "e4bca0514d72b572334db510918a2f23a85f291749feecae51ce276bfc701f12",
+    "bounded-command-v3.py": "4737f7ede0461ec729f32598261382ef4b8b2e03d7abf85342072696ade3f494",
+    "capability-controller-v8.py": "b3f5eb6a618cd3d9c848e1b91eee2a22f9e8c21889afd58076e6faf8d691860f",
+    "child-bootstrap-v2.py": "27d116dc8d1c3a2650f688b16546589df7f0027f7b9a205980e756ccac97ac28",
+    "kernel-credentials-v1.py": "5b218a9a77c3101f748744475afee8109ef8c3e96a1cdb45a80eb802c9d2b008",
+    "mach-fixture-v2.py": "c3238a66d8e06e68857d9c522feae92c5bce017e31aad5deee0acfa25ad488e0",
+    "measurement-fixture-v2.py": "54b1f943e158930e59465b27070cca56bff929f25926d97240aad38d524da6e3",
+    "synthetic-nested-seatbelt-probe-v1.py": "a5bec1c91f24e73fd86401c7df5921fea3c0cf29ba9f8c1a9530257cf0c02d00"
+  },
+  "route": {
+    "attempt": 1,
+    "branch": "refs/heads/codex/network-kernel-groups-reentry-v1-20261021",
+    "repository": "citadelculture/CorbanuTerminal",
+    "runner": "macos-15"
+  },
+  "schema": "network-uid-pf-pins-v2",
+  "scope": "synthetic-capability-only",
+  "sourcePin": "78dd811d6e3718140c938ad4839968d9995fd5ac"
+}

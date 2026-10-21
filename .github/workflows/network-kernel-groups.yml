@@ -1,0 +1,38 @@
+name: Synthetic UID and PF capability only
+on:
+  push:
+    branches: [codex/network-kernel-groups-reentry-v1-20261021]
+permissions:
+  contents: read
+concurrency:
+  group: network-kernel-groups-reentry-v1
+  cancel-in-progress: false
+jobs:
+  capability:
+    if: github.repository == 'citadelculture/CorbanuTerminal' && github.run_attempt == 1
+    runs-on: macos-15
+    timeout-minutes: 8
+    steps:
+      - name: Exact public control source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          ref: ${{ github.sha }}
+          path: control
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Reviewed synthetic capability only
+        shell: bash
+        run: |
+          set -euo pipefail
+          /bin/bash control/trusted-runtime-launch-v2.sh
+      - name: Bounded synthetic evidence
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: network-kernel-groups-reentry-v1-${{ github.run_id }}
+          path: |
+            capability-evidence
+            trusted-runtime-evidence
+          if-no-files-found: warn
+          retention-days: 14
+          include-hidden-files: false
