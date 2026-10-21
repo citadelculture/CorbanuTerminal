@@ -1,0 +1,506 @@
+diff --git a/codex-rs/core/src/security/tainted_action.rs b/codex-rs/core/src/security/tainted_action.rs
+index 323dc9f322d8cf790a5c6354f571cef3626d34c4..dd6bc5facc46d006ae9a44b03b25583e8023db92 100644
+--- a/codex-rs/core/src/security/tainted_action.rs
++++ b/codex-rs/core/src/security/tainted_action.rs
+@@ -29,6 +29,7 @@ use std::collections::HashSet;
+ use std::path::Path;
+ 
+ mod arithmetic;
++mod git_config;
+ mod indirect;
+ mod invocation;
+ mod nested;
+@@ -1015,6 +1016,12 @@ impl Classifier {
+         }
+         if let Some((index, name)) = &command {
+             let args = &words[index + 1..];
++            if name == "git"
++                && !git_config::inspection_only_prefix(&words[..*index])
++                && git_config::writes_code_setting(args)
++            {
++                self.note(ProtectedActionKind::Persistence);
++            }
+             // Code named by a variable or substitution the classifier cannot
+             // see: the command word (`$X`, `bash -c "$X"`), an interpreter's
+             // inline code (`python3 -c "$X"`) or `eval "$x"`.
+diff --git a/codex-rs/core/src/security/tainted_action/git_config.rs b/codex-rs/core/src/security/tainted_action/git_config.rs
+new file mode 100644
+index 0000000000000000000000000000000000000000..fe8a702644ca6629890251574add64df4e770f5d
+--- /dev/null
++++ b/codex-rs/core/src/security/tainted_action/git_config.rs
+@@ -0,0 +1,229 @@
++//! #1159: local Git settings that install a command or another config file.
++//!
++//! Only the key of a write is judged here. A key-shaped value, comment or
++//! file-option operand is data, and a bare key is a query. The older
++//! global/known-key checks remain separate; this adds no permission route.
++
++use super::basename;
++use super::work;
++
++/// Additional executable or include settings reported in #1159. `key` is
++/// lowercase; section and variable names are case-insensitive in Git.
++fn code_key(key: &str) -> bool {
++    if matches!(
++        key,
++        "diff.external"
++            | "sequence.editor"
++            | "gpg.program"
++            | "gpg.ssh.defaultkeycommand"
++            | "core.gitproxy"
++            | "include.path"
++            | "interactive.difffilter"
++    ) {
++        return true;
++    }
++    let Some((section, rest)) = key.split_once('.') else {
++        return false;
++    };
++    if section == "pager" {
++        return !rest.is_empty();
++    }
++    let Some((subsection, variable)) = rest.rsplit_once('.') else {
++        return false;
++    };
++    if subsection.is_empty() {
++        return false;
++    }
++    matches!(
++        (section, variable),
++        ("diff", "command" | "textconv")
++            | ("filter", "clean" | "smudge" | "process")
++            | ("gpg", "program")
++            | ("includeif", "path")
++            | ("remote", "uploadpack" | "receivepack")
++            | ("submodule", "update")
++            | ("hook", "command")
++    )
++}
++
++/// Find `config` in Git's command position, consuming the documented global
++/// options that have a separate operand. Unknown forms are left to the other
++/// classifier checks, rather than interpreting their operands as commands.
++fn config_args(args: &[String]) -> Option<&[String]> {
++    let mut at = 0;
++    while let Some(word) = args.get(at) {
++        work::step();
++        match word.as_str() {
++            "config" => return Some(&args[at + 1..]),
++            "-C" | "-c" | "--git-dir" | "--work-tree" | "--namespace" | "--config-env"
++            | "--super-prefix" | "--attr-source" => at += 2,
++            "--no-pager"
++            | "--paginate"
++            | "-p"
++            | "-P"
++            | "--bare"
++            | "--no-replace-objects"
++            | "--literal-pathspecs"
++            | "--glob-pathspecs"
++            | "--noglob-pathspecs"
++            | "--icase-pathspecs"
++            | "--no-optional-locks"
++            | "--no-lazy-fetch"
++            | "--no-advice" => at += 1,
++            _ if word.starts_with("--git-dir=")
++                || word.starts_with("--work-tree=")
++                || word.starts_with("--namespace=")
++                || word.starts_with("--config-env=")
++                || word.starts_with("--super-prefix=")
++                || word.starts_with("--attr-source=")
++                || (word.len() > 2 && (word.starts_with("-C") || word.starts_with("-c"))) =>
++            {
++                at += 1;
++            }
++            _ => return None,
++        }
++    }
++    None
++}
++
++/// Whether the resolved Git invocation writes one of the additional code
++/// settings. Supports `config set` and legacy `config [options] key value`;
++/// queries, deletion actions and incomplete writes do not install a value.
++pub(super) fn writes_code_setting(args: &[String]) -> bool {
++    let Some(args) = config_args(args) else {
++        return false;
++    };
++    let mut at = 0;
++    let mut action_seen = false;
++    let mut options = true;
++    while let Some(word) = args.get(at) {
++        work::step();
++        if options && word == "--" {
++            options = false;
++            at += 1;
++            continue;
++        }
++        if options && word.starts_with('-') {
++            let option = word.split_once('=').map_or(word.as_str(), |(name, _)| name);
++            match option {
++                "--file" | "-f" | "--type" | "-t" | "--comment" | "--value" => {
++                    at += if word.contains('=') { 1 } else { 2 };
++                }
++                "--local" | "--worktree" | "--global" | "--system" | "--includes"
++                | "--no-includes" | "--add" | "--replace-all" | "--all" | "--append"
++                | "--fixed-value" | "--bool" | "--int" | "--bool-or-int" | "--bool-or-str"
++                | "--path" | "--expiry-date" => at += 1,
++                _ if !word.starts_with("--")
++                    && word.len() > 2
++                    && (word.starts_with("-f") || word.starts_with("-t")) =>
++                {
++                    at += 1;
++                }
++                _ => return false,
++            }
++            continue;
++        }
++        if options && !action_seen && word == "set" {
++            action_seen = true;
++            at += 1;
++            continue;
++        }
++        // A read action is not a key. Once a key is reached, later words
++        // (even `get`, `list` or `--get`) are values, not read selectors.
++        return args.get(at + 1).is_some() && code_key(&word.to_ascii_lowercase());
++    }
++    false
++}
++
++/// The shared resolver deliberately skips wrapper options conservatively.
++/// For this additional detector only, exclude wrappers that inspect names or
++/// print their own help instead of running the resolved Git command. The
++/// prefix ends at that resolved command, so other words here are assignments,
++/// shell keywords or wrappers already recognized by `command_word`.
++/// Consume their value options too: `env -u command git ...` does not invoke
++/// the `command` builtin. Existing classifier checks remain unchanged.
++pub(super) fn inspection_only_prefix(prefix: &[String]) -> bool {
++    let mut at = 0;
++    while let Some(word) = prefix.get(at) {
++        work::step();
++        let name = basename(word).to_lowercase();
++        at += 1;
++        if word.contains('=')
++            || matches!(
++                name.as_str(),
++                "!" | "if" | "then" | "elif" | "else" | "do" | "while" | "until"
++            )
++        {
++            continue;
++        }
++        // Operand boundaries are the same as the unchanged shared resolver.
++        let (value_options, mut operands): (&[&str], usize) = match name.as_str() {
++            "sudo" => (
++                &["-u", "-g", "-h", "-p", "-C", "-D", "-r", "-t", "-U", "-T"],
++                0,
++            ),
++            "doas" => (&["-u", "-C"], 0),
++            "env" => (&["-u", "-C", "--unset", "--chdir"], 0),
++            "nice" => (&["-n", "--adjustment"], 0),
++            "time" => (&["-f", "-o", "--format", "--output"], 0),
++            "timeout" => (&["-s", "--signal", "-k", "--kill-after"], 1),
++            "exec" => (&["-a"], 0),
++            "xargs" => (
++                &[
++                    "-I",
++                    "-L",
++                    "-n",
++                    "-P",
++                    "-s",
++                    "-d",
++                    "-E",
++                    "-a",
++                    "--max-args",
++                    "--max-procs",
++                    "--delimiter",
++                    "--arg-file",
++                    "--replace",
++                ],
++                0,
++            ),
++            "stdbuf" => (&["-i", "-o", "-e"], 0),
++            "caffeinate" => (&["-t", "-w"], 0),
++            "ionice" => (&["-c", "-n", "-p", "-P", "-u"], 0),
++            "chrt" | "sg" => (&[], 1),
++            "taskset" => (&["-c", "--cpu-list"], 1),
++            "flock" => (&["-w", "-E", "--timeout", "--conflict-exit-code"], 1),
++            "runuser" => (&["-u", "-g", "-G"], 0),
++            "nsenter" => (&["-t", "--target"], 0),
++            "systemd-run" => (&["-p", "--property", "-u", "--unit"], 0),
++            "watch" => (&["-n", "--interval"], 0),
++            _ => (&[], 0),
++        };
++        let mut options = true;
++        while let Some(option) = prefix.get(at) {
++            work::step();
++            if option.starts_with('-') {
++                if options
++                    && ((name == "command"
++                        && !option.starts_with("--")
++                        && option.chars().skip(1).any(|ch| matches!(ch, 'v' | 'V')))
++                        || (name == "env" && matches!(option.as_str(), "--help" | "--version")))
++                {
++                    return true;
++                }
++                if option == "--" {
++                    options = false;
++                }
++                if name == "taskset" && matches!(option.as_str(), "-c" | "--cpu-list") {
++                    operands = 0;
++                }
++                at += 1 + usize::from(value_options.contains(&option.as_str()));
++            } else if option.contains('=') {
++                at += 1;
++            } else {
++                break;
++            }
++        }
++        at += operands;
++    }
++    false
++}
+diff --git a/codex-rs/core/src/security/tainted_action/work.rs b/codex-rs/core/src/security/tainted_action/work.rs
+index 72fbe40925ac75df493b3774d5904ea752af369f..56744238a38ecbc959110d21cf36f0d347a79422 100644
+--- a/codex-rs/core/src/security/tainted_action/work.rs
++++ b/codex-rs/core/src/security/tainted_action/work.rs
+@@ -143,6 +143,7 @@ mod tests {
+     const SOURCES: &[(&str, &str)] = &[
+         ("tainted_action.rs", include_str!("../tainted_action.rs")),
+         ("arithmetic.rs", include_str!("arithmetic.rs")),
++        ("git_config.rs", include_str!("git_config.rs")),
+         ("indirect.rs", include_str!("indirect.rs")),
+         ("invocation.rs", include_str!("invocation.rs")),
+         ("nested.rs", include_str!("nested.rs")),
+diff --git a/codex-rs/core/src/security/tainted_action_tests.rs b/codex-rs/core/src/security/tainted_action_tests.rs
+index b24a37091078d1199cfb4157ea70dfa3afb869a3..bd6c098447d4a1a5bee49d25bc016b6b82cb0ade 100644
+--- a/codex-rs/core/src/security/tainted_action_tests.rs
++++ b/codex-rs/core/src/security/tainted_action_tests.rs
+@@ -3151,3 +3151,229 @@ fn issue_1065_review_2_large_values_are_judged_once() {
+     assert_eq!(many.1, few.1);
+     assert!(many.2 - few.2 <= 8 * 997 * 2, "{few:?} {many:?}");
+ }
++
++/// #1159: setting local command-bearing Git configuration is persistence.
++#[test]
++#[cfg_attr(
++    windows,
++    ignore = "Unix fixtures (POSIX paths and shell syntax); Windows coverage is #691"
++)]
++fn issue_1159_local_git_code_keys_are_persistence() {
++    for key in [
++        "diff.external",
++        "sequence.editor",
++        "gpg.program",
++        "gpg.ssh.defaultKeyCommand",
++        "core.gitProxy",
++        "include.path",
++        "interactive.diffFilter",
++    ] {
++        let command = format!("git config {key} marker");
++        assert_eq!(
++            script(&command),
++            Some(ProtectedActionKind::Persistence),
++            "{command}"
++        );
++    }
++}
++
++#[test]
++#[cfg_attr(
++    windows,
++    ignore = "Unix fixtures (POSIX paths and shell syntax); Windows coverage is #691"
++)]
++fn issue_1159_local_git_code_key_families_are_persistence() {
++    for key in [
++        "pager.log",
++        "diff.preview.command",
++        "diff.preview.textconv",
++        "filter.preview.clean",
++        "filter.preview.smudge",
++        "filter.preview.process",
++        "gpg.ssh.program",
++        "gpg.x509.program",
++        "includeIf.onbranch:topic.path",
++        "remote.origin.uploadpack",
++        "remote.origin.receivepack",
++        "submodule.preview.update",
++        "hook.preview.command",
++        "diff.preview.with.dots.textconv",
++        "remote.origin.with.dots.uploadpack",
++        "includeIf.gitdir:repo.with.dots/.path",
++        "PaGeR.LoG",
++    ] {
++        let command = format!("git config '{key}' marker");
++        assert_eq!(
++            script(&command),
++            Some(ProtectedActionKind::Persistence),
++            "{command}"
++        );
++    }
++}
++
++#[test]
++#[cfg_attr(
++    windows,
++    ignore = "Unix fixtures (POSIX paths and shell syntax); Windows coverage is #691"
++)]
++fn issue_1159_local_git_code_writes_find_the_key_after_options() {
++    for command in [
++        "git config --local pager.log marker",
++        "git config --worktree --add pager.log marker",
++        "git config --replace-all diff.external marker previous",
++        "git config --file settings pager.log marker",
++        "git config -fsettings pager.log marker",
++        "git config --type=path include.path marker",
++        "git config -t path include.path marker",
++        "git config set --comment note pager.log marker",
++        "git config set --comment=note --all pager.log marker",
++        "git config set --value previous pager.log marker",
++        "git config set --file settings --type=path include.path marker",
++        "git config -- pager.log marker",
++    ] {
++        assert_eq!(
++            script(command),
++            Some(ProtectedActionKind::Persistence),
++            "{command}"
++        );
++    }
++}
++
++#[test]
++#[cfg_attr(
++    windows,
++    ignore = "Unix fixtures (POSIX paths and shell syntax); Windows coverage is #691"
++)]
++fn issue_1159_local_git_code_key_queries_stay_quiet() {
++    for command in [
++        "git config pager.log",
++        "git config --local diff.external",
++        "git config --get pager.log",
++        "git config --get-all filter.preview.clean",
++        "git config --get-regexp pager.log",
++        "git config --list",
++        "git config -l",
++        "git config get pager.log",
++        "git config get --default marker pager.log",
++        "git config list",
++        "git config --get-urlmatch include.path example.invalid",
++        "git config --unset pager.log",
++        "git config unset pager.log",
++        "git config set pager.log",
++        "git config --file pager.log",
++        "command -v git config pager.log marker",
++        "command -V git config pager.log marker",
++        "command -pv git config pager.log marker",
++        "command -pV git config pager.log marker",
++        "builtin command -v git config pager.log marker",
++        "env LANG=C command -V git config pager.log marker",
++        "nice -n 5 command -v git config pager.log marker",
++        "env --help git config pager.log marker",
++        "env --version git config pager.log marker",
++    ] {
++        assert_eq!(script(command), None, "{command}");
++    }
++}
++
++#[test]
++#[cfg_attr(
++    windows,
++    ignore = "Unix fixtures (POSIX paths and shell syntax); Windows coverage is #691"
++)]
++fn issue_1159_local_git_code_key_spellings_in_data_stay_quiet() {
++    for command in [
++        "git config user.name pager.log",
++        "git config user.name diff.external",
++        "git config user.name include.path",
++        "git config --comment pager.log user.name marker",
++        "git config set --comment=diff.external user.name marker",
++        "git config --file diff.external user.name marker",
++        "git config -fpager.log user.name marker",
++        "git config set --value pager.log user.name marker",
++        "git config user.name marker pager.log",
++        "git log --format=config pager.log marker",
++        "git --git-dir=config status pager.log marker",
++        "git -c user.name=config status pager.log marker",
++    ] {
++        assert_eq!(script(command), None, "{command}");
++    }
++}
++
++#[test]
++#[cfg_attr(
++    windows,
++    ignore = "Unix fixtures (POSIX paths and shell syntax); Windows coverage is #691"
++)]
++fn issue_1159_non_code_git_family_members_stay_quiet() {
++    for command in [
++        "git config diff.preview.binary true",
++        "git config diff.preview.cachetextconv true",
++        "git config filter.preview.required true",
++        "git config remote.origin.fetch marker",
++        "git config remote.origin.uploadpack.extra marker",
++        "git config submodule.preview.branch main",
++        "git config hook.preview.event pre-commit",
++        "git config hook.preview.enabled false",
++        "git config gpg.format ssh",
++        "git config gpg.minTrustLevel fully",
++        "git config includeIf.onbranch:topic.other marker",
++        "git config user.name marker",
++        "git config color.ui auto",
++        "git config advice.statusHints false",
++    ] {
++        assert_eq!(script(command), None, "{command}");
++    }
++}
++
++#[test]
++#[cfg_attr(
++    windows,
++    ignore = "Unix fixtures (POSIX paths and shell syntax); Windows coverage is #691"
++)]
++fn issue_1159_git_code_write_values_are_not_read_selectors() {
++    for command in [
++        "git config pager.log get",
++        "git config pager.log list",
++        "git config pager.log --get",
++        "git config pager.log --list",
++        "git config set --comment get diff.external list",
++    ] {
++        assert_eq!(
++            script(command),
++            Some(ProtectedActionKind::Persistence),
++            "{command}"
++        );
++    }
++}
++
++#[test]
++#[cfg_attr(
++    windows,
++    ignore = "Unix fixtures (POSIX paths and shell syntax); Windows coverage is #691"
++)]
++fn issue_1159_git_code_writes_follow_resolved_commands() {
++    for command in [
++        "command git config pager.log marker",
++        "command -p git config pager.log marker",
++        "command -- git config pager.log marker",
++        "builtin command -p git config pager.log marker",
++        "env -u command git config pager.log marker",
++        "env -C command git config pager.log marker",
++        "env -C command -v git config pager.log marker",
++        "exec -a command git config pager.log marker",
++        "env -v git config pager.log marker",
++        "env LANG=C git config pager.log marker",
++        "git -C repo config pager.log marker",
++        "git -Crepo config pager.log marker",
++        "git --git-dir=repo config pager.log marker",
++        "git --work-tree repo --no-pager config pager.log marker",
++        "git -c user.name=marker config pager.log marker",
++        "bash -lc 'git config pager.log marker'",
++    ] {
++        assert_eq!(
++            script(command),
++            Some(ProtectedActionKind::Persistence),
++            "{command}"
++        );
++    }
++}

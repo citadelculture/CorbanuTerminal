@@ -1,0 +1,40 @@
+Issue1159 bullet3: local Git executable/include configuration keys
+
+This is a frozen, unadmitted preparation. The demand is a contributor report,
+not a maintainer assignment. Other Issue1159 bullets and PR1158 remain separate.
+
+Fresh own-fork GitHub-hosted Ubuntu24.04, nonroot, attempt1 push only. Checkout
+and upload actions are pinned; both checkouts have persist-credentials false.
+No secrets, sudo, deployments or host control overrides. Inherited HOME,
+CODEX_HOME presence/values and CODEX sandbox markers are preserved. The ordinary
+repository just test wrapper supplies its isolated disposable debug profile and
+native-keyring denial. This package is not native/TUI/release qualification.
+
+Base: 460623e6b182cc7fd12c2fb906816d885bf61d27. The final candidate contains four
+source files; original production plus the identical final eight new test bodies
+is the baseline, with no git_config.rs module or baseline instrumentation.
+A sorted full-index canonical patch binds new-file intent-to-add; source hashes
+and complete patch captures are checked before and after each stage.
+
+Run full ordinary just fmt on both variants, requiring no source change. Candidate
+also runs scoped cargo fmt --check and ordinary just clippy -p codex-core --lib
+--locked --offline -- -D warnings. Cargo fetch --locked is setup only, followed by
+offline test stages; no raw cargo test or alternate wrapper. Exact selection is
+source-manifest.json:13 codex-core library cases, eight new and five existing.
+Baseline prediction: five exact pretty_assertions failures and eight PASS.
+Candidate prediction: thirteen PASS. Only actual complete Nextest/JUnit results
+can qualify; wrong source line/input/value, compilation/setup failure, zero cases,
+selected skip, body skip, retry, timeout or incomplete capture holds the result.
+
+Resource gates:30GiB before checkout and first Rust compile,8GiB before reused
+candidate/Clippy,4GiB running floor. Two compile jobs, one test thread,0retries,
+60seconds per test,15minute execution bound,6900seconds total controller and
+120minute job. Each raw stream and JUnit is bounded16MiB; truncation is incomplete.
+Retention is bounded2GiB per binary/4GiB total with streamed hashes and projected
+two-copy space plus4GiB floor. Owned children must be reaped; live leftovers hold.
+Public artifacts contain complete normalized disposable-hosted output and bounded
+qualification binaries, never local operator receipts or inherited environment.
+
+Local full just fmt child0/controller1 source-change HOLD was retained and
+reconciled as layout-only. Pure parser/controller tests are synthetic controls,
+not Rust qualification. No predicted outcomes are presented as observations.

@@ -1,0 +1,207 @@
+{
+  "schema": "issue1159-git-config-hosted-source-v1",
+  "baseCommit": "460623e6b182cc7fd12c2fb906816d885bf61d27",
+  "files": [
+    {
+      "path": "codex-rs/core/src/security/tainted_action.rs",
+      "payload": "payload/tainted_action.rs",
+      "candidateSha256": "a4b6e991d2423e3d006e1f1ea66631c63905108d47d80f761725f9f094a4c9d7",
+      "originalSha256": "8f8e871195ac263c01f96f2acbda26d030e87dd0aad0eebe503a067cf320e846",
+      "baselinePayload": "payload/tainted_action.baseline.rs",
+      "baselineSha256": "8f8e871195ac263c01f96f2acbda26d030e87dd0aad0eebe503a067cf320e846"
+    },
+    {
+      "path": "codex-rs/core/src/security/tainted_action/git_config.rs",
+      "payload": "payload/git_config.rs",
+      "candidateSha256": "a8c6d9cd17a35d3e5581833ded4e89ba93ef6bdd1ed1cd8c529d8528ac66b73b",
+      "originalSha256": null,
+      "originalState": "absent",
+      "baselineState": "absent"
+    },
+    {
+      "path": "codex-rs/core/src/security/tainted_action/work.rs",
+      "payload": "payload/work.rs",
+      "candidateSha256": "23cc1bb5d9dbcd682baa7bcff82b06fb0a7b8ebbdcbec9ca884ced10e88f43e9",
+      "originalSha256": "5bca6b729366343420aa127249ae2a0e6413d5b8ef6523a72e67657c306938d6",
+      "baselinePayload": "payload/work.baseline.rs",
+      "baselineSha256": "5bca6b729366343420aa127249ae2a0e6413d5b8ef6523a72e67657c306938d6"
+    },
+    {
+      "path": "codex-rs/core/src/security/tainted_action_tests.rs",
+      "payload": "payload/tainted_action_tests.rs",
+      "candidateSha256": "b00b8b5e3a3bbf1ea077a1dc49d294d9d675c7945b0607899ff9527adf6c2725",
+      "originalSha256": "6165f0ad64a54b106358dbc1c597a5625c0deed0ff9e42e6ec7f5cdec8140d1d"
+    }
+  ],
+  "candidatePatchSha256": "f176a67ff21ca9d376e4da7a49cee3b8632879a0a9052c50931f700e1264e45c",
+  "patch": {
+    "path": "payload/change.patch",
+    "sha256": "f176a67ff21ca9d376e4da7a49cee3b8632879a0a9052c50931f700e1264e45c"
+  },
+  "baselinePatch": {
+    "path": "payload/baseline-fixture.patch",
+    "sha256": "d69340671459d6261192f74ca273f24f08870e614da5f3e112694450f2aee141"
+  },
+  "productionTransitionPatch": {
+    "path": "payload/production-only.patch",
+    "sha256": "5bdd66701715081cfc2e002da0f14100658a3fd62f3aa0544c904d1e578e87cf"
+  },
+  "authorPatchSha256": "98cc835c6966b3f694067d136226b7837a9aa001944c605f5c266d307e0b8195",
+  "authorBaselinePatchSha256": "d69340671459d6261192f74ca273f24f08870e614da5f3e112694450f2aee141",
+  "sourcePreparationSha256": "26298dc94df8ead4df1977437e431bee42838d478d8098985533f6f4c8c4d006",
+  "fixtureFreezeSha256": "6e86d70d77b7fdcd664ee8c48e886c2b48744772d876d5c2b9826ad3b75ffb49",
+  "sourceReviewSha256": "c5967d8632fad1093752a9315fa484d11e2135bf734c84e2abc2f92e2e57a5ee",
+  "formattedBindingReviewSha256": "82df8d9d42f042135f6d7d8e66eb63ba66fcbdcff4eb0bd22d07657be5630bb7",
+  "selectedCases": [
+    "security::tainted_action::tests::issue_1159_local_git_code_keys_are_persistence",
+    "security::tainted_action::tests::issue_1159_local_git_code_key_families_are_persistence",
+    "security::tainted_action::tests::issue_1159_local_git_code_writes_find_the_key_after_options",
+    "security::tainted_action::tests::issue_1159_local_git_code_key_queries_stay_quiet",
+    "security::tainted_action::tests::issue_1159_local_git_code_key_spellings_in_data_stay_quiet",
+    "security::tainted_action::tests::issue_1159_non_code_git_family_members_stay_quiet",
+    "security::tainted_action::tests::issue_1159_git_code_write_values_are_not_read_selectors",
+    "security::tainted_action::tests::issue_1159_git_code_writes_follow_resolved_commands",
+    "security::tainted_action::tests::pf_23_s02_persistence_writes_are_protected",
+    "security::tainted_action::tests::pf_30_s03_everyday_commands_stay_quiet",
+    "security::tainted_action::tests::pf_23_s01_wrapper_positions_are_bounded",
+    "security::tainted_action::work::tests::every_classifier_loop_steps_the_counter",
+    "security::tainted_action::work::tests::every_classifier_module_is_checked"
+  ],
+  "redCases": [
+    {
+      "name": "security::tainted_action::tests::issue_1159_local_git_code_keys_are_persistence",
+      "panicLine": 3172,
+      "siteRegex": "(?:^|[ /])(?:core/src/)?security/tainted_action_tests\\.rs:3172:[0-9]+",
+      "messageRegex": "(?m)^assertion\\ failed:\\ `\\(left\\ ==\\ right\\)`:\\ git\\ config\\ diff\\.external\\ marker\\\n\\\nDiff\\ <\\ left\\ /\\ right\\ >\\ :\\\n<None\\\n>Some\\(\\\n>\\ \\ \\ \\ Persistence,\\\n>\\)\\\n",
+      "expectedLeftDebug": "None",
+      "expectedRightDebug": "Some(Persistence)",
+      "customMessage": "git config diff.external marker"
+    },
+    {
+      "name": "security::tainted_action::tests::issue_1159_local_git_code_key_families_are_persistence",
+      "panicLine": 3206,
+      "siteRegex": "(?:^|[ /])(?:core/src/)?security/tainted_action_tests\\.rs:3206:[0-9]+",
+      "messageRegex": "(?m)^assertion\\ failed:\\ `\\(left\\ ==\\ right\\)`:\\ git\\ config\\ 'pager\\.log'\\ marker\\\n\\\nDiff\\ <\\ left\\ /\\ right\\ >\\ :\\\n<None\\\n>Some\\(\\\n>\\ \\ \\ \\ Persistence,\\\n>\\)\\\n",
+      "expectedLeftDebug": "None",
+      "expectedRightDebug": "Some(Persistence)",
+      "customMessage": "git config 'pager.log' marker"
+    },
+    {
+      "name": "security::tainted_action::tests::issue_1159_local_git_code_writes_find_the_key_after_options",
+      "panicLine": 3234,
+      "siteRegex": "(?:^|[ /])(?:core/src/)?security/tainted_action_tests\\.rs:3234:[0-9]+",
+      "messageRegex": "(?m)^assertion\\ failed:\\ `\\(left\\ ==\\ right\\)`:\\ git\\ config\\ \\-\\-local\\ pager\\.log\\ marker\\\n\\\nDiff\\ <\\ left\\ /\\ right\\ >\\ :\\\n<None\\\n>Some\\(\\\n>\\ \\ \\ \\ Persistence,\\\n>\\)\\\n",
+      "expectedLeftDebug": "None",
+      "expectedRightDebug": "Some(Persistence)",
+      "customMessage": "git config --local pager.log marker"
+    },
+    {
+      "name": "security::tainted_action::tests::issue_1159_git_code_write_values_are_not_read_selectors",
+      "panicLine": 3341,
+      "siteRegex": "(?:^|[ /])(?:core/src/)?security/tainted_action_tests\\.rs:3341:[0-9]+",
+      "messageRegex": "(?m)^assertion\\ failed:\\ `\\(left\\ ==\\ right\\)`:\\ git\\ config\\ pager\\.log\\ get\\\n\\\nDiff\\ <\\ left\\ /\\ right\\ >\\ :\\\n<None\\\n>Some\\(\\\n>\\ \\ \\ \\ Persistence,\\\n>\\)\\\n",
+      "expectedLeftDebug": "None",
+      "expectedRightDebug": "Some(Persistence)",
+      "customMessage": "git config pager.log get"
+    },
+    {
+      "name": "security::tainted_action::tests::issue_1159_git_code_writes_follow_resolved_commands",
+      "panicLine": 3373,
+      "siteRegex": "(?:^|[ /])(?:core/src/)?security/tainted_action_tests\\.rs:3373:[0-9]+",
+      "messageRegex": "(?m)^assertion\\ failed:\\ `\\(left\\ ==\\ right\\)`:\\ command\\ git\\ config\\ pager\\.log\\ marker\\\n\\\nDiff\\ <\\ left\\ /\\ right\\ >\\ :\\\n<None\\\n>Some\\(\\\n>\\ \\ \\ \\ Persistence,\\\n>\\)\\\n",
+      "expectedLeftDebug": "None",
+      "expectedRightDebug": "Some(Persistence)",
+      "customMessage": "command git config pager.log marker"
+    }
+  ],
+  "sourceCases": [
+    "security::tainted_action::tests::pf_30_s03_vault_credential_and_policy_commands_are_protected",
+    "security::tainted_action::tests::pf_30_s03_ordinary_commands_are_not_protected",
+    "security::tainted_action::tests::pf_30_s03_patches_into_the_home_or_credential_files_are_protected",
+    "security::tainted_action::tests::pf_30_s03_a_custom_home_matches_as_a_whole_segment_run",
+    "security::tainted_action::tests::pf_30_s03_indirect_routes_are_protected",
+    "security::tainted_action::tests::pf_30_s03_indirect_checks_leave_ordinary_commands_alone",
+    "security::tainted_action::tests::pf_30_s03_symlinks_and_canonical_spellings_reach_the_home",
+    "security::tainted_action::tests::pf_30_s03_script_files_and_patched_scripts_are_read",
+    "security::tainted_action::tests::pf_30_s03_research_workflow_prompt_count_and_latency",
+    "security::tainted_action::tests::issue_239_protected_paths_apply_under_protected_level_before_taint",
+    "security::tainted_action::tests::issue_239_human_approval_lifts_rules_only_under_bound_moderate",
+    "security::tainted_action::tests::pf_30_s03_approval_is_bound_to_taint_and_policy",
+    "security::tainted_action::tests::pf_30_s03_review_bypasses_are_closed",
+    "security::tainted_action::tests::pf_30_s03_script_limits_fail_closed_and_patches_follow_symlinks",
+    "security::tainted_action::tests::pf_30_s03_review_2_bypasses_are_closed",
+    "security::tainted_action::tests::pf_30_s03_everyday_commands_stay_quiet",
+    "security::tainted_action::tests::pf_30_s03_review_3_bypasses_are_closed",
+    "security::tainted_action::tests::pf_23_s01_value_transfer_and_outbound_content_are_protected",
+    "security::tainted_action::tests::pf_23_s01_wrapper_positions_are_bounded",
+    "security::tainted_action::tests::pf_23_s02_persistence_writes_are_protected",
+    "security::tainted_action::tests::issue_442_corbanu_home_variables_name_the_home",
+    "security::tainted_action::tests::issue_442_aggressive_credential_reads_say_they_are_never_granted",
+    "security::tainted_action::tests::issue_841_sed_edits_are_not_unseen_code",
+    "security::tainted_action::tests::issue_841_text_only_sed_programs",
+    "security::tainted_action::tests::issue_885_sed_that_runs_commands_is_unseen_code",
+    "security::tainted_action::tests::issue_885_nested_shell_scripts_are_judged",
+    "security::tainted_action::tests::issue_885_sed_writing_a_file_the_line_runs_is_unseen_code",
+    "security::tainted_action::tests::issue_885_review_1_routes_and_limits",
+    "security::tainted_action::tests::issue_885_review_2_routes_and_limits",
+    "security::tainted_action::tests::issue_885_review_3_routes",
+    "security::tainted_action::tests::issue_937_arithmetic_on_filled_variables_is_unseen_code",
+    "security::tainted_action::tests::issue_937_counters_and_plain_uses_are_not_unseen_code",
+    "security::tainted_action::tests::issue_937_review_1_routes",
+    "security::tainted_action::tests::issue_937_review_1_everyday_lines_still_run",
+    "security::tainted_action::tests::issue_937_review_2_routes",
+    "security::tainted_action::tests::issue_937_review_2_everyday_lines_still_run",
+    "security::tainted_action::tests::issue_937_review_6_fallback_routes",
+    "security::tainted_action::tests::issue_1020_deep_substitutions_stay_fast_and_ask",
+    "security::tainted_action::tests::issue_1020_deep_nesting_is_classified_quickly",
+    "security::tainted_action::tests::issue_1012_prompt_transformation_is_unseen_code",
+    "security::tainted_action::tests::issue_1028_glob_qualifiers_that_run_code_are_unseen_code",
+    "security::tainted_action::tests::issue_1065_substituted_values_are_capped",
+    "security::tainted_action::tests::issue_1065_review_1_limits",
+    "security::tainted_action::tests::issue_1065_review_2_large_values_are_judged_once",
+    "security::tainted_action::tests::issue_1159_local_git_code_keys_are_persistence",
+    "security::tainted_action::tests::issue_1159_local_git_code_key_families_are_persistence",
+    "security::tainted_action::tests::issue_1159_local_git_code_writes_find_the_key_after_options",
+    "security::tainted_action::tests::issue_1159_local_git_code_key_queries_stay_quiet",
+    "security::tainted_action::tests::issue_1159_local_git_code_key_spellings_in_data_stay_quiet",
+    "security::tainted_action::tests::issue_1159_non_code_git_family_members_stay_quiet",
+    "security::tainted_action::tests::issue_1159_git_code_write_values_are_not_read_selectors",
+    "security::tainted_action::tests::issue_1159_git_code_writes_follow_resolved_commands",
+    "security::tainted_action::work::tests::every_classifier_loop_steps_the_counter",
+    "security::tainted_action::work::tests::every_classifier_module_is_checked",
+    "security::tainted_action::work::tests::work_counts_this_thread_only"
+  ],
+  "sourceCaseCount": 55,
+  "baselineExpected": [
+    13,
+    8,
+    5
+  ],
+  "candidateExpected": [
+    13,
+    13,
+    0
+  ],
+  "requiredNewCases": [
+    "security::tainted_action::tests::issue_1159_local_git_code_keys_are_persistence",
+    "security::tainted_action::tests::issue_1159_local_git_code_key_families_are_persistence",
+    "security::tainted_action::tests::issue_1159_local_git_code_writes_find_the_key_after_options",
+    "security::tainted_action::tests::issue_1159_local_git_code_key_queries_stay_quiet",
+    "security::tainted_action::tests::issue_1159_local_git_code_key_spellings_in_data_stay_quiet",
+    "security::tainted_action::tests::issue_1159_non_code_git_family_members_stay_quiet",
+    "security::tainted_action::tests::issue_1159_git_code_write_values_are_not_read_selectors",
+    "security::tainted_action::tests::issue_1159_git_code_writes_follow_resolved_commands"
+  ],
+  "additionalExistingControls": [
+    "security::tainted_action::tests::pf_23_s02_persistence_writes_are_protected",
+    "security::tainted_action::tests::pf_30_s03_everyday_commands_stay_quiet",
+    "security::tainted_action::tests::pf_23_s01_wrapper_positions_are_bounded",
+    "security::tainted_action::work::tests::every_classifier_loop_steps_the_counter",
+    "security::tainted_action::work::tests::every_classifier_module_is_checked"
+  ],
+  "scope": "Eight new local Git configuration classifier cases plus five existing controls, including two work inventory checks. Known reported executable/include key families only; no whole Issue1159, exhaustive Git parser, full library or release claim.",
+  "baselineLimitation": "Original two production files plus identical final test fixture; new git_config.rs absent on baseline.",
+  "patchRepresentation": "Canonical Git --binary --full-index HEAD in path order via owned alternate index; exact final bytes equal authored formatter representation.",
+  "actualRustResults": null,
+  "fullPackageQualification": false
+}

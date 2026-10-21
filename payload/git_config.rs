@@ -1,0 +1,229 @@
+//! #1159: local Git settings that install a command or another config file.
+//!
+//! Only the key of a write is judged here. A key-shaped value, comment or
+//! file-option operand is data, and a bare key is a query. The older
+//! global/known-key checks remain separate; this adds no permission route.
+
+use super::basename;
+use super::work;
+
+/// Additional executable or include settings reported in #1159. `key` is
+/// lowercase; section and variable names are case-insensitive in Git.
+fn code_key(key: &str) -> bool {
+    if matches!(
+        key,
+        "diff.external"
+            | "sequence.editor"
+            | "gpg.program"
+            | "gpg.ssh.defaultkeycommand"
+            | "core.gitproxy"
+            | "include.path"
+            | "interactive.difffilter"
+    ) {
+        return true;
+    }
+    let Some((section, rest)) = key.split_once('.') else {
+        return false;
+    };
+    if section == "pager" {
+        return !rest.is_empty();
+    }
+    let Some((subsection, variable)) = rest.rsplit_once('.') else {
+        return false;
+    };
+    if subsection.is_empty() {
+        return false;
+    }
+    matches!(
+        (section, variable),
+        ("diff", "command" | "textconv")
+            | ("filter", "clean" | "smudge" | "process")
+            | ("gpg", "program")
+            | ("includeif", "path")
+            | ("remote", "uploadpack" | "receivepack")
+            | ("submodule", "update")
+            | ("hook", "command")
+    )
+}
+
+/// Find `config` in Git's command position, consuming the documented global
+/// options that have a separate operand. Unknown forms are left to the other
+/// classifier checks, rather than interpreting their operands as commands.
+fn config_args(args: &[String]) -> Option<&[String]> {
+    let mut at = 0;
+    while let Some(word) = args.get(at) {
+        work::step();
+        match word.as_str() {
+            "config" => return Some(&args[at + 1..]),
+            "-C" | "-c" | "--git-dir" | "--work-tree" | "--namespace" | "--config-env"
+            | "--super-prefix" | "--attr-source" => at += 2,
+            "--no-pager"
+            | "--paginate"
+            | "-p"
+            | "-P"
+            | "--bare"
+            | "--no-replace-objects"
+            | "--literal-pathspecs"
+            | "--glob-pathspecs"
+            | "--noglob-pathspecs"
+            | "--icase-pathspecs"
+            | "--no-optional-locks"
+            | "--no-lazy-fetch"
+            | "--no-advice" => at += 1,
+            _ if word.starts_with("--git-dir=")
+                || word.starts_with("--work-tree=")
+                || word.starts_with("--namespace=")
+                || word.starts_with("--config-env=")
+                || word.starts_with("--super-prefix=")
+                || word.starts_with("--attr-source=")
+                || (word.len() > 2 && (word.starts_with("-C") || word.starts_with("-c"))) =>
+            {
+                at += 1;
+            }
+            _ => return None,
+        }
+    }
+    None
+}
+
+/// Whether the resolved Git invocation writes one of the additional code
+/// settings. Supports `config set` and legacy `config [options] key value`;
+/// queries, deletion actions and incomplete writes do not install a value.
+pub(super) fn writes_code_setting(args: &[String]) -> bool {
+    let Some(args) = config_args(args) else {
+        return false;
+    };
+    let mut at = 0;
+    let mut action_seen = false;
+    let mut options = true;
+    while let Some(word) = args.get(at) {
+        work::step();
+        if options && word == "--" {
+            options = false;
+            at += 1;
+            continue;
+        }
+        if options && word.starts_with('-') {
+            let option = word.split_once('=').map_or(word.as_str(), |(name, _)| name);
+            match option {
+                "--file" | "-f" | "--type" | "-t" | "--comment" | "--value" => {
+                    at += if word.contains('=') { 1 } else { 2 };
+                }
+                "--local" | "--worktree" | "--global" | "--system" | "--includes"
+                | "--no-includes" | "--add" | "--replace-all" | "--all" | "--append"
+                | "--fixed-value" | "--bool" | "--int" | "--bool-or-int" | "--bool-or-str"
+                | "--path" | "--expiry-date" => at += 1,
+                _ if !word.starts_with("--")
+                    && word.len() > 2
+                    && (word.starts_with("-f") || word.starts_with("-t")) =>
+                {
+                    at += 1;
+                }
+                _ => return false,
+            }
+            continue;
+        }
+        if options && !action_seen && word == "set" {
+            action_seen = true;
+            at += 1;
+            continue;
+        }
+        // A read action is not a key. Once a key is reached, later words
+        // (even `get`, `list` or `--get`) are values, not read selectors.
+        return args.get(at + 1).is_some() && code_key(&word.to_ascii_lowercase());
+    }
+    false
+}
+
+/// The shared resolver deliberately skips wrapper options conservatively.
+/// For this additional detector only, exclude wrappers that inspect names or
+/// print their own help instead of running the resolved Git command. The
+/// prefix ends at that resolved command, so other words here are assignments,
+/// shell keywords or wrappers already recognized by `command_word`.
+/// Consume their value options too: `env -u command git ...` does not invoke
+/// the `command` builtin. Existing classifier checks remain unchanged.
+pub(super) fn inspection_only_prefix(prefix: &[String]) -> bool {
+    let mut at = 0;
+    while let Some(word) = prefix.get(at) {
+        work::step();
+        let name = basename(word).to_lowercase();
+        at += 1;
+        if word.contains('=')
+            || matches!(
+                name.as_str(),
+                "!" | "if" | "then" | "elif" | "else" | "do" | "while" | "until"
+            )
+        {
+            continue;
+        }
+        // Operand boundaries are the same as the unchanged shared resolver.
+        let (value_options, mut operands): (&[&str], usize) = match name.as_str() {
+            "sudo" => (
+                &["-u", "-g", "-h", "-p", "-C", "-D", "-r", "-t", "-U", "-T"],
+                0,
+            ),
+            "doas" => (&["-u", "-C"], 0),
+            "env" => (&["-u", "-C", "--unset", "--chdir"], 0),
+            "nice" => (&["-n", "--adjustment"], 0),
+            "time" => (&["-f", "-o", "--format", "--output"], 0),
+            "timeout" => (&["-s", "--signal", "-k", "--kill-after"], 1),
+            "exec" => (&["-a"], 0),
+            "xargs" => (
+                &[
+                    "-I",
+                    "-L",
+                    "-n",
+                    "-P",
+                    "-s",
+                    "-d",
+                    "-E",
+                    "-a",
+                    "--max-args",
+                    "--max-procs",
+                    "--delimiter",
+                    "--arg-file",
+                    "--replace",
+                ],
+                0,
+            ),
+            "stdbuf" => (&["-i", "-o", "-e"], 0),
+            "caffeinate" => (&["-t", "-w"], 0),
+            "ionice" => (&["-c", "-n", "-p", "-P", "-u"], 0),
+            "chrt" | "sg" => (&[], 1),
+            "taskset" => (&["-c", "--cpu-list"], 1),
+            "flock" => (&["-w", "-E", "--timeout", "--conflict-exit-code"], 1),
+            "runuser" => (&["-u", "-g", "-G"], 0),
+            "nsenter" => (&["-t", "--target"], 0),
+            "systemd-run" => (&["-p", "--property", "-u", "--unit"], 0),
+            "watch" => (&["-n", "--interval"], 0),
+            _ => (&[], 0),
+        };
+        let mut options = true;
+        while let Some(option) = prefix.get(at) {
+            work::step();
+            if option.starts_with('-') {
+                if options
+                    && ((name == "command"
+                        && !option.starts_with("--")
+                        && option.chars().skip(1).any(|ch| matches!(ch, 'v' | 'V')))
+                        || (name == "env" && matches!(option.as_str(), "--help" | "--version")))
+                {
+                    return true;
+                }
+                if option == "--" {
+                    options = false;
+                }
+                if name == "taskset" && matches!(option.as_str(), "-c" | "--cpu-list") {
+                    operands = 0;
+                }
+                at += 1 + usize::from(value_options.contains(&option.as_str()));
+            } else if option.contains('=') {
+                at += 1;
+            } else {
+                break;
+            }
+        }
+        at += operands;
+    }
+    false
+}
