@@ -1,0 +1,59 @@
+{
+  "expectedTests": [
+    "security::revocation_view::tests::pf_25_s02_kill_switch_review_and_esc_change_nothing",
+    "security::revocation_view::tests::pf_25_s02_kill_switch_on_then_off",
+    "security::revocation_view::tests::pf_25_s02_revoke_all_is_reviewed_and_saved",
+    "security::revocation_view::tests::pf_25_s02_changed_state_is_refused",
+    "security::revocation_view::tests::pf_25_s02_restart_after_a_change",
+    "security::revocation_view::tests::issue_507_kill_switch_on_stops_claude_panes",
+    "security::revocation_view::tests::pf_25_s02_grant_rows_review_and_already_ended",
+    "security::revocation_view::tests::pf_25_s02_selection_follows_the_grant",
+    "security::revocation_view::tests::pf_25_s02_commit_runs_off_the_ui_thread",
+    "security::revocation_view::tests::pf_25_s02_only_this_view_revokes",
+    "security::revocation_view::tests::pf_25_s02_lost_race_is_reported",
+    "security::revocation_view::tests::issue_1035_revoke_all_confirmation_names_every_session",
+    "bottom_pane::security_level_picker::issue_1047_tests::issue_1047_moderate_review_before_the_window_session_starts",
+    "bottom_pane::security_level_picker::issue_1047_tests::issue_1047_moderate_saved_before_the_window_session_starts",
+    "bottom_pane::security_level_picker::issue_1047_tests::issue_1047_remote_window_is_not_told_it_starts_here",
+    "bottom_pane::security_level_picker::issue_1047_tests::issue_1094_revocation_restart_follows_the_window_session_location"
+  ],
+  "lanes": {
+    "candidate": {
+      "justfile": "c4286cfea7819dd7e062a7402ca8db8517cfd5790de32e7b68626c25d966438c",
+      "scripts/just-shell.py": "444d6b328d44abf6453b77b6acce2a0c881fc162ff30b20f352c85067797fbe9",
+      "scripts/isolated_rust_tests.py": "2376d36fae0943cbbf4a0caf58109b0dece03cb226983d1276216adc90d2447c",
+      "codex-rs/Cargo.lock": "ba6f0d3ce73431406461c3480360d1bbd7c7229bbcc2bc99bbb17d6e52d344ac",
+      "codex-rs/Cargo.toml": "3184d6b3a34c0e311a052c7bb7094809ae64364a7efd586e557e33a0544a2666",
+      "codex-rs/rust-toolchain.toml": "913d7e9d7adcd7abfeb0c4554c39a5a57c3cf84a694bc6a6aeae038a1f6ae33b",
+      "codex-rs/.config/nextest.toml": "830c64fd157ef4bb618626c4f7aaf3de986b488289eb28ed352ff0a21e29c110",
+      "codex-rs/tui/Cargo.toml": "f2e82674e1baf4884c4519004a9bc40c8822bba773864351e8dd333706fbd2be",
+      "codex-rs/tui/src/lib.rs": "cc623d571791017aac618d645bb5a7c6fe007977b8844cdf053da9e72ce7a50b",
+      "codex-rs/tui/src/security/mod.rs": "db8c9642773e04581068b65ef9896d695132488a5a94796eaadc80fac4272e43",
+      "codex-rs/tui/src/bottom_pane/security_level_picker.rs": "1699467f3fdd47fef1d55797342153acedbce80236421a34c8b4a7a44c0ac101",
+      "codex-rs/tui/src/bottom_pane/security_level_picker_issue_1047_tests.rs": "f6e025763084fae10303c1646fb1ab42004dccb3c963b08b58871959aae4ae42",
+      "codex-rs/tui/src/security/revocation_view.rs": "f51f98d35b2706d54c642ace294982939cbe29777958ce895f856377f29b79fc",
+      "codex-rs/tui/src/security/revocation_view_tests.rs": "d0331ae768c1cc6f48ebd87ff0e26cda52aec058fb7fd39d5377179a6630c486"
+    },
+    "baseline": {
+      "justfile": "c4286cfea7819dd7e062a7402ca8db8517cfd5790de32e7b68626c25d966438c",
+      "scripts/just-shell.py": "444d6b328d44abf6453b77b6acce2a0c881fc162ff30b20f352c85067797fbe9",
+      "scripts/isolated_rust_tests.py": "2376d36fae0943cbbf4a0caf58109b0dece03cb226983d1276216adc90d2447c",
+      "codex-rs/Cargo.lock": "ba6f0d3ce73431406461c3480360d1bbd7c7229bbcc2bc99bbb17d6e52d344ac",
+      "codex-rs/Cargo.toml": "3184d6b3a34c0e311a052c7bb7094809ae64364a7efd586e557e33a0544a2666",
+      "codex-rs/rust-toolchain.toml": "913d7e9d7adcd7abfeb0c4554c39a5a57c3cf84a694bc6a6aeae038a1f6ae33b",
+      "codex-rs/.config/nextest.toml": "830c64fd157ef4bb618626c4f7aaf3de986b488289eb28ed352ff0a21e29c110",
+      "codex-rs/tui/Cargo.toml": "f2e82674e1baf4884c4519004a9bc40c8822bba773864351e8dd333706fbd2be",
+      "codex-rs/tui/src/lib.rs": "cc623d571791017aac618d645bb5a7c6fe007977b8844cdf053da9e72ce7a50b",
+      "codex-rs/tui/src/security/mod.rs": "db8c9642773e04581068b65ef9896d695132488a5a94796eaadc80fac4272e43",
+      "codex-rs/tui/src/bottom_pane/security_level_picker.rs": "8b18c524e4b9023abf9f3687846d57ad5cb4fb5646ac2b813d53fb6888022d8b",
+      "codex-rs/tui/src/bottom_pane/security_level_picker_issue_1047_tests.rs": "f6e025763084fae10303c1646fb1ab42004dccb3c963b08b58871959aae4ae42",
+      "codex-rs/tui/src/security/revocation_view.rs": "1bdab3b0c474ce0f8bfcdc9743dc9439d1025229855f813189a52e71a8cd6f1b",
+      "codex-rs/tui/src/security/revocation_view_tests.rs": "6e875d6e937364f1f84636e077a5af58e49214dba0d527b1615c9e7deea85489"
+    }
+  },
+  "pendingSnapshots": [
+    "codex-rs/tui/src/bottom_pane/snapshots/codex_tui__bottom_pane__security_level_picker__issue_1047_tests__issue_1094_remote_revoke_all.snap.new",
+    "codex-rs/tui/src/bottom_pane/snapshots/codex_tui__bottom_pane__security_level_picker__issue_1047_tests__issue_1094_remote_kill_switch_on.snap.new",
+    "codex-rs/tui/src/bottom_pane/snapshots/codex_tui__bottom_pane__security_level_picker__issue_1047_tests__issue_1094_remote_kill_switch_off.snap.new"
+  ]
+}

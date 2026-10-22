@@ -1,0 +1,61 @@
+name: Issue1094 bounded ordinary validation
+
+on:
+  push:
+    branches: [validation/issue1094-hosted-20261022]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: issue1094-bounded-ordinary-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    if: github.repository == 'citadelculture/CorbanuTerminal'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - lane: baseline
+            source: cf4dc35bea558756d9fcbfaf9fbe35e69810a4c3
+          - lane: candidate
+            source: cf5ab5befa32e9e555c62c2e2b400839d32fa47d
+    steps:
+      - name: Checkout bounded controller
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          path: method-checkout
+          persist-credentials: false
+          sparse-checkout: .github/issue1094-hosted
+      - name: Checkout exact formatted source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: citadelculture/CorbanuTerminal
+          ref: ${{ matrix.source }}
+          path: source
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Run bounded isolated ordinary test lane
+        shell: bash
+        env:
+          ISSUE1094_LANE: ${{ matrix.lane }}
+        run: |
+          set -euo pipefail
+          python3 method-checkout/.github/issue1094-hosted/run-hosted.py \
+            --lane "$ISSUE1094_LANE" \
+            --source "$GITHUB_WORKSPACE/source" \
+            --work "$RUNNER_TEMP/issue1094-owned-$ISSUE1094_LANE" \
+            --evidence "$GITHUB_WORKSPACE/issue1094-evidence-$ISSUE1094_LANE"
+      - name: Preserve every raw attempt and generated snapshot candidate
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: issue1094-${{ matrix.lane }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: issue1094-evidence-${{ matrix.lane }}/
+          if-no-files-found: error
+          retention-days: 14
