@@ -1,0 +1,46 @@
+{
+  "schema": "issue1094-original-binary-verification-v1",
+  "repository": "citadelculture/CorbanuTerminal",
+  "runId": 39720100672,
+  "runAttempt": 1,
+  "headSha": "7509059392dbb7a2cba92708b0c840de5ccb6814",
+  "conclusion": "success",
+  "artifacts": [
+    {
+      "lane": "candidate",
+      "id": 12401466378,
+      "name": "issue1094-candidate-binaries-39720100672-1",
+      "bytes": 135965754,
+      "sha256": "e32583b347a3078c2e100c25be1e35c103a042b54cac284aa9fb3c0e3894d273",
+      "expectedMember": {
+        "name": "generate-codex-tui-lib-test",
+        "bytes": 719520280,
+        "sha256": "cebe3567d57b6fe71d3eec09577de06bf3403b2b52ed3624d8e86e829653cbf0"
+      },
+      "sourceCommit": "cf5ab5befa32e9e555c62c2e2b400839d32fa47d",
+      "expectationFromVerifiedSmallArtifact": {
+        "id": 12401372139,
+        "member": "generate-executed-binary.json",
+        "memberSha256": "2617d523e414ebeedc363c715dc60c90000e7459363a8a0a534525be011e56a9"
+      }
+    },
+    {
+      "lane": "baseline",
+      "id": 12401920566,
+      "name": "issue1094-baseline-binaries-39720100672-1",
+      "bytes": 136043099,
+      "sha256": "209ae4afc7cd374fc2819153970020728a6a5f625fbed74bd59136496be68df7",
+      "expectedMember": {
+        "name": "regression-codex-tui-lib-test",
+        "bytes": 719518944,
+        "sha256": "95788b6009e6b7dc611d0f66a2d87f09afe6458adb1c58c40da9db7c35a80e23"
+      },
+      "sourceCommit": "cf4dc35bea558756d9fcbfaf9fbe35e69810a4c3",
+      "expectationFromVerifiedSmallArtifact": {
+        "id": 12401855717,
+        "member": "regression-executed-binary.json",
+        "memberSha256": "fb8e646bfeeccb49d26af86baff48bb4d7fbc83da1a1222bd0ab68bc9192c3bb"
+      }
+    }
+  ]
+}
