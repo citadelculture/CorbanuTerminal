@@ -1,0 +1,44 @@
+name: Issue1094 original evidence projection
+
+on:
+  push:
+    branches: [validation/issue1094-artifact-projection-20261022]
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: issue1094-original-artifact-projection
+  cancel-in-progress: false
+
+jobs:
+  project-original-evidence:
+    if: github.repository == 'citadelculture/CorbanuTerminal'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Checkout evidence projector only
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          path: method-checkout
+          persist-credentials: false
+          sparse-checkout: .github/issue1094-artifact-projection
+      - name: Verify and project the two existing public archives
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PYTHONDONTWRITEBYTECODE: '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 method-checkout/.github/issue1094-artifact-projection/project_artifacts.py \
+            --work "$RUNNER_TEMP/issue1094-original-archive-copies" \
+            --output "$GITHUB_WORKSPACE/issue1094-original-evidence-projection"
+      - name: Preserve original text evidence and complete hash manifests
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: issue1094-original39715280360-projection-${{ github.run_id }}-${{ github.run_attempt }}
+          path: issue1094-original-evidence-projection/
+          if-no-files-found: error
+          retention-days: 14

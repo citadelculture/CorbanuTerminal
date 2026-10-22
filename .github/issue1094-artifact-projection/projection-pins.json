@@ -1,0 +1,23 @@
+{
+  "schema": "issue1094-original-artifact-projection-v1",
+  "repository": "citadelculture/CorbanuTerminal",
+  "runId": 39715280360,
+  "headSha": "24d7d186c0e47f992d13f6eed74d1036a429ace0",
+  "observedAt": "2026-10-22T03:32:52.659832+00:00",
+  "artifacts": [
+    {
+      "lane": "candidate",
+      "id": 12399870590,
+      "name": "issue1094-candidate-39715280360-1",
+      "bytes": 136273123,
+      "sha256": "fce4f4919298e40976add48f725817ccd15b77e0f5584d3458b3694610bebeb4"
+    },
+    {
+      "lane": "baseline",
+      "id": 12399188516,
+      "name": "issue1094-baseline-39715280360-1",
+      "bytes": 136350538,
+      "sha256": "8ea5e65a5f0ce5ce7ed76547eaf74419f29aa35633c5802f01098c515f31eff0"
+    }
+  ]
+}
