@@ -1,0 +1,118 @@
+name: Issue1290 final ordinary TUI13 and login1 validation
+
+on:
+  push:
+    branches: [validation/issue1290-final14-v2-20261022]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: issue1290-final14-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  tui13:
+    if: github.repository == 'citadelculture/CorbanuTerminal'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    env:
+      ISSUE1290_LANE: tui
+    steps:
+      - name: Checkout exact controller revision
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          path: method-checkout
+          persist-credentials: false
+          sparse-checkout: .github/issue1290-final14
+      - name: Checkout exact formatted source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: citadelculture/CorbanuTerminal
+          ref: c1d271fbf05ea36b260a8d2dac0ba1eb46c8d872
+          path: source
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Run source-bound final selected tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 method-checkout/.github/issue1290-final14/run-hosted.py \
+            --lane "$ISSUE1290_LANE" \
+            --source "$GITHUB_WORKSPACE/source" \
+            --work "$RUNNER_TEMP/issue1290-owned-$ISSUE1290_LANE" \
+            --evidence "$GITHUB_WORKSPACE/issue1290-evidence-$ISSUE1290_LANE"
+      - name: Preserve raw reports and final reports separately
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: issue1290-tui-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            issue1290-evidence-tui/
+            !issue1290-evidence-tui/*-retained-test-binary
+            !issue1290-evidence-tui/*-interrupted-*
+          if-no-files-found: error
+          retention-days: 14
+      - name: Preserve attributed executable bytes
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: issue1290-tui-binaries-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            issue1290-evidence-tui/*-retained-test-binary
+            issue1290-evidence-tui/*-interrupted-*
+          if-no-files-found: error
+          retention-days: 14
+
+  login1:
+    needs: tui13
+    if: github.repository == 'citadelculture/CorbanuTerminal'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    env:
+      ISSUE1290_LANE: login
+    steps:
+      - name: Checkout exact controller revision
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          path: method-checkout
+          persist-credentials: false
+          sparse-checkout: .github/issue1290-final14
+      - name: Checkout exact formatted source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: citadelculture/CorbanuTerminal
+          ref: c1d271fbf05ea36b260a8d2dac0ba1eb46c8d872
+          path: source
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Run source-bound final selected tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 method-checkout/.github/issue1290-final14/run-hosted.py \
+            --lane "$ISSUE1290_LANE" \
+            --source "$GITHUB_WORKSPACE/source" \
+            --work "$RUNNER_TEMP/issue1290-owned-$ISSUE1290_LANE" \
+            --evidence "$GITHUB_WORKSPACE/issue1290-evidence-$ISSUE1290_LANE"
+      - name: Preserve raw reports and final reports separately
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: issue1290-login-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            issue1290-evidence-login/
+            !issue1290-evidence-login/*-retained-test-binary
+            !issue1290-evidence-login/*-interrupted-*
+          if-no-files-found: error
+          retention-days: 14
+      - name: Preserve attributed executable bytes
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: issue1290-login-binaries-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            issue1290-evidence-login/*-retained-test-binary
+            issue1290-evidence-login/*-interrupted-*
+          if-no-files-found: error
+          retention-days: 14

@@ -1,0 +1,153 @@
+{
+  "acceptedSnapshots": [
+    {
+      "bytes": 238,
+      "path": "codex-rs/tui/src/chatwidget/snapshots/codex_tui__chatwidget__named_account_login__tests__issue1290_finishing_sign_in.snap",
+      "pendingArtifactSha256": "55f960e7e15d022f1f9cb48ec1961217d5676342849e53614ed212dac925ea0c",
+      "sha256": "55f960e7e15d022f1f9cb48ec1961217d5676342849e53614ed212dac925ea0c"
+    },
+    {
+      "bytes": 219,
+      "path": "codex-rs/tui/src/chatwidget/snapshots/codex_tui__chatwidget__named_account_login__tests__issue1290_requesting_device_code.snap",
+      "pendingArtifactSha256": "dd20077c95c432d81ebaf27778534d4a94f62a529577ae48cae54830c12b8659",
+      "sha256": "dd20077c95c432d81ebaf27778534d4a94f62a529577ae48cae54830c12b8659"
+    },
+    {
+      "bytes": 384,
+      "path": "codex-rs/tui/src/chatwidget/snapshots/codex_tui__chatwidget__named_account_login__tests__issue1290_waiting_for_device_sign_in.snap",
+      "pendingArtifactSha256": "6df90274601d96214449339d84a56a43931a67fdae543527a9e5f1d4ecb61b57",
+      "sha256": "6df90274601d96214449339d84a56a43931a67fdae543527a9e5f1d4ecb61b57"
+    },
+    {
+      "bytes": 385,
+      "path": "codex-rs/tui/src/chatwidget/snapshots/codex_tui__chatwidget__named_account_login__tests__issue1290_waiting_for_device_sign_in_narrow.snap",
+      "pendingArtifactSha256": "5a56c1222c975a865ff26aa5623041e6e2a24032cd7625450cb0884a64da7529",
+      "sha256": "5a56c1222c975a865ff26aa5623041e6e2a24032cd7625450cb0884a64da7529"
+    }
+  ],
+  "candidateCaptureArtifacts": [
+    {
+      "bytes": 316217,
+      "id": 12405206298,
+      "kind": "evidence",
+      "sha256": "9ff1c05141a4d33d6af6f74729a9425c622fc2f66dbbfa07f5296261997879bc"
+    },
+    {
+      "bytes": 136202214,
+      "id": 12404352868,
+      "kind": "binaries",
+      "sha256": "f7214e4afecdab508d55680dcd65e4ee791f8538a7310c951588ee675adf15d3"
+    }
+  ],
+  "captureRunAttempt": 1,
+  "captureRunId": 39726635589,
+  "captureWorkflowHead": "21aa6c2778c7fd27f8a4cdf5d8e8396258be7837",
+  "capturedCandidate": "7a280f934d316a0bc6ce4b58502cb2d46ac4df6d",
+  "commit": "c1d271fbf05ea36b260a8d2dac0ba1eb46c8d872",
+  "compileArtifacts": [
+    {
+      "bytes": 60669,
+      "id": 12403907741,
+      "kind": "evidence",
+      "sha256": "c6391e51603796528c7c6ec1e3f96b306a94187daed7cbcfb4caeb21e264f269"
+    },
+    {
+      "bytes": 8215752,
+      "id": 12403952992,
+      "kind": "binaries",
+      "sha256": "9be436efd4ba401868876ab6da94cfe26244cd2d70175076230acda668405776"
+    }
+  ],
+  "fullFmtFinishedAt": "2026-10-22T06:22:14.511794+00:00",
+  "fullFmtReceiptSha256": "fb3aea8126839385e065e60bcb9a08cd24944baeccaf7deec8a1f07fb612dc0c",
+  "fullTrackedManifestSha256": "cba0185617864b70cf33b664853c468a21ad1e469e699eb67cb906ec96ac1338",
+  "lanes": {
+    "login": {
+      "binaryGlob": "all-*",
+      "binaryName": "all",
+      "expectedTests": [
+        "suite::device_code_login::issue1290_cancelled_persistence_guard_leaves_authorized_tokens_unsaved"
+      ],
+      "kind": "test",
+      "package": "codex-login",
+      "targetArgs": [
+        "--test",
+        "all"
+      ]
+    },
+    "tui": {
+      "binaryGlob": "codex_tui-*",
+      "binaryName": "codex_tui",
+      "expectedTests": [
+        "chatwidget::named_account_login::tests::issue1290_escape_stops_both_requesting_and_waiting_tasks",
+        "chatwidget::named_account_login::tests::issue1290_ctrl_c_and_view_drop_stop_pending_sign_in",
+        "chatwidget::named_account_login::tests::issue1290_chatwidget_routes_escape_and_ctrl_c_to_the_named_login",
+        "chatwidget::named_account_login::tests::issue1290_enter_keeps_the_cancellable_waiting_screen",
+        "chatwidget::named_account_login::tests::issue1290_finished_success_and_failure_win_over_late_escape_once",
+        "chatwidget::named_account_login::tests::issue1290_persistence_error_survives_dismissal_without_closing_a_retry",
+        "chatwidget::named_account_login::tests::issue1290_cancelled_attempt_cannot_deliver_into_a_retry",
+        "chatwidget::named_account_login::tests::issue1290_escape_drops_real_device_request_and_token_poll_futures",
+        "chatwidget::named_account_login::tests::issue1290_named_account_login_snapshots",
+        "chatwidget::named_account_login::tests::issue1290_finishing_sign_in_snapshot",
+        "app::provider_accounts::tests::issue1290_dismissal_during_save_or_summary_keeps_the_committed_result",
+        "chatwidget::provider_credentials::tests::codex_account_device_login_escape_cancels_only_active_login",
+        "chatwidget::provider_credentials::tests::codex_account_device_login_accept_disarms_cancel"
+      ],
+      "kind": "lib",
+      "package": "codex-tui",
+      "targetArgs": [
+        "--lib"
+      ]
+    }
+  },
+  "snapshotAcceptanceReceiptSha256": "65a2a949b52b6c25690af4a7f27d29532c835957e74d31c54f794226fce7f3fc",
+  "snapshotAcceptanceReviewedAt": "2026-10-22T06:21:35.385538+00:00",
+  "snapshotsAndImplementationNeverGuessed": true,
+  "sourceHashes": {
+    ".codex/skills/corbanu-terminal-development/SKILL.md": "aae866dc7c03ef742e61dac57413de9b194b28fb1051471939eb1c85bd10c9c8",
+    "AGENTS.md": "4b6aa2003bb1b01c3313f1155e3e5e35516ec217da794d3bf3920ed483bbe608",
+    "MODULE.bazel.lock": "55708654b30ae4719d400ead9f0da048150d86d9bb310102cd7a5dbd8b7276e3",
+    "codex-rs/.config/nextest.toml": "830c64fd157ef4bb618626c4f7aaf3de986b488289eb28ed352ff0a21e29c110",
+    "codex-rs/AGENTS.md": "8770b8bde8ddaf5f404090afb3f2251aca06bca5cfc5707ec42ae3a7490ce47a",
+    "codex-rs/Cargo.lock": "3d3fa9a03d6a5c845c20231b5eb65ae44ef9acef21c38a8e4e5ac7b5afc5774c",
+    "codex-rs/Cargo.toml": "3184d6b3a34c0e311a052c7bb7094809ae64364a7efd586e557e33a0544a2666",
+    "codex-rs/login/BUILD.bazel": "7ba973c032770498a012e8420068a035495ba4cd510d033f071731087e122c13",
+    "codex-rs/login/Cargo.toml": "a7fb71622baeb3f24af6ce34d21ce35ae15bc32cf1cb8467d1ff01f8802c63d8",
+    "codex-rs/login/src/device_code_auth.rs": "34669af2cfe1fa639e6810538e6bc969f6528eff5e9377b95a2584840fb65f24",
+    "codex-rs/login/src/lib.rs": "f8c00ef4732be721f5bd3a84b55bd9f5639f6600e31da2752e567a798b190be5",
+    "codex-rs/login/tests/all.rs": "f484e46e22db99bab05787768d047b60251f6ba95e24387f75034c1dfa1980a3",
+    "codex-rs/login/tests/suite/device_code_login.rs": "e89e9f553b0056959ddc64d84b0a937e212c329502e669d978ee1a696880686f",
+    "codex-rs/login/tests/suite/mod.rs": "562cb356ffb41996bbe3b18a0a9f9501df85a7fa0f50120c586654bf8c5faed1",
+    "codex-rs/rust-toolchain.toml": "913d7e9d7adcd7abfeb0c4554c39a5a57c3cf84a694bc6a6aeae038a1f6ae33b",
+    "codex-rs/tui/AGENTS.md": "bfa859952fd8e12654e109d48ee3f7dbbe10961353cc3e50a15857ff7d93dffa",
+    "codex-rs/tui/BUILD.bazel": "f489fefe10b99c6e3905d2909c28ee388773392115d774a6af569b3f9d3b9cc2",
+    "codex-rs/tui/Cargo.toml": "f2e82674e1baf4884c4519004a9bc40c8822bba773864351e8dd333706fbd2be",
+    "codex-rs/tui/src/app.rs": "88192d37b12f96b74e9cdbf5429645ec672aed267f5c259eaba9f8c85ce9d667",
+    "codex-rs/tui/src/app/provider_accounts.rs": "af081acfaf9bf72c7e6c025aa7c6670e9803b50ca44b34edcd1df604109c9ba0",
+    "codex-rs/tui/src/app/provider_accounts_tests.rs": "9260efb23fd853a425df3107fe8a30ace0880d7244ea2f6c26ca0291ce26e460",
+    "codex-rs/tui/src/chatwidget.rs": "1c1d6c63f6b5ccf7a6f705d3e17ce4f3b7064f3a13fa219f933047f6bf4e087c",
+    "codex-rs/tui/src/chatwidget/named_account_login.rs": "8d84c398f724fac8886159d35290daa848b2403186ab02dbe98a142110142dc8",
+    "codex-rs/tui/src/chatwidget/named_account_login_tests.rs": "c7e4d82373db8a7741eb0c09c09fe569187503f3e5dec3cc6595f742f0a078f2",
+    "codex-rs/tui/src/chatwidget/provider_credentials.rs": "451ab3a467b9c7c2cfaccef6b27fdb3c11c0113ac1f77a8fe5260891eb2885ad",
+    "codex-rs/tui/src/chatwidget/snapshots/codex_tui__chatwidget__named_account_login__tests__issue1290_finishing_sign_in.snap": "55f960e7e15d022f1f9cb48ec1961217d5676342849e53614ed212dac925ea0c",
+    "codex-rs/tui/src/chatwidget/snapshots/codex_tui__chatwidget__named_account_login__tests__issue1290_requesting_device_code.snap": "dd20077c95c432d81ebaf27778534d4a94f62a529577ae48cae54830c12b8659",
+    "codex-rs/tui/src/chatwidget/snapshots/codex_tui__chatwidget__named_account_login__tests__issue1290_waiting_for_device_sign_in.snap": "6df90274601d96214449339d84a56a43931a67fdae543527a9e5f1d4ecb61b57",
+    "codex-rs/tui/src/chatwidget/snapshots/codex_tui__chatwidget__named_account_login__tests__issue1290_waiting_for_device_sign_in_narrow.snap": "5a56c1222c975a865ff26aa5623041e6e2a24032cd7625450cb0884a64da7529",
+    "codex-rs/tui/src/lib.rs": "cc623d571791017aac618d645bb5a7c6fe007977b8844cdf053da9e72ce7a50b",
+    "codex-rs/tui/src/main.rs": "7b5225596b027c15ea5552c1e980f8fb154374f9e141732d1cc76d9e6c3498f9",
+    "codex-rs/tui/styles.md": "e9fd1c7fadf305028537782242afdd2104db9b0d2d1cc0ce7da03f7aceed1af9",
+    "docs/corbanu-product-spec.md": "5075bb5cc6f6ddf55f0592df7083531f68e82737b4d0446cc6891c77ff34ec7d",
+    "docs/development/test-isolation.md": "1a5c54c42d74e08c2a98ea6fc8217e05e15c43b2f6b40f679c6388090514cfd0",
+    "docs/provider-accounts.md": "46414d4dc99e5e98d68937e2c2183bcc947751e4b511012b1901b0458a9b7e28",
+    "justfile": "c4286cfea7819dd7e062a7402ca8db8517cfd5790de32e7b68626c25d966438c",
+    "pnpm-lock.yaml": "316f340e80f0fcc1bfae0caebb92739389ac31c08a8296a96e81cd7ad0bf714d",
+    "scripts/isolated_rust_tests.py": "2376d36fae0943cbbf4a0caf58109b0dece03cb226983d1276216adc90d2447c",
+    "scripts/just-shell.py": "444d6b328d44abf6453b77b6acce2a0c881fc162ff30b20f352c85067797fbe9"
+  },
+  "state": "ROOT_ACCEPTED_FULLFMT_FINAL_SOURCE_BOUND",
+  "trackedBytes": 321230797,
+  "trackedCount": 35921,
+  "tree": "10cf60e2b029e35842ff2ccff3b5f7d81230708b",
+  "unitId": "issue1290-cancel-named-device-login",
+  "verifiedCaptureReceiptSha256": "ff342b40601235174c22305f76fc31317c275dc5973204cbb670a17a4fdb2800"
+}
