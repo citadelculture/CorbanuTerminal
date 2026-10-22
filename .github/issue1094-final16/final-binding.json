@@ -1,0 +1,94 @@
+{
+  "acceptedSnapshots": [
+    {
+      "bytes": 457,
+      "path": "codex-rs/tui/src/bottom_pane/snapshots/codex_tui__bottom_pane__security_level_picker__issue_1047_tests__issue_1094_remote_revoke_all.snap",
+      "pendingArtifactSha256": "1064bd3a3af1a0ed4c489ea66043c4a46b9ec424f0ef1076a5f3f3b8cfc08415",
+      "sha256": "1064bd3a3af1a0ed4c489ea66043c4a46b9ec424f0ef1076a5f3f3b8cfc08415"
+    },
+    {
+      "bytes": 518,
+      "path": "codex-rs/tui/src/bottom_pane/snapshots/codex_tui__bottom_pane__security_level_picker__issue_1047_tests__issue_1094_remote_kill_switch_on.snap",
+      "pendingArtifactSha256": "8514441b1d62655aefefe88e419c20b48de3bf088f7a7b7669753d2373ab48e2",
+      "sha256": "8514441b1d62655aefefe88e419c20b48de3bf088f7a7b7669753d2373ab48e2"
+    },
+    {
+      "bytes": 520,
+      "path": "codex-rs/tui/src/bottom_pane/snapshots/codex_tui__bottom_pane__security_level_picker__issue_1047_tests__issue_1094_remote_kill_switch_off.snap",
+      "pendingArtifactSha256": "f8c56fc93fd727e01eacc84796be7441270f993664f2a596c68f385bd445476e",
+      "sha256": "f8c56fc93fd727e01eacc84796be7441270f993664f2a596c68f385bd445476e"
+    }
+  ],
+  "candidateCaptureArtifacts": [
+    {
+      "bytes": 135965754,
+      "id": 12401466378,
+      "kind": "binaries",
+      "name": "issue1094-candidate-binaries-39720100672-1",
+      "sha256": "e32583b347a3078c2e100c25be1e35c103a042b54cac284aa9fb3c0e3894d273",
+      "verificationMethod": "actual hosted archive and ELF hashes with locally verified returned receipt"
+    },
+    {
+      "bytes": 311068,
+      "id": 12401372139,
+      "kind": "evidence",
+      "name": "issue1094-candidate-evidence-39720100672-1",
+      "sha256": "e116911cf130b941c802e146865befdfc0f4d4bc0b322cd6adcd4c317974de6e",
+      "verificationMethod": "locally verified original small archive"
+    }
+  ],
+  "captureRunAttempt": 1,
+  "captureRunId": 39720100672,
+  "captureWorkflowHead": "7509059392dbb7a2cba92708b0c840de5ccb6814",
+  "capturedCandidate": "cf5ab5befa32e9e555c62c2e2b400839d32fa47d",
+  "commit": "ffe154faceccd04943de0e37e839170b8c7bdd34",
+  "expectedTests": [
+    "security::revocation_view::tests::pf_25_s02_kill_switch_review_and_esc_change_nothing",
+    "security::revocation_view::tests::pf_25_s02_kill_switch_on_then_off",
+    "security::revocation_view::tests::pf_25_s02_revoke_all_is_reviewed_and_saved",
+    "security::revocation_view::tests::pf_25_s02_changed_state_is_refused",
+    "security::revocation_view::tests::pf_25_s02_restart_after_a_change",
+    "security::revocation_view::tests::issue_507_kill_switch_on_stops_claude_panes",
+    "security::revocation_view::tests::pf_25_s02_grant_rows_review_and_already_ended",
+    "security::revocation_view::tests::pf_25_s02_selection_follows_the_grant",
+    "security::revocation_view::tests::pf_25_s02_commit_runs_off_the_ui_thread",
+    "security::revocation_view::tests::pf_25_s02_only_this_view_revokes",
+    "security::revocation_view::tests::pf_25_s02_lost_race_is_reported",
+    "security::revocation_view::tests::issue_1035_revoke_all_confirmation_names_every_session",
+    "bottom_pane::security_level_picker::issue_1047_tests::issue_1047_moderate_review_before_the_window_session_starts",
+    "bottom_pane::security_level_picker::issue_1047_tests::issue_1047_moderate_saved_before_the_window_session_starts",
+    "bottom_pane::security_level_picker::issue_1047_tests::issue_1047_remote_window_is_not_told_it_starts_here",
+    "bottom_pane::security_level_picker::issue_1047_tests::issue_1094_revocation_restart_follows_the_window_session_location"
+  ],
+  "fullFmtFinishedAt": "2026-10-22T04:37:11.610174+00:00",
+  "fullFmtReceiptSha256": "569bc5eb97250d325e94c81044efd1eef24e9086f027d89227f6b0ab65d61b8b",
+  "fullTrackedManifestSha256": "2317f3721be33faff588641586ad1a9e5be9296e5398a50ec93d09132ec25f40",
+  "snapshotAcceptanceReceiptSha256": "1fd08f43ce7a4f556e5bc4c0cf33ce0394dc614bdfa7b06fe6719ddaa9519143",
+  "snapshotAcceptanceReviewedAt": "2026-10-22T04:36:50.507001+00:00",
+  "snapshotsAndImplementationNeverGuessed": true,
+  "sourceHashes": {
+    "codex-rs/.config/nextest.toml": "830c64fd157ef4bb618626c4f7aaf3de986b488289eb28ed352ff0a21e29c110",
+    "codex-rs/Cargo.lock": "ba6f0d3ce73431406461c3480360d1bbd7c7229bbcc2bc99bbb17d6e52d344ac",
+    "codex-rs/Cargo.toml": "3184d6b3a34c0e311a052c7bb7094809ae64364a7efd586e557e33a0544a2666",
+    "codex-rs/rust-toolchain.toml": "913d7e9d7adcd7abfeb0c4554c39a5a57c3cf84a694bc6a6aeae038a1f6ae33b",
+    "codex-rs/tui/Cargo.toml": "f2e82674e1baf4884c4519004a9bc40c8822bba773864351e8dd333706fbd2be",
+    "codex-rs/tui/src/bottom_pane/security_level_picker.rs": "1699467f3fdd47fef1d55797342153acedbce80236421a34c8b4a7a44c0ac101",
+    "codex-rs/tui/src/bottom_pane/security_level_picker_issue_1047_tests.rs": "f6e025763084fae10303c1646fb1ab42004dccb3c963b08b58871959aae4ae42",
+    "codex-rs/tui/src/bottom_pane/snapshots/codex_tui__bottom_pane__security_level_picker__issue_1047_tests__issue_1094_remote_kill_switch_off.snap": "f8c56fc93fd727e01eacc84796be7441270f993664f2a596c68f385bd445476e",
+    "codex-rs/tui/src/bottom_pane/snapshots/codex_tui__bottom_pane__security_level_picker__issue_1047_tests__issue_1094_remote_kill_switch_on.snap": "8514441b1d62655aefefe88e419c20b48de3bf088f7a7b7669753d2373ab48e2",
+    "codex-rs/tui/src/bottom_pane/snapshots/codex_tui__bottom_pane__security_level_picker__issue_1047_tests__issue_1094_remote_revoke_all.snap": "1064bd3a3af1a0ed4c489ea66043c4a46b9ec424f0ef1076a5f3f3b8cfc08415",
+    "codex-rs/tui/src/lib.rs": "cc623d571791017aac618d645bb5a7c6fe007977b8844cdf053da9e72ce7a50b",
+    "codex-rs/tui/src/security/mod.rs": "db8c9642773e04581068b65ef9896d695132488a5a94796eaadc80fac4272e43",
+    "codex-rs/tui/src/security/revocation_view.rs": "f51f98d35b2706d54c642ace294982939cbe29777958ce895f856377f29b79fc",
+    "codex-rs/tui/src/security/revocation_view_tests.rs": "d0331ae768c1cc6f48ebd87ff0e26cda52aec058fb7fd39d5377179a6630c486",
+    "justfile": "c4286cfea7819dd7e062a7402ca8db8517cfd5790de32e7b68626c25d966438c",
+    "scripts/isolated_rust_tests.py": "2376d36fae0943cbbf4a0caf58109b0dece03cb226983d1276216adc90d2447c",
+    "scripts/just-shell.py": "444d6b328d44abf6453b77b6acce2a0c881fc162ff30b20f352c85067797fbe9"
+  },
+  "state": "ROOT_ACCEPTED_FULLFMT_FINAL_SOURCE_BOUND",
+  "trackedBytes": 321164788,
+  "trackedCount": 35918,
+  "tree": "086fdc6d07866721820e81e1791e7eda7e9508a0",
+  "unitId": "issue1094-remote-revocation-restart-affordance",
+  "verifiedCaptureReceiptSha256": "b4dbfd1c1400656a3df6703ababb5f42226fcc1a1bcc928c9bf1ddbe5df3637a"
+}

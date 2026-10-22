@@ -1,0 +1,59 @@
+name: Issue1094 final16 ordinary validation
+on:
+  push:
+    branches: [validation/issue1094-final16-v1-20261022]
+permissions:
+  contents: read
+concurrency:
+  group: issue1094-final16-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  final16:
+    if: github.repository == 'citadelculture/CorbanuTerminal'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    steps:
+      - name: Checkout frozen final controller
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          path: method-checkout
+          persist-credentials: false
+          sparse-checkout: .github/issue1094-final16
+      - name: Checkout exact accepted formatted source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: citadelculture/CorbanuTerminal
+          ref: ffe154faceccd04943de0e37e839170b8c7bdd34
+          path: source
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Run exact16 ordinary library tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 method-checkout/.github/issue1094-final16/run-hosted.py \
+            --lane final \
+            --source "$GITHUB_WORKSPACE/source" \
+            --work "$RUNNER_TEMP/issue1094-owned-final" \
+            --evidence "$GITHUB_WORKSPACE/issue1094-evidence-final"
+      - name: Preserve raw final text evidence
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: issue1094-final16-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            issue1094-evidence-final/
+            !issue1094-evidence-final/*-codex-tui-lib-test
+            !issue1094-evidence-final/*-interrupted-codex_tui-*
+          if-no-files-found: error
+          retention-days: 14
+      - name: Preserve full retained final test executable bytes separately
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: issue1094-final16-binaries-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            issue1094-evidence-final/*-codex-tui-lib-test
+            issue1094-evidence-final/*-interrupted-codex_tui-*
+          if-no-files-found: error
+          retention-days: 14
