@@ -14,6 +14,7 @@ import sys
 import time
 import xml.etree.ElementTree as ET
 from hosted_controls import now, digest, write_json, run_bounded, source_state, cleanup_resources, preserve_attempt
+from report_evidence import REPORT_MOUNT, capture_report_evidence
 
 GIB = 1024 ** 3
 IMAGE = 'rust:1.99.1-bookworm@sha256:8bf7188ae46ad73b801c8d405eedc13ce63a7852b562885743a56890723549a8'
@@ -111,7 +112,7 @@ def main():
                            (lambda: owned_stop(container)) if container else None,
                            allow_failure)
 
-    def create(name, online=False):
+    def create(name, online=False, report_root=None):
         containers.append(name)
         argv = ['docker', 'create', '--name', name, '--network', 'bridge' if online else 'none',
                 '--memory', '12g', '--memory-swap', '12g', '--cpus', '2', '--pids-limit', '512',
@@ -131,6 +132,9 @@ def main():
         if online:
             argv += ['--env', 'FIXTURE_UID=' + str(uid), '--env', 'FIXTURE_GID=' + str(gid), IMAGE]
         else:
+            if report_root is None:
+                raise RuntimeError('Native attempt requires a separate exact report-store mount')
+            argv += ['--mount', f'type=bind,src={report_root},dst={REPORT_MOUNT}']
             argv += ['--read-only', '--cap-drop=ALL', '--security-opt', 'no-new-privileges=true',
                      '--user', f'{uid}:{gid}', '--tmpfs', '/tmp:rw,nosuid,nodev,size=2147483648',
                      '--env', 'CARGO_NET_OFFLINE=true', '--env', 'CARGO_TERM_COLOR=never',
@@ -147,7 +151,13 @@ def main():
     def native(label, expression, timeout, allow_failure=False):
         nonlocal cache_evidence_preserved
         name = prefix + '-' + label
-        argv = create(name)
+        report_root = work / 'reports' / label
+        report_root.mkdir(parents=True, exist_ok=False)
+        # Only an empty mountpoint appears in the host source checkout. The
+        # report bytes stay in owned work/reports, outside the source mount.
+        report_mountpoint = source / REPORT_MOUNT.relative_to('/src')
+        report_mountpoint.mkdir(parents=True, exist_ok=False)
+        argv = create(name, report_root=report_root)
         argv += ['python3', '/method/container_entry.py', label, expression, REGRESSION]
         run(label + '-create', argv, 60)
         inspect = short(['docker', 'inspect', name])
@@ -163,6 +173,10 @@ def main():
             raise RuntimeError('Host/shared process or IPC namespace configured')
         if host_config['CapAdd'] or host_config['CapDrop'] != ['ALL']:
             raise RuntimeError('Unexpected native container capabilities')
+        report_mounts = [m for m in obj['Mounts'] if m['Destination'] == str(REPORT_MOUNT)]
+        if (len(report_mounts) != 1 or report_mounts[0]['Type'] != 'bind'
+                or report_mounts[0]['Source'] != str(report_root) or not report_mounts[0]['RW']):
+            raise RuntimeError('Exact separate native report-store mount not proven')
         # Persist only this known synthetic configuration, never ambient host env.
         write_json(evidence / (label + '-container-config.json'), {
             'id': obj['Id'], 'image': obj['Image'], 'hostConfig': host_config,
@@ -173,16 +187,25 @@ def main():
             rc = run(label, ['docker', 'start', '--attach', name], timeout, name, allow_failure)
         finally:
             try:
-                owned_stop(name)
-                preserve_attempt(scratch / 'target', evidence, label, available, 8 * GIB)
+                try:
+                    owned_stop(name)
+                finally:
+                    # Capture each actual report/snapshot before strict source
+                    # rejection can interrupt the path. Preserve binary evidence
+                    # even if report capture itself reports an error.
+                    try:
+                        capture_report_evidence(report_root, source, evidence, label,
+                                                pending_snapshots if label == 'generate' else set(),
+                                                available, 8 * GIB)
+                    finally:
+                        preserve_attempt(scratch / 'target', evidence, label, available, 8 * GIB)
                 cache_evidence_preserved = True
             finally:
                 source_state(source, (pin, tree), expected_source_hashes, pending_snapshots if label == 'generate' else set(), evidence, label + '-after')
-        # JUnit is copied before a later attempt can overwrite it.
+        # Use the exact observed profile.local report, copied in finally above.
         testcases = []
-        for n, path in enumerate((scratch / 'target').glob('nextest/*/junit.xml')):
-            shutil.copyfile(path, evidence / f'{label}-junit-{n}.xml')
-            testcases.extend(ET.parse(path).getroot().iter('testcase'))
+        path = evidence / (label + '-junit-0.xml')
+        testcases.extend(ET.parse(path).getroot().iter('testcase'))
         expected = 16 if label == 'affected' else 1
         if len(testcases) != expected or any(case.find('skipped') is not None for case in testcases):
             raise RuntimeError(f'Execution record count/skip mismatch: {label}, {len(testcases)} vs {expected}')
@@ -229,12 +252,11 @@ def main():
             outcome = 'BASELINE_RAW_RESULT_REQUIRES_SEMANTIC_ASSERTION_CHECK' if rc else 'UNEXPECTED_BASELINE_PASS'
         else:
             native('generate', f'test(={REGRESSION})', 5400)
-            snapshots = sorted(source / name for name in pending_snapshots if (source / name).is_file())
+            snapshots = sorted(evidence / Path(name).name for name in pending_snapshots
+                               if (evidence / Path(name).name).is_file())
             if len(snapshots) != 3:
                 raise RuntimeError('Expected exactly three actually generated remote snapshots')
             snapshot_hashes = {p.name: digest(p) for p in snapshots}
-            for path in snapshots:
-                shutil.copyfile(path, evidence / path.name)
             write_json(evidence / 'generated-snapshots.json', snapshot_hashes)
             # Root must inspect/accept these exact bytes and run full fmt before
             # rebinding a final commit for the mutation-disabled 16-test lane.

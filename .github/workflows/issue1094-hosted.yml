@@ -2,8 +2,7 @@ name: Issue1094 bounded ordinary validation
 
 on:
   push:
-    branches: [validation/issue1094-hosted-20261022]
-  workflow_dispatch:
+    branches: [validation/issue1094-hosted-v4-20261022]
 
 permissions:
   contents: read
@@ -51,11 +50,24 @@ jobs:
             --source "$GITHUB_WORKSPACE/source" \
             --work "$RUNNER_TEMP/issue1094-owned-$ISSUE1094_LANE" \
             --evidence "$GITHUB_WORKSPACE/issue1094-evidence-$ISSUE1094_LANE"
-      - name: Preserve every raw attempt and generated snapshot candidate
+      - name: Preserve every raw text attempt and generated snapshot candidate
         if: always()
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
         with:
-          name: issue1094-${{ matrix.lane }}-${{ github.run_id }}-${{ github.run_attempt }}
-          path: issue1094-evidence-${{ matrix.lane }}/
+          name: issue1094-${{ matrix.lane }}-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            issue1094-evidence-${{ matrix.lane }}/
+            !issue1094-evidence-${{ matrix.lane }}/*-codex-tui-lib-test
+            !issue1094-evidence-${{ matrix.lane }}/*-interrupted-codex_tui-*
+          if-no-files-found: error
+          retention-days: 14
+      - name: Preserve full retained test executable bytes separately
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: issue1094-${{ matrix.lane }}-binaries-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            issue1094-evidence-${{ matrix.lane }}/*-codex-tui-lib-test
+            issue1094-evidence-${{ matrix.lane }}/*-interrupted-codex_tui-*
           if-no-files-found: error
           retention-days: 14
