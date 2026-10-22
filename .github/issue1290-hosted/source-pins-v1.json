@@ -1,8 +1,8 @@
 {
-  "sourceCommit": "baf33cb0b43b94ca1fe788e6be2d931f3bc085c7",
-  "sourceTree": "67f203944277134769f98d7f2d42f0398df50703",
+  "sourceCommit": "7a280f934d316a0bc6ce4b58502cb2d46ac4df6d",
+  "sourceTree": "da0ec342e7df00435917f53759f7ce5e9d045b15",
   "baseCommit": "353c54916b7f7b542507d08695b984cc05921cc0",
-  "wholeTrackedManifestSha256": "0309ab63c8732d1af1e9e31d2dfbaa8a0242860edbc0d271b4f84fbade7f846b",
+  "wholeTrackedManifestSha256": "8c331e889f6b77de20b8a5b1bb56c238f8fba9712e54f87c0788a92dab7468f2",
   "lanes": {
     "compile": {
       ".codex/skills/corbanu-terminal-development/SKILL.md": "aae866dc7c03ef742e61dac57413de9b194b28fb1051471939eb1c85bd10c9c8",
@@ -25,7 +25,7 @@
       "codex-rs/tui/Cargo.toml": "f2e82674e1baf4884c4519004a9bc40c8822bba773864351e8dd333706fbd2be",
       "codex-rs/tui/src/app.rs": "88192d37b12f96b74e9cdbf5429645ec672aed267f5c259eaba9f8c85ce9d667",
       "codex-rs/tui/src/app/provider_accounts.rs": "af081acfaf9bf72c7e6c025aa7c6670e9803b50ca44b34edcd1df604109c9ba0",
-      "codex-rs/tui/src/app/provider_accounts_tests.rs": "ddd726d46fc199787c6e46b77d03dc29996a9af45e5a89769b5e69ecdbbfc3f3",
+      "codex-rs/tui/src/app/provider_accounts_tests.rs": "9260efb23fd853a425df3107fe8a30ace0880d7244ea2f6c26ca0291ce26e460",
       "codex-rs/tui/src/chatwidget.rs": "1c1d6c63f6b5ccf7a6f705d3e17ce4f3b7064f3a13fa219f933047f6bf4e087c",
       "codex-rs/tui/src/chatwidget/named_account_login.rs": "8d84c398f724fac8886159d35290daa848b2403186ab02dbe98a142110142dc8",
       "codex-rs/tui/src/chatwidget/named_account_login_tests.rs": "c7e4d82373db8a7741eb0c09c09fe569187503f3e5dec3cc6595f742f0a078f2",
@@ -62,7 +62,7 @@
       "codex-rs/tui/Cargo.toml": "f2e82674e1baf4884c4519004a9bc40c8822bba773864351e8dd333706fbd2be",
       "codex-rs/tui/src/app.rs": "88192d37b12f96b74e9cdbf5429645ec672aed267f5c259eaba9f8c85ce9d667",
       "codex-rs/tui/src/app/provider_accounts.rs": "af081acfaf9bf72c7e6c025aa7c6670e9803b50ca44b34edcd1df604109c9ba0",
-      "codex-rs/tui/src/app/provider_accounts_tests.rs": "ddd726d46fc199787c6e46b77d03dc29996a9af45e5a89769b5e69ecdbbfc3f3",
+      "codex-rs/tui/src/app/provider_accounts_tests.rs": "9260efb23fd853a425df3107fe8a30ace0880d7244ea2f6c26ca0291ce26e460",
       "codex-rs/tui/src/chatwidget.rs": "1c1d6c63f6b5ccf7a6f705d3e17ce4f3b7064f3a13fa219f933047f6bf4e087c",
       "codex-rs/tui/src/chatwidget/named_account_login.rs": "8d84c398f724fac8886159d35290daa848b2403186ab02dbe98a142110142dc8",
       "codex-rs/tui/src/chatwidget/named_account_login_tests.rs": "c7e4d82373db8a7741eb0c09c09fe569187503f3e5dec3cc6595f742f0a078f2",

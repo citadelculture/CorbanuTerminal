@@ -2,7 +2,7 @@ name: Issue1290 bounded compile and snapshot capture
 
 on:
   push:
-    branches: [validation/issue1290-stage1-v1-20261022]
+    branches: [validation/issue1290-stage1-v2-20261022]
 
 permissions:
   contents: read
@@ -29,7 +29,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           repository: citadelculture/CorbanuTerminal
-          ref: baf33cb0b43b94ca1fe788e6be2d931f3bc085c7
+          ref: 7a280f934d316a0bc6ce4b58502cb2d46ac4df6d
           path: source
           persist-credentials: false
           fetch-depth: 1
@@ -84,7 +84,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           repository: citadelculture/CorbanuTerminal
-          ref: baf33cb0b43b94ca1fe788e6be2d931f3bc085c7
+          ref: 7a280f934d316a0bc6ce4b58502cb2d46ac4df6d
           path: source
           persist-credentials: false
           fetch-depth: 1

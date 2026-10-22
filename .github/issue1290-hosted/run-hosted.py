@@ -19,8 +19,8 @@ from report_evidence import REPORT_MOUNT, capture_report_evidence
 GIB = 1024 ** 3
 IMAGE = 'rust:1.99.1-bookworm@sha256:8bf7188ae46ad73b801c8d405eedc13ce63a7852b562885743a56890723549a8'
 PINS = {
-    'compile': ('baf33cb0b43b94ca1fe788e6be2d931f3bc085c7', '67f203944277134769f98d7f2d42f0398df50703'),
-    'capture': ('baf33cb0b43b94ca1fe788e6be2d931f3bc085c7', '67f203944277134769f98d7f2d42f0398df50703'),
+    'compile': ('7a280f934d316a0bc6ce4b58502cb2d46ac4df6d', 'da0ec342e7df00435917f53759f7ce5e9d045b15'),
+    'capture': ('7a280f934d316a0bc6ce4b58502cb2d46ac4df6d', 'da0ec342e7df00435917f53759f7ce5e9d045b15'),
 }
 CAPTURE_TESTS = (
     'chatwidget::named_account_login::tests::issue1290_named_account_login_snapshots',
