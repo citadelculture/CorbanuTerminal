@@ -1,0 +1,122 @@
+name: Issue1290 bounded compile and snapshot capture
+
+on:
+  push:
+    branches: [validation/issue1290-stage1-v1-20261022]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: issue1290-stage1-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  production_compile:
+    if: github.repository == 'citadelculture/CorbanuTerminal'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    env:
+      ISSUE1290_LANE: compile
+    steps:
+      - name: Checkout exact controller revision
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          path: method-checkout
+          persist-credentials: false
+          sparse-checkout: .github/issue1290-hosted
+      - name: Checkout exact formatted source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: citadelculture/CorbanuTerminal
+          ref: baf33cb0b43b94ca1fe788e6be2d931f3bc085c7
+          path: source
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Run source-bound stage1 lane
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 method-checkout/.github/issue1290-hosted/run-hosted.py \
+            --lane "$ISSUE1290_LANE" \
+            --source "$GITHUB_WORKSPACE/source" \
+            --work "$RUNNER_TEMP/issue1290-owned-$ISSUE1290_LANE" \
+            --evidence "$GITHUB_WORKSPACE/issue1290-evidence-$ISSUE1290_LANE"
+      - name: Preserve raw reports and pending snapshots separately
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: issue1290-compile-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            issue1290-evidence-compile/
+            !issue1290-evidence-compile/*-codex-tui-lib-test
+            !issue1290-evidence-compile/*-codex-tui-bin-test
+            !issue1290-evidence-compile/*-interrupted-codex_tui-*
+          if-no-files-found: error
+          retention-days: 14
+      - name: Preserve attributed executable bytes
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: issue1290-compile-binaries-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            issue1290-evidence-compile/*-codex-tui-lib-test
+            issue1290-evidence-compile/*-codex-tui-bin-test
+            issue1290-evidence-compile/*-interrupted-codex_tui-*
+          if-no-files-found: error
+          retention-days: 14
+
+  capture:
+    needs: production_compile
+    if: github.repository == 'citadelculture/CorbanuTerminal'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    env:
+      ISSUE1290_LANE: capture
+    steps:
+      - name: Checkout exact controller revision
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          path: method-checkout
+          persist-credentials: false
+          sparse-checkout: .github/issue1290-hosted
+      - name: Checkout exact formatted source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: citadelculture/CorbanuTerminal
+          ref: baf33cb0b43b94ca1fe788e6be2d931f3bc085c7
+          path: source
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Run source-bound stage1 lane
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 method-checkout/.github/issue1290-hosted/run-hosted.py \
+            --lane "$ISSUE1290_LANE" \
+            --source "$GITHUB_WORKSPACE/source" \
+            --work "$RUNNER_TEMP/issue1290-owned-$ISSUE1290_LANE" \
+            --evidence "$GITHUB_WORKSPACE/issue1290-evidence-$ISSUE1290_LANE"
+      - name: Preserve raw reports and pending snapshots separately
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: issue1290-capture-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            issue1290-evidence-capture/
+            !issue1290-evidence-capture/*-codex-tui-lib-test
+            !issue1290-evidence-capture/*-codex-tui-bin-test
+            !issue1290-evidence-capture/*-interrupted-codex_tui-*
+          if-no-files-found: error
+          retention-days: 14
+      - name: Preserve attributed executable bytes
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: issue1290-capture-binaries-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            issue1290-evidence-capture/*-codex-tui-lib-test
+            issue1290-evidence-capture/*-codex-tui-bin-test
+            issue1290-evidence-capture/*-interrupted-codex_tui-*
+          if-no-files-found: error
+          retention-days: 14
