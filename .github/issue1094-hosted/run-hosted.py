@@ -134,6 +134,7 @@ def main():
             argv += ['--read-only', '--cap-drop=ALL', '--security-opt', 'no-new-privileges=true',
                      '--user', f'{uid}:{gid}', '--tmpfs', '/tmp:rw,nosuid,nodev,size=2147483648',
                      '--env', 'CARGO_NET_OFFLINE=true', '--env', 'CARGO_TERM_COLOR=never',
+                     '--env', 'PYTHONDONTWRITEBYTECODE=1',
                      '--env', 'INSTA_UPDATE=new' if name.endswith('-generate') else 'INSTA_UPDATE=no',
                      '--env', 'INSTA_FORCE_PASS=1' if name.endswith('-generate') else 'INSTA_FORCE_PASS=0',
                      '--env', 'SOURCE_COMMIT=' + pin,

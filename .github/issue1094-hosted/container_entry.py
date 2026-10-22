@@ -44,6 +44,7 @@ def validate_list(metadata, original, original_hash, regression):
 
 
 def main():
+    assert sys.dont_write_bytecode, "Native controller requires PYTHONDONTWRITEBYTECODE=1"
     label, expression, regression = sys.argv[1:]
     output = Path('/out')
     target = Path('/scratch/target')
