@@ -1,7 +1,6 @@
 name: issue1448 focused qualification
 on:
-  push:
-    branches: [codex/issue1448-qualification-oct28]
+  workflow_dispatch: {}
 permissions:
   contents: read
 concurrency:
