@@ -3,9 +3,19 @@
 
 use core_test_support::test_codex::local_selections;
 use std::fs;
+use std::sync::Arc;
+use std::sync::Mutex;
 use std::time::Duration;
 use std::time::Instant;
 
+use codex_core::config::Config;
+use codex_extension_api::ExtensionRegistry;
+use codex_extension_api::ExtensionRegistryBuilder;
+use codex_extension_api::ToolCallOutcome;
+use codex_extension_api::ToolFinishInput;
+use codex_extension_api::ToolLifecycleContributor;
+use codex_extension_api::ToolLifecycleFuture;
+use codex_extension_api::ToolStartInput;
 use codex_protocol::models::PermissionProfile;
 use codex_protocol::protocol::AskForApproval;
 use codex_protocol::protocol::EventMsg;
@@ -30,7 +40,79 @@ use core_test_support::wait_for_event;
 use pretty_assertions::assert_eq;
 use serde_json::Value;
 use serde_json::json;
+use tokio::sync::Barrier;
 use tokio::sync::oneshot;
+
+struct ParallelToolRendezvous {
+    barrier: Barrier,
+    arrivals: Mutex<Vec<(String, bool)>>,
+    outcomes: Mutex<Vec<(String, ToolCallOutcome)>>,
+}
+
+impl ParallelToolRendezvous {
+    fn assert_completed(&self) {
+        let mut arrivals = self.arrivals.lock().unwrap();
+        arrivals.sort();
+        assert_eq!(
+            *arrivals,
+            vec![("call-1".to_string(), true), ("call-2".to_string(), true)],
+            "both tool calls must reach the rendezvous while the other is still active"
+        );
+
+        let mut outcomes = self.outcomes.lock().unwrap();
+        outcomes.sort_by(|left, right| left.0.cmp(&right.0));
+        assert_eq!(
+            *outcomes,
+            vec![
+                (
+                    "call-1".to_string(),
+                    ToolCallOutcome::Completed { success: true }
+                ),
+                (
+                    "call-2".to_string(),
+                    ToolCallOutcome::Completed { success: true }
+                ),
+            ]
+        );
+    }
+}
+
+impl ToolLifecycleContributor for ParallelToolRendezvous {
+    fn on_tool_start<'a>(&'a self, input: ToolStartInput<'a>) -> ToolLifecycleFuture<'a> {
+        Box::pin(async move {
+            // The lifecycle callback runs inside the tool's parallel-execution gate.
+            // Neither invocation can proceed until both have been admitted. The
+            // timeout only bounds a failed rendezvous; elapsed time is not the proof.
+            let overlapped = tokio::time::timeout(Duration::from_secs(10), self.barrier.wait())
+                .await
+                .is_ok();
+            self.arrivals
+                .lock()
+                .unwrap()
+                .push((input.call_id.to_string(), overlapped));
+        })
+    }
+
+    fn on_tool_finish<'a>(&'a self, input: ToolFinishInput<'a>) -> ToolLifecycleFuture<'a> {
+        Box::pin(async move {
+            self.outcomes
+                .lock()
+                .unwrap()
+                .push((input.call_id.to_string(), input.outcome));
+        })
+    }
+}
+
+fn parallel_tool_rendezvous() -> (Arc<ParallelToolRendezvous>, Arc<ExtensionRegistry<Config>>) {
+    let rendezvous = Arc::new(ParallelToolRendezvous {
+        barrier: Barrier::new(2),
+        arrivals: Mutex::new(Vec::new()),
+        outcomes: Mutex::new(Vec::new()),
+    });
+    let mut extensions = ExtensionRegistryBuilder::new();
+    extensions.tool_lifecycle_contributor(rendezvous.clone());
+    (rendezvous, Arc::new(extensions.build()))
+}
 
 async fn run_turn(test: &TestCodex, prompt: &str) -> anyhow::Result<()> {
     let session_model = test.session_configured.model.clone();
@@ -162,14 +244,17 @@ async fn shell_tools_run_in_parallel() -> anyhow::Result<()> {
     );
 
     let server = start_mock_server().await;
-    let mut builder = test_codex().with_model("gpt-5.4");
+    let (rendezvous, extensions) = parallel_tool_rendezvous();
+    let mut builder = test_codex()
+        .with_model("gpt-5.4")
+        .with_extensions(extensions);
     let test = builder.build(&server).await?;
 
     let shell_args = json!({
-        "command": "sleep 0.25",
-        // Avoid user-specific shell startup cost (e.g. zsh profile scripts) in timing assertions.
+        "command": "echo shell output",
+        // Avoid user-specific shell startup scripts.
         "login": false,
-        "timeout_ms": 1_000,
+        "timeout_ms": 10_000,
     });
     let args_one = serde_json::to_string(&shell_args)?;
     let args_two = serde_json::to_string(&shell_args)?;
@@ -184,10 +269,10 @@ async fn shell_tools_run_in_parallel() -> anyhow::Result<()> {
         ev_assistant_message("msg-1", "done"),
         ev_completed("resp-2"),
     ]);
-    mount_sse_sequence(&server, vec![first_response, second_response]).await;
+    let _responses = mount_sse_sequence(&server, vec![first_response, second_response]).await;
 
-    let duration = run_turn_and_measure(&test, "run shell_command twice").await?;
-    assert_parallel_duration(duration);
+    run_turn(&test, "run shell_command twice").await?;
+    rendezvous.assert_completed();
 
     Ok(())
 }
@@ -204,17 +289,18 @@ async fn mixed_parallel_tools_run_in_parallel() -> anyhow::Result<()> {
     );
 
     let server = start_mock_server().await;
-    let test = build_codex_with_test_tool(&server).await?;
+    let (rendezvous, extensions) = parallel_tool_rendezvous();
+    let mut builder = test_codex()
+        .with_model("test-gpt-5.1-codex")
+        .with_extensions(extensions);
+    let test = builder.build(&server).await?;
 
-    let sync_args = json!({
-        "sleep_after_ms": 300
-    })
-    .to_string();
+    let sync_args = json!({}).to_string();
     let shell_args = serde_json::to_string(&json!({
-        "command": "sleep 0.25",
-        // Avoid user-specific shell startup cost in timing assertions.
+        "command": "echo shell output",
+        // Avoid user-specific shell startup scripts.
         "login": false,
-        "timeout_ms": 1_000,
+        "timeout_ms": 10_000,
     }))?;
 
     let first_response = sse(vec![
@@ -227,10 +313,10 @@ async fn mixed_parallel_tools_run_in_parallel() -> anyhow::Result<()> {
         ev_assistant_message("msg-1", "done"),
         ev_completed("resp-2"),
     ]);
-    mount_sse_sequence(&server, vec![first_response, second_response]).await;
+    let _responses = mount_sse_sequence(&server, vec![first_response, second_response]).await;
 
-    let duration = run_turn_and_measure(&test, "mix tools").await?;
-    assert_parallel_duration(duration);
+    run_turn(&test, "mix tools").await?;
+    rendezvous.assert_completed();
 
     Ok(())
 }
