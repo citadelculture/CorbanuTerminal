@@ -19,8 +19,8 @@ jobs:
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          ref: 808c2139187354f1d9dfdd53cac21b6c599b0b1f
-          fetch-depth: 2
+          ref: 218d211e1e10f752507ed763b425f798375bb571
+          fetch-depth: 3
           persist-credentials: false
           path: source
       - uses: ./source/.github/actions/setup-ci
@@ -61,12 +61,13 @@ jobs:
           EVIDENCE.mkdir(parents=True, exist_ok=True)
           GIB = 1024**3
           BASE = "aae8fb382c4f8ea8baf9c97b3e22fdd3b3ed4e28"
-          CANDIDATE = "808c2139187354f1d9dfdd53cac21b6c599b0b1f"
-          SERIAL = "70cf28bdad64db3bac81045f0d03051d5f40b62e"
+          PREVIOUS_CANDIDATE = "808c2139187354f1d9dfdd53cac21b6c599b0b1f"
+          CANDIDATE = "218d211e1e10f752507ed763b425f798375bb571"
+          SERIAL = "03bb3704bb7723862cfd8f8975f665a6955990b4"
           TEST_FILE = "codex-rs/core/tests/suite/tool_parallelism.rs"
           HASHES = {
-              CANDIDATE: "a45833a66c7db519fca3965ca5865fea075927343718079f464eb355c7aa0fab",
-              SERIAL: "7c314d627d5113d720d693930eab1b94e48784fcf0cce98dd0bca410a796fc62",
+              CANDIDATE: "e86f5bf3ce50d3cc883baa8da40397d665b53e6fa1cd5b78dbfdf0565012ff0a",
+              SERIAL: "6ae3ed1fe292d22c50fa4af088bea39237ce2f6d671b818fdcc9e08425a9feec",
           }
           NAMES = {
               "suite::tool_parallelism::shell_tools_run_in_parallel",
@@ -264,7 +265,8 @@ jobs:
               assert not TARGET.exists(), "qualification requires a fresh dedicated target"
               assert shutil.disk_usage(TARGET.parent).free >= 30 * GIB, "hosted launch requires 30 GiB free"
               assert git("rev-parse", "HEAD") == CANDIDATE
-              assert git("rev-parse", "HEAD^") == BASE
+              assert git("rev-parse", "HEAD^") == PREVIOUS_CANDIDATE
+              assert git("rev-parse", "HEAD^^") == BASE
               assert git("diff", "--name-only", BASE, CANDIDATE).splitlines() == [TEST_FILE]
               subprocess.run(["git", "fetch", "--no-tags", "--depth=2", "origin", SERIAL], cwd=SOURCE, check=True)
               assert git("rev-parse", SERIAL + "^") == CANDIDATE
