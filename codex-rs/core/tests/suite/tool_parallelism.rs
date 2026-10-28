@@ -262,14 +262,23 @@ async fn shell_tools_run_in_parallel() -> anyhow::Result<()> {
     let first_response = sse(vec![
         json!({"type": "response.created", "response": {"id": "resp-1"}}),
         ev_function_call("call-1", "exec_command", &args_one),
-        ev_function_call("call-2", "exec_command", &args_two),
         ev_completed("resp-1"),
+    ]);
+    // Negative control: the next model request is sent only after call-1 returns.
+    let serial_response = sse(vec![
+        ev_response_created("resp-serial"),
+        ev_function_call("call-2", "exec_command", &args_two),
+        ev_completed("resp-serial"),
     ]);
     let second_response = sse(vec![
         ev_assistant_message("msg-1", "done"),
         ev_completed("resp-2"),
     ]);
-    let responses = mount_sse_sequence(&server, vec![first_response, second_response]).await;
+    let responses = mount_sse_sequence(
+        &server,
+        vec![first_response, serial_response, second_response],
+    )
+    .await;
 
     run_turn(&test, "run exec_command twice").await?;
     rendezvous.assert_completed();
@@ -326,14 +335,23 @@ async fn mixed_parallel_tools_run_in_parallel() -> anyhow::Result<()> {
     let first_response = sse(vec![
         json!({"type": "response.created", "response": {"id": "resp-1"}}),
         ev_function_call("call-1", "test_sync_tool", &sync_args),
-        ev_function_call("call-2", "exec_command", &shell_args),
         ev_completed("resp-1"),
+    ]);
+    // Negative control: the next model request is sent only after call-1 returns.
+    let serial_response = sse(vec![
+        ev_response_created("resp-serial"),
+        ev_function_call("call-2", "exec_command", &shell_args),
+        ev_completed("resp-serial"),
     ]);
     let second_response = sse(vec![
         ev_assistant_message("msg-1", "done"),
         ev_completed("resp-2"),
     ]);
-    let responses = mount_sse_sequence(&server, vec![first_response, second_response]).await;
+    let responses = mount_sse_sequence(
+        &server,
+        vec![first_response, serial_response, second_response],
+    )
+    .await;
 
     run_turn(&test, "mix tools").await?;
     rendezvous.assert_completed();
