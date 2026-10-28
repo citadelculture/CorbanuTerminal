@@ -251,28 +251,48 @@ async fn shell_tools_run_in_parallel() -> anyhow::Result<()> {
     let test = builder.build(&server).await?;
 
     let shell_args = json!({
-        "command": "echo shell output",
+        "cmd": "echo shell output",
         // Avoid user-specific shell startup scripts.
         "login": false,
-        "timeout_ms": 10_000,
+        "yield_time_ms": 10_000,
     });
     let args_one = serde_json::to_string(&shell_args)?;
     let args_two = serde_json::to_string(&shell_args)?;
 
     let first_response = sse(vec![
         json!({"type": "response.created", "response": {"id": "resp-1"}}),
-        ev_function_call("call-1", "shell_command", &args_one),
-        ev_function_call("call-2", "shell_command", &args_two),
+        ev_function_call("call-1", "exec_command", &args_one),
+        ev_function_call("call-2", "exec_command", &args_two),
         ev_completed("resp-1"),
     ]);
     let second_response = sse(vec![
         ev_assistant_message("msg-1", "done"),
         ev_completed("resp-2"),
     ]);
-    let _responses = mount_sse_sequence(&server, vec![first_response, second_response]).await;
+    let responses = mount_sse_sequence(&server, vec![first_response, second_response]).await;
 
-    run_turn(&test, "run shell_command twice").await?;
+    run_turn(&test, "run exec_command twice").await?;
     rendezvous.assert_completed();
+
+    for call_id in ["call-1", "call-2"] {
+        let output = responses
+            .function_call_output_text(call_id)
+            .expect("missing exec_command output");
+        assert!(
+            output
+                .lines()
+                .any(|line| line == "Process exited with code 0"),
+            "{call_id} did not exit successfully: {output}"
+        );
+        assert!(
+            !output.contains("Process running with session ID"),
+            "{call_id} returned a live session: {output}"
+        );
+        assert!(
+            output.lines().any(|line| line == "shell output"),
+            "{call_id} omitted expected shell output: {output}"
+        );
+    }
 
     Ok(())
 }
@@ -297,26 +317,45 @@ async fn mixed_parallel_tools_run_in_parallel() -> anyhow::Result<()> {
 
     let sync_args = json!({}).to_string();
     let shell_args = serde_json::to_string(&json!({
-        "command": "echo shell output",
+        "cmd": "echo shell output",
         // Avoid user-specific shell startup scripts.
         "login": false,
-        "timeout_ms": 10_000,
+        "yield_time_ms": 10_000,
     }))?;
 
     let first_response = sse(vec![
         json!({"type": "response.created", "response": {"id": "resp-1"}}),
         ev_function_call("call-1", "test_sync_tool", &sync_args),
-        ev_function_call("call-2", "shell_command", &shell_args),
+        ev_function_call("call-2", "exec_command", &shell_args),
         ev_completed("resp-1"),
     ]);
     let second_response = sse(vec![
         ev_assistant_message("msg-1", "done"),
         ev_completed("resp-2"),
     ]);
-    let _responses = mount_sse_sequence(&server, vec![first_response, second_response]).await;
+    let responses = mount_sse_sequence(&server, vec![first_response, second_response]).await;
 
     run_turn(&test, "mix tools").await?;
     rendezvous.assert_completed();
+
+    let call_id = "call-2";
+    let output = responses
+        .function_call_output_text(call_id)
+        .expect("missing exec_command output");
+    assert!(
+        output
+            .lines()
+            .any(|line| line == "Process exited with code 0"),
+        "{call_id} did not exit successfully: {output}"
+    );
+    assert!(
+        !output.contains("Process running with session ID"),
+        "{call_id} returned a live session: {output}"
+    );
+    assert!(
+        output.lines().any(|line| line == "shell output"),
+        "{call_id} omitted expected shell output: {output}"
+    );
 
     Ok(())
 }
