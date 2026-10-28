@@ -14,7 +14,6 @@ jobs:
       RUSTUP_TOOLCHAIN: "1.99.1"
       CARGO_INCREMENTAL: "0"
       CARGO_BUILD_JOBS: "2"
-      CARGO_TARGET_DIR: ${{ runner.temp }}/issue1448-target
       RUST_BACKTRACE: "1"
       RUST_MIN_STACK: "8388608"
     steps:
