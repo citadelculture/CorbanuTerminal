@@ -10447,6 +10447,148 @@ fn issue_1159_equals_words_and_modified_outputs_ask() {
     assert_eq!(wrong, Vec::<String>::new());
 }
 
+/// #1573 (1): zsh expands an unquoted leading `=` to a program's path,
+/// including in a redirect. The classifier must not treat it as a local
+/// file literally named `=mytool`. No shell or installed program is run.
+#[test]
+fn issue_1573_zsh_equals_redirect_is_persistence() {
+    assert_eq!(
+        kind(&["zsh", "-c", "echo x >> =mytool"]),
+        Some(ProtectedActionKind::Persistence),
+        "issue1573: active zsh =mytool redirect must protect an executable write"
+    );
+}
+
+#[test]
+fn issue_1573_zsh_equals_redirect_forms_are_protected() {
+    for line in [
+        "echo x > =mytool",
+        "echo x 2>> =mytool",
+        "echo x >>=mytool",
+        "echo x >| =mytool",
+        "echo x &> =mytool",
+        "echo x >> =\"mytool\"",
+        "echo x >> =my'tool'",
+        "echo x >> =my\\tool",
+        "echo x >> \\\n=mytool",
+        "zsh -c 'echo x >> =mytool'",
+    ] {
+        assert_eq!(
+            kind(&["zsh", "-c", line]),
+            Some(ProtectedActionKind::Persistence),
+            "{line}"
+        );
+    }
+}
+
+#[test]
+fn issue_1573_literal_equals_redirects_stay_ordinary() {
+    for line in [
+        "echo x >> '=mytool'",
+        "echo x >> \"=mytool\"",
+        "echo x >> \\=mytool",
+        "echo x >> ./=mytool",
+        "echo x >> report.txt",
+        "echo '=mytool' >> report.txt",
+        "echo =mytool >> report.txt",
+        "echo x >> report=mytool",
+        "echo x >> '='mytool",
+        "echo x >> \"=\"mytool",
+        "echo x >> $'=mytool'",
+        "echo x >> =",
+        "cat < =mytool",
+        "echo x # >> =mytool",
+    ] {
+        assert_eq!(kind(&["zsh", "-c", line]), None, "{line}");
+    }
+}
+
+/// The host's zsh bridge can run a bash-named script under zsh. Only the
+/// as-named interface promises the selected system shell actually runs it.
+#[cfg(unix)]
+#[test]
+fn issue_1573_equals_redirect_respects_named_shell_execution() {
+    for shell in ["/bin/bash", "/usr/bin/bash", "/bin/dash", "/usr/bin/dash"] {
+        let action = shell_in("/work", &[shell, "-c", "echo x >> =mytool"]);
+        assert_eq!(
+            classify_as_named_with(&action, &fixture(HOME), Some(&fixture(USER_HOME))),
+            None,
+            "{shell} run as named"
+        );
+        assert_eq!(
+            classify_fixture(&action),
+            Some(ProtectedActionKind::Persistence),
+            "{shell} may run through the zsh bridge"
+        );
+        for line in [
+            "zsh -c 'echo x >> =mytool'",
+            r#"eval "zsh -c 'echo x >> =mytool'""#,
+        ] {
+            let nested = shell_in("/work", &[shell, "-c", line]);
+            assert_eq!(
+                classify_as_named_with(&nested, &fixture(HOME), Some(&fixture(USER_HOME))),
+                Some(ProtectedActionKind::Persistence),
+                "{shell} launches zsh: {line}"
+            );
+        }
+    }
+}
+
+/// Literal eval/trap bodies take the same expansion path as this shell's
+/// own redirects, even when the body contains no remaining quote or escape.
+#[test]
+fn issue_1573_evaluated_equals_redirects_are_protected() {
+    for line in [
+        "eval 'echo x >> =mytool'",
+        "eval -- 'echo x' '>>' '=mytool'",
+        "builtin eval 'echo x >> =mytool'",
+        "trap 'echo x >> =mytool' EXIT",
+        "trap -- 'echo x >> =mytool' EXIT",
+        r#"eval "eval 'echo x >> =mytool'""#,
+        r#"trap "eval 'echo x >> =mytool'" EXIT"#,
+    ] {
+        assert_eq!(
+            kind(&["zsh", "-c", line]),
+            Some(ProtectedActionKind::Persistence),
+            "{line}"
+        );
+    }
+}
+
+#[test]
+fn issue_1573_evaluated_quotes_and_ordinary_data_stay_ordinary() {
+    for line in [
+        "echo 'echo x >> =mytool'",
+        "echo \"eval 'echo x >> =mytool'\"",
+        "echo \"trap 'echo x >> =mytool' EXIT\"",
+        r#"eval 'echo x >> "=mytool"'"#,
+        r"eval 'echo x >> \=mytool'",
+        r#"trap 'echo x >> "=mytool"' EXIT"#,
+        r"trap 'echo x >> \=mytool' EXIT",
+        r#"eval "echo 'echo x >> =mytool'""#,
+        "eval 'echo x >> report.txt'",
+        "trap 'echo x >> report.txt' EXIT",
+    ] {
+        assert_eq!(kind(&["zsh", "-c", line]), None, "{line}");
+    }
+    // eval and trap run in the selected shell; they do not start zsh.
+    #[cfg(unix)]
+    for line in [
+        "eval 'echo x >> =mytool'",
+        "trap 'echo x >> =mytool' EXIT",
+        r#"eval 'echo x >> ="mytool"'"#,
+        r#"eval "eval 'echo x >> =mytool'""#,
+        r#"trap "eval 'echo x >> =mytool'" EXIT"#,
+    ] {
+        let action = shell_in("/work", &["/bin/bash", "-c", line]);
+        assert_eq!(
+            classify_as_named_with(&action, &fixture(HOME), Some(&fixture(USER_HOME))),
+            None,
+            "bash run as named: {line}"
+        );
+    }
+}
+
 /// #1309 follow-ups from the #1523 review: `run0 -D DIR`, a keep option
 /// that may be an unknown option's value, tmux's `-c DIR` (its commands
 /// read as scripts), and zsh extendedglob command words. Each line was
