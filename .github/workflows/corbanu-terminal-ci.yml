@@ -1,4 +1,4 @@
-name: issue1573 classifier qualification
+name: issue1573 classifier qualification campaign2
 on:
   workflow_dispatch: {}
 permissions:
@@ -39,10 +39,10 @@ jobs:
         working-directory: source
         # setup-ci defines a general target; this step owns a fresh bounded target instead.
         env:
-          CARGO_TARGET_DIR: ${{ runner.temp }}/issue1573-target
+          CARGO_TARGET_DIR: ${{ runner.temp }}/issue1573-campaign2-target
         run: |
           python3 - <<'PY'
-          """Bounded qualification for accepted task8269, issue1573 item1; attempt1 of at most2."""
+          """Final campaign2 for task8269: correct JUnit collection; execution controls unchanged."""
           import hashlib
           import importlib.util
           import json
@@ -59,7 +59,7 @@ jobs:
           SOURCE = Path.cwd()
           CARGO = SOURCE / "codex-rs"
           TARGET = Path(os.environ["CARGO_TARGET_DIR"])
-          EVIDENCE = Path(os.environ["RUNNER_TEMP"]) / "issue1573-evidence"
+          EVIDENCE = Path(os.environ["RUNNER_TEMP"]) / "issue1573-campaign2-evidence"
           EVIDENCE.mkdir(parents=True, exist_ok=True)
           GIB = 1024**3
           BASE = "1329ea58833c2bbef4fc19b4d60fb09bab52e188"
@@ -119,7 +119,11 @@ jobs:
           RESULT = {
               "issueUrl": "https://github.com/CorbanuCore/CorbanuTerminal/issues/1573",
               "taskId": "task_8269cfd54b47ca1be10ec58c8d71c801", "pft": 400,
-              "campaignAttempt": 1, "maximumTaskCampaigns": 2,
+              "campaignAttempt": 2, "maximumTaskCampaigns": 2,
+              "previousCampaign": {"runId": "41287489364", "workflowSha": "510a86e15e4b665465b6ed02ba2ce9e29c9e3c79",
+                                   "rawRedLogSha256": "9d6ec80943bb6d852ea8c10c306ca84310b65d1e4cd3e8db03fd4280b88f918e",
+                                   "outcome": "Expected red regression executed; collector looked under CARGO_TARGET_DIR and missed workspace-relative JUnit."},
+              "reportingCorrection": "nextest0.9.103 joins workspace_root/store.dir/profile/junit.path; use codex-rs/target/nextest/local/junit.xml and preserve fresh reports before validation.",
               "workflowRunId": os.environ.get("GITHUB_RUN_ID"),
               "workflowRunAttempt": os.environ.get("GITHUB_RUN_ATTEMPT"),
               "workflowSha": os.environ.get("GITHUB_SHA"),
@@ -301,22 +305,55 @@ jobs:
               RESULT["phases"].append(phase)
               save()
               log = EVIDENCE / f"{label}.log"
-              junit = TARGET / "nextest" / "local" / "junit.xml"
-              if junit.exists():
-                  junit.unlink()  # Own generated report; earlier report already copied to evidence.
-              started = time.monotonic()
-              phase["startedUnix"] = time.time()
-              print(f"Starting {label}: {expected_sha}", flush=True)
-              phase["exitCode"] = guarded_run(argv, log, phase, started, timeout_seconds)
-              assert junit.exists(), "no fresh nextest JUnit report; compilation/setup failure"
+              # nextest0.9.103 d2e7b879: store.dir is workspace-root-relative,
+              # independent of CARGO_TARGET_DIR (config/core/imp.rs:798-799).
+              junit = CARGO / "target" / "nextest" / "local" / "junit.xml"
               report = EVIDENCE / f"{label}-junit.xml"
-              shutil.copyfile(junit, report)
+              phase["junitSourcePath"] = str(junit)
+              if junit.exists():
+                  previous = RESULT["phases"][-2] if len(RESULT["phases"]) > 1 else None
+                  assert previous and previous.get("junitSourcePath") == str(junit), "unexpected pre-existing report; leave it untouched"
+                  archived = Path(previous["junitArchivedPath"])
+                  assert archived.is_file() and digest(archived) == previous["junitSha256"] == digest(junit), "prior own report is not preserved"
+                  junit.unlink()  # Only the prior phase's byte-verified, preserved generated report.
+              phase["junitAbsentBeforeRun"] = not junit.exists()
+              started = time.monotonic()
+              phase["startedUnixNs"] = time.time_ns()
+              phase["startedUnix"] = phase["startedUnixNs"] / 1_000_000_000
+              print(f"Starting {label}: {expected_sha}", flush=True)
+              try:
+                  phase["exitCode"] = guarded_run(argv, log, phase, started, timeout_seconds)
+              finally:
+                  # Preserve actual evidence even if a guard, parser or later assertion fails.
+                  # Collection failures remain explicit; they never manufacture a test result.
+                  try:
+                      if junit.is_file() and not junit.is_symlink():
+                          metadata = junit.stat()
+                          shutil.copyfile(junit, report)
+                          phase.update(junitArchivedPath=str(report), junitSha256=digest(report),
+                                       junitMtimeNs=metadata.st_mtime_ns, junitBytes=metadata.st_size,
+                                       junitFresh=phase["junitAbsentBeforeRun"] and metadata.st_mtime_ns >= phase["startedUnixNs"])
+                  except Exception as error:
+                      phase["junitCaptureFailure"] = f"{type(error).__name__}: {error}"
+                  try:
+                      phase["binaries"] = binary_manifest()
+                  except Exception as error:
+                      phase["binaryCaptureFailure"] = f"{type(error).__name__}: {error}"
+                  try:
+                      phase["afterSource"] = snapshot(f"{label}-after", expected_sha)
+                  except Exception as error:
+                      phase["sourceCaptureFailure"] = f"{type(error).__name__}: {error}"
+                  if log.is_file():
+                      phase["logSha256"] = digest(log)
+                  save()
+              assert phase.get("binaries") and phase.get("afterSource"), "binary/source evidence missing; inspect capture failures"
+              assert report.is_file(), "nextest JUnit report missing at recorded source path; inspect raw test output"
+              assert phase.get("junitFresh"), "JUnit report does not have fresh phase-bound provenance"
               root = ET.parse(report).getroot()
               cases = list(root.iter("testcase"))
               names = {case.get("name") for case in cases}
               assert cases and len(cases) == len(names), "missing or duplicate JUnit cases"
-              binaries = binary_manifest()
-              phase["binaries"] = binaries
+              binaries = phase["binaries"]
               expected_names = {RED_NAME} if expect_failure else classifier_inventory(binaries[0], phase, started, timeout_seconds)
               selected = [case for case in cases if case.get("name") in expected_names]
               unselected = [case for case in cases if case.get("name") not in expected_names]
@@ -342,7 +379,6 @@ jobs:
               assert digest(Path(binaries[0]["path"])) == binaries[0]["sha256"], "tested core binary changed"
               phase.update(expectedFailure=expect_failure, selectedBodies=len(selected), retries=0,
                            logSha256=digest(log), junitSha256=digest(report), evidenceAccepted=True)
-              snapshot(f"{label}-after", expected_sha)
               save()
               print(f"Verified {label}: {len(selected)} {'expected regression failure' if expect_failure else 'passes'}", flush=True)
 
@@ -421,7 +457,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
-          name: issue1573-qualification-${{ github.run_id }}-attempt-${{ github.run_attempt }}
-          path: ${{ runner.temp }}/issue1573-evidence/
+          name: issue1573-campaign2-qualification-${{ github.run_id }}-attempt-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/issue1573-campaign2-evidence/
           if-no-files-found: warn
           retention-days: 7
