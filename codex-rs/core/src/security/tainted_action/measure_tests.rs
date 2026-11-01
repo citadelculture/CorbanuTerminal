@@ -191,7 +191,13 @@ fn judge(homes: &MeasureHomes, shell: &str, script: &str, cwd: &Path, forced: bo
     let action = action(shell, script, cwd);
     let (found, sites) = recording(|| {
         if forced {
-            judged_avoiding(&action, homes.homes(), /*avoids_zsh*/ true).found
+            judged_avoiding(
+                &action,
+                homes.homes(),
+                /*avoids_zsh*/ true,
+                /*top_level_non_zsh*/ super::not_zsh(shell),
+            )
+            .found
         } else {
             judged(&action, homes.homes(), /*as_named*/ true).found
         }

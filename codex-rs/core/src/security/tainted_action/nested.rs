@@ -78,8 +78,9 @@ const PURE_FILTERS: &[&str] = &[
 struct Found {
     /// Scripts that nested shells run, with the folder they run in, and
     /// what a launcher does with its input there (#1268).
-    /// #1283: and whether that folder is unknown.
-    scripts: Vec<(String, String, launched_git::Launch, bool)>,
+    /// #1283: and whether that folder is unknown. The last flag marks a
+    /// same-shell eval body (#1573); a nested shell does not inherit it.
+    scripts: Vec<(String, String, launched_git::Launch, bool, bool)>,
     /// The line as written holds a brace: a launcher's placeholder (`{}`)
     /// may be in it.
     braces: bool,
@@ -252,6 +253,21 @@ impl Classifier {
         for script in scripts {
             work::step();
             let reading = quoted::commands(script);
+            // #1573 (1): an active zsh `=cmd` redirect names an executable,
+            // not a local file named `=cmd`. The action's PATH is not known
+            // here, so protect the write without resolving it on this host.
+            // Use the quote-aware spelling: `'=cmd'` and `\=cmd` are files.
+            let mut equals_bytes = MAX_JOINED_BYTES;
+            if self.non_zsh_depth != Some(depth)
+                && equals_redirects(
+                    &reading.commands,
+                    /*level*/ 0,
+                    &mut equals_bytes,
+                    &mut found.unreadable,
+                )
+            {
+                self.note(ProtectedActionKind::Persistence);
+            }
             // #932 phase 2: compared and logged; decides nothing. Once per
             // action: not again in the Windows view (#1240).
             if !self.homes.is_windows_view() {
@@ -284,9 +300,9 @@ impl Classifier {
             }
         }
         let mut judged = HashSet::new();
-        for (script, cwd, launched, unknown) in std::mem::take(&mut found.scripts) {
+        for (script, cwd, launched, unknown, same_shell) in std::mem::take(&mut found.scripts) {
             work::step();
-            if !judged.insert((script.clone(), cwd.clone(), launched, unknown)) {
+            if !judged.insert((script.clone(), cwd.clone(), launched, unknown, same_shell)) {
                 continue;
             }
             self.nested_scripts += 1;
@@ -300,7 +316,12 @@ impl Classifier {
                 replaced: outer.replaced || launched.replaced,
             };
             self.unknown_folder += usize::from(unknown);
+            let outer_non_zsh = self.non_zsh_depth;
+            if same_shell && outer_non_zsh == Some(depth) {
+                self.non_zsh_depth = Some(depth + 1);
+            }
             self.script(&script, &cwd, depth + 1);
+            self.non_zsh_depth = outer_non_zsh;
             self.unknown_folder -= usize::from(unknown);
             self.launched = outer;
         }
@@ -652,7 +673,15 @@ impl Classifier {
                             &mut joined_left,
                             &mut found.unreadable,
                         );
+                        let before = found.scripts.len();
                         push_script(found, folders, line, replaced(launches[at]), unknown);
+                        for script in &mut found.scripts[before..] {
+                            work::step();
+                            // eval inside a trap body uses this shell too.
+                            // An explicit nested shell is collected separately
+                            // and does not inherit the same-shell marker.
+                            script.4 = true;
+                        }
                     }
                     continue;
                 }
@@ -1201,12 +1230,12 @@ fn push_script(
             work::step();
             found
                 .scripts
-                .push((script.clone(), other.clone(), launch, false));
+                .push((script.clone(), other.clone(), launch, false, false));
         }
     }
     found
         .scripts
-        .push((script, folders.cwd.clone(), launch, unknown));
+        .push((script, folders.cwd.clone(), launch, unknown, false));
 }
 
 fn collect_seds(
@@ -1361,6 +1390,80 @@ fn file_operand(word: &str) -> &str {
 /// Bytes of words joined into lines (`env -S'git config' k v`), for each
 /// command.
 const MAX_JOINED_BYTES: usize = 64 * 1024;
+
+/// #1573: redirects in this shell's text, including literal bodies that
+/// `eval` and `trap` execute in the same shell. Other quoted words are data
+/// for this check. Each evaluation is read with its own quotes intact;
+/// the caller retains the executing shell's equals-expansion context.
+fn equals_redirects(
+    commands: &[Command],
+    level: usize,
+    left: &mut usize,
+    unreadable: &mut bool,
+) -> bool {
+    for command in commands {
+        work::step();
+        if command.writes_to.iter().any(|word| {
+            work::step();
+            word.equals_expansion && word.text.len() > 1
+        }) {
+            return true;
+        }
+        let texts: Vec<String> = command
+            .words
+            .iter()
+            .map(|word| {
+                work::step();
+                word.text.clone()
+            })
+            .collect();
+        let Some((at, name)) = indirect::command_word(&texts) else {
+            continue;
+        };
+        let args = &texts[at + 1..];
+        let args = if args.first().is_some_and(|arg| arg == "--") {
+            &args[1..]
+        } else {
+            args
+        };
+        let body = match name.as_str() {
+            "eval" => args,
+            // Only the action is shell text; signal names and the options
+            // that inspect or reset traps do not execute a body.
+            "trap" => match args.first() {
+                Some(action) if !matches!(action.as_str(), "-p" | "-l" | "-") => &args[..1],
+                _ => continue,
+            },
+            _ => continue,
+        };
+        if body.is_empty() {
+            continue;
+        }
+        // Plain eval chains cannot introduce a literal equals redirect.
+        // An escape can hide either character until a later reading.
+        let mut equals = false;
+        let mut redirect = false;
+        for word in body {
+            work::step();
+            equals |= word.contains(['=', '\\']);
+            redirect |= word.contains(['>', '\\']);
+        }
+        if !equals || !redirect {
+            continue;
+        }
+        if level >= MAX_QUOTED_LEVEL {
+            *unreadable = true;
+            continue;
+        }
+        let line = joined(String::new(), body, left, unreadable);
+        let reading = quoted::commands(&line);
+        *unreadable |= reading.too_deep || reading.unsure || reading.unterminated;
+        if equals_redirects(&reading.commands, level + 1, left, unreadable) {
+            return true;
+        }
+    }
+    false
+}
 
 /// `line` with `words` after it, each after a space, as a shell would run
 /// them: at most `MAX_JUDGED_POSITIONS` words, adding at most the bytes

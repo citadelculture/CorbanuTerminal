@@ -18,6 +18,9 @@ pub(super) struct Word {
     pub(super) text: String,
     /// Some of it was quoted or escaped, so the word lexer may split it.
     pub(super) quoted: bool,
+    /// Its first character was an unquoted `=`: zsh may replace the word
+    /// with a command's path. Quoting later characters does not quote `=`.
+    pub(super) equals_expansion: bool,
     /// It holds an expansion whose value the classifier does not know.
     pub(super) dynamic: bool,
     /// An expansion outside double quotes: it may split into several words.
@@ -498,6 +501,9 @@ impl Reader<'_> {
                     continue;
                 }
                 ch => {
+                    if !list.has_word && ch == '=' {
+                        list.word.equals_expansion = true;
+                    }
                     list.has_word = true;
                     list.word.text.push(ch);
                 }

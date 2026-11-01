@@ -279,7 +279,7 @@ fn splits_differently(script: &str) -> bool {
     })
 }
 
-fn not_zsh(shell: &str) -> bool {
+pub(super) fn not_zsh(shell: &str) -> bool {
     NOT_ZSH.contains(&shell) || (SYSTEM_SH.contains(&shell) && system_sh_not_zsh(shell))
 }
 

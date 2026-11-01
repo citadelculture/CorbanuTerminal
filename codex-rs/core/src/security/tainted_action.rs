@@ -500,13 +500,27 @@ fn judged(action: &ApprovalAction, homes: Homes, as_named: bool) -> Classifier {
             }
             ApprovalAction::ApplyPatch { .. } => false,
         };
-    judged_avoiding(action, homes, avoids_zsh)
+    let top_level_non_zsh = as_named
+        && match action {
+            ApprovalAction::Shell { command, .. } | ApprovalAction::ExecCommand { command, .. } => {
+                matches!(command.as_slice(), [shell, flag, _]
+                    if matches!(flag.as_str(), "-c" | "-lc") && named_shell::not_zsh(shell))
+            }
+            ApprovalAction::ApplyPatch { .. } => false,
+        };
+    judged_avoiding(action, homes, avoids_zsh, top_level_non_zsh)
 }
 
 /// [`judged`] with the zsh-only checks skipped at the top level when
 /// `avoids_zsh` (#932's measuring harness also judges with it forced).
-fn judged_avoiding(action: &ApprovalAction, homes: Homes, avoids_zsh: bool) -> Classifier {
+fn judged_avoiding(
+    action: &ApprovalAction,
+    homes: Homes,
+    avoids_zsh: bool,
+    top_level_non_zsh: bool,
+) -> Classifier {
     let mut classifier = Classifier::new(homes, avoids_zsh);
+    classifier.non_zsh_depth = top_level_non_zsh.then_some(0);
     match action {
         ApprovalAction::Shell { command, cwd, .. }
         | ApprovalAction::ExecCommand { command, cwd, .. } => {
@@ -566,6 +580,7 @@ impl Classifier {
     fn new(homes: Homes, avoids_zsh: bool) -> Self {
         Self {
             avoids_zsh,
+            non_zsh_depth: None,
             homes,
             found: None,
             scripts_read: 0,
@@ -1240,6 +1255,11 @@ struct Classifier {
     homes: Homes,
     found: Option<ProtectedActionKind>,
     scripts_read: usize,
+    /// #1573: this depth's text runs under a known non-zsh shell, initially
+    /// the action's own `-c` line. Same-shell eval bodies inherit it, but a
+    /// nested shell does not. Unlike `avoids_zsh`, this makes no claim that
+    /// the entire line cannot reach zsh.
+    non_zsh_depth: Option<usize>,
     /// #1261: under Windows path rules, whether the first judgment lexed
     /// text holding a backslash. Its POSIX lexer drops every backslash
     /// (`bash 'C:\work\run.sh'` reads the word `C:workrun.sh`, `cd 'a\b'`
