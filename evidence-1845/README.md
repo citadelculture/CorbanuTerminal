@@ -1,6 +1,6 @@
 # #1845 evidence packet (item 1, zsh `[[ … ]]` short-loop part only)
 
-- **PR:** https://github.com/CorbanuCore/CorbanuTerminal/pull/ (see PR link in the comment)
+- **PR:** https://github.com/CorbanuCore/CorbanuTerminal/pull/1860
 - **Base:** main `cea7ffa7ee160bd3b681bb59ff79dbfd750c9e9c`
 - **Head:** `c922bd363d9485b927c1ee3abd550dd3984dd070`, DCO `Signed-off-by: citadelculture <citadelculture@gmail.com>`
 - **Changed files** (`changed-files.txt`, `fix.diff`): `tainted_action/code_tables.rs` (+12) and `tainted_action_tests.rs` (+54).
