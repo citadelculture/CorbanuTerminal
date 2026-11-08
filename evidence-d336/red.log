@@ -1,0 +1,74 @@
+replay 2026-11-07T22:22:46Z macOS python 3.9.6 git 2.39.5
+== RED: base sdk.yml (ca204cfefe11ea25e2c8d9973ba6779687a9c686) + head test
+test_case_matrix (__main__.SdkPathFilterTest) ... 
+======================================================================
+FAIL: test_case_matrix (__main__.SdkPathFilterTest) [root package.json]
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/kc/w4yrcxk5709bgng27t_kjqnr0000gn/T/tmp.ttDeSYMkQ5/.github/scripts/test_sdk_path_filter.py", line 109, in test_case_matrix
+    self.assertEqual(run_for(changed), f"run={'true' if runs else 'false'}", changed)
+AssertionError: 'run=false' != 'run=true'
+- run=false
++ run=true
+ : ['package.json']
+
+======================================================================
+FAIL: test_case_matrix (__main__.SdkPathFilterTest) [root pnpm-workspace.yaml]
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/kc/w4yrcxk5709bgng27t_kjqnr0000gn/T/tmp.ttDeSYMkQ5/.github/scripts/test_sdk_path_filter.py", line 109, in test_case_matrix
+    self.assertEqual(run_for(changed), f"run={'true' if runs else 'false'}", changed)
+AssertionError: 'run=false' != 'run=true'
+- run=false
++ run=true
+ : ['pnpm-workspace.yaml']
+
+======================================================================
+FAIL: test_case_matrix (__main__.SdkPathFilterTest) [root .npmrc]
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/kc/w4yrcxk5709bgng27t_kjqnr0000gn/T/tmp.ttDeSYMkQ5/.github/scripts/test_sdk_path_filter.py", line 109, in test_case_matrix
+    self.assertEqual(run_for(changed), f"run={'true' if runs else 'false'}", changed)
+AssertionError: 'run=false' != 'run=true'
+- run=false
++ run=true
+ : ['.npmrc']
+
+======================================================================
+FAIL: test_case_matrix (__main__.SdkPathFilterTest) [root package.json with unrelated]
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/kc/w4yrcxk5709bgng27t_kjqnr0000gn/T/tmp.ttDeSYMkQ5/.github/scripts/test_sdk_path_filter.py", line 109, in test_case_matrix
+    self.assertEqual(run_for(changed), f"run={'true' if runs else 'false'}", changed)
+AssertionError: 'run=false' != 'run=true'
+- run=false
++ run=true
+ : ['package.json', 'README.md']
+
+======================================================================
+FAIL: test_case_matrix (__main__.SdkPathFilterTest) [root pnpm-workspace.yaml with unrelated]
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/kc/w4yrcxk5709bgng27t_kjqnr0000gn/T/tmp.ttDeSYMkQ5/.github/scripts/test_sdk_path_filter.py", line 109, in test_case_matrix
+    self.assertEqual(run_for(changed), f"run={'true' if runs else 'false'}", changed)
+AssertionError: 'run=false' != 'run=true'
+- run=false
++ run=true
+ : ['pnpm-workspace.yaml', 'docs/x.md']
+
+======================================================================
+FAIL: test_case_matrix (__main__.SdkPathFilterTest) [root .npmrc with unrelated]
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/kc/w4yrcxk5709bgng27t_kjqnr0000gn/T/tmp.ttDeSYMkQ5/.github/scripts/test_sdk_path_filter.py", line 109, in test_case_matrix
+    self.assertEqual(run_for(changed), f"run={'true' if runs else 'false'}", changed)
+AssertionError: 'run=false' != 'run=true'
+- run=false
++ run=true
+ : ['.npmrc', 'codex-rs/core/src/lib.rs']
+
+----------------------------------------------------------------------
+Ran 1 test in 3.325s
+
+FAILED (failures=6)
+exit=1

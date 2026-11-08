@@ -1,0 +1,17 @@
+e9a0cf6ca714c84f1ce4f1ecec95795843573d6a
+citadelculture <citadelculture@gmail.com>
+Sat Nov 7 21:02:50 2026 +0200
+
+ci(sdk): run the TypeScript SDK job when root package.json, pnpm-workspace.yaml or .npmrc change (D336)
+
+Owner decision D336 (option a): the root package.json, pnpm-workspace.yaml
+and .npmrc join main's case list in the Detect changed paths step (root
+only). test_sdk_path_filter.py gains runs cases (each alone and with an
+unrelated file) and skips for nested look-alikes and package.json.bak;
+sdk/typescript/package.json still runs through sdk/typescript/*.
+
+Red on main's sdk.yml: the 6 new runs cases fail; green: 26/26.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Signed-off-by: citadelculture <citadelculture@gmail.com>
+

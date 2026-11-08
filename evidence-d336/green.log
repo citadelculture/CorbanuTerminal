@@ -1,0 +1,8 @@
+== GREEN: head sdk.yml (e9a0cf6ca714c84f1ce4f1ecec95795843573d6a) + head test
+test_case_matrix (__main__.SdkPathFilterTest) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 5.448s
+
+OK
+exit=0
