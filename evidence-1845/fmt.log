@@ -1,0 +1,2 @@
+$ cargo fmt -p codex-core --check
+exit status: 0

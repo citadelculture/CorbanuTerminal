@@ -1,0 +1,13 @@
+base main cea7ffa7ee160bd3b681bb59ff79dbfd750c9e9c + fix + tests (head)
+  |
+  = note: `#[warn(linker_messages)]` on by default
+
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2m 53s
+     Running unittests src/lib.rs (/Users/dom/pft-work/target_zsh1573/debug/deps/codex_core-95ace29623ba0e4e)
+
+running 2 tests
+test security::tainted_action::tests::issue1845_short_loop_walk_is_linear ... ok
+test security::tainted_action::tests::issue1845_short_loop_test_does_not_hide_a_table_writer ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 3737 filtered out; finished in 1.45s
+

@@ -1,0 +1,18 @@
+verdicts compared: 11148 (5,574 lines x bash/zsh)
+quieter than main: 0
+newly ask: 14
+kind changed: 0
+NEWLY ASK: /bin/bash if [[ -n x ]] set -A functions a -> Some(UnseenCode)
+NEWLY ASK: /bin/zsh if [[ -n x ]] set -A functions a -> Some(UnseenCode)
+NEWLY ASK: /bin/bash if [[ 1 ]] noglob read -A functions -> Some(UnseenCode)
+NEWLY ASK: /bin/zsh if [[ 1 ]] noglob read -A functions -> Some(UnseenCode)
+NEWLY ASK: /bin/bash if [[ 1 ]] read -A functions -> Some(UnseenCode)
+NEWLY ASK: /bin/zsh if [[ 1 ]] read -A functions -> Some(UnseenCode)
+NEWLY ASK: /bin/bash if [[ 1 ]] zparseopts -a functions -- f: -> Some(UnseenCode)
+NEWLY ASK: /bin/zsh if [[ 1 ]] zparseopts -a functions -- f: -> Some(UnseenCode)
+NEWLY ASK: /bin/bash if [[ a == b ]] read -A aliases -> Some(UnseenCode)
+NEWLY ASK: /bin/zsh if [[ a == b ]] read -A aliases -> Some(UnseenCode)
+NEWLY ASK: /bin/bash until [[ 1 ]] read -A functions -> Some(UnseenCode)
+NEWLY ASK: /bin/zsh until [[ 1 ]] read -A functions -> Some(UnseenCode)
+NEWLY ASK: /bin/bash while [[ 1 ]] read -A functions -> Some(UnseenCode)
+NEWLY ASK: /bin/zsh while [[ 1 ]] read -A functions -> Some(UnseenCode)

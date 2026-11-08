@@ -1,0 +1,6 @@
+$ cargo clippy -p codex-core --tests -- -D warnings
+    Checking core_test_support v0.1.48 (/Users/dom/pft-work/wt_1845/codex-rs/core/tests/common)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1m 59s
+warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+exit status: 0

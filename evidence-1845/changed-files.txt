@@ -1,0 +1,3 @@
+ .../src/security/tainted_action/code_tables.rs     | 12 +++++
+ codex-rs/core/src/security/tainted_action_tests.rs | 54 ++++++++++++++++++++++
+ 2 files changed, 66 insertions(+)

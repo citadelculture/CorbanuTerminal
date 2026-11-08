@@ -1,0 +1,47 @@
+base main cea7ffa7ee160bd3b681bb59ff79dbfd750c9e9c code_tables.rs + #1845 tests (red)
+  |
+  = note: `#[warn(linker_messages)]` on by default
+
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.80s
+     Running unittests src/lib.rs (/Users/dom/pft-work/target_zsh1573/debug/deps/codex_core-95ace29623ba0e4e)
+
+running 3 tests
+test security::tainted_action::tests::issue1845_sweep_dump ... ignored, sweep dump
+test security::tainted_action::tests::issue1845_short_loop_walk_is_linear ... ok
+test security::tainted_action::tests::issue1845_short_loop_test_does_not_hide_a_table_writer ... FAILED
+
+failures:
+
+---- security::tainted_action::tests::issue1845_short_loop_test_does_not_hide_a_table_writer stdout ----
+
+thread 'security::tainted_action::tests::issue1845_short_loop_test_does_not_hide_a_table_writer' (82741375) panicked at core/src/security/tainted_action_tests.rs:12428:5:
+assertion failed: `(left == right)`
+
+[1mDiff[0m [31m< left[0m / [32mright >[0m :
+[31m<[[0m
+[31m<    "asks /bin/bash: if [[ 1 ]] read -A functions",[0m
+[31m<    "asks /bin/bash: while [[ 1 ]] read -A functions",[0m
+[31m<    "asks /bin/bash: until [[ 1 ]] read -A functions",[0m
+[31m<    "asks /bin/bash: if [[ -n x ]] set -A functions a",[0m
+[31m<    "asks /bin/bash: if [[ 1 ]] zparseopts -a functions -- f:",[0m
+[31m<    "asks /bin/bash: if [[ 1 ]] noglob read -A functions",[0m
+[31m<    "asks /bin/bash: if [[ a == b ]] read -A aliases",[0m
+[31m<    "asks /bin/zsh: if [[ 1 ]] read -A functions",[0m
+[31m<    "asks /bin/zsh: while [[ 1 ]] read -A functions",[0m
+[31m<    "asks /bin/zsh: until [[ 1 ]] read -A functions",[0m
+[31m<    "asks /bin/zsh: if [[ -n x ]] set -A functions a",[0m
+[31m<    "asks /bin/zsh: if [[ 1 ]] zparseopts -a functions -- f:",[0m
+[31m<    "asks /bin/zsh: if [[ 1 ]] noglob read -A functions",[0m
+[31m<    "asks /bin/zsh: if [[ a == b ]] read -A aliases",[0m
+[31m<][0m
+[32m>[][0m
+
+
+
+
+failures:
+    security::tainted_action::tests::issue1845_short_loop_test_does_not_hide_a_table_writer
+
+test result: FAILED. 1 passed; 1 failed; 1 ignored; 0 measured; 3737 filtered out; finished in 0.96s
+
+error: test failed, to rerun pass `-p codex-core --lib`
