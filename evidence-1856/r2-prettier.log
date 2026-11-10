@@ -1,0 +1,4 @@
+$ npx --yes prettier@3.5.3 --check .github/workflows/bazel.yml docs/ci.md
+Checking formatting...
+All matched files use Prettier code style!
+exit status: 0

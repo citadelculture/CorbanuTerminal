@@ -1,0 +1,6 @@
+$ python3 -m unittest discover -s .github/scripts -p 'test_*.py'   # head
+Ran 83 tests in 3.858s
+
+FAILED (failures=5, errors=11)
+exit status: 1
+IDENTICAL_FAILURES

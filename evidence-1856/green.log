@@ -1,0 +1,11 @@
+$ python3 .github/scripts/test_windows_integration_disclosure.py   # head (green)
+test_authenticated_shard_is_unchanged (__main__.WindowsIntegrationDisclosureTest) ... ok
+test_docs_say_no_ci_job_runs_windows_integration_tests (__main__.WindowsIntegrationDisclosureTest) ... ok
+test_later_steps_still_gate_on_the_same_output (__main__.WindowsIntegrationDisclosureTest) ... ok
+test_skipped_shard_discloses_integration_tests_did_not_run (__main__.WindowsIntegrationDisclosureTest) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.011s
+
+OK
+exit status: 0

@@ -1,0 +1,5 @@
+$ python3 -m unittest discover -s .github/scripts -p 'test_*.py'   # base d0002812b4aed3032580cc47b661cf394097cc5c
+Ran 79 tests in 3.063s
+
+FAILED (failures=5, errors=11)
+exit status: 1
