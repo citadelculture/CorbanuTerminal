@@ -1,0 +1,201 @@
+ 4440                                  path: requested_path,
+ 4441                                  error: Some(err.to_string()),
+ 4442                              },
+ 4443                          };
+ 4444                          tx.send(event);
+ 4445                      });
+ 4446                  }
+ 4447                  #[cfg(not(target_os = "windows"))]
+ 4448                  {
+ 4449                      let _ = path;
+ 4450                  }
+ 4451              }
+ 4452              AppEvent::WindowsSandboxGrantReadRootCompleted { path, error } => match error {
+ 4453                  Some(err) => {
+ 4454                      self.chat_widget
+ 4455                          .add_to_history(history_cell::new_error_event(format!("Error: {err}")));
+ 4456                  }
+ 4457                  None => {
+ 4458                      self.chat_widget
+ 4459                          .add_to_history(history_cell::new_info_event(
+ 4460                              format!("Sandbox read access granted for {}", path.display()),
+ 4461                              /*hint*/ None,
+ 4462                          ));
+ 4463                  }
+ 4464              },
+ 4465              AppEvent::EnableWindowsSandboxForAgentMode {
+ 4466                  preset,
+ 4467                  mode,
+ 4468                  profile_selection,
+ 4469              } => {
+ 4470                  #[cfg(target_os = "windows")]
+ 4471                  {
+ 4472                      self.chat_widget.clear_windows_sandbox_setup_status();
+ 4473                      if let Some(started_at) = self.windows_sandbox.setup_started_at.take() {
+ 4474                          self.session_telemetry.record_duration(
+ 4475                              "codex.windows_sandbox.elevated_setup_duration_ms",
+ 4476                              started_at.elapsed(),
+ 4477                              &[("result", "success")],
+ 4478                          );
+ 4479                      }
+ 4480                      let selected_mode = match mode {
+ 4481                          WindowsSandboxEnableMode::Elevated => WindowsSandboxModeToml::Elevated,
+ 4482                          WindowsSandboxEnableMode::Legacy => WindowsSandboxModeToml::Unelevated,
+ 4483                      };
+ 4484                      let elevated_enabled = selected_mode == WindowsSandboxModeToml::Elevated;
+ 4485                      if !self.chat_widget.windows_sandbox_mode_allowed(selected_mode) {
+ 4486                          tracing::warn!(
+ 4487                              ?selected_mode,
+ 4488                              "refusing to persist Windows sandbox mode disallowed by requirements"
+ 4489                          );
+ 4490                          self.chat_widget.add_info_message(
+ 4491                              "That Windows sandbox option is disallowed by requirements."
+ 4492                                  .to_string(),
+ 4493                              /*hint*/ None,
+ 4494                          );
+ 4495                          return Ok(AppRunControl::Continue);
+ 4496                      }
+ 4497                      let edits =
+ 4498                          crate::config_update::build_windows_sandbox_mode_edits(elevated_enabled);
+ 4499                      match crate::config_update::write_config_batch(
+ 4500                          app_server.request_handle(),
+ 4501                          edits,
+ 4502                      )
+ 4503                      .await
+ 4504                      {
+ 4505                          Ok(response) if response.status == WriteStatus::OkOverridden => {
+ 4506                              self.sync_windows_sandbox_after_overridden_write(app_server, &response)
+ 4507                                  .await;
+ 4508                          }
+ 4509                          Ok(_) => {
+ 4510                              if elevated_enabled {
+ 4511                                  self.config.set_windows_sandbox_enabled(/*value*/ false);
+ 4512                                  self.config
+ 4513                                      .set_windows_elevated_sandbox_enabled(/*value*/ true);
+ 4514                              } else {
+ 4515                                  self.config.set_windows_sandbox_enabled(/*value*/ true);
+ 4516                                  self.config
+ 4517                                      .set_windows_elevated_sandbox_enabled(/*value*/ false);
+ 4518                              }
+ 4519                              self.chat_widget.set_windows_sandbox_mode(
+ 4520                                  self.config.permissions.windows_sandbox_mode,
+ 4521                              );
+ 4522                              let windows_sandbox_level =
+ 4523                                  crate::windows_sandbox::level_from_config(&self.config);
+ 4524                              if let Some((sample_paths, extra_count, failed_scan)) =
+ 4525                                  self.chat_widget.world_writable_warning_details()
+ 4526                              {
+ 4527                                  self.app_event_tx.send(AppEvent::CodexOp(
+ 4528                                      AppCommand::override_turn_context(
+ 4529                                          /*cwd*/ None,
+ 4530                                          /*approval_policy*/ None,
+ 4531                                          /*approvals_reviewer*/ None,
+ 4532                                          /*permission_profile*/ None,
+ 4533                                          /*active_permission_profile*/ None,
+ 4534                                          #[cfg(target_os = "windows")]
+ 4535                                          Some(windows_sandbox_level),
+ 4536                                          /*model*/ None,
+ 4537                                          /*effort*/ None,
+ 4538                                          /*summary*/ None,
+ 4539                                          /*service_tier*/ None,
+ 4540                                          /*collaboration_mode*/ None,
+ 4541                                          /*personality*/ None,
+ 4542                                      ),
+ 4543                                  ));
+ 4544                                  self.app_event_tx.send(
+ 4545                                      AppEvent::OpenWorldWritableWarningConfirmation {
+ 4546                                          preset: Some(preset.clone()),
+ 4547                                          profile_selection: profile_selection.clone(),
+ 4548                                          sample_paths,
+ 4549                                          extra_count,
+ 4550                                          failed_scan,
+ 4551                                      },
+ 4552                                  );
+ 4553                              } else if let Some(selection) = profile_selection {
+ 4554                                  self.app_event_tx.send(AppEvent::CodexOp(
+ 4555                                      AppCommand::override_turn_context(
+ 4556                                          /*cwd*/ None,
+ 4557                                          /*approval_policy*/ None,
+ 4558                                          /*approvals_reviewer*/ None,
+ 4559                                          /*permission_profile*/ None,
+ 4560                                          /*active_permission_profile*/ None,
+ 4561                                          #[cfg(target_os = "windows")]
+ 4562                                          Some(windows_sandbox_level),
+ 4563                                          /*model*/ None,
+ 4564                                          /*effort*/ None,
+ 4565                                          /*summary*/ None,
+ 4566                                          /*service_tier*/ None,
+ 4567                                          /*collaboration_mode*/ None,
+ 4568                                          /*personality*/ None,
+ 4569                                      ),
+ 4570                                  ));
+ 4571                                  if self.apply_permission_profile_selection(app_server, selection).await {
+ 4572                                      self.chat_widget.submit_initial_user_message_if_pending();
+ 4573                                  }
+ 4574                                  self.chat_widget.add_plain_history_lines(vec![
+ 4575                                      Line::from(vec!["• ".dim(), "Sandbox ready".into()]),
+ 4576                                      Line::from(vec![
+ 4577                                          "  ".into(),
+ 4578                                          "Codex can now safely edit files and execute commands in your computer"
+ 4579                                              .dark_gray(),
+ 4580                                      ]),
+ 4581                                  ]);
+ 4582                              } else {
+ 4583                                  self.app_event_tx.send(AppEvent::CodexOp(
+ 4584                                      AppCommand::override_turn_context(
+ 4585                                          /*cwd*/ None,
+ 4586                                          /*approval_policy*/ None,
+ 4587                                          /*approvals_reviewer*/ None,
+ 4588                                          /*permission_profile*/ None,
+ 4589                                          /*active_permission_profile*/ None,
+ 4590                                          #[cfg(target_os = "windows")]
+ 4591                                          Some(windows_sandbox_level),
+ 4592                                          /*model*/ None,
+ 4593                                          /*effort*/ None,
+ 4594                                          /*summary*/ None,
+ 4595                                          /*service_tier*/ None,
+ 4596                                          /*collaboration_mode*/ None,
+ 4597                                          /*personality*/ None,
+ 4598                                      ),
+ 4599                                  ));
+ 4600                                  self.app_event_tx.send(AppEvent::SelectPermissionProfile(PermissionProfileSelection {
+ 4601                                      profile_id: preset.active_permission_profile.id.clone(),
+ 4602                                      approval_policy: Some(AskForApproval::from(preset.approval)),
+ 4603                                      approvals_reviewer: Some(self.config.approvals_reviewer),
+ 4604                                      display_label: preset.active_permission_profile.id.clone(),
+ 4605                                  }));
+ 4606                                  self.chat_widget.add_plain_history_lines(vec![
+ 4607                                      Line::from(vec!["• ".dim(), "Sandbox ready".into()]),
+ 4608                                      Line::from(vec![
+ 4609                                          "  ".into(),
+ 4610                                          "Codex can now safely edit files and execute commands in your computer"
+ 4611                                              .dark_gray(),
+ 4612                                      ]),
+ 4613                                  ]);
+ 4614                              }
+ 4615                              if let Some(message) = codex_sandboxing::legacy_windows_sandbox_warning(
+ 4616                                  windows_sandbox_level,
+ 4617                                  &preset.permission_profile,
+ 4618                              ) {
+ 4619                                  self.chat_widget
+ 4620                                      .add_to_history(history_cell::new_warning_event(message));
+ 4621                              }
+ 4622                          }
+ 4623                          Err(err) => {
+ 4624                              tracing::error!(
+ 4625                                  error = %err,
+ 4626                                  "failed to enable Windows sandbox feature"
+ 4627                              );
+ 4628                              self.chat_widget.add_error_message(format!(
+ 4629                                  "Failed to enable the Windows sandbox feature: {err}"
+ 4630                              ));
+ 4631                          }
+ 4632                      }
+ 4633                  }
+ 4634                  #[cfg(not(target_os = "windows"))]
+ 4635                  {
+ 4636                      let _ = (preset, mode, profile_selection);
+ 4637                  }
+ 4638              }
+ 4639              AppEvent::PersistModelSelection {
+ 4640                  model,

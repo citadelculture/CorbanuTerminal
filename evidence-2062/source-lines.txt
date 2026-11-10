@@ -1,0 +1,12 @@
+4447:                #[cfg(not(target_os = "windows"))]
+4465:            AppEvent::EnableWindowsSandboxForAgentMode {
+4470:                #[cfg(target_os = "windows")]
+4534:                                        #[cfg(target_os = "windows")]
+4561:                                        #[cfg(target_os = "windows")]
+4571:                                if self.apply_permission_profile_selection(app_server, selection).await {
+4575:                                    Line::from(vec!["• ".dim(), "Sandbox ready".into()]),
+4590:                                        #[cfg(target_os = "windows")]
+4600:                                self.app_event_tx.send(AppEvent::SelectPermissionProfile(PermissionProfileSelection {
+4607:                                    Line::from(vec!["• ".dim(), "Sandbox ready".into()]),
+4634:                #[cfg(not(target_os = "windows"))]
+4918:            AppEvent::SelectPermissionProfile(selection) => {
