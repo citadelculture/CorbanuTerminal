@@ -1,0 +1,140 @@
+diff --git a/codex-rs/core/src/session/input_queue.rs b/codex-rs/core/src/session/input_queue.rs
+index 8cb601da04..f3c004e9d7 100644
+--- a/codex-rs/core/src/session/input_queue.rs
++++ b/codex-rs/core/src/session/input_queue.rs
+@@ -393,33 +393,26 @@ impl InputQueue {
+         input
+     }
+ 
++    /// #2047: tests poll pending input the way a running task does. With no active turn (a
++    /// detached task, or an idle session) mailbox mail stays queued, as in production; tests
++    /// that inspect queued mail use `drain_mailbox_input_items` or `has_pending_mailbox_items`.
+     #[cfg(test)]
+     pub(crate) async fn get_pending_input(
+         &self,
+         active_turn: &Mutex<Option<ActiveTurn>>,
+     ) -> (Vec<TurnInput>, Option<String>) {
+-        self.get_pending_input_inner(active_turn, /*allow_untracked_mailbox*/ true)
+-            .await
++        self.get_pending_input_for_running_task(active_turn).await
+     }
+ 
+     /// Takes input for an already-running task. A task detached by any stop path must not drain
+     /// mailbox mail: it no longer has a turn state that can record its outcome.
+-    pub(crate) async fn get_pending_input_for_running_task(
+-        &self,
+-        active_turn: &Mutex<Option<ActiveTurn>>,
+-    ) -> (Vec<TurnInput>, Option<String>) {
+-        self.get_pending_input_inner(active_turn, /*allow_untracked_mailbox*/ false)
+-            .await
+-    }
+-
+     #[allow(
+         clippy::await_holding_invalid_type,
+         reason = "taking mail off the queue and noting it in the turn state must remain atomic"
+     )]
+-    async fn get_pending_input_inner(
++    pub(crate) async fn get_pending_input_for_running_task(
+         &self,
+         active_turn: &Mutex<Option<ActiveTurn>>,
+-        allow_untracked_mailbox: bool,
+     ) -> (Vec<TurnInput>, Option<String>) {
+         let (pending_input, accepts_mailbox_delivery, turn_id, turn_state) =
+             Self::take_turn_pending_input(active_turn).await;
+@@ -436,11 +429,7 @@ impl InputQueue {
+                 turn_state.track_taken_mailbox_messages(&mailbox_items);
+                 (mailbox_items, parent_turn_id)
+             }
+-            // Test-only: older tests poll an empty slot to inspect queued mail. Executing tasks
+-            // use the fail-closed path above.
+-            None if allow_untracked_mailbox => {
+-                self.drain_mailbox_input_for_turn(turn_id.as_deref()).await
+-            }
++            // No turn state can note the mail (a detached task): it stays queued.
+             None => (Vec::new(), None),
+         };
+         if pending_input.is_empty() {
+diff --git a/codex-rs/core/src/session/stale_poll_mail_tests.rs b/codex-rs/core/src/session/stale_poll_mail_tests.rs
+index 3c84d836b0..7b39802713 100644
+--- a/codex-rs/core/src/session/stale_poll_mail_tests.rs
++++ b/codex-rs/core/src/session/stale_poll_mail_tests.rs
+@@ -1,4 +1,4 @@
+-//! #2010 reproduction (rev-2033): every stop path removes the active-turn slot before it waits
++//! #2010 reproduction: every stop path removes the active-turn slot before it waits
+ //! for the stopped task. A task that reaches its next input poll in that window (as `run_turn`
+ //! does at the top of its loop) must not take mailbox mail it can no longer note; the mail must
+ //! still be queued once the stop has finished.
+diff --git a/codex-rs/core/src/session/tests.rs b/codex-rs/core/src/session/tests.rs
+index cb17d58f6e..ec5b1ef0f9 100644
+--- a/codex-rs/core/src/session/tests.rs
++++ b/codex-rs/core/src/session/tests.rs
+@@ -11555,7 +11555,7 @@ async fn interrupt_clears_steered_input_without_follow_up_turn() {
+     assert!(sess.active_turn.lock().await.is_none());
+     assert_eq!(
+         (Vec::<TurnInput>::new(), None),
+-        sess.input_queue.get_pending_input(&sess.active_turn).await
++        sess.input_queue.drain_mailbox_input_items().await
+     );
+     assert!(
+         tokio::time::timeout(std::time::Duration::from_millis(200), rx.recv())
+@@ -11706,7 +11706,41 @@ async fn try_start_turn_if_idle_rejects_plan_mode_without_injecting() {
+     assert!(sess.active_turn.lock().await.is_none());
+     assert_eq!(
+         (Vec::<TurnInput>::new(), None),
+-        sess.input_queue.get_pending_input(&sess.active_turn).await
++        sess.input_queue.drain_mailbox_input_items().await
++    );
++}
++
++/// #2047: the test-only `get_pending_input` behaves like production with no active turn: it takes
++/// no mailbox mail (no turn state could note it), and the mail stays queued for the next turn.
++#[tokio::test]
++async fn get_pending_input_without_active_turn_leaves_mailbox_mail_queued() {
++    let (sess, _tc, _rx) = make_session_and_context_with_rx().await;
++    let communication = InterAgentCommunication::new(
++        AgentPath::root(),
++        AgentPath::root(),
++        Vec::new(),
++        "queued while idle".to_string(),
++        /*trigger_turn*/ false,
++    );
++    sess.input_queue
++        .enqueue_mailbox_communication(communication.clone(), /*parent_turn_id*/ None)
++        .await;
++    assert!(sess.active_turn.lock().await.is_none());
++
++    assert_eq!(
++        sess.input_queue.get_pending_input(&sess.active_turn).await,
++        sess.input_queue
++            .get_pending_input_for_running_task(&sess.active_turn)
++            .await,
++    );
++    assert_eq!(
++        sess.input_queue.get_pending_input(&sess.active_turn).await,
++        (Vec::new(), None)
++    );
++    assert!(sess.input_queue.has_pending_mailbox_items().await);
++    assert_eq!(
++        sess.input_queue.drain_mailbox_input_items().await.0,
++        vec![TurnInput::InterAgentCommunication(communication)]
+     );
+ }
+ 
+@@ -11764,7 +11798,7 @@ async fn try_start_turn_if_idle_rejects_active_review_turn_without_injecting() {
+     assert_eq!(vec![item], err.into_input());
+     assert_eq!(
+         (Vec::<TurnInput>::new(), None),
+-        sess.input_queue.get_pending_input(&sess.active_turn).await
++        sess.input_queue.drain_mailbox_input_items().await
+     );
+ 
+     sess.abort_all_tasks(TurnAbortReason::Interrupted).await;
+@@ -13227,7 +13261,7 @@ async fn queue_only_mailbox_mail_waits_for_next_turn_after_answer_boundary() {
+     sess.abort_all_tasks(TurnAbortReason::Replaced).await;
+ 
+     assert_eq!(
+-        (sess.input_queue.get_pending_input(&sess.active_turn).await).0,
++        sess.input_queue.drain_mailbox_input_items().await.0,
+         vec![TurnInput::InterAgentCommunication(communication)],
+     );
+ }

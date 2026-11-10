@@ -1,0 +1,468 @@
+red: base 27b317cad7a08cdb771095496e3f4b913b85afd8 input_queue.rs (old draining test helper) + head tests
+  |
+  = note: `#[warn(linker_messages)]` on by default
+
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3m 55s
+     Running unittests src/lib.rs (/Users/dom/pft-work/target_zsh1573/debug/deps/codex_core-7ac96f175d83bb2d)
+
+running 403 tests
+test guardian::review_session::tests::had_prior_review_context_tracks_prompt_mode ... ok
+test guardian::review_session::tests::guardian_prompt_cache_key_is_scoped_to_parent_thread ... ok
+test guardian::review_session::tests::run_before_review_deadline_times_out_before_future_completes ... ok
+test guardian::review_session::tests::run_before_review_deadline_aborts_when_cancelled ... ok
+test guardian::review_session::tests::run_before_review_deadline_with_cancel_cancels_token_on_abort ... ok
+test guardian::review_session::tests::run_before_review_deadline_with_cancel_preserves_token_on_success ... ok
+test guardian::review_session::tests::run_before_review_deadline_with_cancel_cancels_token_on_timeout ... ok
+test guardian::review_session::tests::guardian_review_session_config_change_invalidates_cached_session ... ok
+test guardian::review_session::tests::guardian_review_session_config_prefers_managed_policy_and_uses_catalog_template ... ok
+test guardian::review_session::tests::token_usage_delta_never_reports_negative_usage ... ok
+test guardian::review_session::tests::guardian_review_session_config_disables_skill_instructions ... ok
+test guardian::review_session::tests::guardian_review_session_config_preserves_explicit_empty_catalog_policy ... ok
+test guardian::review_session::tests::guardian_review_session_compact_scope_change_invalidates_cached_session ... ok
+test guardian::review_session::tests::guardian_review_session_config_disables_hooks ... ok
+test guardian::review_session::tests::guardian_review_session_config_preserves_explicit_empty_catalog_template ... ok
+test guardian::review_session::tests::wait_for_guardian_review_ignores_prior_turn_errors ... ok
+test guardian::review_session::tests::wait_for_guardian_review_ignores_prior_turn_completion ... ok
+test guardian::review_session::tests::wait_for_guardian_review_ignores_prior_turn_aborts ... ok
+test guardian::review_session::tests::wait_for_guardian_review_cancel_drains_expected_turn_after_stale_terminal_event ... ok
+test guardian::review_session::tests::wait_for_guardian_review_preserves_structured_session_error ... ok
+test guardian::review_session::tests::interrupt_and_drain_turn_ignores_prior_turn_completion ... ok
+test guardian::review_session::tests::wait_for_guardian_review_timeout_drains_expected_turn_after_stale_terminal_event ... ok
+test guardian::review_session::tests::spawned_guardian_session_preserves_windows_sandbox_proxy_settings ... ok
+test guardian::review_session::tests::run_review_on_reused_session_waits_for_submitted_turn ... ok
+test session::code_mode_warning::tests::does_not_warn_when_code_mode_is_disabled ... ok
+test session::code_mode_warning::tests::does_not_warn_when_model_has_tool_mode_selector ... ok
+test session::code_mode_warning::tests::fallback_metadata_only_uses_existing_warning ... ok
+test session::code_mode_warning::tests::warns_when_code_mode_is_enabled_without_model_selector ... ok
+test session::code_mode_warning::tests::warns_when_code_mode_only_is_enabled_without_model_selector ... ok
+test guardian::review_session::tests::run_review_removes_trunk_when_event_stream_is_broken ... ok
+test session::account_switch_tests::mcp_refresh_updates_plugin_auth_mode_before_checking_pending_state ... ok
+test session::config_lock::tests::lock_contains_prompts_and_materializes_features ... ok
+test session::config_lock::tests::lock_contains_exact_managed_requirements ... ok
+test session::config_lock::tests::lock_preserves_model_owned_token_budget_defaults ... ok
+test session::config_lock::tests::lock_skips_session_values_when_model_catalog_fields_are_not_saved ... ok
+test session::config_lock::tests::lock_drops_unmanaged_model_catalog_input ... ok
+test session::config_lock::tests::lock_validation_can_ignore_codex_version_mismatch ... ok
+test session::config_lock::tests::lock_validation_rejects_codex_version_mismatch_by_default ... ok
+test session::config_lock::tests::lock_validation_ignores_removed_apps_mcp_path_override ... ok
+test session::confirmed_aggressive::tests::issue_505_a_managed_approval_policy_is_kept ... ok
+test session::config_lock::tests::lock_validation_reports_config_diff ... ok
+test session::confirmed_aggressive::tests::issue_505_settings_updates_cannot_lower_held_approvals ... ok
+test session::confirmed_aggressive::tests::issue_505_internal_sessions_keep_their_settings ... ok
+test session::confirmed_aggressive::tests::issue_505_a_running_session_stores_it_for_turns_mcp_and_clients ... ok
+test session::detached_agent_config::tests::issue_2015_detached_agent_config_follows_the_live_session ... ok
+test session::detached_agent_config::tests::issue_2015_windows_sandbox_is_never_lowered ... ok
+test session::elicitation_holders_tests::command_approval_holds_an_elicitation_until_response ... ok
+test session::elicitation_holders_tests::patch_approval_holds_an_elicitation_until_response ... ok
+test session::elicitation_holders_tests::permission_request_holds_an_elicitation_until_response ... ok
+test session::input_queue::tests::admitted_turn_drain_accepts_trigger_mail_immediately ... ok
+test session::input_queue::tests::admitted_turn_drain_waits_one_boundary_for_queue_only_mail ... ok
+test session::elicitation_holders_tests::request_user_input_holds_an_elicitation_until_response ... ok
+test session::input_queue::tests::input_queue_drains_mailbox_in_delivery_order ... ok
+test session::input_queue::tests::input_queue_notifies_mailbox_subscribers ... ok
+test session::input_queue::tests::input_queue_notifies_steer_subscribers ... ok
+test session::input_queue::tests::input_queue_reports_already_pending_steer ... ok
+test session::input_queue::tests::input_queue_requires_one_unambiguous_trigger_parent ... ok
+test session::input_queue::tests::input_queue_tracks_pending_trigger_turn_mail ... ok
+test session::input_queue::tests::running_turn_notes_the_mail_it_takes ... ok
+test session::input_queue::tests::stopped_turn_keeps_mailbox_items_for_the_next_turn ... ok
+test session::input_queue::tests::task_start_still_admits_ready_mail_from_an_idle_slot ... ok
+test session::input_queue::tests::unrecorded_mail_leaves_out_recorded_and_deferred_mail ... ok
+test session::mcp::tests::guardian_decisions_map_to_elicitation_responses_without_session_state ... ok
+test session::mcp::tests::guardian_elicitation_review_request_builds_mcp_tool_call ... ok
+test session::mcp::tests::guardian_elicitation_review_request_declines_unsupported_opt_in_shapes ... ok
+test session::mcp::tests::guardian_elicitation_review_request_defaults_missing_tool_params ... ok
+test session::mcp::tests::guardian_elicitation_review_request_requires_opt_in ... ok
+test session::mcp::tests::plugin_install_elicitation_telemetry_metadata_requires_install_tool_suggestion ... ok
+test session::output_text_stream::tests::pending_output_text_binds_unidentified_text_to_the_first_item ... ok
+test session::output_text_stream::tests::pending_output_text_enforces_a_hard_byte_limit ... ok
+test session::output_text_stream::tests::pending_output_text_rejects_interleaved_item_ids ... ok
+test session::home_access_session_tests::unsaved_rollout_tracks_written_appends_and_ends_with_the_thread ... ok
+test session::input_queue::tests::idle_session_makes_queue_only_mail_ready_for_next_turn ... ok
+test session::rollout_reconstruction_tests::reconstruct_history_legacy_compaction_without_replacement_history_clears_later_reference_context_item ... ok
+test session::rollout_reconstruction_tests::reconstruct_history_legacy_compaction_without_replacement_history_does_not_inject_current_initial_context ... ok
+test session::pending_mailbox_wake_tests::pending_mailbox_wake_checks_idle_before_preparing_a_turn ... ok
+test session::rollout_reconstruction_tests::reconstruct_history_prefers_compacted_window_over_session_meta ... ok
+test session::rollout_reconstruction_tests::reconstruct_history_preserves_legacy_compaction_count_with_session_meta_window ... ok
+test session::rollout_reconstruction_tests::reconstruct_history_replays_world_state_from_latest_compaction_window ... ok
+test session::rollout_reconstruction_tests::reconstruct_history_restores_initial_window_from_session_meta ... ok
+test session::rollout_reconstruction_tests::reconstruct_history_rollback_clears_history_and_metadata_when_exceeding_user_turns ... ok
+test session::rollout_reconstruction_tests::reconstruct_history_rollback_counts_inter_agent_assistant_turns ... ok
+test session::rollout_reconstruction_tests::reconstruct_history_rollback_keeps_history_and_metadata_in_sync_for_completed_turns ... ok
+test session::rollout_reconstruction_tests::reconstruct_history_rollback_keeps_history_and_metadata_in_sync_for_incomplete_turn ... ok
+test session::rollout_reconstruction_tests::reconstruct_history_rollback_skips_non_user_turns_for_history_and_metadata ... ok
+test session::rollout_reconstruction_tests::record_initial_history_reconstructs_typed_inter_agent_message ... ok
+test session::rollout_reconstruction_tests::record_initial_history_restores_world_state_baseline ... ok
+test session::rollout_reconstruction_tests::record_initial_history_resumed_aborted_turn_without_id_clears_active_turn_for_compaction_accounting ... ok
+test session::rollout_reconstruction_tests::record_initial_history_resumed_bare_turn_context_does_not_seed_reference_context_item ... ok
+test session::rollout_reconstruction_tests::record_initial_history_resumed_bare_turn_context_does_not_hydrate_previous_turn_settings ... ok
+test session::rollout_reconstruction_tests::record_initial_history_resumed_does_not_seed_reference_context_item_after_compaction ... ok
+test session::rollout_reconstruction_tests::record_initial_history_resumed_replaced_incomplete_compacted_turn_clears_reference_context_item ... ok
+test session::rollout_reconstruction_tests::record_initial_history_resumed_hydrates_previous_turn_settings_from_lifecycle_turn_with_missing_turn_context_id ... ok
+test session::rollout_reconstruction_tests::record_initial_history_resumed_rollback_drops_incomplete_user_turn_compaction_metadata ... ok
+test session::rollout_reconstruction_tests::record_initial_history_resumed_trailing_incomplete_turn_preserves_turn_context_item ... ok
+test session::rollout_reconstruction_tests::record_initial_history_resumed_trailing_incomplete_turn_compaction_clears_reference_context_item ... ok
+test session::rollout_reconstruction_tests::record_initial_history_resumed_rollback_skips_only_user_turns ... ok
+test session::stale_approval_tests::issue_1001_host_allowed_for_good_is_marked_only_under_aggressive ... ok
+test session::rollout_reconstruction_tests::record_initial_history_resumed_unmatched_abort_preserves_active_turn_for_later_turn_context ... ok
+test session::rollout_reconstruction_tests::record_initial_history_resumed_turn_context_after_compaction_reestablishes_reference_context_item ... ok
+test session::stale_approval_tests::issue_1001_permission_grants_end_at_a_level_change ... ok
+test session::stale_approval_tests::issue_1001_strict_auto_review_ends_with_its_grant ... ok
+test session::stale_approval_tests::issue_945_dont_ask_again_after_a_level_change_is_not_saved ... ok
+test session::stale_approval_tests::issue_945_dont_ask_again_without_an_open_prompt_is_not_saved ... ok
+test session::stale_approval_tests::issue_945_permission_grant_after_a_level_change_grants_nothing ... ok
+test session::tests::abort_does_not_advance_unrelated_queue_only_mail ... ok
+test session::tests::abort_empty_active_turn_preserves_pending_input ... ok
+test session::tests::abort_gracefully_emits_marker_before_turn_aborted ... ok
+test session::stale_poll_mail_tests::stopped_turn_poll_leaves_mail_queued_on_every_stop_path ... ok
+test session::tests::abort_review_task_emits_exited_then_aborted_and_records_history ... ok
+test session::tests::account_usage_increase_is_per_account_and_skips_unchanged ... ok
+test session::tests::absolute_cwd_update_with_turn_environment_is_allowed ... ok
+test session::tests::active_profile_update_keeps_security_proxy_features ... ok
+test session::tests::active_profile_update_rebuilds_network_proxy_config ... ok
+test session::tests::assign_missing_response_item_ids_assigns_additional_tools_ids ... ok
+test session::tests::assign_missing_response_item_ids_assigns_agent_message_ids ... ok
+test session::tests::assistant_message_stream_parsers_can_be_seeded_from_output_item_added_text ... ok
+test session::tests::assistant_message_stream_parsers_seed_buffered_prefix_stays_out_of_finish_tail ... ok
+test session::tests::assistant_message_stream_parsers_seed_plan_parser_across_added_and_delta_boundaries ... ok
+test session::tests::abort_regular_task_emits_marker_before_turn_aborted ... ok
+test session::tests::admitted_terminal_result_mailbox_task_counts_as_native_auto_turn ... ok
+test session::tests::authorization_changed_defer_race_starts_fresh_turn_without_error ... ok
+test session::tests::authorization_changed_deferred_input_survives_interrupt ... ok
+test session::tests::authorization_changed_injection_preserves_items_until_completion ... ok
+test session::tests::authorization_changed_interrupted_input_wakes_fresh_admission ... ok
+test session::tests::authorization_changed_mail_waits_for_turn_boundary ... ok
+test session::tests::authorization_changed_public_injection_waits_for_later_model_turn ... ok
+test session::tests::authorization_changed_natural_completion_preserves_model_output_schema ... ok
+test session::tests::authorization_changed_turn_receives_code_mode_notify_and_user_shell_output ... ok
+test session::tests::build_initial_context_adds_multi_agent_v2_root_usage_hint_as_developer_message ... ok
+test session::tests::authorization_changed_user_input_runs_after_completion_with_latest_permissions ... ok
+test session::tests::build_initial_context_adds_multi_agent_v2_subagent_usage_hint_as_developer_message ... ok
+test session::tests::build_initial_context_describes_active_realtime_state ... ok
+test session::tests::build_initial_context_emits_thread_start_skill_warning_on_repeated_builds ... ok
+test session::tests::build_initial_context_includes_prompt_fragments_from_extensions ... ok
+test session::tests::build_initial_context_includes_turn_context_fragments_from_extensions ... ok
+test session::tests::build_initial_context_omits_multi_agent_v2_usage_hints_when_feature_disabled ... ok
+test session::tests::build_initial_context_omits_multi_agent_v2_usage_hints_when_hint_is_empty ... ok
+test session::tests::build_initial_context_omits_prompt_fragments_without_extension_state ... ok
+test session::tests::build_initial_context_prepends_model_switch_message ... ok
+test session::tests::build_test_config_is_built_for_the_given_folder ... ok
+test session::tests::build_initial_context_restates_realtime_start_when_reference_context_is_missing ... ok
+test session::tests::build_initial_context_trims_skill_metadata_from_context_window_budget ... ok
+test session::tests::collect_explicit_app_ids_from_skill_items_includes_linked_mentions ... ok
+test session::tests::collect_explicit_app_ids_from_skill_items_resolves_unambiguous_plain_mentions ... ok
+test session::tests::collect_explicit_app_ids_from_skill_items_skips_plain_mentions_with_skill_conflicts ... ok
+test session::tests::cancelled_mcp_refresh_remains_pending ... ok
+test session::tests::config_change_contributor_observes_effective_config_changes ... ok
+test session::tests::cached_guardian_subagent_exposes_its_rollout_path ... ok
+test session::tests::conflicting_ready_environment_root_ids_keep_first_location ... ok
+test session::tests::danger_full_access_tool_attempts_do_not_enforce_managed_network ... ok
+test session::tests::default_turn_context_assigns_missing_response_item_ids ... ok
+test session::tests::default_turn_does_not_overlay_legacy_fallback_cwd_onto_stored_thread_environments ... ok
+test session::tests::default_turn_honors_empty_stored_thread_environments ... ok
+test session::tests::deferred_input_does_not_interrupt_turn_local_sleep ... ok
+test session::tests::danger_full_access_turns_do_not_expose_managed_network_proxy ... ok
+test session::tests::emit_subagent_session_started_includes_fork_lineage_and_originator ... ok
+test session::tests::emit_thread_start_skill_metrics_records_description_truncated_chars_without_omitted_skills ... ok
+test session::tests::emit_thread_start_skill_metrics_records_enabled_kept_and_truncated_values ... ok
+test session::tests::empty_turn_environments_clear_primary_environment ... ok
+test session::tests::deferred_mail_does_not_interrupt_turn_local_sleep ... ok
+test session::tests::delegated_usage_counts_toward_the_parent_only_with_named_accounts ... ok
+test session::tests::extension_metrics_preserve_session_metadata_tags ... ok
+test session::tests::falls_back_to_content_when_structured_is_null ... ok
+test session::tests::enable_strict_auto_review_for_turn_uses_originating_turn ... ok
+test session::tests::environment_settings_preserve_explicit_primary_cwd ... ok
+test session::tests::fatal_tool_error_stops_turn_and_reports_error ... ok
+test session::tests::get_base_instructions_no_user_content ... ok
+test session::tests::get_service_tier_does_not_default_when_model_has_no_default ... ok
+test session::tests::get_service_tier_does_not_use_model_default_when_absent_and_fast_mode_enabled ... ok
+test session::tests::get_service_tier_does_not_use_model_default_when_fast_mode_disabled ... ok
+test session::tests::get_service_tier_drops_unsupported_configured_tier_when_fast_mode_enabled ... ok
+test session::tests::get_service_tier_ignores_configured_tier_when_fast_mode_disabled ... ok
+test session::tests::get_service_tier_keeps_supported_explicit_tier ... ok
+test session::tests::guardian_auto_review_emits_thread_idle_after_interrupt ... ok
+test session::tests::get_pending_input_without_active_turn_leaves_mailbox_mail_queued ... FAILED
+test session::tests::guardian_helper_review_interrupts_after_three_consecutive_denials ... ok
+test session::tests::fork_startup_context_then_first_turn_diff_snapshot ... ok
+test session::tests::guardian_tests::accounting_owner_of_a_guardian_fork_is_the_reviewed_conversation ... ok
+test session::tests::guardian_tests::an_uncollected_session_is_named_once ... ok
+test session::tests::guardian_tests::accounting_owner_of_ephemeral_sub_agents ... ok
+test session::tests::guardian_tests::guardian_allows_unified_exec_additional_permissions_requests_past_policy_validation ... ok
+test session::tests::guardian_tests::guardian_subagent_does_not_inherit_parent_exec_policy_rules ... ok
+test session::tests::guardian_tests::process_compacted_history_preserves_separate_guardian_developer_message ... ok
+test session::tests::guardian_tests::accounting_owner_of_side_and_consolidation_sessions ... ok
+test session::tests::guardian_tests::guardian_allows_shell_command_additional_permissions_requests_past_policy_validation ... ok
+test session::tests::guardian_tests::shell_command_allows_sticky_turn_permissions_without_inline_request_permissions_feature ... ok
+test session::account_switch_tests::a_turn_that_changes_the_provider_moves_the_account ... ok
+test session::tests::guardian_tests::request_permissions_guardian_review_stops_when_cancelled ... ok
+test session::tests::hard_abort_tool_output_tests::hard_aborted_turn_records_finished_tool_output ... ok
+test session::account_switch_tests::accounting_follows_a_mid_session_account_switch ... ok
+test session::account_switch_tests::a_switch_that_keeps_the_account_does_not_reconnect ... ok
+test session::account_switch_tests::the_model_list_follows_a_mid_session_account_switch ... ok
+test session::tests::guardian_tests::strict_auto_review_turn_grant_forces_guardian_for_shell_command_policy_skip ... ok
+test session::tests::guardian_tests::request_permissions_routes_to_guardian_when_reviewer_is_enabled ... ok
+test session::tests::hook_transcript_path_does_not_persist_non_local_thread_store ... ok
+test session::tests::includes_timed_out_message ... ok
+test session::tests::hook_transcript_path_materializes_lazy_local_thread ... ok
+test session::tests::interrupted_input_cannot_be_spliced_into_review_task ... ok
+test session::tests::hard_abort_tool_output_tests::hard_aborted_turn_records_tool_abort_output ... ok
+test session::tests::hard_abort_tool_output_tests::hard_aborted_turn_sends_its_file_change_summary ... ok
+test session::tests::interrupting_regular_turn_waiting_on_startup_prewarm_emits_turn_aborted ... ok
+test session::tests::issue1577_context_window_fill_keeps_thread_usage_counters ... ok
+test session::tests::kept_test_cwd_overrides_build_for_a_temporary_folder ... ok
+test session::tests::managed_network_proxy_decider_survives_full_access_start ... ok
+test session::tests::issue_245_a_grant_stored_before_the_rules_applied_drops_protected_paths ... ok
+test session::tests::interrupt_clears_steered_input_without_follow_up_turn ... ok
+test session::tests::item_completion_without_a_start_uses_completion_timestamp ... ok
+test session::tests::mcp_elicitation_reviewer_is_reused_across_runtime_refreshes ... ok
+test session::tests::issue_524_a_grant_is_checked_against_the_current_folder_too ... ok
+test session::account_switch_tests::connectors_follow_a_mid_session_account_switch ... ok
+test session::tests::mcp_policy_changes_schedule_runtime_refresh ... ok
+test session::account_switch_tests::the_connector_worker_survives_switches_and_reconnects ... ok
+test session::tests::mcp_skill_dependency_tests::skill_dependency_install_skips_servers_in_reserved_namespaces ... ok
+test session::tests::op_kind_for_input_and_context_ops ... ok
+test session::tests::new_default_turn_captures_current_span_trace_id ... ok
+test session::tests::per_turn_context_ceiling_tracks_static_provider_switches ... ok
+test session::tests::per_turn_fable_limits_are_scoped_to_the_plan_route ... ok
+test session::tests::new_default_turn_uses_config_aware_skills_for_role_overrides ... ok
+test session::tests::new_turn_refreshes_managed_network_proxy_for_sandbox_change ... ok
+test session::tests::prefers_structured_content_when_present ... ok
+test session::tests::notify_request_permissions_response_ignores_unmatched_call_id ... ok
+test session::tests::panicking_task_tests::a_panicking_task_fails_its_turn_instead_of_leaving_it_running ... ok
+test session::account_switch_tests::a_prompt_refused_for_a_removed_account_is_not_recorded_as_its_turn ... ok
+test session::tests::non_steerable_turn_defers_user_input_until_completion ... ok
+test session::tests::prepares_image_failures_before_history_insertion ... ok
+test session::tests::pf_30_s02_token_budget_mcp_hint_is_mcp_data_with_the_flag ... ok
+test session::tests::issue_1001_aggressive_proxy_leaves_out_allow_rules_saved_outside_it ... ok
+test session::tests::prepares_resumed_history_before_installing_it ... ok
+test session::tests::primary_environment_uses_first_turn_environment ... ok
+test session::tests::queue_only_mailbox_mail_waits_for_next_turn_after_answer_boundary ... ok
+test session::tests::pf_30_s02_stored_data_context_is_separate_external_memory_with_the_flag ... ok
+test session::tests::realtime_conversation_list_voices_emits_builtin_list ... ok
+test session::tests::recompute_token_usage_updates_model_context_window ... ok
+test session::tests::reconstruct_history_matches_live_compactions ... ok
+test session::tests::reconstruct_history_uses_replacement_history_verbatim ... ok
+test session::tests::recompute_token_usage_uses_session_base_instructions ... ok
+test session::tests::record_context_updates_and_set_reference_context_item_injects_full_context_when_baseline_missing ... ok
+test session::tests::record_context_updates_and_set_reference_context_item_persists_baseline_without_emitting_diffs ... ok
+test session::tests::record_context_updates_and_set_reference_context_item_persists_split_file_system_policy_to_rollout ... ok
+test session::tests::record_context_updates_and_set_reference_context_item_persists_full_reinjection_to_rollout ... ok
+test session::tests::record_context_updates_and_set_reference_context_item_reinjects_full_context_after_clear ... ok
+test session::tests::record_context_updates_emits_environment_item_for_cwd_changes ... ok
+test session::tests::record_context_updates_emits_environment_item_for_time_changes ... ok
+test session::tests::record_context_updates_emits_environment_item_for_network_changes ... ok
+test session::tests::record_context_updates_emits_realtime_start_when_session_becomes_live ... ok
+test session::tests::record_context_updates_emits_realtime_end_when_session_stops_being_live ... ok
+test session::tests::record_context_updates_includes_turn_context_fragments_on_steady_state_turns ... ok
+test session::tests::record_conversation_items_stamps_missing_turn_id_and_preserves_existing_turn_id ... ok
+test session::tests::record_context_updates_omits_environment_item_when_disabled ... ok
+test session::tests::record_granted_request_permissions_for_turn_uses_originating_turn ... ok
+test session::tests::record_initial_history_new_defers_initial_context_until_first_turn ... ok
+test session::tests::record_initial_history_assigns_and_persists_id_for_forked_response_item ... ok
+test session::tests::record_initial_history_reconstructs_forked_transcript ... ok
+test session::tests::record_initial_history_forked_hydrates_previous_turn_settings ... ok
+test session::tests::record_initial_history_seeds_token_info_from_rollout ... ok
+test session::tests::record_initial_history_reconstructs_resumed_transcript ... ok
+test session::tests::non_steerable_defer_race_starts_fresh_turn_without_error ... ok
+test session::tests::record_inter_agent_communication_preserves_item_id_in_rollout_and_resume ... ok
+test session::tests::record_token_usage_info_notifies_extension_contributors ... ok
+test session::tests::refresh_runtime_config_refreshes_hooks ... ok
+test session::tests::refresh_mcp_servers_uses_latest_state_for_existing_turns ... ok
+test session::tests::record_response_item_and_emit_turn_item_emits_hook_prompt_lifecycle ... ok
+test session::tests::refresh_mcp_config_replaces_managed_server_and_plugin_requirements ... ok
+test session::tests::refreshed_mcp_binding_captures_current_approval_authority ... ok
+test session::tests::refresh_runtime_config_updates_runtime_refreshable_fields_and_keeps_session_static_settings ... ok
+test session::tests::record_inter_agent_communication_sets_turn_id_in_rollout_and_resume ... ok
+test session::tests::reload_user_config_layer_updates_effective_tool_suggest_config ... ok
+test session::tests::rejects_escalated_permissions_when_policy_not_on_request ... ok
+test session::tests::relative_cwd_update_without_environments_resolves_under_session_cwd ... ok
+test session::tests::reload_user_config_layer_updates_effective_apps_config ... ok
+test session::tests::regular_turn_emits_turn_started_with_trace_id_without_waiting_for_startup_prewarm ... ok
+test session::tests::reload_user_config_layer_updates_base_and_selected_profile_layers ... ok
+test session::tests::reload_user_config_layer_refreshes_hooks ... ok
+test session::tests::resolve_multi_agent_version_handles_unset_and_legacy_history ... ok
+test session::tests::reload_user_config_layer_keeps_previous_config_for_malformed_shell_policy ... ok
+test session::tests::request_permission_grants_are_environment_keyed ... ok
+test session::tests::request_mcp_server_elicitation_auto_accepts_when_auto_deny_is_enabled ... ok
+test session::tests::request_permissions_emits_event_when_granular_policy_allows_requests ... ok
+test session::tests::request_permissions_response_materializes_session_cwd_grants_before_recording ... ok
+test session::tests::request_permissions_tool_resolves_relative_paths_against_selected_environment ... ok
+test session::tests::request_permissions_tool_rejects_unknown_environment_id ... ok
+test session::tests::session_configuration_apply_permission_profile_accepts_direct_write_roots ... ok
+test session::tests::session_configuration_apply_permission_profile_preserves_existing_deny_read_entries ... ok
+test session::tests::session_configuration_apply_preserves_profile_file_system_policy_on_cwd_only_update ... ok
+test session::tests::session_configuration_apply_preserves_absolute_cwd_write_root_on_cwd_update ... ok
+test session::tests::resumed_history_injects_initial_context_on_first_context_update_only ... ok
+test session::tests::session_new_fails_when_zsh_fork_enabled_without_packaged_zsh ... ok
+test session::tests::request_permissions_is_auto_denied_when_granular_policy_blocks_tool_requests ... ok
+test session::tests::session_settings_legacy_fast_service_tier_update_uses_priority_request_value ... ok
+test session::tests::session_settings_null_service_tier_update_uses_default_service_tier ... ok
+test session::tests::session_start_hooks_only_load_from_trusted_project_layers ... ok
+test session::tests::session_start_hooks_require_project_trust_without_config_toml ... ok
+test session::tests::resume_restores_account_usage_and_fork_does_not ... ok
+test session::tests::resuming_a_fork_before_its_first_reply_has_no_account_usage ... ok
+test session::tests::set_rate_limits_retains_previous_credits ... ok
+test session::tests::set_rate_limits_updates_plan_type_when_present ... ok
+test session::tests::session_update_settings_does_not_rewrite_sticky_environment_cwds ... ok
+test session::tests::resumed_root_session_uses_thread_id_as_session_id ... ok
+test session::tests::session_update_settings_model_provider_rebuilds_model_client ... ok
+test session::tests::resumed_subagent_session_restores_persisted_session_id ... ok
+test session::tests::run_user_shell_command_does_not_set_reference_context_item ... ok
+test session::tests::session_configured_reports_permission_profile_for_external_sandbox ... ok
+test session::tests::shutdown_and_wait_waits_when_shutdown_is_already_in_progress ... ok
+test session::tests::shutdown_complete_does_not_append_to_thread_store_after_shutdown ... ok
+test session::tests::start_managed_network_proxy_applies_execpolicy_network_rules ... ok
+test session::tests::start_managed_network_proxy_ignores_invalid_execpolicy_network_rules ... ok
+test session::tests::spawn_task_turn_span_inherits_dispatch_trace_context ... ok
+test session::tests::spawn_task_does_not_update_previous_turn_settings_for_non_run_turn_tasks ... ok
+test session::tests::stale_defer_mailbox_delivery_does_not_override_steered_input ... ok
+test session::tests::shutdown_and_wait_allows_multiple_waiters ... ok
+test session::tests::shutdown_and_wait_shuts_down_cached_guardian_subagent ... ok
+test session::tests::shutdown_and_wait_shuts_down_tracked_ephemeral_guardian_review ... ok
+test session::tests::steer_input_accepts_runtime_user_layer_reload ... ok
+test session::tests::steer_input_accepts_unchanged_authorization_after_settings_update ... ok
+test session::tests::start_new_context_window_assigns_and_persists_item_ids ... ok
+test session::tests::steer_input_enforces_expected_turn_id ... ok
+test session::tests::strict_auto_review_session_scope_grants_no_permissions ... ok
+test session::tests::steer_input_returns_active_turn_id ... ok
+test session::tests::submission_dispatch_span_prefers_submission_trace_context ... ok
+test session::tests::submission_dispatch_span_uses_debug_for_realtime_audio ... ok
+test session::tests::steered_input_reopens_mailbox_delivery_for_current_turn ... ok
+test session::tests::steer_input_requires_active_turn ... ok
+test session::tests::steer_input_rejects_non_regular_turns ... ok
+test session::tests::success_flag_reflects_is_error_true ... ok
+test session::tests::success_flag_true_with_no_error_and_content_used ... ok
+test session::tests::subagent_activity_emits_matching_start_and_completion ... ok
+test session::tests::step_context_keeps_its_mcp_runtime_for_tools ... ok
+test session::tests::submit_with_id_captures_current_span_trace_context ... ok
+test session::tests::submission_loop_channel_close_aborts_active_turn_before_thread_stop_lifecycle ... ok
+test session::tests::steer_input_rejects_changed_authorization_without_mutating_active_work ... ok
+test session::tests::submission_loop_channel_close_runs_full_thread_teardown ... ok
+test session::tests::task_finish_starts_turn_for_trigger_turn_mailbox_tail ... ok
+test session::tests::task_finish_emits_thread_idle_lifecycle_after_active_turn_clears ... ok
+test session::tests::task_finish_starts_follow_up_turn_for_leftover_pending_user_input ... ok
+test session::tests::thread_idle_lifecycle_waits_for_trigger_turn_mailbox_work ... ok
+test session::tests::thread_rollback_fails_when_num_turns_is_zero ... ok
+test session::tests::thread_rollback_clears_history_when_num_turns_exceeds_existing_turns ... ok
+test session::tests::thread_rollback_drops_last_turn_from_history ... ok
+test session::tests::thread_rollback_fails_when_turn_in_progress ... ok
+test session::tests::thread_rollback_fails_without_persisted_thread_history ... ok
+test session::tests::thread_rollback_persists_marker_and_replays_cumulatively ... ok
+test session::tests::thread_rollback_restores_cleared_reference_context_item_after_compaction ... ok
+test session::tests::tool_calls_reopen_mailbox_delivery_for_current_turn ... ok
+test session::tests::thread_rollback_recomputes_previous_turn_settings_and_reference_context_from_replay ... ok
+test session::tests::trigger_turn_mailbox_mail_waits_for_next_turn_after_answer_boundary ... ok
+test session::tests::session_new_turn_refreshes_runtime_gpu_provider_endpoint_without_reselection ... ok
+test session::tests::token_usage_is_attributed_per_account_only_with_named_accounts ... ok
+test session::tests::try_start_turn_if_idle_rejects_pending_trigger_turn_without_injecting ... ok
+test session::tests::try_start_turn_if_idle_rejects_active_review_turn_without_injecting ... ok
+test session::tests::try_start_turn_if_idle_rejects_active_turn_without_injecting ... ok
+test session::tests::try_start_turn_if_idle_rejects_plan_mode_without_injecting ... ok
+test session::tests::turn_aborted_flushes_terminal_event_after_delivery ... ok
+test session::tests::turn_admission_records_parent_completion_ownership ... ok
+test session::tests::turn_context_item_stores_local_cwd ... ok
+test session::tests::turn_context_item_omits_legacy_equivalent_file_system_sandbox_policy ... ok
+test session::tests::turn_complete_flushes_terminal_event_after_delivery ... ok
+test session::tests::mcp_elicitation_reviewer_uses_latest_runtime_authority ... ok
+test session::tests::turn_context_item_stores_split_file_system_sandbox_policy_when_different ... ok
+test session::tests::turn_error_lifecycle_exposes_error_and_stores ... ok
+test session::tests::validated_network_policy_amendment_host_allows_normalized_match ... ok
+test session::tests::turn_context_with_model_updates_model_fields ... ok
+test session::tests::validated_network_policy_amendment_host_rejects_mismatch ... ok
+test session::tests::turn_environments_set_primary_environment ... ok
+test session::tests::unified_exec_rejects_escalated_permissions_when_policy_not_on_request ... ok
+test session::turn::tests::native_auto_turn_classification_requires_terminal_result_only_input ... ok
+test session::turn::tests::omitted_tools_notice_names_the_left_out_tools ... ok
+test session::turn::tests::parent_completion_requires_triggering_collaboration_without_operator_input ... ok
+test session::tests::turn_start_lifecycle_exposes_turn_metadata_and_token_baseline ... ok
+test session::turn::tests::post_sampling_token_estimate_is_disabled_by_always_on_sinks ... ok
+test session::turn_completion::tests::assessment_parser_requires_state_and_non_empty_reason ... ok
+test session::turn_completion::tests::assessment_prompt_bounds_inputs ... ok
+test session::turn_completion::tests::completed_and_blocked_assessments_end_the_turn ... ok
+test session::turn_completion::tests::empty_stops_continue_once_then_stall ... ok
+test session::turn_completion::tests::failed_assessment_without_fresh_tool_progress_warns_and_stops ... ok
+test session::turn_completion::tests::failed_assessments_continue_while_fresh_tool_progress_is_observed ... ok
+test session::turn_completion::tests::incomplete_assessments_stall_after_two_no_progress_boundaries ... ok
+test session::turn_completion::tests::repeated_response_stalls_after_failed_assessment ... ok
+test session::turn_completion::tests::tool_progress_allows_long_productive_turns ... ok
+test session::turn_context::tests::concurrent_failures_have_one_activation_transition ... ok
+test session::turn_context::tests::fallback_activation_is_absorbing_and_reported_once ... ok
+test session::turn_context::tests::successful_parse_resets_one_grammar_failure ... ok
+test session::tests::task_finish_submits_follow_up_when_active_turn_was_replaced ... ok
+test session::windows_sandbox_settings_tests::issue_2000_a_raised_windows_sandbox_reaches_the_per_turn_config ... ok
+test session::windows_sandbox_settings_tests::issue_2000_windows_sandbox_only_gets_stronger_mid_session ... ok
+test session::tests::user_turn_updates_approvals_reviewer ... ok
+test state::session::tests::clear_connector_selection_removes_entries ... ok
+test session::tests::shell_tool_cancellation_waits_for_runtime_cleanup ... ok
+test session::tests::world_state_extension_metrics_follow_turn_model_switch ... ok
+test state::session::tests::merge_connector_selection_deduplicates_entries ... ok
+test state::session::tests::omitted_tools_are_reported_once_per_session ... ok
+test state::session::tests::openai_api_key_env_fallback_notice_fires_on_each_switch_to_it ... ok
+test state::session::tests::replace_history_clears_auto_compact_window_prefill ... ok
+test state::session::tests::set_rate_limits_carries_account_metadata_from_codex_to_codex_other ... ok
+test state::session::tests::set_rate_limits_defaults_limit_id_to_codex_when_missing ... ok
+test state::session::tests::set_rate_limits_defaults_to_codex_when_limit_id_missing_after_other_bucket ... ok
+test session::tests::workspace_write_turns_continue_to_expose_managed_network_proxy ... ok
+test session::withdrawn_approval_tests::issue_722_answered_approval_is_not_withdrawn ... ok
+test session::turn::tests::plan_mode_uses_contributed_turn_item_for_last_agent_message ... ok
+test session::withdrawn_approval_tests::issue_722_dropped_approval_withdraws_its_prompt ... ok
+test session::turn::tests::completion_check_respects_and_records_the_provider_request_throttle ... ok
+test session::tests::user_shell_commands_do_not_inherit_managed_network_proxy ... ok
+test session::tests::user_shell_commands_remain_login_shells_when_model_login_shells_are_disabled ... ok
+
+failures:
+
+---- session::tests::get_pending_input_without_active_turn_leaves_mailbox_mail_queued stdout ----
+2026-11-10T09:43:25.885600Z DEBUG codex_config::loader::layer_io: /var/folders/kc/w4yrcxk5709bgng27t_kjqnr0000gn/T/codex-config-tests/managed_config.toml not found
+2026-11-10T09:43:25.914223Z  WARN codex_models_manager::model_info: Unknown model gpt-5.5 is used. This will use fallback model metadata.
+2026-11-10T09:43:25.914279Z TRACE codex_protocol::openai_models: Model personality requested but model_messages is missing, falling back to base instructions. model=gpt-5.5 personality=pragmatic
+2026-11-10T09:43:25.914406Z  WARN codex_models_manager::model_info: Unknown model gpt-5.5 is used. This will use fallback model metadata.
+
+thread 'session::tests::get_pending_input_without_active_turn_leaves_mailbox_mail_queued' (85031425) panicked at core/src/session/tests.rs:11730:5:
+assertion failed: `(left == right)`
+
+[1mDiff[0m [31m< left[0m / [32mright >[0m :
+ (
+[31m<    [[0m
+[31m<        InterAgentCommunication([0m
+[31m<            InterAgentCommunication {[0m
+[31m<                id: None,[0m
+[31m<                message_id: Some([0m
+[31m<                    "01a1c4d7-4a4b-7883-8d74-2b0e749761f0",[0m
+[31m<                ),[0m
+[31m<                assignment_id: None,[0m
+[31m<                kind: Some([0m
+[31m<                    Informational,[0m
+[31m<                ),[0m
+[31m<                created_at_ms: Some([0m
+[31m<                    1794303806027,[0m
+[31m<                ),[0m
+[31m<                author: AgentPath([0m
+[31m<                    "/root",[0m
+[31m<                ),[0m
+[31m<                author_label: None,[0m
+[31m<                recipient: AgentPath([0m
+[31m<                    "/root",[0m
+[31m<                ),[0m
+[31m<                other_recipients: [],[0m
+[31m<                content: "queued while idle",[0m
+[31m<                encrypted_content: None,[0m
+[31m<                internal_chat_message_metadata_passthrough: None,[0m
+[31m<                metadata: None,[0m
+[31m<                trigger_turn: false,[0m
+[31m<            },[0m
+[31m<        ),[0m
+[31m<    ],[0m
+[32m>    [],[0m
+     None,
+ )
+
+
+
+
+failures:
+    session::tests::get_pending_input_without_active_turn_leaves_mailbox_mail_queued
+
+test result: FAILED. 402 passed; 1 failed; 0 ignored; 0 measured; 3445 filtered out; finished in 9.61s
+
+error: test failed, to rerun pass `-p codex-core --lib`
