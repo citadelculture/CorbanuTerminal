@@ -11798,7 +11798,7 @@ async fn try_start_turn_if_idle_rejects_active_review_turn_without_injecting() {
     assert_eq!(vec![item], err.into_input());
     assert_eq!(
         (Vec::<TurnInput>::new(), None),
-        sess.input_queue.drain_mailbox_input_items().await
+        sess.input_queue.get_pending_input(&sess.active_turn).await
     );
 
     sess.abort_all_tasks(TurnAbortReason::Interrupted).await;
@@ -13259,6 +13259,7 @@ async fn queue_only_mailbox_mail_waits_for_next_turn_after_answer_boundary() {
     );
 
     sess.abort_all_tasks(TurnAbortReason::Replaced).await;
+    assert!(sess.active_turn.lock().await.is_none());
 
     assert_eq!(
         sess.input_queue.drain_mailbox_input_items().await.0,

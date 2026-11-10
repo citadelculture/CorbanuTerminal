@@ -429,7 +429,8 @@ impl InputQueue {
                 turn_state.track_taken_mailbox_messages(&mailbox_items);
                 (mailbox_items, parent_turn_id)
             }
-            // No turn state can note the mail (a detached task): it stays queued.
+            // No turn state can note the mail (a detached task or an idle session): it stays
+            // queued.
             None => (Vec::new(), None),
         };
         if pending_input.is_empty() {
