@@ -1,0 +1,122 @@
+    Checking hyper v1.8.1
+    Checking codex-utils-absolute-path v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/utils/absolute-path)
+    Checking tracing-subscriber v0.3.22
+    Checking codex-utils-rustls-provider v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/utils/rustls-provider)
+    Checking pagable v0.4.1
+    Checking codex-security-policy v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/security-policy)
+    Checking codex-process-hardening v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/process-hardening)
+    Checking codex-utils-cache v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/utils/cache)
+    Checking codex-utils-string v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/utils/string)
+    Checking codex-async-utils v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/async-utils)
+    Checking codex-product-brand v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/product-brand)
+   Compiling codex-windows-sandbox v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/windows-sandbox-rs)
+    Checking codex-utils-image v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/utils/image)
+    Checking codex-utils-pty v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/utils/pty)
+    Checking codex-utils-home-dir v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/utils/home-dir)
+    Checking codex-extension-items v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/ext/items)
+    Checking codex-utils-path-uri v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/utils/path-uri)
+    Checking codex-utils-path v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/utils/path-utils)
+    Checking codex-keyring-store v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/keyring-store)
+    Checking codex-utils-template v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/utils/template)
+    Checking codex-terminal-detection v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/terminal-detection)
+    Checking codex-collaboration-mode-templates v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/collaboration-mode-templates)
+    Checking codex-install-context v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/install-context)
+   Compiling codex-experimental-api-macros v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/codex-experimental-api-macros)
+   Compiling codex-app-server-protocol-noop-macros v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/app-server-protocol-noop-macros)
+   Compiling codex-skills v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/skills)
+    Checking codex-file-search v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/file-search)
+    Checking codex-security-level v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/security-level)
+    Checking tracing-opentelemetry v0.34.0
+    Checking starlark_map v0.14.2
+    Checking hyper-util v0.1.20
+    Checking opentelemetry-appender-tracing v0.33.1
+    Checking codex-log-guard v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/log-guard)
+    Checking tracing-appender v0.2.4
+    Checking codex-content-security v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/content-security)
+    Checking codex-utils-stream-parser v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/utils/stream-parser)
+    Checking codex-uds v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/uds)
+    Checking starlark_syntax v0.14.2
+    Checking codex-security-audit v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/security-audit)
+    Checking hyper-rustls v0.27.7
+    Checking hyper-tls v0.6.0
+    Checking hyper-timeout v0.5.2
+    Checking axum v0.8.8
+    Checking reqwest v0.13.4
+    Checking codex-secret-broker v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/secret-broker)
+    Checking tonic v0.14.3
+    Checking reqwest v0.12.28
+    Checking aws-smithy-http-client v1.1.12
+    Checking starlark v0.14.2
+    Checking aws-smithy-runtime v1.9.5
+    Checking codex-network-proxy v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/network-proxy)
+    Checking codex-http-client v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/http-client)
+    Checking oauth2 v5.0.0
+    Checking sentry v0.46.1
+    Checking tonic-prost v0.14.3
+    Checking tonic-types v0.14.5
+    Checking opentelemetry-proto v0.33.1
+    Checking rmcp v3.9.0
+    Checking codex-websocket-client v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/websocket-client)
+    Checking codex-client v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/codex-client)
+    Checking aws-runtime v1.5.17
+    Checking aws-sdk-signin v1.2.0
+    Checking aws-sdk-sts v1.95.0
+    Checking aws-sdk-sso v1.91.0
+    Checking aws-sdk-ssooidc v1.93.0
+    Checking opentelemetry-otlp v0.33.1
+    Checking aws-config v1.8.12
+    Checking codex-browser-isolation v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/browser-isolation)
+    Checking codex-aws-auth v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/aws-auth)
+    Checking codex-execpolicy v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/execpolicy)
+    Checking codex-protocol v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/protocol)
+    Checking codex-api v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/codex-api)
+    Checking codex-file-system v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/file-system)
+    Checking codex-shell-command v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/shell-command)
+    Checking codex-agent-identity v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/agent-identity)
+    Checking codex-utils-output-truncation v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/utils/output-truncation)
+    Checking codex-state v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/state)
+    Checking codex-code-mode-protocol v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/code-mode-protocol)
+    Checking codex-context-fragments v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/context-fragments)
+    Checking codex-shell-escalation v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/shell-escalation)
+    Checking codex-app-server-protocol v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/app-server-protocol)
+    Checking codex-memories-read v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/memories/read)
+    Checking codex-git-utils v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/git-utils)
+    Checking codex-exec-server-protocol v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/exec-server-protocol)
+    Checking codex-code-mode v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/code-mode)
+    Checking codex-secrets v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/secrets)
+    Checking codex-prompts v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/prompts)
+    Checking codex-rollout-trace v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/rollout-trace)
+    Checking codex-vault v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/vault)
+    Checking codex-otel v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/otel)
+    Checking codex-model-provider-info v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/model-provider-info)
+    Checking codex-response-debug-context v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/response-debug-context)
+    Checking codex-agent-graph-store v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/agent-graph-store)
+    Checking codex-features v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/features)
+    Checking codex-rollout v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/rollout)
+    Checking codex-sandboxing v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/sandboxing)
+    Checking codex-config v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/config)
+    Checking codex-exec-server v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/exec-server)
+    Checking codex-utils-plugins v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/utils/plugins)
+    Checking codex-apply-patch v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/apply-patch)
+    Checking codex-login v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/login)
+    Checking codex-rmcp-client v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/rmcp-client)
+    Checking codex-protected-state v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/protected-state)
+    Checking codex-plugin v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/plugin)
+    Checking codex-hooks v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/hooks)
+    Checking codex-models-manager v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/models-manager)
+    Checking codex-feedback v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/feedback)
+    Checking codex-connectors v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/connectors)
+    Checking codex-model-provider v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/model-provider)
+    Checking codex-tools v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/tools)
+    Checking codex-mcp v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/codex-mcp)
+    Checking codex-extension-api v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/ext/extension-api)
+    Checking codex-analytics v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/analytics)
+    Checking codex-thread-store v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/thread-store)
+    Checking codex-core-skills v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/core-skills)
+    Checking codex-core-plugins v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/core-plugins)
+    Checking codex-core v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/core)
+    Checking codex-app-server-transport v0.1.48 (/Users/dom/pft-work/wt_2108/codex-rs/app-server-transport)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1m 31s
+warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+exit status: 0
