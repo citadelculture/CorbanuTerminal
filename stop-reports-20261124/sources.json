@@ -1,0 +1,1628 @@
+[
+ {
+  "taskId": "task_234be5d87a6360c59cb6d06070ccef17",
+  "title": "Fix Issue2143 CODEX_HOME Symlink Opt-Out and Ship PR",
+  "pft": 5,
+  "acceptedAt": "2026-11-14T12:08:38.604745+00:00",
+  "issue": 2143,
+  "description": "Own CorbanuCore/CorbanuTerminal issue #2143 item 3 only: codex_home_symlink_opt_out_respects_host_config_and_scope expects false but returns true for root=.../visualizations and enabled=None on GitHub macos-15. After confirming ownership and the maintainer-approved sync baseline and PR target, deliver one outcome: a focused DCO-signed fix PR with regression/control evidence, or a dated source-backed stop report if overlap, ownership, baseline/target availability, or honest reproduction blocks implementation. Preserve host-config opt-out and scope decisions, legitimate symlinks, protected paths, mandatory prompts, sandbox authorization, and all unrelated issue scopes.",
+  "verification": "For a fix, submit the public DCO-signed PR URL and immutable evidence URL plus a short scope note; evidence must include pinned base/head SHAs, exact commands, raw baseline/candidate output, regression and control results, and explicit failed/unrun-check disclosures. For an authorized stop, submit a dated source-backed report containing coordination, baseline/target, or reproduction evidence, the precise blocker, and an explicit statement that no fix, merge, or other author\u2019s work is claimed. All links must be independently accessible without private credentials, and macos-15 must remain identified as the source report unless actually executed there.",
+  "gh": {
+   "title": "upstream sync: macOS-runner failures in codex-sandboxing seatbelt ordering and exec-server codex_home_symlink tests (sync branch)",
+   "state": "CLOSED",
+   "closedAt": "2026-11-16T06:38:46Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2143",
+   "closedByPullRequestsReferences": {
+    "nodes": []
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-16T06:38:46Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": null
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_b08e1d22530ed669101abde83ea1004d",
+  "title": "Fix Issue2150 Role-File Labels and Ship DCO PR",
+  "pft": 5,
+  "acceptedAt": "2026-11-14T13:38:16.703442+00:00",
+  "issue": 2150,
+  "description": "For CorbanuCore/CorbanuTerminal issue #2150 item 3 only, correct the preflight and app-server status labels so a project-role-file configuration layer is identified accurately, while true launch flags and other layers retain their labels. Deliver either a narrow DCO-signed PR with regression/control proof and an independently accessible immutable evidence packet, or, if ownership, overlap, baseline availability, or behavior-preserving isolation prevents honest proof, a dated source-backed stop report claiming no fix. Exclude items 1 and 2 and merged PR2071/issue2052 policy work; preserve all configuration and security behavior, use macOS Apple silicon evidence without unexecuted-platform claims, and do not require merge or announcement.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "Submit exactly one outcome: URLs for the DCO-signed PR and its public immutable evidence packet, or the dated source-backed stop report as text or a URL. For the PR outcome, the packet must include the ownership/scope check, exact approved baseline and head commits, affected labels, replay commands, raw baseline/candidate outputs and exit statuses, regression results for project-role-file labels in both surfaces, controls for true launch flags and other layers, integrity hashes, and disclosures of failed or unrun checks; the diff must be limited to item 3 labels and tests with configuration and security behavior unchanged. For the stop outcome, the report must identify and source the actual blocker, state its limitations, and claim no fix, merge, announcement, or another author's work. Neither outcome requires merge or announcement.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "Follow-ups from #2071 (D525): empty provider_allowlist in crew records, warning wording, project-role layer labels",
+   "state": "CLOSED",
+   "closedAt": "2026-11-14T18:32:46Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2150",
+   "closedByPullRequestsReferences": {
+    "nodes": [
+     {
+      "number": 2163,
+      "title": "fix: enforce empty crew provider policy and identify project role layers",
+      "author": {
+       "login": "IridiumMaster"
+      },
+      "mergedAt": "2026-11-14T18:32:45Z",
+      "mergeCommit": {
+       "oid": "492cac6b080526b31e786034613a66beb3fb1691"
+      },
+      "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2163"
+     }
+    ]
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-14T18:32:47Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": {
+       "__typename": "PullRequest",
+       "number": 2163,
+       "mergedAt": "2026-11-14T18:32:45Z",
+       "author": {
+        "login": "IridiumMaster"
+       },
+       "mergeCommit": {
+        "oid": "492cac6b080526b31e786034613a66beb3fb1691"
+       },
+       "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2163"
+      }
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_1b1a70f64a33d8a89718c6455f118589",
+  "title": "Fix Issue2166 Cross-Route Resume State and Ship PR",
+  "pft": 5,
+  "acceptedAt": "2026-11-14T17:40:56.381976+00:00",
+  "issue": 2166,
+  "description": "Restore the existing untrusted-content state from the rollout on every CorbanuTerminal conversation-resume path for issue #2166, so a Moderate conversation resumed on a different model/provider route still requires fresh approval for protected actions. Scope one narrow DCO-signed PR with a different-provider regression plus same-route and clean/no-untrusted-content controls; keep existing protection and approval behavior intact and exclude issue2165, issue2167, and overlapping work. Use synthetic secret-free fixtures and controlled routes on macOS Apple silicon, with an independently accessible immutable evidence packet and honest limitations. If ownership, baseline/target availability, controlled routing, or isolation prevents honest proof, use the paid dated source-backed stop/report alternative instead of claiming a fix.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "Submit the independently resolvable PR URL and immutable evidence-packet URL containing exact baseline/head commits, ownership and non-overlap receipts, replay commands, actual route choices, raw baseline/candidate outputs with exit statuses, state-restoration/prompt observations, control results, and explicit limitations. If implementation or proof is honestly blocked, submit a dated source-backed stop report identifying the actual blocker and limitations, with no claim of a fix, merge, or another author's work. Merge and announcement are not required; another author's merge does not satisfy this task.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "resume --last after switching model provider starts a new conversation without saying so",
+   "state": "CLOSED",
+   "closedAt": "2026-11-16T07:59:28Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2166",
+   "closedByPullRequestsReferences": {
+    "nodes": []
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-16T07:59:28Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": null
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_5646cd5eaacec9e3e162955e3afa2435",
+  "title": "Restore Issue2167 Project Env Credential Approval and Ship PR",
+  "pft": 5,
+  "acceptedAt": "2026-11-14T17:45:29.991879+00:00",
+  "issue": 2167,
+  "description": "Restore Moderate\u2019s existing post-untrusted-content credential approval check for project .env reads in CorbanuCore/CorbanuTerminal issue #2167, using only the maintainer\u2019s cited restorative policy. After official acceptance and handoff to Claude Code, ship one narrow DCO-signed PR with synthetic secret-free macOS regressions for direct relative and absolute reads, excluding the listed adjacent issues and prior work. Merge and announcement are not required; if ownership, policy, baseline, fixture, or isolation blockers arise, submit only the dated source-backed stop report.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "For completion, provide independently accessible PR and immutable evidence-packet URLs containing exact baseline/head commits, ownership and scope evidence, replay commands, raw baseline/candidate outputs with exit statuses, actual taint and prompt observations, named control results, and honest failed or unrun limitations. Demonstrate preservation of approval/refusal, sandbox, credential isolation, account, model-route, and resume behavior; use no real secrets or unsupported native-Windows claims. For stop completion, provide a dated source-backed report identifying the actual blocker and limitations while claiming no fix, merge, or another author\u2019s work; submit only one outcome.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "Moderate: reading the project .env after untrusted content runs without asking (docs and #841 say it asks)",
+   "state": "CLOSED",
+   "closedAt": "2026-11-14T21:02:27Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2167",
+   "closedByPullRequestsReferences": {
+    "nodes": [
+     {
+      "number": 2181,
+      "title": "fix(security): ask before project .env reads after untrusted content",
+      "author": {
+       "login": "IridiumMaster"
+      },
+      "mergedAt": "2026-11-14T21:02:26Z",
+      "mergeCommit": {
+       "oid": "944f71886af4ec061270236f95336eea6e92ad69"
+      },
+      "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2181"
+     }
+    ]
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-14T21:02:28Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": {
+       "__typename": "PullRequest",
+       "number": 2181,
+       "mergedAt": "2026-11-14T21:02:26Z",
+       "author": {
+        "login": "IridiumMaster"
+       },
+       "mergeCommit": {
+        "oid": "944f71886af4ec061270236f95336eea6e92ad69"
+       },
+       "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2181"
+      }
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_48256c8f78d308a1f145d572a8c0fe1c",
+  "title": "Fix Issue2165 Chroot-Wrapped Exec-Policy Enforcement and Ship PR",
+  "pft": 5,
+  "acceptedAt": "2026-11-14T17:48:20.451331+00:00",
+  "issue": 2165,
+  "description": "Fix CorbanuCore/CorbanuTerminal issue #2165 by applying existing forbidden and prompt exec-policy rules to the inner command only for the observed `sudo -n chroot /` wrapper form, while retaining outer-command evaluation. Ship one narrow DCO-signed PR with synthetic secret-free macOS Apple-silicon regression coverage and an immutable public evidence packet; do not add allow-rule authority, arbitrary-wrapper support, or unrelated security changes. Merge and announcement are not required, but a dated source-backed stop report is the alternative for ownership, semantics, baseline, or isolation blockers.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "Submit the publicly resolvable PR URL and immutable evidence-packet URL with exact baseline/head commits, DCO sign-off, ownership/scope receipts, replay commands, and raw baseline/candidate outputs and exit statuses. Evidence must cover direct, wrapped, outer-rule, and unchanged allow/control cases, distinguish policy decisions from sandbox effects, and disclose failed or unrun checks; merge is not required. If blocked, submit a dated source-backed stop report naming the actual blocker and claiming no fix, merge, or another author\u2019s work.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "Exec-policy rules (allow/prompt/forbidden) are not applied to the same command behind sudo chroot /",
+   "state": "CLOSED",
+   "closedAt": "2026-11-16T10:06:35Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2165",
+   "closedByPullRequestsReferences": {
+    "nodes": []
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-16T10:06:35Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": null
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_98132be7de0e17a54a2dba2177afb486",
+  "title": "Fix Issue2174 macOS Changed-Crate JUnit Artifact Publication",
+  "pft": 5,
+  "acceptedAt": "2026-11-14T18:07:20.945332+00:00",
+  "issue": 2174,
+  "description": "For CorbanuCore/CorbanuTerminal issue #2174, work only on .github/workflows/rust-ci-changed-crate-tests-macos.yml: audit its actual nextest setup and available run logs, then correct the JUnit upload path if needed so it finds the workspace-relative report regardless of CARGO_TARGET_DIR. Confirm ownership, approved baseline/target, and intended nextest version before editing, while preserving test selection and execution, exit-status/known-failure handling, coverage, triggers, security controls, and credential isolation. Deliver one narrow DCO-signed PR plus an immutable public evidence packet with secret-free passing/failing fixtures, a separate Cargo target directory, native macOS results where honestly available, named-test XML/artifact proof, raw commands and exit statuses, and explicit limitations. If ownership, absorption, approval, platform access, or independently accessible artifact proof prevents honest completion, submit one dated source-backed stop report instead without claiming a fix or another author's work.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "Submit the PR URL and immutable evidence-packet URL with a concise outcome note identifying the exact baseline/head commits and single changed workflow. The packet must include independently accessible ownership/source receipts, raw before/after logs, installed nextest version, separate-target passing/failing fixture results, named-test XML/artifact proof, and explicit platform or unrun limitations; native macOS claims require native run evidence. For the stop alternative, submit the dated source-backed report with verified blocker evidence and no PR, fix, merge, or execution claim.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "CI: audit workspace-relative nextest JUnit paths in the remaining jobs",
+   "state": "CLOSED",
+   "closedAt": "2026-11-15T00:53:13Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2174",
+   "closedByPullRequestsReferences": {
+    "nodes": [
+     {
+      "number": 2209,
+      "title": "fix(ci): upload remaining nextest JUnit reports from the workspace store",
+      "author": {
+       "login": "IridiumMaster"
+      },
+      "mergedAt": "2026-11-15T00:53:11Z",
+      "mergeCommit": {
+       "oid": "5d96b0dcfa935897ca7e726aa22b8bb4beddfb3c"
+      },
+      "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2209"
+     }
+    ]
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-15T00:53:14Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": {
+       "__typename": "PullRequest",
+       "number": 2209,
+       "mergedAt": "2026-11-15T00:53:11Z",
+       "author": {
+        "login": "IridiumMaster"
+       },
+       "mergeCommit": {
+        "oid": "5d96b0dcfa935897ca7e726aa22b8bb4beddfb3c"
+       },
+       "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2209"
+      }
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_ccef7b312da589d75a59686d357c7129",
+  "title": "Fix Issue2192 Assignment-Token Boundaries and Ship DCO PR",
+  "pft": 5,
+  "acceptedAt": "2026-11-14T21:06:03.153362+00:00",
+  "issue": 2192,
+  "description": "Investigate and, if still reproducible and unowned, fix only CorbanuCore/CorbanuTerminal issue #2192: a leading comma or U+00A0 must not act as shell assignment whitespace and falsely establish a variable used by a later git remote. Deliver one outcome: a narrow DCO-signed PR with reproducible red/green, control, and full never-quieter evidence, or a dated source-backed stop report when ownership, absorption, baseline, isolation, platform, or comparison requirements block honest completion. Preserve valid assignments and existing security, taint, approval, and fail-closed behavior; treat source-reported results as leads to reproduce, not your own proof. Merge and announcement are not required.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "For a fix, submit the independently resolvable PR URL, DCO head commit, and immutable public evidence URL containing baseline/head pins, dated ownership/source readbacks, replay commands, raw pre-fix/post-fix/control/full-comparison outputs and exit statuses, hashes, environment, and explicit limitations and non-claims. A fix is acceptable only with both exact boundary cases, bash/zsh plain/named coverage, controls, and the full comparison; otherwise use the stop outcome. For a stop, submit dated public sources and work performed proving the specific blocker, without claiming a fix, merge, success, or another author's work; only one outcome is acceptable.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "Post-taint classifier invents assignments after comma or non-shell whitespace",
+   "state": "CLOSED",
+   "closedAt": "2026-11-14T23:16:25Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2192",
+   "closedByPullRequestsReferences": {
+    "nodes": [
+     {
+      "number": 2194,
+      "title": "fix(security): no assignment from a word the shell does not split (#2192)",
+      "author": {
+       "login": "white-guy-01"
+      },
+      "mergedAt": "2026-11-14T23:16:24Z",
+      "mergeCommit": {
+       "oid": "acc0f670fe90ce9ebef141c09dfaf25f4ee9414a"
+      },
+      "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2194"
+     }
+    ]
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-14T23:16:26Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": {
+       "__typename": "PullRequest",
+       "number": 2194,
+       "mergedAt": "2026-11-14T23:16:24Z",
+       "author": {
+        "login": "white-guy-01"
+       },
+       "mergeCommit": {
+        "oid": "acc0f670fe90ce9ebef141c09dfaf25f4ee9414a"
+       },
+       "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2194"
+      }
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_2a0fd7cfe37ba5400d2f0917faed88ac",
+  "title": "Fix Issue2213 Exec Approval Downgrade and Ship PR",
+  "pft": 5,
+  "acceptedAt": "2026-11-15T00:38:20.391194+00:00",
+  "issue": 2213,
+  "description": "Resolve only the exec offered-options residual in CorbanuTerminal issue #2213: before any session approval cache write, downgrade an unoffered lasting exec answer to Approved while preserving explicitly offered lasting approvals, denial/abort, fresh-human-authority, protected-path, sandbox/permission, and existing valid approval behavior. First confirm ownership, approved base/target branches, upstream-sync sequencing, and that this residual remains independently implementable; exclude #2145, #2211, and other authors' work. Submit either a narrow DCO-signed PR with immutable red/green evidence or, if a named blocker prevents honest implementation, a dated source-backed stop report as an accepted paid branch. Merge and Discord announcements are not required.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "For a fix, submit an independently resolvable PR URL and immutable public evidence URL containing exact base/head SHAs, changed files, DCO status, an executed baseline failure for the unoffered lasting exec answer, green proof that the subsequent identical request prompts again, and controls for offered lasting approval plus denial, fresh-human-authority, and protected-path behavior. Include actual scoped command results, retained failures, reproducible steps, and limitations; fabricated baselines, disguised skips, and unsupported Windows claims are unacceptable. For the paid stop branch, submit dated text naming the exact blocking condition with source URLs and available evidence, without claiming a fix, tests, or another author's work.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "Exec approvals accept and cache a 'for this session' answer the prompt did not offer",
+   "state": "CLOSED",
+   "closedAt": "2026-11-15T03:24:26Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2213",
+   "closedByPullRequestsReferences": {
+    "nodes": [
+     {
+      "number": 2230,
+      "title": "fix(approvals): refuse answers the prompt did not offer (#2213)",
+      "author": {
+       "login": "IridiumMaster"
+      },
+      "mergedAt": "2026-11-15T03:24:24Z",
+      "mergeCommit": {
+       "oid": "b1610570324c811ab4d3b85d4a6283dbe78ccda9"
+      },
+      "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2230"
+     }
+    ]
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-15T03:24:27Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": {
+       "__typename": "PullRequest",
+       "number": 2230,
+       "mergedAt": "2026-11-15T03:24:24Z",
+       "author": {
+        "login": "IridiumMaster"
+       },
+       "mergeCommit": {
+        "oid": "b1610570324c811ab4d3b85d4a6283dbe78ccda9"
+       },
+       "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2230"
+      }
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_bc3d2525ddb4614f4229a4f20200c4bb",
+  "title": "Ship Issue2222 Referenced-Image Admission Fix or Stop Report",
+  "pft": 5,
+  "acceptedAt": "2026-11-15T01:37:14.174818+00:00",
+  "issue": 2222,
+  "description": "Close the still-open protective residual in CorbanuTerminal issue #2222 by routing first-party image_gen.imagegen calls carrying referenced_image_paths through the same post-taint file-read admission as built-in view_image. Deliver either a narrow DCO-signed PR with reproducible red/green evidence or, if ownership, coordination, platform, isolation, or honest-proof constraints block implementation, a dated source-backed stop report; both branches are eligible for this task's reward. Exclude #2167/#2181 project-env and view_image restoration, #2099 goal-tool parity, #2213 exec approval-cache work, and upstream-sync porting, and do not claim credential exfiltration or another author's work. Use isolated synthetic fixtures, preserve all existing security controls, and require neither merge nor Discord announcements.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "For the implementation branch, submit independently resolvable PR and immutable public evidence URLs containing exact base/head commits, changed files, actual commands and exit codes, a genuine baseline failure, green proof through the relevant routing path, retained failures, and limitations. Evidence must cover calls without referenced paths, legitimate permitted images, existing denials, and unchanged built-in view_image behavior using only synthetic fixtures, with no fabricated baseline, disguised skips, or unsupported platform claims. For the stop branch, submit a dated source-backed report naming the exact blocker, source URLs, and available coordination or baseline evidence without claiming implementation or test results.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "Security follow-up: image_gen.imagegen reads referenced_image_paths without #2167's post-taint file-read check",
+   "state": "CLOSED",
+   "closedAt": "2026-11-15T05:59:31Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2222",
+   "closedByPullRequestsReferences": {
+    "nodes": [
+     {
+      "number": 2239,
+      "title": "fix(security): guard local image references and agent attachments",
+      "author": {
+       "login": "IridiumMaster"
+      },
+      "mergedAt": "2026-11-15T05:59:29Z",
+      "mergeCommit": {
+       "oid": "465255c230827b00610cda75bff8ecf27d9d7933"
+      },
+      "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2239"
+     }
+    ]
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-15T05:59:32Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": {
+       "__typename": "PullRequest",
+       "number": 2239,
+       "mergedAt": "2026-11-15T05:59:29Z",
+       "author": {
+        "login": "IridiumMaster"
+       },
+       "mergeCommit": {
+        "oid": "465255c230827b00610cda75bff8ecf27d9d7933"
+       },
+       "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2239"
+      }
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_0964e881ec9330ee43a47cf8ceb4cb8b",
+  "title": "Fix Issue2255 MXC Sandbox Wording or Submit Stop Report",
+  "pft": 5,
+  "acceptedAt": "2026-11-15T06:10:24.198531+00:00",
+  "issue": 2255,
+  "description": "Resolve only the wording residual in CorbanuCore/CorbanuTerminal issue #2255: report that the selected MXC Windows sandbox is unsupported by the security levels, not that no Windows sandbox is configured. Before implementation, confirm the residual remains open, S4a ownership and maintainer coordination, the approved sync base/target, compile dependencies, and whether honest portable proof is feasible. Deliver either a narrow DCO-signed PR with reproducible evidence, an MXC regression case, preserved non-MXC wording, a consistent picker note, and unchanged closed-gate and Mxc-to-Disabled behavior, or a dated source-backed stop report under this explicitly paid stop branch; no MXC enablement, security-policy change, native Windows proof claim, merge, or Discord announcement is required, while corbanu-security review remains required. Codex handles official intake and submission, and Claude Code alone performs engineering after acceptance.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "For PR delivery, submit an independently resolvable DCO PR URL plus public evidence containing exact base/head commits, changed files, commands and exit codes, retained raw baseline/green logs, hashes, MXC and preserved non-MXC results, picker-note consistency, unchanged gate behavior, and limitations; claim only checks actually executed. For the paid stop branch, submit a dated report with source URLs, the precise blocking condition, coordination and feasibility findings, and actual work performed, without claiming a fix, unrun tests, another author's work, or guaranteed payment. Security review remains required, but merge and Discord announcement are not completion conditions.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "/security gate: say \"MXC sandbox not supported\" instead of \"sandbox not set up\" when sandbox = \"mxc\" (D592)",
+   "state": "CLOSED",
+   "closedAt": "2026-11-15T18:57:21Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2255",
+   "closedByPullRequestsReferences": {
+    "nodes": []
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-15T18:57:21Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": null
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_821333c85ea9431e72976657d46af0f0",
+  "title": "Repair Issue2261 Cargo-Chef Source Restoration or Stop",
+  "pft": 5,
+  "acceptedAt": "2026-11-15T06:39:37.946373+00:00",
+  "issue": 2261,
+  "description": "Investigate CorbanuCore/CorbanuTerminal issue #2261\u2019s residual: whether cargo-chef leaves synthetic sources in the checked-out workspace, causing release clippy to inspect them instead of real sources. If reproduced and still unowned, ship a narrow DCO-signed PR that cooks outside the real source tree or restores real sources before clippy, preserves dependency caching, and adds a guard that fails on an intentional real-source compile/lint error and passes after its removal. Before editing, confirm ownership, S0/integrator coordination, approved base/target, the 0.1.71 versus 0.1.78 version context, and whether a tiny disposable macOS workspace provides honest proof; keep isolation and platform controls intact. If these constraints block implementation, submit a dated source-backed stop report under this same positive-PFT task, without claiming #2258/#2238 work, unrelated #2260 repairs, #1972 coverage, unrun results, or the earlier green job as real workspace qualification.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "For implementation, provide independently resolvable PR and immutable evidence-gist URLs plus a concise text summary covering the version rationale, baseline reproduction, base/head commits, changed files, guard red/green commands and exit codes, raw retained logs and hashes, scoped checks, and limitations. For the paid stop branch, provide a dated source-backed report with citations, the precise blocker, and actual work performed, without claiming a fix or unrun results. Merge, Discord announcement, Windows access, and hosted CI are not completion conditions.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "CI audit: release clippy may check cargo-chef synthetic sources",
+   "state": "CLOSED",
+   "closedAt": "2026-11-15T13:05:55Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2261",
+   "closedByPullRequestsReferences": {
+    "nodes": [
+     {
+      "number": 2297,
+      "title": "ci: lint the real workspace in the release clippy job",
+      "author": {
+       "login": "white-guy-01"
+      },
+      "mergedAt": "2026-11-15T13:05:53Z",
+      "mergeCommit": {
+       "oid": "75101c67f9b35e9d7f083066d4f78efeb66b7f3e"
+      },
+      "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2297"
+     }
+    ]
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-15T13:05:56Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": {
+       "__typename": "PullRequest",
+       "number": 2297,
+       "mergedAt": "2026-11-15T13:05:53Z",
+       "author": {
+        "login": "white-guy-01"
+       },
+       "mergeCommit": {
+        "oid": "75101c67f9b35e9d7f083066d4f78efeb66b7f3e"
+       },
+       "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2297"
+      }
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_2966e7748abed3ec4d10692c56d5cc9e",
+  "title": "Fix Issue2277 Standalone Executor Version or Stop",
+  "pft": 5,
+  "acceptedAt": "2026-11-15T09:14:20.853228+00:00",
+  "issue": 2277,
+  "description": "Resolve only the Issue #2277 residual where standalone_initializes_reports_version_and_runs_helpers receives executorVersion \u201c0.0.0\u201d instead of the actual package/build version. Ship a narrow DCO-signed citadelculture PR with immutable public before/after evidence, or publish a dated source-backed paid-stop report if ownership, coordination, dependencies, version context, isolation, or honest proof requirements block implementation. Do not hardcode 0.1.48, weaken the assertion to accept 0.0.0, invent a sync baseline, alter enforced controls, or claim source ownership, security approval, merge, or guaranteed payment.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "For a fix, submit the independently resolvable DCO PR URL, immutable public evidence-gist URL, and a short scope note containing all required captures, build-derived version expectation, actual before/after results, logs, hashes, and limitations. For a stop, submit a dated public stop-report URL with source citations, the exact blocker, and work performed, claiming no fix or unrun result. Maintainer review remains required, but merge, Discord, hosted CI, Linux/Windows access, and remote-machine proof are not completion conditions.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "sync: remaining CLI-dependent app-server coverage above core (#2274)",
+   "state": "OPEN",
+   "closedAt": null,
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2277",
+   "closedByPullRequestsReferences": {
+    "nodes": []
+   },
+   "timelineItems": {
+    "nodes": []
+   }
+  }
+ },
+ {
+  "taskId": "task_1127e34479712bf136b9fd92ebf5fd69",
+  "title": "Fix Issue2285 Forced-RM Spellings or Submit Stop Report",
+  "pft": 5,
+  "acceptedAt": "2026-11-15T10:29:30.223387+00:00",
+  "issue": 2285,
+  "description": "Resolve only the two reported forced-rm spelling gaps in CorbanuTerminal issue #2285: GNU --force abbreviations --f/--fo/--forc and simple ANSI-C/translated literal spellings of -rf missed by the dangerous-command literal parse. After acceptance, use Claude Code for engineering and first confirm ownership, separation from PR #2283 and other security work, required security/integrator review, approved base/target, and GNU versus macOS semantics; these are existing hardening reports on main and sync, not an executed reproduction or new sync regression. Deliver either a narrow DCO-signed citadelculture PR with safe before/after fixtures and immutable public evidence, or a dated source-backed stop report naming the actual blocker, without destructive rm execution, scope expansion, or claims of unrun or others' work. Preserve sandbox, prompt/refusal, and existing detections; maintainer review remains required, but merge, hosted CI, Discord, and remote or native Windows/Linux access are not completion conditions.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "For a fix, submit independently resolvable PR and public gist URLs plus a short summary; the gist must contain the exact approved base/head and DCO commit, ownership/coordination captures, changed files, actual red/green results for both spelling families and controls, replay commands, numeric exit codes, raw transcripts, SHA256SUMS, and explicit non-claims and unrun checks. Evidence must show safe fixtures only, with no destructive rm or expansion/substitution execution and no claimed sandbox bypass or merge. For a stop, submit the dated report and source captures identifying the precise ownership, coordination, base/target, semantics, isolation, dependency, or evidence blocker and work performed, without claiming a fix or guaranteed payment.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "Dangerous-command check misses rm --forc / --f and $'-rf' spellings (main and sync)",
+   "state": "CLOSED",
+   "closedAt": "2026-11-15T12:04:35Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2285",
+   "closedByPullRequestsReferences": {
+    "nodes": [
+     {
+      "number": 2299,
+      "title": "fix: catch force-option prefixes and ANSI-C quoted rm flags",
+      "author": {
+       "login": "IridiumMaster"
+      },
+      "mergedAt": "2026-11-15T12:04:34Z",
+      "mergeCommit": {
+       "oid": "bca189bd3be3d2987e986f841de7c4829c16c058"
+      },
+      "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2299"
+     }
+    ]
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-15T12:04:36Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": {
+       "__typename": "PullRequest",
+       "number": 2299,
+       "mergedAt": "2026-11-15T12:04:34Z",
+       "author": {
+        "login": "IridiumMaster"
+       },
+       "mergeCommit": {
+        "oid": "bca189bd3be3d2987e986f841de7c4829c16c058"
+       },
+       "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2299"
+      }
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_1a7fcfe035e9c8362cf7361cb7edfc70",
+  "title": "Ship Issue2292 Refusal Regression Test or Stop Report",
+  "pft": 5,
+  "acceptedAt": "2026-11-15T10:41:02.091634+00:00",
+  "issue": 2292,
+  "description": "On the approved upstream-sync base for CorbanuCore/CorbanuTerminal issue #2292, add only a handle-level regression test and the relevant compile-ledger row: a security transition during ExtensionToolAdapter::handle's awaited history read must trigger the existing extension_call_basis refusal with EXTENSION_PREPARED_REFUSAL and never start the extension. Use deterministic synthetic fixtures and a no-transition success control; do not change production/security behavior, restore whole-call rebuild semantics, or overlap PR #2290. Deliver a bounded DCO-signed PR and immutable public evidence gist, or a dated source-backed stop report if ownership, coordination, compilation, safe deterministic testing, or portable evidence prevents honest completion.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "Provide independently accessible PR and immutable evidence-gist URLs showing exact approved base/head, DCO commit, ownership/coordination captures, changed files, ledger diff, deterministic fixture procedure and hashes, raw focused-test transcripts with numeric exits, transition refusal/no-start and control results, any test-sensitivity results, and unrun/failed limitations. A stop report is acceptable when a listed blocker prevents honest completion; it must be dated, source-backed, independently accessible, and state actual work without claiming a fix or another contributor's work. Merge, hosted CI, remote execution, native Windows/Linux, and paid infrastructure are not completion conditions.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "Sync: test #1057's refusal when a transition lands during the extension call's history read",
+   "state": "CLOSED",
+   "closedAt": "2026-11-15T16:19:13Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2292",
+   "closedByPullRequestsReferences": {
+    "nodes": []
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-15T16:19:13Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": null
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_5dd94e8ddaf0b173422bbfde57fda1bd",
+  "title": "Fix Issue2389 Resume Notice Attribution or Stop",
+  "pft": 5,
+  "acceptedAt": "2026-11-16T07:52:12.267334+00:00",
+  "issue": 2389,
+  "description": "Resolve only CorbanuTerminal issue #2389's fallback-notice attribution: after an early resume --last lookup and onboarding provider change, preserve and present the provider/scope actually searched, or accurately explain both searched and newly selected providers. Add focused regressions and controls without changing session selection, authentication/account isolation, provider semantics, or excluded broader work. Deliver a minimal public DCO-signed PR with reproducible evidence, or the permitted dated stop report; do not treat PR2388 head 51f7b8463d31fcb9ed5fe2bb7513b196313657f8 as the current target or claim a reproduced production failure without evidence.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "Submit a publicly resolvable PR URL and immutable evidence URL containing exact base/head, changed files, focused before/after and control commands with raw outputs and numeric exits, replay instructions, content hashes, and honest failed/unrun limitations. Evidence must accurately label code tracing versus actual behavior and show the unchanged-selection/security controls. If a permitted stop condition applies, submit a dated public source-backed stop report stating the exact source/conflict/proof limits, actual work performed, and an issuer-disposition request without claiming another author's implementation.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "Resume fallback notice can name the new provider after onboarding changes it",
+   "state": "CLOSED",
+   "closedAt": "2026-11-16T22:16:16Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2389",
+   "closedByPullRequestsReferences": {
+    "nodes": [
+     {
+      "number": 2423,
+      "title": "Fix resume fallback notice after provider onboarding",
+      "author": {
+       "login": "ryssroad"
+      },
+      "mergedAt": "2026-11-16T22:16:15Z",
+      "mergeCommit": {
+       "oid": "d8a7458ac34a3f722ecc0939a9df0b0b1b20b94d"
+      },
+      "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2423"
+     }
+    ]
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-16T22:16:17Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": {
+       "__typename": "PullRequest",
+       "number": 2423,
+       "mergedAt": "2026-11-16T22:16:15Z",
+       "author": {
+        "login": "ryssroad"
+       },
+       "mergeCommit": {
+        "oid": "d8a7458ac34a3f722ecc0939a9df0b0b1b20b94d"
+       },
+       "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2423"
+      }
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_d0aff62428b84d373cc63250b7e4a63c",
+  "title": "Fix Issue2392 Snapshot Credential Paths or Stop",
+  "pft": 5,
+  "acceptedAt": "2026-11-16T08:11:01.674550+00:00",
+  "issue": 2392,
+  "description": "After official acceptance, address only item 1 of CorbanuCore/CorbanuTerminal issue #2392: the sync-branch `restore_fallback` behavior in `shell_snapshot_credentials.rs` and the snapshot-specific `supports_credential_snapshot` path in `prepare_managed_network`. Deliver either a minimal DCO-signed citadelculture PR with independently resolvable evidence, or the permitted dated public source-backed stop report. Do not begin engineering until ownership, non-overlap, security review, approved base/dependencies, and explicit D641(a) authorization are established; preserve all credential, broker, prompt, and fallback protections.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "Submit publicly resolvable URLs for the DCO-signed PR and immutable evidence packet, including approved base/head, changed files, exact commands, raw outputs, numeric exit statuses, hashes, replay steps, and all limitations. If stopping, submit the dated public stop report URL and text identifying precise sources, blocker, actual work, proof limits, and requested issuer disposition. Do not claim reproduction, completion, hosted CI, native Windows/Linux proof, or another author\u2019s work without direct evidence. No real credentials or secrets are acceptable evidence.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "Sync: exec-server snapshot fallback logs 'unmasked credentials' under main's engine; share copied snapshot helpers",
+   "state": "CLOSED",
+   "closedAt": "2026-11-16T19:58:14Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2392",
+   "closedByPullRequestsReferences": {
+    "nodes": []
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-16T19:58:14Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": null
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_7f8c4f0ec2bd0704a3fe2a57db555ab9",
+  "title": "Fix Issue2395 URL-Password Classification or Submit Stop Report",
+  "pft": 5,
+  "acceptedAt": "2026-11-16T08:35:59.660472+00:00",
+  "issue": 2395,
+  "description": "After official acceptance, resolve only the PF-27-S02 residual in CorbanuCore/CorbanuTerminal issue #2395: secretless_launch::value_has_url_password misses scheme-less password-bearing proxy-style values and passwords in later URLs. Deliver a minimal DCO-signed citadelculture PR correcting those classifications in existing protected launch filtering and the minimum admitted caller integration, with synthetic red/green regressions and portable scoped evidence; preserve secret removal, masking, prompts, approvals, name filtering, non-target semantics, and safe controls. If ownership, coordination, dependencies, overlap, scope, or safe proof prevents honest delivery, submit a paid dated public source-backed stop report instead.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "For a fix, submit the public PR URL plus an independently resolvable evidence packet containing exact base/head commits, changed files, red/green transcripts, commands, raw outputs, numeric exits, replay instructions, hashes, and explicit limitations; no live secrets, network execution, or privileged execution. For a stop, submit the dated public report URL and text identifying the precise blocker with publicly resolvable sources and requested disposition, without claiming completion, reproduction, merge, unsupported platform coverage, or another author\u2019s work.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "PF-27-S02: URL-password value rule misses scheme-less and later URLs",
+   "state": "CLOSED",
+   "closedAt": "2026-11-16T11:24:15Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2395",
+   "closedByPullRequestsReferences": {
+    "nodes": [
+     {
+      "number": 2400,
+      "title": "fix(security): URL-password detector catches scheme-less proxies and later URLs (#2395)",
+      "author": {
+       "login": "IridiumMaster"
+      },
+      "mergedAt": "2026-11-16T11:24:14Z",
+      "mergeCommit": {
+       "oid": "75a0117b35d1fd0c037469b6e4dbf09bfca84fb4"
+      },
+      "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2400"
+     }
+    ]
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-16T11:24:16Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": {
+       "__typename": "PullRequest",
+       "number": 2400,
+       "mergedAt": "2026-11-16T11:24:14Z",
+       "author": {
+        "login": "IridiumMaster"
+       },
+       "mergeCommit": {
+        "oid": "75a0117b35d1fd0c037469b6e4dbf09bfca84fb4"
+       },
+       "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2400"
+      }
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_e0b956043be1322cf0cab86cb8954690",
+  "title": "Fix Issue1532 Queued-Message Diagnostics or Submit Stop Report",
+  "pft": 5,
+  "acceptedAt": "2026-11-16T08:51:53.982704+00:00",
+  "issue": 1532,
+  "description": "Own only the diagnostic residual in https://github.com/CorbanuCore/CorbanuTerminal/issues/1532#issuecomment-6911191840 left outside PR2393: truthful reporting for the queued-explanation/non-retention contradiction and idle refusal versus NotSubmitted, without changing authorization, retention, delivery, wake-up, retry, or access semantics. Before engineering, confirm intended semantics, ownership, approved base/dependencies, PR2393 coordination, and non-overlap with prior work; any claim, absorption, isolation, or honest-proof blocker triggers the stop branch. Deliver a minimal public DCO-signed PR with synthetic local regressions and immutable red/green evidence, or a dated public source-backed stop report, without claiming PR2393 credit, reproduction, or another author\u2019s work.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "For the fix branch, submit the public PR URL, immutable evidence URL, and a short scope note with base/head, DCO sign-off, changed files, commands, raw red/green outputs, numeric exits, control results, hashes, replay instructions, and failed/unrun limitations. For the stop branch, submit the dated public report URL or text with precise sources, the actual blocker, work performed, proof limits, and requested disposition; do not claim reproduction, completion, PR2393 credit, or another author\u2019s work.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "Upstream Codex sync to rust-v0.165.0: scoping report",
+   "state": "OPEN",
+   "closedAt": null,
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/1532",
+   "closedByPullRequestsReferences": {
+    "nodes": []
+   },
+   "timelineItems": {
+    "nodes": []
+   }
+  }
+ },
+ {
+  "taskId": "task_fac901f30c6669452e3ec0ead11e123f",
+  "title": "Fix Issue2407 Held-Enter Shortcut Transitions or Stop",
+  "pft": 5,
+  "acceptedAt": "2026-11-16T11:39:45.550057+00:00",
+  "issue": 2407,
+  "description": "After official acceptance, address only item 2 of CorbanuCore/CorbanuTerminal issue #2407: the reported Ctrl+T and Ctrl+G interception during held-Enter lookahead, cancelling or materializing held input before each transition so the draft is preserved and no unintended submission occurs. Before engineering, confirm current ownership, non-overlap, intended input semantics, and maintainer-approved base or stacked-work coordination; deliver a minimal DCO-signed citadelculture PR with controlled-clock regression evidence if those conditions hold. Exclude item 1, item 3, PR2405 raw-key grouping, and unrelated outcomes; if ownership changes, coordination fails, or safe portable proof cannot establish the result, submit the permitted dated source-backed stop closeout instead.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "Submit either the publicly resolvable DCO-signed citadelculture PR URL plus its immutable evidence URL and a concise scope summary, or the dated text stop closeout with public source links, the exact ownership/coordination/proof blocker, work actually performed, and the requested issuer disposition. PR evidence must include red/green results for both transitions, relevant behavior controls, scoped checks, and every failed or unrun-check limitation; do not claim native, hosted, PTY, external-editor, integration, merge, or another author\u2019s results without direct supporting evidence. No merge or Discord announcement is required.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "TUI: follow up held-Enter handling for AltGr and app-level shortcuts",
+   "state": "OPEN",
+   "closedAt": null,
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2407",
+   "closedByPullRequestsReferences": {
+    "nodes": []
+   },
+   "timelineItems": {
+    "nodes": []
+   }
+  }
+ },
+ {
+  "taskId": "task_2da771372c922a8c52d8968deb53f591",
+  "title": "Ship Issue2401 Password Redaction PR or Stop Report",
+  "pft": 5,
+  "acceptedAt": "2026-11-16T11:47:02.803448+00:00",
+  "issue": 2401,
+  "description": "For CorbanuCore/CorbanuTerminal issue #2401, verify ownership, non-overlap, security coordination, exact semantics, and a maintainer-approved PR #2400 base before engineering. If clear, ship a minimal DCO-signed citadelculture PR that extracts and registers scheme-less user:pass@proxy passwords and passwords in later URLs for disclosure-gate redaction while preserving existing classification, removal, masking, prompts, approvals, and isolation. Prove both missing cases with synthetic local red/green tests and controls; if ownership, coordination, review, or safe proof fails, submit a dated public source-backed stop closeout instead.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "Submit the public PR URL, immutable evidence URL, and a concise scope-and-results summary with independently resolvable red/green outputs, controls, scoped checks, hashes, and explicit unrun or failed limitations. A stop submission must instead provide the dated text closeout and public source URLs proving the ownership, coordination, review, or proof blocker without claiming completion or another author's work. Merge and Discord announcement are not required.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "Disclosure gate url_password registers only the first URL's password (follow-up to #2395)",
+   "state": "CLOSED",
+   "closedAt": "2026-11-18T14:02:04Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2401",
+   "closedByPullRequestsReferences": {
+    "nodes": [
+     {
+      "number": 2620,
+      "title": "fix(security): register every possible URL password for redaction (#2401, #2604)",
+      "author": {
+       "login": "IridiumMaster"
+      },
+      "mergedAt": "2026-11-18T14:02:03Z",
+      "mergeCommit": {
+       "oid": "59eb554a97848942f376df567af1bd1b5a801f8e"
+      },
+      "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2620"
+     }
+    ]
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-18T14:02:05Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": {
+       "__typename": "PullRequest",
+       "number": 2620,
+       "mergedAt": "2026-11-18T14:02:03Z",
+       "author": {
+        "login": "IridiumMaster"
+       },
+       "mergeCommit": {
+        "oid": "59eb554a97848942f376df567af1bd1b5a801f8e"
+       },
+       "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2620"
+      }
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_a51b8d6de8efb5ad42213914a70824d7",
+  "title": "Fix Issue2402 Snapshot Warning or Submit Stop",
+  "pft": 5,
+  "acceptedAt": "2026-11-16T11:53:24.396645+00:00",
+  "issue": 2402,
+  "description": "Resolve CorbanuTerminal issue #2402 only for truthful logging on the successful hardened-zsh credential-snapshot path in exec-server shell_snapshot_credentials::prepare. After official acceptance, secure owner/security authorization and sec-2392 coordination before engineering; prove with secret-free synthetic fixtures whether the Warn call produces misleading output, without changing masking, brokering, capture, replay, fallback, prompts, approvals, or unhardened behavior. Exclude all listed neighboring issue/PR outcomes and stop if ownership, authorization, safe proof, or the required independent Opus security review is unavailable. Deliver either a minimal DCO-signed citadelculture PR with reproducible public evidence or a dated public source-backed stop closeout stating the precise blocker and requested issuer disposition.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "Submit either the publicly accessible PR and immutable evidence URLs plus a concise limitation note, or the text of the dated public source-backed stop closeout. PR evidence must include the approved base/head, DCO sign-off, independent Opus security review, baseline false warning and corrected output, required controls, raw red/green and scoped test/lint results, hashes, and replay instructions. The stop closeout must identify the precise blocker or proof limit, dated public sources, work actually performed, and requested issuer disposition; do not claim unobserved platforms, hosted CI, or another author's work.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "Sync: successful zsh credential snapshot under main's engine logs upstream's 'continuing with those values unmasked' warning",
+   "state": "CLOSED",
+   "closedAt": "2026-11-17T08:13:20Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2402",
+   "closedByPullRequestsReferences": {
+    "nodes": []
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-17T08:13:21Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": null
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_95732b9aa05356fba2b8ee2e3a2f93c0",
+  "title": "Fix Issue2410 Cold-Chat Fixture or Submit Stop Report",
+  "pft": 5,
+  "acceptedAt": "2026-11-16T11:56:43.383575+00:00",
+  "issue": 2410,
+  "description": "Resolve only readiness::tests::cold_chat_can_outlive_normal_request_timeout_without_retry_injection in codex-rs/gpu-market/src/readiness_tests.rs for CorbanuTerminal issue #2410. The source suggests fixture fragility because the preliminary /v1/models request may time out first; it does not establish a product cold-chat bug or a reproduction. If authorized and demonstrable, ship the smallest test-fixture repair as a public DCO-signed citadelculture PR with immutable evidence; otherwise submit a dated public source-backed stop report eligible for the same reward. Preserve production behavior, the longer cold-chat deadline, single-request assertion, and meaningful timeout sensitivity without weaker assertions, blanket budget increases, or excluded scope.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "Submit independently accessible URLs for the public PR or stop report and its immutable evidence packet, plus a concise scope and non-claims note. PR evidence must include exact base/head commits, changed-file hashes, failing-before/passing-after or labelled fixture-sensitivity proof, focused control results, raw outputs with numeric exits, replay instructions, and limitations. Stop evidence must cite dated public sources and show why authorization, demonstrability, coordination, or safe portable proof prevents a compliant PR; no merge, external service, hosted CI, or unsupported platform claim is required.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "nightly-ci: GPU readiness cold-chat test times out on the preliminary models request",
+   "state": "CLOSED",
+   "closedAt": "2026-11-16T13:14:17Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2410",
+   "closedByPullRequestsReferences": {
+    "nodes": [
+     {
+      "number": 2414,
+      "title": "test(gpu-market): allow runner scheduling time in cold readiness probe",
+      "author": {
+       "login": "IridiumMaster"
+      },
+      "mergedAt": "2026-11-16T13:14:15Z",
+      "mergeCommit": {
+       "oid": "fba279359e07c91278449a736c9b349ea99a1bb9"
+      },
+      "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2414"
+     }
+    ]
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-16T13:14:18Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": {
+       "__typename": "PullRequest",
+       "number": 2414,
+       "mergedAt": "2026-11-16T13:14:15Z",
+       "author": {
+        "login": "IridiumMaster"
+       },
+       "mergeCommit": {
+        "oid": "fba279359e07c91278449a736c9b349ea99a1bb9"
+       },
+       "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2414"
+      }
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_87fe27d5d0f80a2da4cd8ed89344230e",
+  "title": "Fix Issue2296 Idle-Mail Survival or Submit Stop Report",
+  "pft": 5,
+  "acceptedAt": "2026-11-16T15:18:00.248170+00:00",
+  "issue": 2296,
+  "description": "Work only on CorbanuCore/CorbanuTerminal issue #2296's `suite::agent_execution::agent_mailbox::idle_mail_survives_eviction_and_preserves_followup_order` outcome. Before engineering, obtain explicit public confirmation that this residual is separately allocated outside the announced sync batch, along with the approved base, dependencies, and expected event sequence. If authorized and reproducible with a safe portable/macOS check, restore idle-mail survival across eviction and follow-up ordering/completion through the smallest code change and focused regressions; otherwise publish a dated public source-backed stop report instead of competing or expanding scope. Both the PR and stop branches are eligible for the proposed 5 PFT reward.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "For a completed fix, submit a short result summary, the independently accessible DCO-signed PR URL, and an immutable public evidence URL containing the exact commits, changed files, focused red/green transcripts with commands and exit statuses, macOS/platform details, file hashes, replay steps, and explicit limitations; the evidence must demonstrate the named idle-mail contract and preserved controls. For the stop branch, submit the dated public stop-report URL and its text, with citations to the exact issue comments or source state proving the allocation, authorization, reproduction, or ownership blocker and a factual account of work performed and not claimed. Submit only one branch, and do not claim merge, completion of excluded outcomes, unsupported platform coverage, or another author's work.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "Sync: codex-core lib tests \u2014 4550 pass, 139 fail on the first full run (per-module list)",
+   "state": "CLOSED",
+   "closedAt": "2026-11-17T18:40:53Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2296",
+   "closedByPullRequestsReferences": {
+    "nodes": []
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-17T18:40:53Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": null
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_52f27f81da5b5f8465085dd755dbb98a",
+  "title": "Fix Issue2428 Sync Heredoc Amendment or Submit Stop",
+  "pft": 5,
+  "acceptedAt": "2026-11-16T15:37:40.405499+00:00",
+  "issue": 2428,
+  "description": "Own only the Issue2428 sync-branch residual: an uncertain-wrapper top-level heredoc already raises Prompt, yet retained outer bash -lc argv can still permit a reusable remembered-command amendment. After confirming ownership, intended no-amendment behavior, approved sync base, and PR2426 dependency with the source owner/core-security reviewer and sync integrator, ship the smallest DCO-signed citadelculture PR that blocks only that amendment and adds focused regressions while preserving all required decisions and controls. If coordination fails, another author claims or absorbs the work, the residual is fixed, the root cause broadens, or valid portable proof is impossible, publish a dated public source-backed stop report instead; either single branch is eligible for the 5.00 PFT reward. Do not claim prior reproduction, another author's work, excluded scope, merge, or unsupported platform coverage.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "Provide the publicly resolvable PR or stop-report URL, its immutable evidence URL, and a short branch-selection note. PR evidence must identify exact base/head SHAs, DCO sign-off, changed files and hashes, failing-before/passing-after sync-path results, required control results, raw outputs with exit statuses, replay instructions, exact-head security coordination, and every failed or unrun check; no native Windows/Linux or hosted-CI claim is required or authorized. Stop evidence must be dated, cite exact public sources, establish the blocker and work performed within stated proof limits, request issuer disposition, and make no implementation or reproduction claim beyond the evidence.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "sync: no remembered-command amendment for a wrapped top-level heredoc (main #2396 parity, LOW)",
+   "state": "CLOSED",
+   "closedAt": "2026-11-16T18:49:44Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2428",
+   "closedByPullRequestsReferences": {
+    "nodes": []
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-16T18:49:44Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": null
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_8e2e932511863a13abb0634d4d5f121c",
+  "title": "Restore Issue2430 Native Schema Overrides or Submit Stop",
+  "pft": 5,
+  "acceptedAt": "2026-11-16T16:05:51.423452+00:00",
+  "issue": 2430,
+  "description": "After official acceptance, resolve only the open residual in https://github.com/CorbanuCore/CorbanuTerminal/issues/2430: incomplete native catalog parameter overrides must not remove required encrypted-message properties or required lists, and the missing_encrypted_parameters_fall_back assertion must pass. Before engineering, confirm ownership, restorative semantics, dependencies, sync base, and exact-head review path with the designated owners; stop if the work is claimed, absorbed, fixed, uncoordinated, or cannot stay within the approved boundaries. If approved, deliver a minimal DCO-signed citadelculture PR preserving generic-provider overrides, native pins, codecs, isolation, and authority/approval controls, proved with secret-free local fixtures through the actual sync path. If blocked, deliver a dated public source-backed stop report instead; only one branch earns the reward.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "Exactly one branch is eligible for 5.00 PFT: submit the public PR and immutable evidence URLs, or the dated public stop-report URL and text. PR evidence must identify exact base/head and changed files and include full commands, raw outputs, numeric exits, replay instructions, SHA256 hashes, red/green results, and failed or unrun limitations. A stop report must cite exact public sources, establish the blocker and actual work performed, state proof limits, request issuer disposition, and claim no other author's work or invented implementation.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "Sync: native collaboration catalog overrides can drop required encrypted-message fields",
+   "state": "CLOSED",
+   "closedAt": "2026-11-17T07:52:59Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2430",
+   "closedByPullRequestsReferences": {
+    "nodes": []
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-17T07:52:59Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": null
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_cf4940f731cdcdd98e2abfa50be5923c",
+  "title": "Fix Issue2433 D642 Held-Enter Residual or Submit Stop",
+  "pft": 5,
+  "acceptedAt": "2026-11-16T17:11:40.199587+00:00",
+  "issue": 2433,
+  "description": "Resolve only Issue2433's sync-branch D642 async-questions held-Enter residual for citadelculture, without starting engineering before task acceptance and required public coordination. The implementation branch must route a tick-resolved answer from ChatWidget::handle_paste_burst_tick through a helper shared with handle_question_key exactly once to its original question, bind or clear pending submission across navigation, collapse and resolution, cancel while a modal is on top, and enable the existing burst-Enter lookahead only for that composer while preserving prompts, question identity, input/approval/security guards and ordinary behavior. Deliver exactly one branch: a minimal public DCO-signed PR with portable synthetic controlled-clock red/green evidence, or a dated public source-backed stop report when ownership, grant, coordination, dependencies, isolation or safe proof blocks implementation; parent/main ports and unrelated redesign remain excluded. The 5.00 PFT offer applies to one qualifying branch only, with no credit for another author's work or unsupported claims.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "Accept either one independently accessible PR URL plus immutable evidence URL and a concise scope/limitations note, or one dated public source-backed stop report with its URL or full text. PR evidence must include portable red/green transcripts for exactly-once tick delivery, navigation, collapse, resolution, modal cancellation and ordinary-input controls, plus all requested provenance and replay details. A stop report must prove the blocking condition and actual work performed without claiming implementation or another author's work; only one branch qualifies.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "sync: D642 pasted-newline protection for upstream's async-questions panel",
+   "state": "CLOSED",
+   "closedAt": "2026-11-16T18:35:07Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2433",
+   "closedByPullRequestsReferences": {
+    "nodes": []
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-16T18:35:08Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": null
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_a2239f8235d377c0ab393dbe8cb71c04",
+  "title": "Fix Issue2312 Raw-Paste Regression or Submit Stop",
+  "pft": 5,
+  "acceptedAt": "2026-11-16T18:13:50.002166+00:00",
+  "issue": 2312,
+  "description": "Resolve only the maintainer-attributed residual `app::owned_transcript::input_tests::raw_multiline_paste_defers_rendering_and_submits_once` from issue #2312, reportedly failing at PR2435 head `c7ba510744706d261cd3a893b0a59d8d759c03c5` with nonempty queued messages; this attribution is not yet proof of a product bug. Before engineering, secure public coordination confirming a separately owned outcome, approved sync base and dependencies, intended semantics, and exact-head review path. Deliver exactly one paid branch: a minimal DCO-signed fix with independently accessible red/green evidence, or a dated public source-backed stop report when ownership, absorption, isolation, semantics, dependencies, coordination, or safe portable proof blocks implementation. All other failures and accepted or delivered scopes are excluded, with no assertion weakening, input redesign, full-suite campaign, or unobserved native OS claims.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "Submit exactly one branch: (1) a publicly resolvable minimal DCO-signed citadelculture PR plus immutable public evidence giving exact base/head, changed files, full commands, raw before/after outputs, numeric exits, replay instructions, SHA256 hashes, ordinary-input controls, and every failed/unrun limitation; or (2) a dated public source-backed stop report identifying the precise ownership/absorption, scope/semantics, coordination/dependency, or safe-proof blocker, public sources, actual work performed, and requested issuer disposition. The implementation branch must show this exact case failing before and passing after without assertion weakening or duplicated/out-of-scope work; the stop branch must not claim implementation or another author's work. Merge, Discord announcement, and native Windows/Linux runs are not required.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "Sync compile pass: codex-tui test results after it compiles (489 failing lib tests by cause; 3 abort/hang)",
+   "state": "CLOSED",
+   "closedAt": "2026-11-17T18:42:51Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2312",
+   "closedByPullRequestsReferences": {
+    "nodes": []
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-17T18:42:51Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": null
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_4742e4c6626c4ede92b8406a18841f95",
+  "title": "Fix Issue2446 Connection Reuse or Submit Stop",
+  "pft": 5,
+  "acceptedAt": "2026-11-16T20:29:31.408555+00:00",
+  "issue": 2446,
+  "description": "Resolve only the open residual in CorbanuCore/CorbanuTerminal #2446: the direct HTTP client must not reuse a connection marked `Connection: close` when a controlled server answers keep-alive, with the original assertion preserved. After acceptance, use Claude Code alone for engineering and Codex for official intake/submission; first secure distinct ownership and integrator approval of the base, target, dependency closure, and semantics without changing pins or manifests. Deliver a minimal DCO-signed citadelculture PR with independently resolvable red/green evidence, or an equally eligible paid-stop report if ownership, absorption, authorization, dependencies, safe portable proof, or scope blocks the fix. Maintainer review is required; merge, hosted CI, native Linux/Windows execution, Discord, and remote-machine access are not completion conditions.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "For a fix, submit independently resolvable URLs for the DCO-signed PR and immutable public evidence packet, plus a short note identifying exact base/head and the unchanged assertion\u2019s before/after results. The packet must include public ownership/coordination/authorization captures, replay commands, raw outputs with numeric exits, hashes, and explicit unrun or failed-check limits. For a blocked task, submit the dated public stop report URL and blocker summary with source citations; no invented fix, completion claim, or further diagnostic campaign is acceptable.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "sync: direct HTTP client reuses a connection marked close",
+   "state": "CLOSED",
+   "closedAt": "2026-11-16T21:51:48Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2446",
+   "closedByPullRequestsReferences": {
+    "nodes": []
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-16T21:51:48Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": null
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_2218a908d85207c8a6d4f9656d3d1db4",
+  "title": "Promote Issue1989 Five-Crate macOS Gate or Submit Stop",
+  "pft": 5,
+  "acceptedAt": "2026-11-17T08:17:58.562173+00:00",
+  "issue": 1989,
+  "description": "Deliver only the remaining owner-authorized D623 outcome in CorbanuCore/CorbanuTerminal issue #1989: make the existing five-crate macOS changed-crate test lane required through a minimal selector-aware aggregate. Keep it non-blocking until the full observation window ending 2026-11-17T09:41:02Z and a fresh full-window per-job retry/flake audit are complete. Submit a DCO-signed public PR with immutable evidence, or an equally eligible dated source-backed stop report for a verified ownership, authorization, scope, or proof blocker; routinely waiting for the known gate is not a blocker.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "For implementation, provide independently accessible PR and evidence URLs containing coordination/source readbacks, exact base/head and changed files, the dated full-window audit with source links, regression/control transcripts, replay instructions, hashes, and all failed or unrun limitations. For a stop completion, provide the public dated report and supporting source links without a fix or other-author credit claim. Synthetic checks must be distinguished from native/hosted observations and cannot substitute for the required public audit.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "CI: remaining PR test gaps after #1984 (dependents, macOS, test-support crates)",
+   "state": "CLOSED",
+   "closedAt": "2026-11-17T10:36:10Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/1989",
+   "closedByPullRequestsReferences": {
+    "nodes": []
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-17T10:36:10Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": null
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_65dade1f211dd1ed5edb3b43be2f626c",
+  "title": "Fix Issue2506 Item2 Approval Reason or Submit Stop",
+  "pft": 5,
+  "acceptedAt": "2026-11-17T08:37:46.358180+00:00",
+  "issue": 2506,
+  "description": "For CorbanuCore/CorbanuTerminal issue 2506 ITEM2 ONLY, determine whether the sync branch can minimally show the existing PromptUser/NeedsHumanApproval exec-policy reason in the D48 approval prompt through policy_prompt_reason, then implement it if ownership, base, semantics, and safe portable proof are approved. Preserve enforcement, approval authority and decisions, rule evaluation, escalation/retry, redaction, and existing and empty-reason behavior; exclude ITEM1 and broader approval work. Completion requires focused red/green/control tests, independent Opus security review, actual corbanu-security approval on the reviewed head, and a DCO-signed public PR with immutable evidence; otherwise submit the permitted dated public source-backed stop report without claiming implementation.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "For a fix, submit the public PR and immutable evidence URLs plus a concise qualification summary. Evidence must resolve approved base/head, changed files, ownership/base/semantics coordination, required approvals bound to the reviewed head, raw before/after and control outputs, exact commands and numeric exits, replay instructions, hashes, and every failed or unrun limitation. For a blocker, submit the dated public stop report URL and pasted summary citing exact sources, the unmet condition, work actually performed, and the issuer-disposition request, without claiming implementation or another author's work.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "sync: carry PromptUser through D677 xargs check and D48 prompt reason (#2455 follow-up)",
+   "state": "CLOSED",
+   "closedAt": "2026-11-17T13:03:28Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2506",
+   "closedByPullRequestsReferences": {
+    "nodes": []
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-17T13:03:28Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": null
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_93dff16cfc5e16b2be59ae1bcc5bfdeb",
+  "title": "Fix Issue2510 Item1 Cased Shell Checks or Submit Stop",
+  "pft": 5,
+  "acceptedAt": "2026-11-17T09:30:25.168810+00:00",
+  "issue": 2510,
+  "description": "Restore exec-policy checks for CorbanuCore/CorbanuTerminal issue #2510 ITEM1 only: BASH -lc, /bin/Sh -c and BASH.EXE -c, including after recognized SUDO, on the designated macOS/Windows paths. Deliver either a minimal DCO-signed citadelculture PR with red/green/control proof and required security approval, or a dated public source-backed stop report if ownership, authorization, semantics, review availability, absorption, or safe portable proof blocks the work. Preserve literal outer-argument evaluation and every existing approval/refusal; no merge or native Windows/Linux execution is required.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "For implementation, submit the independently accessible public PR URL and immutable evidence URL containing ownership/coordination and approval records, commit pins, changed files, red/green/control transcripts, replay instructions, hashes, and explicit platform limitations. For the stop branch, submit a public URL or full dated report with exact source citations, the unmet condition, actual work performed, and no claim of implementation or another author's work. Native Windows/Linux results, merger, and Discord announcement are not required.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "Exec policy: shell -c detection and rule program names are still case-sensitive on macOS/Windows (follow-up to #2503)",
+   "state": "CLOSED",
+   "closedAt": "2026-11-17T17:22:59Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2510",
+   "closedByPullRequestsReferences": {
+    "nodes": []
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-17T17:22:59Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": null
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_8fccbecbc976140cde7de2e6813e58e5",
+  "title": "Fix Issue2515 npm Fixture Expiry or Submit Stop",
+  "pft": 5,
+  "acceptedAt": "2026-11-17T10:34:04.499059+00:00",
+  "issue": 2515,
+  "description": "Resolve CorbanuCore/CorbanuTerminal issue #2515 only by implementing the publicly approved durable npm staging fixture source or bounded, validated pin-refresh mechanism, excluding PR #2514's one-off pin bump and the specified timeout/macOS work. Preserve packaging-inputs/main triggers, full staging, deterministic provenance, release verification, all six platform artifacts, mandatory independent reviews, and fail-closed behavior. If ownership, authorization, dependencies, review availability, or safe portable proof blocks implementation, submit a dated public source-backed stop report instead. No merge, release, package publication, or native Windows/Linux execution is required.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "Submit the public PR URL, reviewed head SHA, and independently accessible evidence URL containing coordination/approval sources, base/head and changed files, commands/tool versions, raw stdout/stderr with numeric exit codes, artifact provenance/hashes, replay steps, positive/negative controls, full-staging preservation, review dispositions, and explicit failed/unrun limitations. Label synthetic metadata controls and do not claim unexercised end-to-end success. If blocked, submit the dated public stop report URL or text citing exact sources and the unmet contract condition, without claiming implementation or another author's work.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "CI: prevent npm staging fixture expiry from breaking repo-checks",
+   "state": "OPEN",
+   "closedAt": null,
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2515",
+   "closedByPullRequestsReferences": {
+    "nodes": [
+     {
+      "number": 2542,
+      "title": "ci: verify and refresh the npm staging fixture before it expires (#2515)",
+      "author": {
+       "login": "bradsbots"
+      },
+      "mergedAt": null,
+      "mergeCommit": null,
+      "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2542"
+     }
+    ]
+   },
+   "timelineItems": {
+    "nodes": []
+   }
+  }
+ },
+ {
+  "taskId": "task_ad7f69376500dc618f0d850bba755e21",
+  "title": "Fix Issue2585 PowerShell Unknown-Shell Floor or Submit Stop",
+  "pft": 5,
+  "acceptedAt": "2026-11-18T07:14:47.983231+00:00",
+  "issue": 2585,
+  "description": "Restore CorbanuCore/CorbanuTerminal issue #2585\u2019s existing restrictive-rule unknown-shell floor in `partial_command_matches` for PowerShell program forms already recognized by `policy_powershell_script`, including existing respellings, when runtime-unknown words occur inside a partially read bash/sh/zsh script. After coordinating separate ownership, semantics, base/dependencies, sync scope, and required security review, ship only the minimal approved DCO-signed public PR with portable fail-before/pass-after evidence, closing the reported D553 residual without broader parser, allow-rule, approval, or shell changes. If those gates or safe bounded proof cannot be established, submit the dated public source-backed stop report instead.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "Submit the independently resolvable public PR URL plus an immutable evidence URL containing dated coordination and approvals, exact base/head and changed files, required independent security reviews and security-owner approval tied to the reviewed head, raw fail-before/pass-after/control stdout and stderr with numeric exits and tool versions, hashes, replay steps, and every failed or unrun limitation. Portable results must be labeled accurately, and the unrelated prompt-only rule must produce Prompt rather than Skip without payload or shell execution. If blocked, submit a dated public source-backed stop report identifying the unmet ownership/completion, authorization/semantics/base/dependency/sync, review-availability, or safe-proof condition and requesting issuer disposition, without claiming implementation or another author\u2019s work.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "exec policy: a bash script giving PowerShell a run-time word asks only for rules matching pwsh (#2543 follow-up)",
+   "state": "CLOSED",
+   "closedAt": "2026-11-18T19:09:58Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2585",
+   "closedByPullRequestsReferences": {
+    "nodes": [
+     {
+      "number": 2613,
+      "title": "Read shell scripts default-deny: eval, stdin and reserved prefixes cannot hide commands (#2548, #2585)",
+      "author": {
+       "login": "IridiumMaster"
+      },
+      "mergedAt": "2026-11-18T19:09:54Z",
+      "mergeCommit": {
+       "oid": "5e5ffb872eb53665d954f10cccb01c0a9640a935"
+      },
+      "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2613"
+     }
+    ]
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-18T19:09:59Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": {
+       "__typename": "PullRequest",
+       "number": 2613,
+       "mergedAt": "2026-11-18T19:09:54Z",
+       "author": {
+        "login": "IridiumMaster"
+       },
+       "mergeCommit": {
+        "oid": "5e5ffb872eb53665d954f10cccb01c0a9640a935"
+       },
+       "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2613"
+      }
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_ee7c8f4a652a31b131e0d6aa1e672566",
+  "title": "Fix Issue2601 Hash-Rebind Fail-Closed Floor or Submit Stop",
+  "pft": 5,
+  "acceptedAt": "2026-11-18T07:42:41.531667+00:00",
+  "issue": 2601,
+  "description": "Handle only CorbanuCore/CorbanuTerminal issue2601's `hash -p /bin/bash f` followed by `echo 'echo PROBE' | f` case, where rebinding can hide the effective shell recipient from configured command rules. After separate ownership, semantics, base/dependency, sequencing, and security-review approvals, prove any defect with harmless fixtures through the real policy path, then ship the smallest restrictive-only fail-closed restoration as a DCO-signed PR with independent security review and security-owner approval. If a gate fails, the approved baseline already enforces the floor, or safe bounded proof is impossible, submit the equally eligible dated public source-backed stop report instead. Claude Code owns engineering; Codex is limited to official intake and submission.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "Submit publicly resolvable PR and immutable evidence-gist URLs plus a short outcome summary, or the public stop-report URL and summary. Implementation evidence must include independently resolvable reviews and security-owner approval for the exact head, red/green/control raw logs and numeric exits, hashes, replay instructions, and every failed or unrun limitation; stop evidence must name the verified unmet gate with dated public observations without claiming a fix or another author's work.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "Command rules: shell name rebinding and callback execution contexts",
+   "state": "CLOSED",
+   "closedAt": "2026-11-19T01:17:51Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2601",
+   "closedByPullRequestsReferences": {
+    "nodes": [
+     {
+      "number": 2653,
+      "title": "Exec policy: #2594/#2597/#2601 regression tests; PowerShell name rebinding and off-Windows PowerShell fail closed",
+      "author": {
+       "login": "IridiumMaster"
+      },
+      "mergedAt": "2026-11-19T01:17:46Z",
+      "mergeCommit": {
+       "oid": "2ecb4b7490a4efc598a472427ea4b7b15d395430"
+      },
+      "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2653"
+     }
+    ]
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-19T01:17:52Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": {
+       "__typename": "PullRequest",
+       "number": 2653,
+       "mergedAt": "2026-11-19T01:17:46Z",
+       "author": {
+        "login": "IridiumMaster"
+       },
+       "mergeCommit": {
+        "oid": "2ecb4b7490a4efc598a472427ea4b7b15d395430"
+       },
+       "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2653"
+      }
+     }
+    ]
+   }
+  }
+ },
+ {
+  "taskId": "task_a58c0a806a9986ba15be68bda6ce1b9e",
+  "title": "Fix Issue2604 Credential Redaction Registration or Submit Stop",
+  "pft": 5,
+  "acceptedAt": "2026-11-18T08:13:19.667478+00:00",
+  "issue": 2604,
+  "description": "Work only on CorbanuCore/CorbanuTerminal issue #2604: the explicit credential-URL-plus-email/list ambiguity that can register an overlong password and leave the actual short password unredacted in later output. After confirming separate ownership, approved conservative semantics, base/dependency sequencing, and independent security-review routing, reproduce it with harmless synthetic fixtures and either ship the minimal DCO-signed correction or submit the paid dated stop report for a verified gate. Do not duplicate #2401, #2395, or #2603, change launch policy, broaden credential parsing, or use real credentials.",
+  "verification": {
+   "title": "Submit Mixed",
+   "body": "For implementation, submit the publicly resolvable PR URL, immutable evidence URL, and a short note listing exact base/head, test results, required independent reviews and security-owner approval, and every failed or unrun limitation. For stop, submit the dated public source-backed report URL and a short summary of actual observations, the unmet accepted condition, and requested issuer disposition, without claiming reproduction or implementation. Use synthetic fixtures only, with no real credentials or secret-bearing launches.",
+   "policy": {
+    "mode": "standard_followup",
+    "followup_required": true,
+    "verification_type": "mixed"
+   }
+  },
+  "gh": {
+   "title": "Disclosure gate: URL followed by email can register an overlong password",
+   "state": "CLOSED",
+   "closedAt": "2026-11-18T14:02:06Z",
+   "url": "https://github.com/CorbanuCore/CorbanuTerminal/issues/2604",
+   "closedByPullRequestsReferences": {
+    "nodes": [
+     {
+      "number": 2620,
+      "title": "fix(security): register every possible URL password for redaction (#2401, #2604)",
+      "author": {
+       "login": "IridiumMaster"
+      },
+      "mergedAt": "2026-11-18T14:02:03Z",
+      "mergeCommit": {
+       "oid": "59eb554a97848942f376df567af1bd1b5a801f8e"
+      },
+      "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2620"
+     }
+    ]
+   },
+   "timelineItems": {
+    "nodes": [
+     {
+      "createdAt": "2026-11-18T14:02:07Z",
+      "actor": {
+       "login": "IridiumMaster"
+      },
+      "closer": {
+       "__typename": "PullRequest",
+       "number": 2620,
+       "mergedAt": "2026-11-18T14:02:03Z",
+       "author": {
+        "login": "IridiumMaster"
+       },
+       "mergeCommit": {
+        "oid": "59eb554a97848942f376df567af1bd1b5a801f8e"
+       },
+       "url": "https://github.com/CorbanuCore/CorbanuTerminal/pull/2620"
+      }
+     }
+    ]
+   }
+  }
+ }
+]

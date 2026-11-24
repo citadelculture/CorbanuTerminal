@@ -1,0 +1,240 @@
+[
+ {
+  "issue": 2143,
+  "taskId": "task_234be5d87a6360c59cb6d06070ccef17",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 42.5
+ },
+ {
+  "issue": 2150,
+  "taskId": "task_b08e1d22530ed669101abde83ea1004d",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 4.9
+ },
+ {
+  "issue": 2166,
+  "taskId": "task_1b1a70f64a33d8a89718c6455f118589",
+  "state": "CLOSED",
+  "stopOffered": false,
+  "hours": 38.3
+ },
+ {
+  "issue": 2167,
+  "taskId": "task_5646cd5eaacec9e3e162955e3afa2435",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 3.3
+ },
+ {
+  "issue": 2165,
+  "taskId": "task_48256c8f78d308a1f145d572a8c0fe1c",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 40.3
+ },
+ {
+  "issue": 2174,
+  "taskId": "task_98132be7de0e17a54a2dba2177afb486",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 6.8
+ },
+ {
+  "issue": 2192,
+  "taskId": "task_ccef7b312da589d75a59686d357c7129",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 2.2
+ },
+ {
+  "issue": 2213,
+  "taskId": "task_2a0fd7cfe37ba5400d2f0917faed88ac",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 2.8
+ },
+ {
+  "issue": 2222,
+  "taskId": "task_bc3d2525ddb4614f4229a4f20200c4bb",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 4.4
+ },
+ {
+  "issue": 2255,
+  "taskId": "task_0964e881ec9330ee43a47cf8ceb4cb8b",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 12.8
+ },
+ {
+  "issue": 2261,
+  "taskId": "task_821333c85ea9431e72976657d46af0f0",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 6.4
+ },
+ {
+  "issue": 2277,
+  "taskId": "task_2966e7748abed3ec4d10692c56d5cc9e",
+  "state": "OPEN",
+  "stopOffered": true,
+  "hours": null
+ },
+ {
+  "issue": 2285,
+  "taskId": "task_1127e34479712bf136b9fd92ebf5fd69",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 1.6
+ },
+ {
+  "issue": 2292,
+  "taskId": "task_1a7fcfe035e9c8362cf7361cb7edfc70",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 5.6
+ },
+ {
+  "issue": 2389,
+  "taskId": "task_5dd94e8ddaf0b173422bbfde57fda1bd",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 14.4
+ },
+ {
+  "issue": 2392,
+  "taskId": "task_d0aff62428b84d373cc63250b7e4a63c",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 11.8
+ },
+ {
+  "issue": 2395,
+  "taskId": "task_7f8c4f0ec2bd0704a3fe2a57db555ab9",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 2.8
+ },
+ {
+  "issue": 1532,
+  "taskId": "task_e0b956043be1322cf0cab86cb8954690",
+  "state": "OPEN",
+  "stopOffered": true,
+  "hours": null
+ },
+ {
+  "issue": 2401,
+  "taskId": "task_2da771372c922a8c52d8968deb53f591",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 50.3
+ },
+ {
+  "issue": 2402,
+  "taskId": "task_a51b8d6de8efb5ad42213914a70824d7",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 20.3
+ },
+ {
+  "issue": 2410,
+  "taskId": "task_95732b9aa05356fba2b8ee2e3a2f93c0",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 1.3
+ },
+ {
+  "issue": 2296,
+  "taskId": "task_87fe27d5d0f80a2da4cd8ed89344230e",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 27.4
+ },
+ {
+  "issue": 2428,
+  "taskId": "task_52f27f81da5b5f8465085dd755dbb98a",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 3.2
+ },
+ {
+  "issue": 2430,
+  "taskId": "task_8e2e932511863a13abb0634d4d5f121c",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 15.8
+ },
+ {
+  "issue": 2433,
+  "taskId": "task_cf4940f731cdcdd98e2abfa50be5923c",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 1.4
+ },
+ {
+  "issue": 2312,
+  "taskId": "task_a2239f8235d377c0ab393dbe8cb71c04",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 24.5
+ },
+ {
+  "issue": 2446,
+  "taskId": "task_4742e4c6626c4ede92b8406a18841f95",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 1.4
+ },
+ {
+  "issue": 1989,
+  "taskId": "task_2218a908d85207c8a6d4f9656d3d1db4",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 2.3
+ },
+ {
+  "issue": 2506,
+  "taskId": "task_65dade1f211dd1ed5edb3b43be2f626c",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 4.4
+ },
+ {
+  "issue": 2510,
+  "taskId": "task_93dff16cfc5e16b2be59ae1bcc5bfdeb",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 7.9
+ },
+ {
+  "issue": 2515,
+  "taskId": "task_8fccbecbc976140cde7de2e6813e58e5",
+  "state": "OPEN",
+  "stopOffered": true,
+  "hours": null
+ },
+ {
+  "issue": 2585,
+  "taskId": "task_ad7f69376500dc618f0d850bba755e21",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 11.9
+ },
+ {
+  "issue": 2601,
+  "taskId": "task_ee7c8f4a652a31b131e0d6aa1e672566",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 17.6
+ },
+ {
+  "issue": 2604,
+  "taskId": "task_a58c0a806a9986ba15be68bda6ce1b9e",
+  "state": "CLOSED",
+  "stopOffered": true,
+  "hours": 5.8
+ }
+]
