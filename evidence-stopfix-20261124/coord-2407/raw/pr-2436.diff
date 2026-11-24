@@ -1,0 +1,761 @@
+diff --git a/codex-rs/tui/src/app.rs b/codex-rs/tui/src/app.rs
+index 1674a99194..d028d5b00e 100644
+--- a/codex-rs/tui/src/app.rs
++++ b/codex-rs/tui/src/app.rs
+@@ -250,6 +250,7 @@ mod managed_worktree_creation;
+ mod misalignment_policy;
+ mod model_defaults;
+ mod new_session;
++mod question_burst;
+ mod quick_dials;
+ mod turn_tips;
+ pub(crate) use new_session::has_launch_setting;
+@@ -1078,6 +1079,14 @@ impl App {
+         app_server: &mut AppServerSession,
+         event: TuiEvent,
+     ) -> Result<AppRunControl> {
++        self.cancel_question_burst_if_unfocused();
++        if let TuiEvent::Key(key) = &event
++            && key.kind != KeyEventKind::Release
++            && !crate::bottom_pane::key_continues_paste(key.code, key.modifiers)
++        {
++            // Global shortcuts can consume a key before ChatWidget sees it.
++            self.chat_widget.cancel_question_burst_enter();
++        }
+         self.transcript_view
+             .sync_patch_approval(self.chat_widget.current_patch_approval());
+         tui.link_hover.observe(&event);
+diff --git a/codex-rs/tui/src/app/event_dispatch.rs b/codex-rs/tui/src/app/event_dispatch.rs
+index 8e4c82d6f1..091f310d07 100644
+--- a/codex-rs/tui/src/app/event_dispatch.rs
++++ b/codex-rs/tui/src/app/event_dispatch.rs
+@@ -943,6 +943,9 @@ impl App {
+         app_server: &mut AppServerSession,
+         event: AppEvent,
+     ) -> Result<AppRunControl> {
++        // Observe routing changes before a closing event can hide them from a
++        // delayed question key (for example, opening then closing an overlay).
++        self.cancel_question_burst_if_unfocused();
+         let event = match event {
+             AppEvent::TaskNodeScopedResult {
+                 label,
+@@ -7627,6 +7630,9 @@ impl App {
+                     self.chat_widget.refresh_config_panel(/*notice*/ None);
+                 }
+             }
++            AppEvent::AsyncQuestionBurstEnter { token } => {
++                self.chat_widget.handle_async_question_burst_enter(token);
++            }
+             AppEvent::TestConfigNotification => self.schedule_config_notification_test(),
+             AppEvent::SendConfigTestNotification { generation } => {
+                 self.send_config_notification_test(tui, generation)
+diff --git a/codex-rs/tui/src/app/question_burst.rs b/codex-rs/tui/src/app/question_burst.rs
+new file mode 100644
+index 0000000000..1cb604c763
+--- /dev/null
++++ b/codex-rs/tui/src/app/question_burst.rs
+@@ -0,0 +1,24 @@
++//! Cancel retained question keys when app-level routing takes input away.
++
++#[cfg(test)]
++#[path = "question_burst_tests.rs"]
++mod tests;
++
++use super::*;
++
++impl App {
++    pub(crate) fn cancel_question_burst_if_unfocused(&mut self) {
++        if self.overlay.is_some()
++            || self.reconnect.offline
++            || self.claude_panes.active_claude_pane_id().is_some()
++            || self.chat_widget.fork_in_progress
++            || self.chat_widget.is_external_writer_view()
++            || self.chat_widget.has_provider_error()
++            || self
++                .current_displayed_thread_id()
++                .is_some_and(|id| self.thread_unavailable(id))
++        {
++            self.chat_widget.cancel_question_burst_enter();
++        }
++    }
++}
+diff --git a/codex-rs/tui/src/app/question_burst_tests.rs b/codex-rs/tui/src/app/question_burst_tests.rs
+new file mode 100644
+index 0000000000..e77921f7d9
+--- /dev/null
++++ b/codex-rs/tui/src/app/question_burst_tests.rs
+@@ -0,0 +1,22 @@
++use super::*;
++use crate::chatwidget::tests::assert_app_input_handoff_cancels_burst;
++
++#[tokio::test]
++async fn app_input_handoffs_cancel_delayed_enter_before_focus_returns() {
++    assert_app_input_handoff_cancels_burst(
++        |app| {
++            app.overlay = Some(Overlay::new_static_with_lines(
++                Vec::new(),
++                "Other input target".into(),
++                app.keymap.pager.clone(),
++            ));
++        },
++        |app| app.overlay = None,
++    )
++    .await;
++    assert_app_input_handoff_cancels_burst(
++        |app| app.reconnect.offline = true,
++        |app| app.reconnect.offline = false,
++    )
++    .await;
++}
+diff --git a/codex-rs/tui/src/app_event.rs b/codex-rs/tui/src/app_event.rs
+index efa831b6a8..58228d924e 100644
+--- a/codex-rs/tui/src/app_event.rs
++++ b/codex-rs/tui/src/app_event.rs
+@@ -2972,6 +2972,11 @@ pub(crate) enum AppEvent {
+     /// Open an existing editor above the configuration panel.
+     OpenConfigEditor(crate::config_panel::ConfigEditorHandoff),
+ 
++    /// Replay a held Enter only if the same question editor still owns it.
++    AsyncQuestionBurstEnter {
++        token: u64,
++    },
++
+     /// Schedule a notification preview with time to switch away from the terminal.
+     TestConfigNotification,
+ 
+diff --git a/codex-rs/tui/src/bottom_pane/async_questions/burst_enter.rs b/codex-rs/tui/src/bottom_pane/async_questions/burst_enter.rs
+new file mode 100644
+index 0000000000..e7eb883547
+--- /dev/null
++++ b/codex-rs/tui/src/bottom_pane/async_questions/burst_enter.rs
+@@ -0,0 +1,48 @@
++//! D642: replay a quiet burst Enter through the ordinary question key path.
++//! Redraws only flush text. A unique token prevents a delayed key from reaching
++//! another question or a panel restored after navigation or a modal interruption.
++
++use super::*;
++use crate::app_event::AppEvent;
++use crate::bottom_pane::paste_burst::BURST_ENTER_LOOKAHEAD;
++use std::sync::atomic::AtomicU64;
++use std::sync::atomic::Ordering;
++
++static NEXT_BURST_ENTER: AtomicU64 = AtomicU64::new(1);
++
++impl AsyncQuestions {
++    pub(super) fn schedule_burst_enter(&mut self) {
++        if !self.composer.has_pending_burst_enter() {
++            self.pending_burst_enter = None;
++            return;
++        }
++        if self.pending_burst_enter.is_some() {
++            return;
++        }
++        let token = NEXT_BURST_ENTER.fetch_add(1, Ordering::Relaxed);
++        self.pending_burst_enter = Some(token);
++        let tx = self.app_event_tx.clone();
++        // Compute the deadline before spawning so scheduler latency cannot
++        // restart the lookahead window.
++        let deadline = tokio::time::Instant::now() + BURST_ENTER_LOOKAHEAD;
++        tokio::spawn(async move {
++            tokio::time::sleep_until(deadline).await;
++            tx.send(AppEvent::AsyncQuestionBurstEnter { token });
++        });
++    }
++
++    pub(crate) fn cancel_pending_burst_enter(&mut self) {
++        self.pending_burst_enter = None;
++        self.submission = None;
++        self.composer.cancel_pending_burst_submission();
++    }
++
++    pub(crate) fn prepare_burst_enter_key(&mut self, token: u64) -> bool {
++        if !self.expanded || self.pending_burst_enter != Some(token) {
++            return false;
++        }
++        self.pending_burst_enter = None;
++        self.composer
++            .prepare_burst_enter_key(tokio::time::Instant::now().into_std())
++    }
++}
+diff --git a/codex-rs/tui/src/bottom_pane/async_questions/input.rs b/codex-rs/tui/src/bottom_pane/async_questions/input.rs
+index 5c292fb173..61c35339f7 100644
+--- a/codex-rs/tui/src/bottom_pane/async_questions/input.rs
++++ b/codex-rs/tui/src/bottom_pane/async_questions/input.rs
+@@ -74,16 +74,21 @@ impl AsyncQuestions {
+             return;
+         }
+ 
+-        // Sync (D642): this composer doesn't hold a burst Enter, so a long
+-        // single-line burst is materialized before the draft snapshot below;
+-        // otherwise its text would be dropped when the draft is restored.
++        // Materialize expired text before retaining the draft for a possible send.
++        // A held Enter is deliberately not resolved by this text-only flush.
++        self.composer.flush_paste_burst_if_due();
++        // Preserve the full draft around immediate submissions, but let a plain
++        // burst Enter wait for following paste input (D642).
+         if self.keymap.composer.submit.is_pressed(key)
+-            && (!self.composer.is_in_paste_burst() || self.composer.burst_enter_would_submit())
++            && (!self.composer.is_in_paste_burst()
++                || (self.composer.burst_enter_would_submit()
++                    && (key.code != KeyCode::Enter || !key.modifiers.is_empty())))
+         {
+             self.composer.flush_pending_input();
+         }
+         let before = self.composer.snapshot_draft();
+         let (result, _) = self.composer.handle_key_event(key);
++        self.schedule_burst_enter();
+         let queued = matches!(result, InputResult::Queued { .. });
+         if matches!(
+             result,
+@@ -365,7 +370,6 @@ impl BottomPaneView for AsyncQuestions {
+         if !self.focus_is_notes() {
+             self.focus_other();
+         }
+-        self.composer.flush_pending_input();
+         self.composer.handle_paste(text)
+     }
+     fn flush_paste_burst_if_due(&mut self) -> bool {
+diff --git a/codex-rs/tui/src/bottom_pane/async_questions/mod.rs b/codex-rs/tui/src/bottom_pane/async_questions/mod.rs
+index d5d4a4212c..49ca24aacd 100644
+--- a/codex-rs/tui/src/bottom_pane/async_questions/mod.rs
++++ b/codex-rs/tui/src/bottom_pane/async_questions/mod.rs
+@@ -29,6 +29,7 @@ use std::time::Duration;
+ use std::time::Instant;
+ use unicode_width::UnicodeWidthStr;
+ 
++mod burst_enter;
+ mod input;
+ mod layout;
+ mod render;
+@@ -70,6 +71,7 @@ pub(crate) struct AsyncQuestions {
+     pub(crate) has_queued_messages: bool,
+     pub(crate) delivery_enabled: bool,
+     pub(crate) submission: Option<QuestionSubmission>,
++    pending_burst_enter: Option<u64>,
+     visible_options: std::cell::Cell<(usize, usize)>,
+     keymap: RuntimeKeymap,
+     // Ignore autorepeat from the number key that opened Other.
+@@ -115,10 +117,6 @@ impl AsyncQuestions {
+         );
+         composer.set_keymap_bindings(&keymap);
+         composer.set_footer_hint_override(Some(Vec::new()));
+-        // D642 (sync): answers are dispatched only from this view's key path,
+-        // so a held Enter could not be sent when its lookahead ends; keep
+-        // rule #22's immediate submission here (follow-up issue in the ledger).
+-        composer.set_burst_enter_lookahead(/*enabled*/ false);
+         Self {
+             app_event_tx,
+             state: QuestionState::default(),
+@@ -126,6 +124,7 @@ impl AsyncQuestions {
+             has_queued_messages: false,
+             delivery_enabled: true,
+             submission: None,
++            pending_burst_enter: None,
+             visible_options: std::cell::Cell::new((0, 0)),
+             keymap,
+             other_selector: None,
+@@ -286,6 +285,7 @@ impl AsyncQuestions {
+     }
+ 
+     fn save_current_draft(&mut self) {
++        self.cancel_pending_burst_enter();
+         self.composer.flush_pending_input();
+         if self.focus_is_notes() {
+             let draft = self.composer.snapshot_draft();
+@@ -296,6 +296,7 @@ impl AsyncQuestions {
+     }
+ 
+     fn restore_current_draft(&mut self) {
++        self.cancel_pending_burst_enter();
+         self.sync_composer_placeholder();
+         let draft = self
+             .current_answer()
+diff --git a/codex-rs/tui/src/bottom_pane/async_questions/state.rs b/codex-rs/tui/src/bottom_pane/async_questions/state.rs
+index 1684aca749..beceeb5fe0 100644
+--- a/codex-rs/tui/src/bottom_pane/async_questions/state.rs
++++ b/codex-rs/tui/src/bottom_pane/async_questions/state.rs
+@@ -73,6 +73,7 @@ impl AsyncQuestions {
+     }
+ 
+     pub(crate) fn navigate(&mut self, forward: bool) -> bool {
++        self.cancel_pending_burst_enter();
+         let next = if forward {
+             self.state.current_idx.checked_add(1)
+         } else {
+@@ -168,6 +169,7 @@ impl AsyncQuestions {
+         if !self.state.pending.iter().any(answered) {
+             return false;
+         }
++        self.cancel_pending_burst_enter();
+         let current_answered = self.current_answer().is_some_and(answered);
+         let displayed_answer_changed = self.expanded && current_answered;
+         if current_answered {
+diff --git a/codex-rs/tui/src/bottom_pane/async_questions/state_tests.rs b/codex-rs/tui/src/bottom_pane/async_questions/state_tests.rs
+index 2ca83aabbd..12394b570a 100644
+--- a/codex-rs/tui/src/bottom_pane/async_questions/state_tests.rs
++++ b/codex-rs/tui/src/bottom_pane/async_questions/state_tests.rs
+@@ -657,11 +657,9 @@ fn oversized_question_ids_keep_questions_answerable_without_echoing_the_id() {
+     assert_eq!(reply, "> Question\n\nAnswer");
+ }
+ 
+-/// sync-main7 review r2: the questions composer does not hold a burst Enter
+-/// (its answers are dispatched only from this view's key path), so a long
+-/// keystroke burst ending in Enter answers at once and nothing stays held.
+-#[test]
+-fn burst_enter_answers_immediately_and_holds_nothing() {
++/// #2433: retain the answer until the held Enter returns through the key path.
++#[tokio::test(start_paused = true)]
++async fn burst_enter_answers_through_key_path_and_holds_nothing_afterward() {
+     let (tx, _rx) = tokio::sync::mpsc::unbounded_channel();
+     let mut editor = AsyncQuestions::new(
+         AppEventSender::new(tx),
+@@ -677,6 +675,13 @@ fn burst_enter_answers_immediately_and_holds_nothing() {
+         editor.handle_key_event(KeyEvent::from(KeyCode::Char(ch)));
+     }
+     editor.handle_key_event(KeyEvent::from(KeyCode::Enter));
++    assert!(editor.submission.is_none());
++    let token = editor.pending_burst_enter.unwrap();
++    tokio::time::advance(Duration::from_millis(100)).await;
++    assert!(!editor.flush_paste_burst_if_due());
++    assert!(editor.submission.is_none());
++    assert!(editor.prepare_burst_enter_key(token));
++    editor.handle_key_event(KeyEvent::from(KeyCode::Enter));
+     assert!(matches!(
+         &editor.submission,
+         Some(QuestionSubmission::Submit(text)) if text.contains("0123456789abcdef")
+diff --git a/codex-rs/tui/src/bottom_pane/chat_composer.rs b/codex-rs/tui/src/bottom_pane/chat_composer.rs
+index 772a7790af..079d169611 100644
+--- a/codex-rs/tui/src/bottom_pane/chat_composer.rs
++++ b/codex-rs/tui/src/bottom_pane/chat_composer.rs
+@@ -132,6 +132,8 @@
+ //! # Submission and Prompt Expansion
+ //!
+ //! Multiline pastes continue blockquote prefixes.
++//! Async-question editors replay a quiet held Enter through their normal key path using a
++//! cancellable event token; their redraw ticks never create or dispatch answers.
+ //! `Enter` submits immediately except after a long raw-key burst: a 32ms lookahead distinguishes
+ //! a submit from a pasted newline. `Tab` requests queuing while a task is running; if no task is
+ //! running, `Tab` submits just like Enter so input is never dropped.
+@@ -650,9 +652,6 @@ pub(crate) struct ChatComposer {
+     blocks_direct_input: bool,
+     is_task_running: bool,
+     queue_submissions: bool,
+-    /// D642: hold an ambiguous Enter after a long burst. Editors whose
+-    /// submissions are dispatched only from their own key path turn this off.
+-    burst_enter_lookahead: bool,
+     /// Slash-command draft staged for local recall after application-level dispatch.
+     ///
+     /// This slot is intentionally separate from `ChatComposerHistory` so inline slash commands can
+@@ -839,7 +838,6 @@ impl ChatComposer {
+             blocks_direct_input: false,
+             is_task_running: false,
+             queue_submissions: false,
+-            burst_enter_lookahead: true,
+             pending_slash_command_history: None,
+             skills: None,
+             plugins: None,
+@@ -3315,14 +3313,8 @@ impl ChatComposer {
+                 .paste_burst
+                 .single_line_burst_enter_should_submit(self.draft.textarea.text())
+         {
+-            if self.burst_enter_lookahead {
+-                self.draft.paste_burst.defer_enter(now);
+-                return (InputResult::None, true);
+-            }
+-            // Pre-D642 rule #22: submit the materialized burst at once.
+-            if let Some(pasted) = self.draft.paste_burst.flush_before_modified_input() {
+-                self.apply_paste(pasted);
+-            }
++            self.draft.paste_burst.defer_enter(now);
++            return (InputResult::None, true);
+         }
+ 
+         if !should_queue && self.handle_paste_enter(now) {
+@@ -4504,14 +4496,6 @@ impl ChatComposer {
+         self.is_task_running = running;
+     }
+ 
+-    /// See `burst_enter_lookahead`.
+-    pub(crate) fn set_burst_enter_lookahead(&mut self, enabled: bool) {
+-        self.burst_enter_lookahead = enabled;
+-        if !enabled {
+-            self.cancel_pending_burst_submission();
+-        }
+-    }
+-
+     pub(crate) fn set_queue_submissions(&mut self, queue_submissions: bool) {
+         self.queue_submissions = queue_submissions;
+     }
+diff --git a/codex-rs/tui/src/bottom_pane/chat_composer/burst_submission.rs b/codex-rs/tui/src/bottom_pane/chat_composer/burst_submission.rs
+index b738b0368e..44a81d41e0 100644
+--- a/codex-rs/tui/src/bottom_pane/chat_composer/burst_submission.rs
++++ b/codex-rs/tui/src/bottom_pane/chat_composer/burst_submission.rs
+@@ -38,6 +38,20 @@ impl ChatComposer {
+         Some(result)
+     }
+ 
++    pub(crate) fn has_pending_burst_enter(&self) -> bool {
++        self.draft.paste_burst.has_pending_enter()
++    }
++
++    /// Materialize a quiet Enter's draft without dispatching it. Inline question
++    /// editors replay the key through their normal delivery and input guards.
++    pub(crate) fn prepare_burst_enter_key(&mut self, now: Instant) -> bool {
++        if !self.draft.input_enabled || !self.draft.paste_burst.take_due_enter(now) {
++            return false;
++        }
++        self.flush_pending_input();
++        true
++    }
++
+     pub(crate) fn cancel_pending_burst_submission(&mut self) {
+         if self.draft.paste_burst.cancel_pending_enter()
+             && let Some(pasted) = self.draft.paste_burst.flush_before_modified_input()
+diff --git a/codex-rs/tui/src/bottom_pane/mod.rs b/codex-rs/tui/src/bottom_pane/mod.rs
+index a5041c0761..fd041e063f 100644
+--- a/codex-rs/tui/src/bottom_pane/mod.rs
++++ b/codex-rs/tui/src/bottom_pane/mod.rs
+@@ -827,7 +827,7 @@ impl BottomPane {
+     }
+ 
+     fn push_view(&mut self, view: Box<dyn BottomPaneView>) {
+-        self.composer.cancel_pending_burst_submission();
++        self.cancel_pending_burst_submission();
+         self.key_chord_reset_requested = true;
+         self.view_stack.push(view);
+         self.schedule_active_view_frame();
+@@ -2711,6 +2711,9 @@ impl BottomPane {
+ 
+     pub(crate) fn cancel_pending_burst_submission(&mut self) {
+         self.composer.cancel_pending_burst_submission();
++        if let Some(questions) = &mut self.questions {
++            questions.cancel_pending_burst_enter();
++        }
+     }
+ 
+     pub(crate) fn take_burst_submission(&mut self, now: Instant) -> Option<InputResult> {
+diff --git a/codex-rs/tui/src/bottom_pane/warnings.rs b/codex-rs/tui/src/bottom_pane/warnings.rs
+index 757dc2e735..b34bbbfb4e 100644
+--- a/codex-rs/tui/src/bottom_pane/warnings.rs
++++ b/codex-rs/tui/src/bottom_pane/warnings.rs
+@@ -11,6 +11,7 @@ impl BottomPane {
+         transcript: Arc<()>,
+         daemon_restart_hint_at: Option<usize>,
+     ) {
++        self.cancel_pending_burst_submission();
+         let mut view = warnings_view::WarningsView::new(
+             entries,
+             transcript,
+diff --git a/codex-rs/tui/src/chatwidget/questions.rs b/codex-rs/tui/src/chatwidget/questions.rs
+index 3a76151783..c2cde2444e 100644
+--- a/codex-rs/tui/src/chatwidget/questions.rs
++++ b/codex-rs/tui/src/chatwidget/questions.rs
+@@ -53,6 +53,27 @@ impl ChatWidget {
+         self.refresh_pending_input_preview();
+     }
+ 
++    pub(crate) fn cancel_question_burst_enter(&mut self) {
++        if let Some(questions) = &mut self.bottom_pane.questions {
++            questions.cancel_pending_burst_enter();
++        }
++    }
++
++    pub(crate) fn handle_async_question_burst_enter(&mut self, token: u64) {
++        if self.bottom_pane.has_active_view() {
++            self.bottom_pane.cancel_pending_burst_submission();
++            return;
++        }
++        if self
++            .bottom_pane
++            .questions
++            .as_mut()
++            .is_some_and(|questions| questions.prepare_burst_enter_key(token))
++        {
++            self.handle_question_key(KeyEvent::from(KeyCode::Enter));
++        }
++    }
++
+     pub(super) fn handle_question_key(&mut self, key: KeyEvent) -> bool {
+         if self.bottom_pane.has_active_view() {
+             return false;
+diff --git a/codex-rs/tui/src/chatwidget/tests.rs b/codex-rs/tui/src/chatwidget/tests.rs
+index f9b1aa649a..a9ffce42b3 100644
+--- a/codex-rs/tui/src/chatwidget/tests.rs
++++ b/codex-rs/tui/src/chatwidget/tests.rs
+@@ -325,6 +325,7 @@ pub(super) use helpers::*;
+ 
+ #[path = "tests/questions_tests.rs"]
+ mod questions_tests;
++pub(crate) use questions_tests::burst_enter_tests::assert_app_input_handoff_cancels_burst;
+ 
+ #[path = "tests/question_turn_end_tests.rs"]
+ mod question_turn_end_tests;
+diff --git a/codex-rs/tui/src/chatwidget/tests/questions_burst_enter_tests.rs b/codex-rs/tui/src/chatwidget/tests/questions_burst_enter_tests.rs
+new file mode 100644
+index 0000000000..3c801d7c70
+--- /dev/null
++++ b/codex-rs/tui/src/chatwidget/tests/questions_burst_enter_tests.rs
+@@ -0,0 +1,226 @@
++//! Exercise D642 at the question delivery boundary, including delayed event replay.
++use super::*;
++use codex_context_fragments::AnsweredQuestion;
++use codex_context_fragments::ContextualUserFragment;
++use pretty_assertions::assert_eq;
++
++const FIRST_LINE: &str = "a sufficiently long answer";
++
++fn type_keys(chat: &mut ChatWidget, text: &str) {
++    for ch in text.chars() {
++        chat.handle_key_event(KeyEvent::from(KeyCode::Char(ch)));
++    }
++}
++
++fn open_questions(chat: &mut ChatWidget) {
++    chat.thread_id = Some(ThreadId::new());
++    chat.add_async_questions("message", &questions());
++    chat.handle_key_event(KeyEvent::new(KeyCode::Up, KeyModifiers::ALT));
++}
++
++async fn held_enter_event(rx: &mut tokio::sync::mpsc::UnboundedReceiver<AppEvent>) -> u64 {
++    loop {
++        if let AppEvent::AsyncQuestionBurstEnter { token } =
++            tokio::time::timeout(Duration::from_secs(1), rx.recv())
++                .await
++                .expect("question timer deadline")
++                .expect("question timer event")
++        {
++            return token;
++        }
++    }
++}
++
++fn assert_first_answer(op: Op, text: &str) {
++    let Op::UserTurn { items, .. } = op else {
++        panic!("expected user turn");
++    };
++    let id = serde_json::json!(["request_user_input_async", "message", 0]).to_string();
++    assert_eq!(
++        items,
++        vec![UserInput::Text {
++            text: AnsweredQuestion::new(&id, "Which way?", text)
++                .render()
++                .expect_text(),
++            text_elements: Vec::new(),
++        }]
++    );
++}
++
++#[tokio::test]
++async fn quiet_enter_replays_once_through_question_key_delivery() {
++    let (mut chat, mut rx, mut ops) = make_chatwidget_manual(/*model_override*/ None).await;
++    tokio::time::pause();
++    open_questions(&mut chat);
++    type_keys(&mut chat, FIRST_LINE);
++    chat.handle_key_event(KeyEvent::from(KeyCode::Enter));
++    assert!(ops.try_recv().is_err());
++    assert_eq!(question_count(&chat), 2);
++
++    let token = held_enter_event(&mut rx).await;
++    // Even a tick after the timer expires cannot produce an answer.
++    chat.handle_paste_burst_tick(FrameRequester::test_dummy());
++    assert!(ops.try_recv().is_err());
++    assert!(
++        chat.bottom_pane
++            .questions
++            .as_ref()
++            .unwrap()
++            .submission
++            .is_none()
++    );
++    chat.handle_async_question_burst_enter(token);
++    assert_first_answer(ops.try_recv().unwrap(), FIRST_LINE);
++    assert_eq!(question_count(&chat), 1);
++    chat.handle_async_question_burst_enter(token);
++    assert!(ops.try_recv().is_err());
++    assert_eq!(question_count(&chat), 1);
++}
++
++#[tokio::test]
++async fn following_paste_keeps_held_enter_as_a_newline() {
++    for bracketed in [false, true] {
++        let (mut chat, mut rx, mut ops) = make_chatwidget_manual(/*model_override*/ None).await;
++        tokio::time::pause();
++        open_questions(&mut chat);
++        type_keys(&mut chat, FIRST_LINE);
++        chat.handle_key_event(KeyEvent::from(KeyCode::Enter));
++        assert!(ops.try_recv().is_err());
++        tokio::time::advance(Duration::from_millis(8)).await;
++        if bracketed {
++            chat.handle_paste("second line".into());
++        } else {
++            type_keys(&mut chat, "second line");
++        }
++        let token = held_enter_event(&mut rx).await;
++        chat.handle_async_question_burst_enter(token);
++        assert!(ops.try_recv().is_err());
++        assert_eq!(question_count(&chat), 2);
++        tokio::time::advance(Duration::from_millis(200)).await;
++        chat.handle_paste_burst_tick(FrameRequester::test_dummy());
++        chat.handle_key_event(KeyEvent::from(KeyCode::Enter));
++        assert_first_answer(
++            ops.try_recv().unwrap(),
++            &format!("{FIRST_LINE}\nsecond line"),
++        );
++        assert!(ops.try_recv().is_err());
++        tokio::time::resume();
++    }
++}
++
++#[tokio::test]
++async fn question_transitions_cancel_delayed_enter_even_after_returning() {
++    for transition in [
++        "navigate",
++        "collapse",
++        "resolve",
++        "modal",
++        "modal_closed",
++        "clear",
++    ] {
++        let (mut chat, mut rx, mut ops) = make_chatwidget_manual(/*model_override*/ None).await;
++        tokio::time::pause();
++        open_questions(&mut chat);
++        type_keys(&mut chat, FIRST_LINE);
++        chat.handle_key_event(KeyEvent::from(KeyCode::Enter));
++        assert!(ops.try_recv().is_err());
++        let token = held_enter_event(&mut rx).await;
++        match transition {
++            "navigate" => {
++                let questions = chat.bottom_pane.questions.as_mut().unwrap();
++                assert!(questions.navigate(/*forward*/ true));
++                assert!(questions.navigate(/*forward*/ false));
++            }
++            "collapse" => {
++                let questions = chat.bottom_pane.questions.as_mut().unwrap();
++                questions.set_expanded(/*expanded*/ false);
++                questions.set_expanded(/*expanded*/ true);
++            }
++            "resolve" => {
++                chat.bottom_pane
++                    .questions
++                    .as_mut()
++                    .unwrap()
++                    .resolve_answers(&[serde_json::json!([
++                        "request_user_input_async",
++                        "message",
++                        0
++                    ])
++                    .to_string()]);
++            }
++            "modal" | "modal_closed" => {
++                chat.bottom_pane
++                    .show_selection_view(crate::bottom_pane::SelectionViewParams {
++                        view_id: Some("burst-test"),
++                        ..Default::default()
++                    });
++                if transition == "modal" {
++                    chat.handle_async_question_burst_enter(token);
++                    assert!(ops.try_recv().is_err());
++                }
++                assert!(chat.bottom_pane.dismiss_active_view_if_id("burst-test"));
++            }
++            "clear" => chat.bottom_pane.clear_pending_questions(),
++            _ => unreachable!(),
++        }
++        let count = question_count(&chat);
++        chat.handle_paste_burst_tick(FrameRequester::test_dummy());
++        chat.handle_async_question_burst_enter(token);
++        assert!(ops.try_recv().is_err(), "{transition}");
++        assert_eq!(question_count(&chat), count, "{transition}");
++        assert!(
++            chat.bottom_pane
++                .questions
++                .as_ref()
++                .unwrap()
++                .submission
++                .is_none()
++        );
++        tokio::time::resume();
++    }
++}
++
++pub(crate) async fn assert_app_input_handoff_cancels_burst(
++    take_focus: impl FnOnce(&mut crate::app::App),
++    return_focus: impl FnOnce(&mut crate::app::App),
++) {
++    {
++        let mut app = crate::app::test_support::make_test_app().await;
++        let (chat, mut rx, mut ops) = make_chatwidget_manual(/*model_override*/ None).await;
++        app.chat_widget = chat;
++        tokio::time::pause();
++        open_questions(&mut app.chat_widget);
++        type_keys(&mut app.chat_widget, FIRST_LINE);
++        app.chat_widget
++            .handle_key_event(KeyEvent::from(KeyCode::Enter));
++        let token = held_enter_event(&mut rx).await;
++        take_focus(&mut app);
++        app.cancel_question_burst_if_unfocused();
++        return_focus(&mut app);
++        app.chat_widget.handle_async_question_burst_enter(token);
++        assert!(ops.try_recv().is_err());
++        assert_eq!(question_count(&app.chat_widget), 2);
++        app.chat_widget
++            .handle_key_event(KeyEvent::from(KeyCode::Enter));
++        assert_first_answer(ops.try_recv().unwrap(), FIRST_LINE);
++        tokio::time::resume();
++    }
++}
++
++#[tokio::test]
++async fn delayed_enter_preserves_answer_when_delivery_is_restricted() {
++    let (mut chat, mut rx, mut ops) = make_chatwidget_manual(/*model_override*/ None).await;
++    tokio::time::pause();
++    open_questions(&mut chat);
++    type_keys(&mut chat, FIRST_LINE);
++    chat.handle_key_event(KeyEvent::from(KeyCode::Enter));
++    let token = held_enter_event(&mut rx).await;
++    chat.blocks_direct_input = true;
++    chat.handle_async_question_burst_enter(token);
++    assert!(ops.try_recv().is_err());
++    assert_eq!(question_count(&chat), 2);
++    chat.blocks_direct_input = false;
++    chat.handle_key_event(KeyEvent::from(KeyCode::Enter));
++    assert_first_answer(ops.try_recv().unwrap(), FIRST_LINE);
++    assert!(ops.try_recv().is_err());
++}
+diff --git a/codex-rs/tui/src/chatwidget/tests/questions_tests.rs b/codex-rs/tui/src/chatwidget/tests/questions_tests.rs
+index 9a37fabf65..75f76cb00b 100644
+--- a/codex-rs/tui/src/chatwidget/tests/questions_tests.rs
++++ b/codex-rs/tui/src/chatwidget/tests/questions_tests.rs
+@@ -5,6 +5,9 @@ use codex_protocol::items::AsyncUserInputQuestion;
+ use codex_protocol_test_support::ContentItemTestExt;
+ use pretty_assertions::assert_eq;
+ 
++#[path = "questions_burst_enter_tests.rs"]
++pub(super) mod burst_enter_tests;
++
+ fn questions() -> Vec<AsyncUserInputQuestion> {
+     vec![
+         question("Which way?", /*options*/ None),
+diff --git a/docs/management/upstreamSync/ledger-rust-v0.167.0-compile.tsv b/docs/management/upstreamSync/ledger-rust-v0.167.0-compile.tsv
+index 6b7bf9c60b..a088bde97e 100644
+--- a/docs/management/upstreamSync/ledger-rust-v0.167.0-compile.tsv
++++ b/docs/management/upstreamSync/ledger-rust-v0.167.0-compile.tsv
+@@ -16,6 +16,9 @@ codex-rs/tui/src/app/config_persistence.rs	follow-up	--	compile-pass	S4a tui app
+ codex-rs/tui/src/app_event.rs	follow-up	--	compile-pass	S4a tui app/lib/onboarding/status	3	astra-syncdec2 (maintainer)	no	resolved	ported	0	0	true	false	false	false	D622(a), owner 2026-11-16 (#2308): a no-task preset resolves locally and queues UpdateApprovalsReviewer only after successful selection. The real app-server config writer saves the reviewer; invalid profiles retain it. New fail-before/pass-after regression covers both cases.
+ codex-rs/tui/src/chatwidget/session_model_selection.rs	follow-up	--	compile-pass	S4b tui chatwidget/bottom_pane	3	sync-compile5 (maintainer)	no	open	ported	0	0	false	false	false	false	compile pass: upstream's `AstraModelPickerAction::{UpdateModel, ApplyModelSelection}` are not sent since main's provider-tabbed picker sends provider-aware events (S4b decision on chatwidget/model_popups.rs); kept with `expect(dead_code)` for the follow-up that reconciles the Astra picker actions.
+ codex-rs/tui/src/bottom_pane/async_questions/input.rs	follow-up	--	compile-pass	S4b tui chatwidget/bottom_pane	3	sync-compile5 (maintainer)	no	resolved	ported	0	0	true	false	false	true	compile pass (#1631 follow-up to #2249): main's #787 rule carried to upstream's async question panel: after keys were dropped as a question appeared, nothing but navigation (arrow/Page/Home/End or non-character list keys) arms it; Enter, a number key, skip, typing and paste answer or edit nothing; interrupt, question navigation and collapse still act; the footer says to navigate first. `last_input_dropped` reports only the key the pane dropped (goal pause, chatwidget/questions.rs). Tests: bottom_pane/tests/issue_787_async.rs (four #2249 tests updated, one new). Main's #787/#817 question tests now match upstream's thread-scoped answer (`SubmitThreadOp { UserInputAnswer }`, which needs a parseable thread id); 11 bottom-pane snapshots re-accepted after reading each diff: composer placeholder "Ask Corbanu Terminal to do anything" (Corbanu branding, BottomPane default), one more blank row under an approval's command (upstream layout), the #624 notice still first above upstream's picker header and compact hint. bottom_pane + #787/#817/#624 tests: 84/84 pass.
++codex-rs/tui/src/bottom_pane/async_questions/burst_enter.rs	follow-up	--	compile-pass	S4b tui chatwidget/bottom_pane	3	astra-syncfu (maintainer)	no	resolved	ported	0	0	true	false	false	false	#2433 / D642(c): question-bound delayed key events resolve a quiet held Enter only through ChatWidget::handle_question_key. Redraws never create submissions. Navigation, collapse, resolve, draft restore, and modal/warnings entry cancel the token. Immediate raw/bracketed continuation retains the newline. ChatWidget regressions cover exact question identity, single delivery, stale event replay, modal close before delivery, and restricted input.
++codex-rs/tui/src/bottom_pane/chat_composer/burst_submission.rs	follow-up	--	compile-pass	S4b tui chatwidget/bottom_pane	3	astra-syncfu (maintainer)	no	resolved	ported	0	0	true	false	false	false	#2433: materialize a due held Enter without dispatch so the async question editor can use its ordinary key path; remove its obsolete lookahead opt-out. Main-composer behavior remains D642.
++codex-rs/tui/src/app/event_dispatch.rs	follow-up	--	compile-pass	S4a tui app/lib/onboarding/status	3	astra-syncfu (maintainer)	no	resolved	ported	0	0	true	false	false	false	#2433: route AsyncQuestionBurstEnter to the displayed ChatWidget; a globally unique pending token prevents a different or restored editor from accepting the event. AppEvent carries no answer payload. App input/event boundaries cancel question holds while overlays, disconnects, external writers, unavailable threads, or other pane focus own input; global non-paste shortcuts cancel before interception. Regression covers overlay/disconnect return before timer delivery.
+ codex-rs/app-server/src/request_processors/turn_processor.rs	follow-up	--	compile-pass	S4c app-server	3	sync-compile3 (maintainer)	no	resolved	ported	0	0	false	false	false	true	compile pass: main's #2177 confirmed thread/settings/update moved onto upstream's API: upstream removed Submission/submit_with_id, so the request now sends Op::ThreadSettings with a reply channel via submit_with_trace; Core's accept/reject reply is forwarded to the pending confirmation (settings_confirmation::forward_core_settings_result), which keeps its connection/listener-generation lifecycle and 10 s deadline (lost reply = Uncertain). The confirmation no longer waits for the ThreadSettingsApplied notification to pass the listener; Core replies before emitting it. Test-module imports for main's spawn-pane test; bespoke_event_handling's event-based finish (ThreadSettingsApplied/Error keyed by submission id) removed, since no confirmation is keyed by a Core submission id any more; unit test core_settings_reply_is_forwarded_to_its_confirmation
+ codex-rs/app-server/src/settings_confirmation.rs	follow-up	--	compile-pass	S4c app-server	3	sync-compile3 (maintainer)	no	resolved	ported	0	0	false	false	false	true	compile pass: forward_core_settings_result (see turn_processor.rs row)
+ codex-rs/app-server/src/request_processors/thread_processor.rs	follow-up	--	compile-pass	S4c app-server	3	sync-compile3 (maintainer)	no	resolved	ported	0	0	false	false	false	false	compile pass: main's thread_spawn_agent takes upstream's ClientMcpExtensions instead of the removed supports_openai_form_elicitation flag; main's CODEX_TUI_CLIENT_NAME constant restored (upstream dropped it; main's eager TUI materialization uses it); persisted reasoning_effort cloned (no longer Copy)
+diff --git a/qa/release/unreleased/notes/2433-async-question-paste.md b/qa/release/unreleased/notes/2433-async-question-paste.md
+new file mode 100644
+index 0000000000..2907fce2aa
+--- /dev/null
++++ b/qa/release/unreleased/notes/2433-async-question-paste.md
+@@ -0,0 +1,3 @@
++## Async questions
++
++Pasting multiple lines into an asynchronous question keeps them in one answer. A fast single-line answer still sends after the short paste check. Switching questions, closing the panel, or opening a modal cancels the pending Enter and retains the draft.

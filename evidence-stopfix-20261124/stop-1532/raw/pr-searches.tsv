@@ -1,0 +1,40 @@
+## search: NotSubmitted
+2271	MERGED	2026-11-15T07:49:03Z	2026-11-15T08:46:42Z	IridiumMaster	Upstream sync compile pass 2b: more core test ports; first PF-83 steering tests on upstream's turn-input API
+2444	MERGED	2026-11-16T20:11:17Z	2026-11-16T20:44:00Z	IridiumMaster	test(core, sync): align two stale upstream expectations with decided Corbanu contracts (sync-core5)
+2298	MERGED	2026-11-15T11:06:59Z	2026-11-15T12:58:57Z	IridiumMaster	Sync compile 4e: port main's PF-83 steering-authority tests and PF-13's user-turn MCP check
+2382	MERGED	2026-11-16T04:27:19Z	2026-11-16T06:43:53Z	IridiumMaster	Sync compile 17: kill switch idle refusal + mail with the next turn (#507/#445), resumed child without its parent, stable spawn_agent effort (#1532)
+## search: "not kept"
+2860	MERGED	2026-11-20T10:13:31Z	2026-11-20T11:59:33Z	IridiumMaster	sync: count a Linux sandbox startup failure only from a "bwrap: " line; MXC docs (port of #2859, #2797)
+1026	MERGED	2026-10-20T03:36:10Z	2026-10-20T07:42:46Z	IridiumMaster	core: permission grants end at a security transition (#1001 D51)
+456	MERGED	2026-10-11T10:17:11Z	2026-10-11T11:57:10Z	IridiumMaster	#445: with the kill switch on, model turns are refused, not sent
+1256	CLOSED	2026-10-21T19:27:31Z	null	bradsbots	docs: Windows installs natively, not via WSL2 (#1253)
+637	MERGED	2026-10-13T05:17:22Z	2026-10-13T07:15:45Z	IridiumMaster	Aggressive: no Grant once where it cannot apply (python home listing, ~/.zshrc); sandbox denials reach the inspector (#620, #621, #622)
+## search: queued agent message
+2840	MERGED	2026-11-20T07:10:09Z	2026-11-20T08:51:59Z	IridiumMaster	sync(D742): report idle before agent-mail wake discovery, as upstream
+2033	MERGED	2026-11-10T03:26:28Z	2026-11-10T05:37:17Z	0xzoz	fix: preserve mailbox messages during turn shutdown
+2452	MERGED	2026-11-16T22:33:52Z	2026-11-17T00:03:11Z	IridiumMaster	fix(sync): preserve pending agent mail and cancel reserved wakes (D659–D664)
+1458	MERGED	2026-10-28T08:56:28Z	2026-10-28T09:59:26Z	IridiumMaster	test(core): answer the worker request that ends with the grandchild's final answer (#1448)
+2065	MERGED	2026-11-10T08:15:49Z	2026-11-10T08:31:09Z	IridiumMaster	Upstream sync S2c part 4: agent control + durable mailbox on LocalAgentControl
+2445	MERGED	2026-11-16T20:14:43Z	2026-11-16T20:43:55Z	IridiumMaster	test(core, sync): align reload/role/mail fixtures with main's contracts; bound two hangs (sync-mail)
+1927	MERGED	2026-11-09T08:52:19Z	2026-11-09T10:14:16Z	IridiumMaster	interrupt_agent: a pending agent gets the interrupt, not the turn-starting notice (D435)
+1362	MERGED	2026-10-22T18:57:58Z	2026-10-28T07:44:45Z	citadelculture	fix(core): surface held mailbox account warnings to parents
+2458	MERGED	2026-11-17T01:09:35Z	2026-11-17T02:10:24Z	IridiumMaster	fix(sync): preserve queued agent mail through refused turns
+1492	MERGED	2026-10-28T17:06:34Z	2026-10-29T05:52:02Z	bradsbots	core: leave a lost Submitting write to its owner (#1452)
+1359	MERGED	2026-10-22T17:04:55Z	2026-10-26T19:19:05Z	citadelculture	docs(core): clarify pending input after turn refusal
+1051	MERGED	2026-10-20T06:27:24Z	2026-10-20T07:27:51Z	IridiumMaster	core: fix flaky agent reload test racing the child's initial turn (postmerge 468cf46337)
+1180	MERGED	2026-10-21T04:22:32Z	2026-10-21T05:22:08Z	IridiumMaster	core tests: wait for the spawned child's task before addressing it directly (fix postmerge-ci red)
+2368	MERGED	2026-11-16T01:46:07Z	2026-11-16T02:21:14Z	IridiumMaster	Upstream sync compile pass: core/tests security-group expectations, base-instruction placement, 6 snapshots (#2296)
+1361	MERGED	2026-10-22T18:24:58Z	2026-10-28T07:44:41Z	citadelculture	fix(core): skip turn preparation for busy mailbox wakes
+2083	MERGED	2026-11-10T10:38:52Z	2026-11-10T11:41:57Z	IridiumMaster	#2046: a stopping turn takes no input or mail from a newer turn
+2622	MERGED	2026-11-18T12:05:25Z	2026-11-18T12:51:00Z	IridiumMaster	sync: OnRequest-only escalation, MXC start-up notice, project-role EMA trust, auto-review approval history (D618, D522, D525, D617, #2562)
+657	MERGED	2026-10-13T09:33:02Z	2026-10-13T11:10:43Z	IridiumMaster	Kill switch follow-ups from the #602 review (#613)
+527	MERGED	2026-10-11T21:38:18Z	2026-10-11T22:28:22Z	IridiumMaster	tui: a number key only highlights an MCP approval option (#192)
+1375	MERGED	2026-10-23T02:02:34Z	2026-10-28T01:29:07Z	bradsbots	core: no Submitted after a turn applied the mail (#1058)
+2367	MERGED	2026-11-16T01:42:00Z	2026-11-16T02:05:55Z	IridiumMaster	Sync compile 14: codex-tui server-default, panic-hook and single-cause rows; tests/all.rs; isolated escape-route test (#2312)
+2064	MERGED	2026-11-10T08:12:48Z	2026-11-10T08:46:57Z	IridiumMaster	Upstream sync S2a part 4 (security): fenced session grants (D520 a), #945 approvals, request_permissions, input-queue mailbox admission (D485/#1999/#2033)
+138	MERGED	2026-09-28T22:18:25Z	2026-10-04T12:47:29Z	IridiumMaster	Accounting: local cost ledger and /cost inspector (integration branch)
+59	MERGED	2026-07-22T03:02:45Z	2026-07-22T20:30:51Z	goodalexander	Telegram connector: main merge + reliability hardening (builds on #37)
+## search: detached-child refusal
+2393	MERGED	2026-11-16T08:00:38Z	2026-11-16T09:21:20Z	IridiumMaster	Sync: apply provider and agent lifecycle owner decisions (#2312, #2277)
+2622	MERGED	2026-11-18T12:05:25Z	2026-11-18T12:51:00Z	IridiumMaster	sync: OnRequest-only escalation, MXC start-up notice, project-role EMA trust, auto-review approval history (D618, D522, D525, D617, #2562)
+2009	MERGED	2026-11-10T00:28:45Z	2026-11-10T06:29:05Z	IridiumMaster	#2000: "Set up default sandbox" applies to the running session (one-way, server-decided) — needs security sign-off

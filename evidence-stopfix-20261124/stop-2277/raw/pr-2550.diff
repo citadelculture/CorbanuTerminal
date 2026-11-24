@@ -1,0 +1,92 @@
+diff --git a/codex-rs/exec-server-cli/src/snapshots/codex_exec_server_cli__command__tests__standalone_help_documents_executor_options.snap b/codex-rs/exec-server-cli/src/snapshots/codex_exec_server_cli__command__tests__standalone_help_documents_executor_options.snap
+index ca16be8532..5e3344acb7 100644
+--- a/codex-rs/exec-server-cli/src/snapshots/codex_exec_server_cli__command__tests__standalone_help_documents_executor_options.snap
++++ b/codex-rs/exec-server-cli/src/snapshots/codex_exec_server_cli__command__tests__standalone_help_documents_executor_options.snap
+@@ -14,9 +14,9 @@ Commands:
+ Options:
+   -c, --config <key=value>
+           Override a configuration value that would otherwise be loaded from
+-          `~/.codex/config.toml`. Use a dotted path (`foo.bar.baz`) to override
+-          nested values. The `value` portion is parsed as TOML. If it fails to
+-          parse as TOML, the raw string is used as a literal.
++          `~/.corbanu/config.toml`. Use a dotted path (`foo.bar.baz`) to
++          override nested values. The `value` portion is parsed as TOML. If it
++          fails to parse as TOML, the raw string is used as a literal.
+ 
+           Examples: - `-c model="o3"` - `-c
+           'sandbox_permissions=["disk-full-read-access"]'` - `-c
+diff --git a/codex-rs/exec-server-cli/tests/standalone.rs b/codex-rs/exec-server-cli/tests/standalone.rs
+index 22ed228264..b6bd55c376 100644
+--- a/codex-rs/exec-server-cli/tests/standalone.rs
++++ b/codex-rs/exec-server-cli/tests/standalone.rs
+@@ -17,6 +17,7 @@ use codex_utils_process::background_command;
+ use pretty_assertions::assert_eq;
+ use serde_json::Value;
+ use serde_json::json;
++use std::path::Path;
+ use std::process::Stdio;
+ use tokio::io::AsyncBufReadExt;
+ use tokio::io::AsyncWriteExt;
+@@ -24,11 +25,32 @@ use tokio::io::BufReader;
+ 
+ #[tokio::test]
+ async fn standalone_initializes_reports_version_and_runs_helpers() -> anyhow::Result<()> {
++    let source_binary = cargo_bin("codex-exec-server")?;
++    // Runtime release metadata comes from the package manifest, not Cargo.toml.
++    let package = tempfile::tempdir()?;
++    let bin_dir = package.path().join("bin");
++    std::fs::create_dir(&bin_dir)?;
++    let binary = bin_dir.join(source_binary.file_name().context("executor filename")?);
++    std::fs::copy(source_binary, &binary)?;
++    std::fs::write(
++        package.path().join("codex-package.json"),
++        json!({"version": env!("CARGO_PKG_VERSION")}).to_string(),
++    )?;
++
++    assert_standalone(&binary, env!("CARGO_PKG_VERSION")).await
++}
++
++#[tokio::test]
++async fn source_standalone_reports_source_version_and_runs_helpers() -> anyhow::Result<()> {
+     let binary = cargo_bin("codex-exec-server")?;
++    assert_standalone(&binary, "0.0.0").await
++}
++
++async fn assert_standalone(binary: &Path, expected_executor_version: &str) -> anyhow::Result<()> {
+     let directory = tempfile::tempdir()?;
+     let cwd = url::Url::from_directory_path(directory.path())
+         .map_err(|()| anyhow::anyhow!("file URI"))?;
+-    let version = tokio::process::Command::from(background_command(&binary))
++    let version = tokio::process::Command::from(background_command(binary))
+         .arg("--version")
+         .env("CODEX_HOME", directory.path())
+         .output()
+@@ -71,7 +93,7 @@ async fn standalone_initializes_reports_version_and_runs_helpers() -> anyhow::Re
+         sandboxes
+     };
+     for sandbox in sandboxes {
+-        let mut child = tokio::process::Command::from(background_command(&binary))
++        let mut child = tokio::process::Command::from(background_command(binary))
+             .args(["--listen", "stdio"])
+             .current_dir(directory.path())
+             .env("CODEX_HOME", directory.path())
+@@ -90,7 +112,7 @@ async fn standalone_initializes_reports_version_and_runs_helpers() -> anyhow::Re
+         assert_eq!(response["id"], 1);
+         assert!(response["result"]["sessionId"].is_string(), "{response}");
+         let environment = response["result"]["environmentInfo"].clone();
+-        assert_eq!(environment["executorVersion"], env!("CARGO_PKG_VERSION"));
++        assert_eq!(environment["executorVersion"], expected_executor_version);
+         let initialized = json!({"method": "initialized", "params": {}});
+         let info = json!({"id": 2, "method": "environment/info", "params": {}});
+         stdin
+@@ -102,8 +124,9 @@ async fn standalone_initializes_reports_version_and_runs_helpers() -> anyhow::Re
+ 
+         let file = directory.path().join("readable.txt");
+         std::fs::write(&file, "ok")?;
++        let file_url = url::Url::from_file_path(&file).map_err(|()| anyhow::anyhow!("file URI"))?;
+         let read = json!({"id": 3, "method": "fs/readFile", "params": {
+-            "path": url::Url::from_file_path(&file).unwrap(), "sandbox": sandbox,
++            "path": file_url, "sandbox": sandbox,
+         }});
+         stdin.write_all(format!("{read}\n").as_bytes()).await?;
+         let response: Value =
