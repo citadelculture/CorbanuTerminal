@@ -1,0 +1,4 @@
+pr https://github.com/CorbanuCore/CorbanuTerminal/pull/2916 open head 8112c24f1169b323c6a940d0c7541d94e4c06ce0 base main
+commit 8112c24f1169b323c6a940d0c7541d94e4c06ce0 author citadelculture
+dco ['Signed-off-by: citadelculture <citadelculture@gmail.com>']
+files ['codex-rs/tui/src/app/input.rs', 'codex-rs/tui/src/app/tests.rs', 'codex-rs/tui/src/app/tests/held_enter_shortcuts.rs', 'codex-rs/tui/src/bottom_pane/chat_composer/burst_submission.rs', 'codex-rs/tui/src/bottom_pane/mod.rs', 'codex-rs/tui/src/chatwidget/interaction.rs']

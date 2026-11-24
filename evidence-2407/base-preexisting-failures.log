@@ -1,0 +1,11 @@
+$ cargo test -p codex-tui --lib chatwidget::tests::status_and_layout::rolling_rate_limit_snapshot_preserves_prior_individual_limit -- --exact  (base)
+test chatwidget::tests::status_and_layout::rolling_rate_limit_snapshot_preserves_prior_individual_limit ... FAILED
+thread 'chatwidget::tests::status_and_layout::rolling_rate_limit_snapshot_preserves_prior_individual_limit' (1232301) panicked at tui/src/chatwidget/tests/status_and_layout.rs:862:5:
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4804 filtered out; finished in 0.15s
+$ cargo test -p codex-tui --lib security::current::tests::sec_437_thread_settings_keep_the_aggressive_rows -- --exact  (base)
+test security::current::tests::sec_437_thread_settings_keep_the_aggressive_rows ... ok
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4804 filtered out; finished in 0.03s
+$ cargo test -p codex-tui --lib status::tests::status_snapshot_includes_enterprise_monthly_credit_limit -- --exact  (base)
+test status::tests::status_snapshot_includes_enterprise_monthly_credit_limit ... FAILED
+thread 'status::tests::status_snapshot_includes_enterprise_monthly_credit_limit' (1232402) panicked at /Users/dom/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/insta-1.48.0/src/runtime.rs:719:13:
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4804 filtered out; finished in 0.12s

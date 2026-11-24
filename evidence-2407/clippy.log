@@ -1,0 +1,476 @@
+$ cargo clippy -p codex-tui --tests --locked -- -D warnings
+    Checking zeroize v1.8.2
+    Checking mio v1.2.0
+    Checking socket2 v0.6.5
+   Compiling sha2-asm v0.6.4
+    Checking serde_json v1.0.149
+    Checking zerocopy v0.8.37
+    Checking ipnet v2.11.0
+    Checking form_urlencoded v1.2.3
+    Checking rustix v1.1.6
+    Checking cookie v0.18.3
+    Checking url v2.5.9
+    Checking generic-array v0.14.7
+    Checking rustls-pki-types v1.14.0
+    Checking aws-lc-rs v1.18.1
+    Checking tokio v1.53.3
+    Checking serde_urlencoded v0.7.1
+    Checking rustls-native-certs v0.8.3
+    Checking webpki-roots v1.0.10
+    Checking prefix-trie v0.8.4
+    Checking arrayvec v0.7.6
+    Checking crypto-common v0.1.7
+    Checking block-buffer v0.10.4
+    Checking serde_html_form v0.3.2
+    Checking zune-core v0.4.12
+    Checking digest v0.10.7
+    Checking cookie_store v0.22.1
+    Checking schemars v0.8.22
+    Checking sha1 v0.10.6
+    Checking hmac v0.12.1
+    Checking ts-rs v11.1.0
+    Checking tracing-subscriber v0.3.22
+    Checking sha2 v0.10.9
+    Checking tempfile v3.27.0
+    Checking terminal_size v0.4.3
+    Checking hickory-proto v0.26.3
+    Checking rustls-webpki v0.103.16
+    Checking clap_builder v4.5.58
+    Checking blake3 v1.8.2
+    Checking x509-parser v0.18.1
+    Checking native-tls v0.2.14
+    Checking zune-jpeg v0.4.21
+    Checking codex-utils-absolute-path v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/absolute-path)
+    Checking pagable v0.4.1
+    Checking rustls v0.23.46
+    Checking codex-utils-home-dir v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/home-dir)
+    Checking codex-security-policy v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/security-policy)
+    Checking fax v0.2.6
+   Compiling curve25519-dalek v4.1.3
+    Checking codex-process-hardening v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/process-hardening)
+    Checking rcgen v0.14.7
+    Checking tracing-opentelemetry v0.34.0
+    Checking starlark_map v0.14.2
+    Checking clap v4.5.58
+    Checking lsp-types v0.97.0
+    Checking fd-lock v4.0.4
+    Checking debugserver-types v0.5.0
+    Checking codex-extension-items v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/items)
+    Checking rustyline v14.0.0
+    Checking ppv-lite86 v0.2.21
+    Checking ahash v0.8.12
+    Checking half v2.7.1
+    Checking rand_chacha v0.9.0
+    Checking codex-utils-path-uri v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/path-uri)
+    Checking codex-utils-string v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/string)
+    Checking rand v0.9.3
+    Checking sha1-checked v0.10.0
+    Checking tiff v0.10.3
+    Checking codex-security-audit v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/security-audit)
+    Checking inout v0.1.4
+    Checking headers v0.4.1
+    Checking cipher v0.4.4
+    Checking gix-hash v0.23.0
+    Checking universal-hash v0.5.1
+    Checking gix-tempfile v21.0.2
+    Checking rand_chacha v0.3.1
+    Checking gix-hashtable v0.13.0
+    Checking tokio-util v0.7.18
+    Checking rama-utils v0.3.0-alpha.4
+    Checking tokio-graceful v0.2.2
+    Checking tokio-native-tls v0.3.1
+    Checking hickory-net v0.26.3
+    Checking image v0.25.9
+    Checking codex-secret-broker v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/secret-broker)
+    Checking codex-utils-cache v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/cache)
+    Checking gix-object v0.58.0
+    Checking rand v0.8.6
+    Checking gix-lock v21.0.2
+    Checking h2 v0.4.16
+    Checking tower v0.5.3
+    Checking tokio-rustls v0.26.4
+    Checking tokio-stream v0.1.19
+    Checking rama-core v0.3.0-alpha.4
+    Checking hickory-resolver v0.26.3
+    Checking codex-utils-rustls-provider v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/rustls-provider)
+    Checking codex-async-utils v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/async-utils)
+    Checking tungstenite v0.27.0 (https://github.com/openai-oss-forks/tungstenite-rs?rev=4fffad30fe373adbdcffab9545e9e9bf4f2fc19f#4fffad30)
+    Checking aead v0.5.2
+    Checking tokio-test v0.4.5
+    Checking gix-commitgraph v0.35.0
+    Checking der v0.7.10
+    Checking gix-revwalk v0.29.0
+    Checking tower-http v0.6.8
+    Checking gix-ref v0.61.0
+    Checking codex-utils-image v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/image)
+    Checking tokio-tungstenite v0.28.0 (https://github.com/openai-oss-forks/tokio-tungstenite?rev=0e5b2d73aa18dd9f0a50ee9ff199d5aef7594186#0e5b2d73)
+    Checking opentelemetry_sdk v0.33.1
+    Checking gix-pack v0.68.0
+    Checking gix-revision v0.43.0
+    Checking gix-shallow v0.10.0
+    Checking spki v0.7.3
+    Checking gix-refspec v0.39.0
+    Checking gix-traverse v0.55.0
+    Checking pkcs8 v0.10.2
+    Checking gix-discover v0.49.0
+    Checking gix-protocol v0.59.0
+    Checking gix-config v0.54.0
+    Checking gix-diff v0.61.0
+    Checking gix-odb v0.78.0
+    Checking opentelemetry-appender-tracing v0.33.1
+    Checking codex-log-guard v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/log-guard)
+    Checking gethostname v1.1.0
+    Checking poly1305 v0.8.0
+    Checking signature v2.2.0
+    Checking x25519-dalek v2.0.1
+    Checking rama-http-types v0.3.0-alpha.4
+    Checking salsa20 v0.10.2
+    Checking chacha20 v0.9.1
+    Checking ed25519 v2.2.3
+    Checking aws-smithy-async v1.2.14
+    Checking codex-utils-path v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/path-utils)
+    Checking chacha20poly1305 v0.10.1
+    Checking rust-embed-utils v8.11.0
+    Checking codex-keyring-store v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/keyring-store)
+    Checking ed25519-dalek v2.2.0
+    Checking rust-embed v8.11.0
+    Checking aws-smithy-runtime-api v1.12.0
+    Checking hkdf v0.12.4
+    Checking pbkdf2 v0.12.2
+    Checking secrecy v0.10.3
+    Checking gix v0.81.0
+    Checking codex-product-brand v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/product-brand)
+    Checking i18n-embed v0.15.4
+    Checking scrypt v0.11.0
+    Checking age-core v0.11.0
+    Checking dns-lookup v3.0.1
+    Checking which v8.0.0
+    Checking blake2 v0.10.6
+    Checking objc2-core-graphics v0.3.2
+    Checking hyper v1.8.1
+    Checking crypto_secretbox v0.1.1
+    Checking age v0.11.2
+    Checking jsonwebtoken v9.3.1
+    Checking crypto_box v0.9.1
+    Checking aws-credential-types v1.2.11
+    Checking aws-smithy-http v0.62.6
+    Checking objc2-app-kit v0.3.2
+    Checking aws-smithy-observability v0.1.5
+    Checking polyval v0.6.2
+   Compiling codex-windows-sandbox v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/windows-sandbox-rs)
+    Checking codex-utils-template v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/template)
+    Checking ghash v0.5.1
+    Checking sha3 v0.10.9
+    Checking sentry-types v0.46.1
+    Checking aws-sigv4 v1.3.7
+    Checking aws-types v1.3.11
+    Checking rama-net v0.3.0-alpha.4
+    Checking codex-utils-pty v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/pty)
+    Checking tungstenite v0.29.0
+    Checking aes v0.8.4
+    Checking hyper-util v0.1.20
+    Checking ctr v0.9.2
+    Checking webbrowser v1.2.2
+    Checking tracing-appender v0.2.4
+    Checking kem v0.3.0-pre.0
+    Checking codex-terminal-detection v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/terminal-detection)
+    Checking sec1 v0.7.3
+    Checking ml-kem v0.2.3
+    Checking aes-gcm v0.10.3
+    Checking tokio-tungstenite v0.29.0
+    Checking crypto-bigint v0.5.5
+    Checking rfc6979 v0.4.0
+    Checking schemars v1.2.1
+    Checking process-wrap v10.0.1
+    Checking codex-collaboration-mode-templates v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/collaboration-mode-templates)
+    Checking sqlx-core v0.9.0
+    Checking codex-install-context v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/install-context)
+    Checking clatter v2.2.0
+    Checking hyper-rustls v0.27.7
+    Checking hyper-tls v0.6.0
+    Checking starlark_syntax v0.14.2
+    Checking hyper-timeout v0.5.2
+    Checking elliptic-curve v0.13.8
+    Checking axum v0.8.9
+    Checking reqwest v0.12.28
+    Checking tonic v0.14.3
+    Checking aws-smithy-http-client v1.1.12
+    Checking sentry-core v0.46.1
+    Checking aws-smithy-runtime v1.9.5
+    Checking sentry-backtrace v0.46.1
+    Checking ecdsa v0.16.9
+    Checking codex-http-client v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/http-client)
+    Checking tonic-prost v0.14.3
+    Checking tonic-types v0.14.5
+    Checking primeorder v0.13.6
+    Checking starlark v0.14.2
+    Checking opentelemetry-proto v0.33.1
+    Checking p256 v0.13.2
+    Checking sentry-panic v0.46.1
+    Checking sentry-contexts v0.46.1
+    Checking sentry-debug-images v0.46.1
+    Checking oauth2 v5.0.0
+    Checking rama-http-headers v0.3.0-alpha.4
+    Checking rama-dns v0.3.0-alpha.4 (/Users/dom/pft-work/wt_2407/third_party/rama-dns)
+    Checking rama-unix v0.3.0-alpha.4
+    Checking rama-udp v0.3.0-alpha.4
+    Checking rama-tls-rustls v0.3.0-alpha.4
+    Checking codex-websocket-client v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/websocket-client)
+    Checking codex-client v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/codex-client)
+    Checking sentry v0.46.1
+    Checking aws-runtime v1.5.17
+    Checking reqwest v0.13.4
+    Checking sqlx-sqlite v0.9.0
+    Checking five8_core v1.0.0
+   Compiling codex-experimental-api-macros v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/codex-experimental-api-macros)
+    Checking solana-sanitize v3.0.1
+   Compiling codex-app-server-protocol-noop-macros v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/app-server-protocol-noop-macros)
+    Checking opentelemetry-otlp v0.33.1
+    Checking rmcp v3.9.0
+    Checking five8 v1.0.0
+    Checking aws-sdk-signin v1.2.0
+    Checking aws-sdk-sts v1.95.0
+    Checking rama-http v0.3.0-alpha.4
+    Checking aws-sdk-sso v1.91.0
+    Checking aws-sdk-ssooidc v1.93.0
+   Compiling codex-skills v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/skills)
+    Checking solana-program-error v3.0.1
+    Checking solana-hash v4.5.0
+    Checking solana-sha256-hasher v3.1.0
+    Checking five8_const v1.0.0
+    Checking sha2-const-stable v0.1.0
+    Checking solana-atomic-u64 v3.0.1
+    Checking codex-file-search v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/file-search)
+    Checking solana-address v2.6.1
+    Checking rama-tcp v0.3.0-alpha.4
+    Checking cached v0.56.0
+    Checking codex-security-level v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/security-level)
+    Checking codex-content-security v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/content-security)
+    Checking bm25 v2.3.2
+    Checking codex-utils-stream-parser v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/stream-parser)
+    Checking solana-sdk-ids v3.1.0
+    Checking solana-pubkey v4.2.0
+    Checking solana-instruction-error v2.4.0
+    Checking codex-backend-openapi-models v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/codex-backend-openapi-models)
+    Checking solana-sysvar-id v3.1.0
+    Checking solana-get-sysvar v1.0.0
+    Checking aws-config v1.8.12
+    Checking unicode-width v0.2.1
+   Compiling codex-linux-sandbox v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/linux-sandbox)
+    Checking solana-instruction v3.4.0
+    Checking rama-socks5 v0.3.0-alpha.4
+    Checking codex-uds v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/uds)
+    Checking castaway v0.2.4
+    Checking bincode v1.3.3
+    Checking compact_str v0.9.1
+    Checking unicode-truncate v2.0.1
+    Checking strum v0.28.0
+    Checking kasuari v0.4.12
+    Checking solana-program-memory v3.1.0
+    Checking deadpool v0.12.3
+    Checking solana-account-info v3.1.1
+   Compiling object v0.39.1
+    Checking ratatui-core v0.1.2
+    Checking solana-transaction-error v3.3.1
+    Checking assert-json-diff v2.0.2
+   Compiling convert_case v0.10.0
+    Checking serde-big-array v0.5.1
+   Compiling instability v0.3.11
+   Compiling derive_more-impl v2.1.1
+    Checking solana-signature v3.4.1
+    Checking wiremock v0.6.5
+    Checking bv v0.11.1
+    Checking signal-hook v0.3.18
+    Checking solana-address v1.1.0
+    Checking codex-utils-json-to-toml v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/json-to-toml)
+   Compiling num_enum_derive v0.7.6
+   Compiling onig_sys v69.9.1
+    Checking solana-define-syscall v4.0.1
+    Checking codex-aws-auth v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/aws-auth)
+    Checking solana-program-entrypoint v3.1.1
+    Checking solana-slot-history v3.1.0
+    Checking solana-pubkey v3.0.0
+    Checking signal-hook-mio v0.2.5
+    Checking derive_more v2.1.1
+    Checking solana-signer v3.0.1
+    Checking solana-epoch-schedule v3.2.0
+    Checking solana-rent v3.1.0
+    Checking num_enum v0.7.6
+    Checking solana-last-restart-slot v3.1.0
+    Checking solana-clock v3.1.1
+    Checking solana-epoch-rewards v3.1.0
+    Checking solana-slot-hashes v3.1.0
+    Checking solana-program-pack v3.1.0
+    Checking codex-file-watcher v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/file-watcher)
+    Checking pbkdf2 v0.11.0
+   Compiling ar_archive_writer v0.5.3
+    Checking solana-fee-calculator v3.2.2
+    Checking line-clipping v0.3.7
+    Checking solana-short-vec v3.2.2
+    Checking rama-http-core v0.3.0-alpha.4
+    Checking solana-program-option v3.1.0
+    Checking ratatui-widgets v0.3.2
+    Checking solana-message v3.1.0
+    Checking spl-token-interface v2.0.0
+    Checking solana-sysvar v3.1.1
+   Compiling sqlx-macros-core v0.9.0
+    Checking solana-seed-phrase v3.0.0
+   Compiling psm v0.1.31
+    Checking crossterm v0.29.0 (https://github.com/openai-oss-forks/crossterm?rev=f69a4a0499f2fdc7d5d222df32373ffffe9ba3f5#f69a4a04)
+    Checking solana-cpi v3.1.0
+    Checking password-hash v0.5.0
+   Compiling stacker v0.1.24
+    Checking quick-xml v0.39.4
+    Checking solana-msg v3.1.0
+    Checking linked-hash-map v0.5.6
+    Checking spl-token v9.0.0
+    Checking yaml-rust v0.4.5
+    Checking plist v1.9.0
+    Checking argon2 v0.5.3
+    Checking ratatui-crossterm v0.1.2
+    Checking codex-execpolicy v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/execpolicy)
+    Checking solana-keypair v3.1.2
+    Checking erasable v1.3.0
+    Checking solana-transaction v3.1.0
+    Checking solana-compute-budget-interface v3.0.0
+    Checking tracing-error v0.2.1
+    Checking bs58 v0.5.1
+    Checking simdutf8 v0.1.5
+    Checking color-spantrace v0.3.0
+    Checking rc-box v1.3.0
+    Checking codex-wallet v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/wallet)
+    Checking ansi-to-tui v8.0.1
+    Checking ratatui v0.30.2
+    Checking eyre v0.6.12
+   Compiling include_dir v0.7.4
+   Compiling itertools v0.10.5
+    Checking diffy v0.4.2
+    Checking rgb v0.8.53
+    Checking colored v3.1.1
+    Checking smawk v0.3.2
+    Checking takecell v0.1.1
+    Checking unicode-linebreak v0.1.5
+    Checking dptree v0.5.1
+    Checking teloxide-core v0.13.0
+    Checking textwrap v0.16.2
+    Checking predicates v3.1.3
+    Checking color-eyre v0.6.5
+    Checking codex-ansi-escape v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ansi-escape)
+    Checking codex-wallet-daemon v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/wallet-daemon)
+    Checking ratatui-macros v0.7.2
+    Checking arboard v3.6.1
+    Checking codex-utils-sleep-inhibitor v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/sleep-inhibitor)
+    Checking pathdiff v0.2.3
+    Checking codex-utils-elapsed v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/elapsed)
+    Checking codex-utils-fuzzy-match v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/fuzzy-match)
+    Checking codex-utils-cargo-bin v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/cargo-bin)
+   Compiling aquamarine v0.6.0
+    Checking assert_cmd v2.2.2
+   Compiling codex-cli v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/cli)
+    Checking codex-stdio-to-uds v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/stdio-to-uds)
+    Checking codex-responses-api-proxy v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/responses-api-proxy)
+    Checking clap_complete v4.5.65
+    Checking vte v0.15.0
+    Checking insta v1.48.0
+    Checking vt100 v0.16.2
+    Checking rama-http-backend v0.3.0-alpha.4
+    Checking codex-network-proxy v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/network-proxy)
+    Checking onig v6.5.1
+    Checking syntect v5.3.0
+   Compiling sqlx-macros v0.9.0
+    Checking two-face v0.5.1
+    Checking sqlx v0.9.0
+    Checking codex-protocol v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/protocol)
+    Checking codex-browser-isolation v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/browser-isolation)
+    Checking teloxide v0.17.0
+    Checking codex-file-system v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/file-system)
+    Checking codex-api v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/codex-api)
+    Checking codex-shell-command v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/shell-command)
+    Checking codex-agent-identity v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/agent-identity)
+    Checking codex-utils-output-truncation v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/output-truncation)
+    Checking codex-state v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/state)
+    Checking codex-code-mode-protocol v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/code-mode-protocol)
+    Checking codex-context-fragments v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/context-fragments)
+    Checking codex-shell-escalation v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/shell-escalation)
+    Checking codex-utils-sandbox-summary v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/sandbox-summary)
+    Checking codex-utils-approval-presets v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/approval-presets)
+    Checking codex-git-utils v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/git-utils)
+    Checking codex-exec-server-protocol v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/exec-server-protocol)
+    Checking codex-app-server-protocol v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/app-server-protocol)
+    Checking codex-memories-read v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/memories/read)
+    Checking codex-utils-cli v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/cli)
+    Checking codex-secrets v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/secrets)
+    Checking codex-prompts v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/prompts)
+    Checking codex-code-mode v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/code-mode)
+    Checking codex-vault v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/vault)
+    Checking codex-rollout-trace v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/rollout-trace)
+    Checking codex-tasknode-session v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/tasknode-session)
+    Checking codex-otel v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/otel)
+    Checking codex-model-provider-info v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/model-provider-info)
+    Checking codex-response-debug-context v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/response-debug-context)
+    Checking codex-agent-graph-store v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/agent-graph-store)
+    Checking codex-gpu-market v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/gpu-market)
+    Checking codex-features v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/features)
+    Checking codex-rollout v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/rollout)
+    Checking codex-sandboxing v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/sandboxing)
+    Checking codex-config v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/config)
+    Checking codex-exec-server v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/exec-server)
+    Checking codex-utils-plugins v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/plugins)
+    Checking codex-apply-patch v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/apply-patch)
+    Checking codex-login v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/login)
+    Checking codex-rmcp-client v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/rmcp-client)
+    Checking codex-protected-state v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/protected-state)
+    Checking codex-message-history v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/message-history)
+    Checking codex-plugin v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/plugin)
+    Checking codex-hooks v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/hooks)
+    Checking codex-models-manager v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/models-manager)
+    Checking codex-feedback v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/feedback)
+    Checking codex-connectors v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/connectors)
+    Checking codex-arg0 v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/arg0)
+    Checking codex-provider-auth v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/provider-auth)
+    Checking codex-model-provider v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/model-provider)
+    Checking codex-tools v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/tools)
+    Checking codex-mcp v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/codex-mcp)
+    Checking codex-backend-client v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/backend-client)
+    Checking codex-cloud-tasks-client v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/cloud-tasks-client)
+    Checking codex-cloud-tasks-mock-client v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/cloud-tasks-mock-client)
+    Checking codex-extension-api v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/extension-api)
+    Checking codex-home v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/codex-home)
+    Checking codex-git-attribution v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/git-attribution)
+    Checking codex-analytics v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/analytics)
+    Checking codex-thread-store v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/thread-store)
+    Checking codex-core-skills v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/core-skills)
+    Checking codex-core-plugins v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/core-plugins)
+    Checking codex-skills-extension v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/skills)
+    Checking codex-core v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/core)
+    Checking codex-connectors-extension v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/connectors)
+    Checking codex-app-server-transport v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/app-server-transport)
+    Checking codex-memories-write v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/memories/write)
+    Checking codex-image-generation-extension v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/image-generation)
+    Checking codex-memories-extension v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/memories)
+    Checking codex-goal-extension v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/goal)
+    Checking codex-cloud-config v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/cloud-config)
+    Checking codex-guardian v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/guardian)
+    Checking codex-web-search-extension v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/web-search)
+    Checking codex-mcp-extension v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/mcp)
+    Checking codex-agent-extension v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/agent)
+    Checking codex-chatgpt v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/chatgpt)
+    Checking codex-lmstudio v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/lmstudio)
+    Checking codex-ollama v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ollama)
+    Checking codex-app-server-test-client v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/app-server-test-client)
+    Checking codex-mcp-server v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/mcp-server)
+    Checking core_test_support v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/core/tests/common)
+    Checking codex-utils-oss v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/oss)
+    Checking codex-external-agent-migration v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/external-agent-migration)
+    Checking app_test_support v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/app-server/tests/common)
+    Checking codex-app-server v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/app-server)
+    Checking codex-app-server-daemon v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/app-server-daemon)
+    Checking codex-app-server-client v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/app-server-client)
+    Checking codex-tui v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/tui)
+    Checking codex-telegram v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/telegram)
+    Checking codex-exec v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/exec)
+    Checking codex-cloud-tasks v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/cloud-tasks)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2m 39s
+warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+exit status: 0

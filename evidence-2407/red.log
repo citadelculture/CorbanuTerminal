@@ -1,0 +1,550 @@
+$ cargo test -p codex-tui --lib held_enter_shortcuts  (base app/input.rs, head tests)
+    Updating crates.io index
+ Downloading crates ...
+  Downloaded axum v0.8.9
+  Downloaded assert_cmd v2.2.2
+  Downloaded cookie v0.18.3
+  Downloaded form_urlencoded v1.2.3
+  Downloaded hickory-net v0.26.3
+  Downloaded hickory-resolver v0.26.3
+  Downloaded hickory-proto v0.26.3
+  Downloaded prefix-trie v0.8.4
+  Downloaded rustix v1.1.6
+  Downloaded sha2-asm v0.6.4
+  Downloaded tokio-tungstenite v0.29.0
+  Downloaded tungstenite v0.29.0
+  Downloaded url v2.5.9
+   Compiling zeroize v1.8.2
+   Compiling mio v1.2.0
+   Compiling socket2 v0.6.5
+   Compiling serde_json v1.0.149
+   Compiling sha2-asm v0.6.4
+   Compiling zerocopy v0.8.37
+   Compiling zerocopy-derive v0.8.37
+   Compiling form_urlencoded v1.2.3
+   Compiling ipnet v2.11.0
+   Compiling rustix v1.1.6
+   Compiling url v2.5.9
+   Compiling generic-array v0.14.7
+   Compiling tokio v1.53.3
+   Compiling rustls-pki-types v1.14.0
+   Compiling aws-lc-rs v1.18.1
+   Compiling crypto-common v0.1.7
+   Compiling block-buffer v0.10.4
+   Compiling rustls-native-certs v0.8.3
+   Compiling digest v0.10.7
+   Compiling webpki-roots v1.0.10
+   Compiling sha1 v0.10.6
+   Compiling hmac v0.12.1
+   Compiling cookie v0.18.3
+   Compiling serde_urlencoded v0.7.1
+   Compiling prefix-trie v0.8.4
+   Compiling arrayvec v0.7.6
+   Compiling blake3 v1.8.2
+   Compiling rustls-webpki v0.103.16
+   Compiling sha2 v0.10.9
+   Compiling hickory-proto v0.26.3
+   Compiling serde_html_form v0.3.2
+   Compiling fax_derive v0.2.0
+   Compiling rustls v0.23.46
+   Compiling schemars v0.8.22
+   Compiling ts-rs v11.1.0
+   Compiling tracing-subscriber v0.3.22
+   Compiling cookie_store v0.22.1
+   Compiling zune-core v0.4.12
+   Compiling tempfile v3.27.0
+   Compiling codex-utils-absolute-path v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/absolute-path)
+   Compiling terminal_size v0.4.3
+   Compiling clap_builder v4.5.58
+   Compiling native-tls v0.2.14
+   Compiling pagable v0.4.1
+   Compiling codex-utils-home-dir v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/home-dir)
+   Compiling zune-jpeg v0.4.21
+   Compiling codex-security-policy v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/security-policy)
+   Compiling fax v0.2.6
+   Compiling tokio-util v0.7.18
+   Compiling rama-utils v0.3.0-alpha.4
+   Compiling tokio-graceful v0.2.2
+   Compiling tokio-native-tls v0.3.1
+   Compiling ppv-lite86 v0.2.21
+   Compiling ahash v0.8.12
+   Compiling rand_chacha v0.9.0
+   Compiling tokio-rustls v0.26.4
+   Compiling clap v4.5.58
+   Compiling hickory-net v0.26.3
+   Compiling h2 v0.4.16
+   Compiling rand v0.9.3
+   Compiling tower v0.5.3
+   Compiling tokio-stream v0.1.19
+   Compiling rama-core v0.3.0-alpha.4
+   Compiling codex-utils-rustls-provider v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/rustls-provider)
+   Compiling half v2.7.1
+   Compiling tokio-test v0.4.5
+   Compiling x509-parser v0.18.1
+   Compiling curve25519-dalek v4.1.3
+   Compiling codex-process-hardening v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/process-hardening)
+   Compiling codex-security-audit v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/security-audit)
+   Compiling tiff v0.10.3
+   Compiling starlark_map v0.14.2
+   Compiling tower-http v0.6.8
+   Compiling hickory-resolver v0.26.3
+   Compiling tracing-opentelemetry v0.34.0
+   Compiling lsp-types v0.97.0
+   Compiling fd-lock v4.0.4
+   Compiling rustyline v14.0.0
+   Compiling codex-secret-broker v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/secret-broker)
+   Compiling rcgen v0.14.7
+   Compiling rama-http-types v0.3.0-alpha.4
+   Compiling image v0.25.9
+   Compiling debugserver-types v0.5.0
+   Compiling codex-utils-cache v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/cache)
+   Compiling codex-async-utils v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/async-utils)
+   Compiling codex-utils-path-uri v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/path-uri)
+   Compiling codex-extension-items v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/items)
+   Compiling codex-utils-string v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/string)
+   Compiling sha1-checked v0.10.0
+   Compiling inout v0.1.4
+   Compiling hyper v1.8.1
+   Compiling gix-hash v0.23.0
+   Compiling cipher v0.4.4
+   Compiling headers v0.4.1
+   Compiling gix-hashtable v0.13.0
+   Compiling universal-hash v0.5.1
+   Compiling gix-object v0.58.0
+   Compiling rama-net v0.3.0-alpha.4
+   Compiling tungstenite v0.27.0 (https://github.com/openai-oss-forks/tungstenite-rs?rev=4fffad30fe373adbdcffab9545e9e9bf4f2fc19f#4fffad30)
+   Compiling gix-tempfile v21.0.2
+   Compiling rand_chacha v0.3.1
+   Compiling rand v0.8.6
+   Compiling hyper-util v0.1.20
+   Compiling gix-lock v21.0.2
+   Compiling aead v0.5.2
+   Compiling gix-commitgraph v0.35.0
+   Compiling der v0.7.10
+   Compiling codex-utils-image v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/image)
+   Compiling tokio-tungstenite v0.28.0 (https://github.com/openai-oss-forks/tokio-tungstenite?rev=0e5b2d73aa18dd9f0a50ee9ff199d5aef7594186#0e5b2d73)
+   Compiling gix-revwalk v0.29.0
+   Compiling gix-ref v0.61.0
+   Compiling opentelemetry_sdk v0.33.1
+   Compiling gix-pack v0.68.0
+   Compiling hyper-rustls v0.27.7
+   Compiling hyper-tls v0.6.0
+   Compiling hyper-timeout v0.5.2
+   Compiling reqwest v0.12.28
+   Compiling tonic v0.14.3
+   Compiling spki v0.7.3
+   Compiling gix-revision v0.43.0
+   Compiling pkcs8 v0.10.2
+   Compiling gix-shallow v0.10.0
+   Compiling gix-config v0.54.0
+   Compiling gix-protocol v0.59.0
+   Compiling gix-refspec v0.39.0
+   Compiling gix-odb v0.78.0
+   Compiling gix-discover v0.49.0
+   Compiling gix-traverse v0.55.0
+   Compiling gix-diff v0.61.0
+   Compiling rama-dns v0.3.0-alpha.4 (/Users/dom/pft-work/wt_2407/third_party/rama-dns)
+   Compiling rama-http-headers v0.3.0-alpha.4
+   Compiling rama-unix v0.3.0-alpha.4
+   Compiling rama-udp v0.3.0-alpha.4
+   Compiling codex-http-client v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/http-client)
+   Compiling starlark_syntax v0.14.2
+   Compiling rama-tls-rustls v0.3.0-alpha.4
+   Compiling tonic-prost v0.14.3
+   Compiling opentelemetry-proto v0.33.1
+   Compiling codex-websocket-client v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/websocket-client)
+   Compiling codex-client v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/codex-client)
+   Compiling rama-http v0.3.0-alpha.4
+   Compiling tonic-types v0.14.5
+   Compiling opentelemetry-appender-tracing v0.33.1
+   Compiling codex-log-guard v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/log-guard)
+   Compiling gethostname v1.1.0
+   Compiling gix v0.81.0
+   Compiling poly1305 v0.8.0
+   Compiling starlark v0.14.2
+   Compiling signature v2.2.0
+   Compiling rust-embed-utils v8.11.0
+   Compiling x25519-dalek v2.0.1
+   Compiling rust-embed-impl v8.11.0
+   Compiling chacha20 v0.9.1
+   Compiling rama-tcp v0.3.0-alpha.4
+   Compiling opentelemetry-otlp v0.33.1
+   Compiling salsa20 v0.10.2
+   Compiling chacha20poly1305 v0.10.1
+   Compiling rust-embed v8.11.0
+   Compiling ed25519 v2.2.3
+   Compiling aws-smithy-async v1.2.14
+   Compiling codex-utils-path v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/path-utils)
+   Compiling rama-socks5 v0.3.0-alpha.4
+   Compiling aws-smithy-runtime-api v1.12.0
+   Compiling codex-keyring-store v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/keyring-store)
+   Compiling i18n-embed v0.15.4
+   Compiling ed25519-dalek v2.2.0
+   Compiling hkdf v0.12.4
+   Compiling pbkdf2 v0.12.2
+   Compiling secrecy v0.10.3
+   Compiling codex-product-brand v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/product-brand)
+   Compiling age-core v0.11.0
+   Compiling scrypt v0.11.0
+   Compiling i18n-embed-fl v0.9.4
+   Compiling dns-lookup v3.0.1
+   Compiling which v8.0.0
+   Compiling blake2 v0.10.6
+   Compiling objc2-core-graphics v0.3.2
+   Compiling aws-credential-types v1.2.11
+   Compiling aws-smithy-http v0.62.6
+   Compiling crypto_secretbox v0.1.1
+   Compiling age v0.11.2
+   Compiling jsonwebtoken v9.3.1
+   Compiling aws-smithy-http-client v1.1.12
+   Compiling aws-smithy-observability v0.1.5
+   Compiling crypto_box v0.9.1
+   Compiling polyval v0.6.2
+   Compiling codex-utils-template v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/template)
+   Compiling codex-windows-sandbox v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/windows-sandbox-rs)
+   Compiling objc2-app-kit v0.3.2
+   Compiling sha3 v0.10.9
+   Compiling sentry-types v0.46.1
+   Compiling ghash v0.5.1
+   Compiling aws-types v1.3.11
+   Compiling codex-utils-pty v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/pty)
+   Compiling aws-sigv4 v1.3.7
+   Compiling webbrowser v1.2.2
+   Compiling aws-smithy-runtime v1.9.5
+   Compiling aes v0.8.4
+   Compiling ctr v0.9.2
+   Compiling tungstenite v0.29.0
+   Compiling tracing-appender v0.2.4
+   Compiling kem v0.3.0-pre.0
+   Compiling codex-terminal-detection v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/terminal-detection)
+   Compiling sec1 v0.7.3
+   Compiling ml-kem v0.2.3
+   Compiling tokio-tungstenite v0.29.0
+   Compiling aes-gcm v0.10.3
+   Compiling crypto-bigint v0.5.5
+   Compiling axum v0.8.9
+   Compiling rfc6979 v0.4.0
+   Compiling clatter v2.2.0
+   Compiling sentry-core v0.46.1
+   Compiling rama-http-core v0.3.0-alpha.4
+   Compiling aws-runtime v1.5.17
+   Compiling elliptic-curve v0.13.8
+   Compiling sentry-backtrace v0.46.1
+   Compiling primeorder v0.13.6
+   Compiling ecdsa v0.16.9
+   Compiling sentry-contexts v0.46.1
+   Compiling aws-sdk-sts v1.95.0
+   Compiling sentry-debug-images v0.46.1
+   Compiling p256 v0.13.2
+   Compiling sentry-panic v0.46.1
+   Compiling aws-sdk-signin v1.2.0
+   Compiling aws-sdk-sso v1.91.0
+   Compiling aws-sdk-ssooidc v1.93.0
+   Compiling schemars v1.2.1
+   Compiling sentry v0.46.1
+   Compiling sqlx-core v0.9.0
+   Compiling aws-config v1.8.12
+   Compiling process-wrap v10.0.1
+   Compiling oauth2 v5.0.0
+   Compiling reqwest v0.13.4
+   Compiling codex-collaboration-mode-templates v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/collaboration-mode-templates)
+   Compiling codex-install-context v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/install-context)
+   Compiling five8_core v1.0.0
+   Compiling codex-experimental-api-macros v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/codex-experimental-api-macros)
+   Compiling rama-http-backend v0.3.0-alpha.4
+   Compiling solana-sanitize v3.0.1
+   Compiling codex-app-server-protocol-noop-macros v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/app-server-protocol-noop-macros)
+   Compiling five8 v1.0.0
+   Compiling codex-skills v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/skills)
+   Compiling solana-program-error v3.0.1
+   Compiling rmcp v3.9.0
+   Compiling solana-hash v4.5.0
+   Compiling codex-network-proxy v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/network-proxy)
+   Compiling solana-sha256-hasher v3.1.0
+   Compiling five8_const v1.0.0
+   Compiling sha2-const-stable v0.1.0
+   Compiling solana-atomic-u64 v3.0.1
+   Compiling codex-file-search v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/file-search)
+   Compiling solana-address v2.6.1
+   Compiling cached v0.56.0
+   Compiling sqlx-sqlite v0.9.0
+   Compiling codex-aws-auth v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/aws-auth)
+   Compiling codex-execpolicy v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/execpolicy)
+   Compiling bm25 v2.3.2
+   Compiling codex-security-level v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/security-level)
+   Compiling sqlx-macros-core v0.9.0
+   Compiling codex-content-security v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/content-security)
+   Compiling codex-utils-stream-parser v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/stream-parser)
+   Compiling solana-sdk-ids v3.1.0
+   Compiling solana-pubkey v4.2.0
+   Compiling solana-instruction-error v2.4.0
+   Compiling codex-backend-openapi-models v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/codex-backend-openapi-models)
+   Compiling solana-sysvar-id v3.1.0
+   Compiling solana-get-sysvar v1.0.0
+   Compiling bs58 v0.5.1
+   Compiling codex-linux-sandbox v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/linux-sandbox)
+   Compiling unicode-width v0.2.1
+   Compiling solana-sdk-macro v3.0.1
+   Compiling solana-instruction v3.4.0
+   Compiling castaway v0.2.4
+   Compiling codex-uds v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/uds)
+   Compiling bincode v1.3.3
+   Compiling feature-probe v0.1.1
+   Compiling object v0.39.1
+   Compiling bv v0.11.1
+   Compiling compact_str v0.9.1
+   Compiling unicode-truncate v2.0.1
+   Compiling strum v0.28.0
+   Compiling kasuari v0.4.12
+   Compiling instability v0.3.11
+   Compiling signal-hook v0.3.18
+   Compiling solana-program-memory v3.1.0
+   Compiling deadpool v0.12.3
+   Compiling solana-account-info v3.1.1
+   Compiling ratatui-core v0.1.2
+   Compiling solana-transaction-error v3.3.1
+   Compiling assert-json-diff v2.0.2
+   Compiling convert_case v0.10.0
+   Compiling serde-big-array v0.5.1
+   Compiling indoc v2.0.7
+   Compiling solana-signature v3.4.1
+   Compiling derive_more-impl v2.1.1
+   Compiling wiremock v0.6.5
+   Compiling solana-address v1.1.0
+   Compiling codex-utils-json-to-toml v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/json-to-toml)
+   Compiling num_enum_derive v0.7.6
+   Compiling onig_sys v69.9.1
+   Compiling solana-define-syscall v4.0.1
+   Compiling solana-program-entrypoint v3.1.1
+   Compiling solana-pubkey v3.0.0
+   Compiling signal-hook-mio v0.2.5
+   Compiling solana-slot-history v3.1.0
+   Compiling derive_more v2.1.1
+   Compiling ar_archive_writer v0.5.3
+   Compiling num_enum v0.7.6
+   Compiling solana-signer v3.0.1
+   Compiling codex-protocol v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/protocol)
+   Compiling codex-browser-isolation v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/browser-isolation)
+   Compiling psm v0.1.31
+   Compiling solana-last-restart-slot v3.1.0
+   Compiling solana-clock v3.1.1
+   Compiling solana-epoch-rewards v3.1.0
+   Compiling solana-epoch-schedule v3.2.0
+   Compiling solana-rent v3.1.0
+   Compiling solana-slot-hashes v3.1.0
+   Compiling solana-program-pack v3.1.0
+   Compiling codex-file-watcher v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/file-watcher)
+   Compiling pbkdf2 v0.11.0
+   Compiling erasable v1.3.0
+   Compiling solana-fee-calculator v3.2.2
+   Compiling line-clipping v0.3.7
+   Compiling num-derive v0.4.2
+   Compiling solana-short-vec v3.2.2
+   Compiling solana-program-option v3.1.0
+   Compiling solana-message v3.1.0
+   Compiling spl-token-interface v2.0.0
+   Compiling ratatui-widgets v0.3.2
+   Compiling solana-sysvar v3.1.1
+   Compiling solana-seed-phrase v3.0.0
+   Compiling crossterm v0.29.0 (https://github.com/openai-oss-forks/crossterm?rev=f69a4a0499f2fdc7d5d222df32373ffffe9ba3f5#f69a4a04)
+   Compiling solana-cpi v3.1.0
+   Compiling password-hash v0.5.0
+   Compiling stacker v0.1.24
+   Compiling quick-xml v0.39.4
+   Compiling solana-msg v3.1.0
+   Compiling eyre v0.6.12
+   Compiling color-spantrace v0.3.0
+   Compiling linked-hash-map v0.5.6
+   Compiling yaml-rust v0.4.5
+   Compiling spl-token v9.0.0
+   Compiling sqlx-macros v0.9.0
+   Compiling plist v1.9.0
+   Compiling ratatui-crossterm v0.1.2
+   Compiling argon2 v0.5.3
+   Compiling solana-keypair v3.1.2
+   Compiling solana-transaction v3.1.0
+   Compiling solana-compute-budget-interface v3.0.0
+   Compiling tracing-error v0.2.1
+   Compiling simdutf8 v0.1.5
+   Compiling rc-box v1.3.0
+   Compiling codex-wallet v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/wallet)
+   Compiling ansi-to-tui v8.0.1
+   Compiling ratatui v0.30.2
+   Compiling sqlx v0.9.0
+   Compiling itertools v0.10.5
+   Compiling diffy v0.4.2
+   Compiling onig v6.5.1
+   Compiling rgb v0.8.53
+   Compiling colored v3.1.1
+   Compiling takecell v0.1.1
+   Compiling smawk v0.3.2
+   Compiling unicode-linebreak v0.1.5
+   Compiling assert_cmd v2.2.2
+   Compiling teloxide-core v0.13.0
+   Compiling dptree v0.5.1
+   Compiling textwrap v0.16.2
+   Compiling syntect v5.3.0
+   Compiling predicates v3.1.3
+   Compiling color-eyre v0.6.5
+   Compiling codex-wallet-daemon v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/wallet-daemon)
+   Compiling aquamarine v0.6.0
+   Compiling codex-ansi-escape v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ansi-escape)
+   Compiling ratatui-macros v0.7.2
+   Compiling arboard v3.6.1
+   Compiling teloxide-macros v0.10.0
+   Compiling codex-utils-sleep-inhibitor v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/sleep-inhibitor)
+   Compiling pathdiff v0.2.3
+   Compiling codex-utils-elapsed v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/elapsed)
+   Compiling codex-utils-fuzzy-match v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/fuzzy-match)
+   Compiling codex-utils-cargo-bin v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/cargo-bin)
+   Compiling codex-cli v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/cli)
+   Compiling codex-stdio-to-uds v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/stdio-to-uds)
+   Compiling codex-responses-api-proxy v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/responses-api-proxy)
+   Compiling clap_complete v4.5.65
+   Compiling vte v0.15.0
+   Compiling insta v1.48.0
+   Compiling two-face v0.5.1
+   Compiling vt100 v0.16.2
+   Compiling codex-file-system v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/file-system)
+   Compiling codex-api v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/codex-api)
+   Compiling codex-shell-command v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/shell-command)
+   Compiling codex-agent-identity v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/agent-identity)
+   Compiling codex-utils-output-truncation v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/output-truncation)
+   Compiling codex-code-mode-protocol v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/code-mode-protocol)
+   Compiling codex-state v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/state)
+   Compiling codex-context-fragments v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/context-fragments)
+   Compiling codex-shell-escalation v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/shell-escalation)
+   Compiling codex-git-utils v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/git-utils)
+   Compiling codex-utils-sandbox-summary v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/sandbox-summary)
+   Compiling codex-utils-approval-presets v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/approval-presets)
+   Compiling codex-exec-server-protocol v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/exec-server-protocol)
+   Compiling codex-app-server-protocol v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/app-server-protocol)
+   Compiling codex-code-mode v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/code-mode)
+   Compiling codex-secrets v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/secrets)
+   Compiling codex-prompts v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/prompts)
+   Compiling codex-vault v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/vault)
+   Compiling codex-memories-read v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/memories/read)
+   Compiling codex-utils-cli v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/cli)
+   Compiling codex-rollout-trace v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/rollout-trace)
+   Compiling codex-tasknode-session v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/tasknode-session)
+   Compiling codex-otel v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/otel)
+   Compiling codex-model-provider-info v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/model-provider-info)
+   Compiling codex-response-debug-context v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/response-debug-context)
+   Compiling teloxide v0.17.0
+   Compiling codex-agent-graph-store v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/agent-graph-store)
+   Compiling codex-gpu-market v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/gpu-market)
+   Compiling codex-features v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/features)
+   Compiling codex-rollout v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/rollout)
+   Compiling codex-config v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/config)
+   Compiling codex-sandboxing v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/sandboxing)
+   Compiling codex-exec-server v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/exec-server)
+   Compiling codex-login v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/login)
+   Compiling codex-protected-state v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/protected-state)
+   Compiling codex-message-history v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/message-history)
+   Compiling codex-utils-plugins v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/plugins)
+   Compiling codex-rmcp-client v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/rmcp-client)
+   Compiling codex-plugin v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/plugin)
+   Compiling codex-apply-patch v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/apply-patch)
+   Compiling codex-hooks v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/hooks)
+   Compiling codex-feedback v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/feedback)
+   Compiling codex-models-manager v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/models-manager)
+   Compiling codex-connectors v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/connectors)
+   Compiling codex-arg0 v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/arg0)
+   Compiling codex-model-provider v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/model-provider)
+   Compiling codex-provider-auth v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/provider-auth)
+   Compiling codex-tools v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/tools)
+   Compiling codex-mcp v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/codex-mcp)
+   Compiling codex-backend-client v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/backend-client)
+   Compiling codex-analytics v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/analytics)
+   Compiling codex-thread-store v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/thread-store)
+   Compiling codex-cloud-tasks-client v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/cloud-tasks-client)
+   Compiling codex-cloud-tasks-mock-client v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/cloud-tasks-mock-client)
+   Compiling codex-core-skills v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/core-skills)
+   Compiling codex-extension-api v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/extension-api)
+   Compiling codex-home v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/codex-home)
+   Compiling codex-git-attribution v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/git-attribution)
+   Compiling codex-core-plugins v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/core-plugins)
+   Compiling codex-skills-extension v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/skills)
+   Compiling codex-core v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/core)
+   Compiling codex-connectors-extension v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/connectors)
+   Compiling codex-app-server-transport v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/app-server-transport)
+   Compiling codex-memories-write v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/memories/write)
+   Compiling codex-image-generation-extension v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/image-generation)
+   Compiling codex-chatgpt v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/chatgpt)
+   Compiling codex-memories-extension v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/memories)
+   Compiling codex-goal-extension v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/goal)
+   Compiling codex-cloud-config v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/cloud-config)
+   Compiling codex-guardian v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/guardian)
+   Compiling codex-web-search-extension v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/web-search)
+   Compiling codex-mcp-extension v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/mcp)
+   Compiling codex-agent-extension v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ext/agent)
+   Compiling codex-lmstudio v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/lmstudio)
+   Compiling codex-ollama v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/ollama)
+   Compiling codex-mcp-server v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/mcp-server)
+   Compiling core_test_support v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/core/tests/common)
+   Compiling codex-app-server-test-client v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/app-server-test-client)
+   Compiling codex-external-agent-migration v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/external-agent-migration)
+   Compiling codex-utils-oss v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/utils/oss)
+   Compiling codex-app-server-daemon v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/app-server-daemon)
+   Compiling codex-app-server v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/app-server)
+   Compiling app_test_support v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/app-server/tests/common)
+   Compiling codex-app-server-client v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/app-server-client)
+   Compiling codex-tui v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/tui)
+   Compiling codex-telegram v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/telegram)
+   Compiling codex-exec v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/exec)
+warning: method `cancel_pending_burst_submission` is never used
+ --> tui/src/chatwidget/interaction.rs:9:19
+  |
+5 | impl ChatWidget {
+  | --------------- method in this implementation
+...
+9 |     pub(crate) fn cancel_pending_burst_submission(&mut self) {
+  |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+   Compiling codex-cloud-tasks v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/cloud-tasks)
+warning: `codex-tui` (lib) generated 1 warning
+warning: linker stderr: ld: __eh_frame section too large (max 16MB) to encode dwarf unwind offsets in compact unwind table, performance of exception handling might be affected
+  |
+  = note: `#[warn(linker_messages)]` on by default
+
+warning: `codex-tui` (lib test) generated 2 warnings (1 duplicate)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4m 43s
+warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+     Running unittests src/lib.rs (/Users/dom/pft-work/target_zsh1573/debug/deps/codex_tui-487631f2eafdc48b)
+
+running 4 tests
+test app::tests::held_enter_shortcuts::held_burst_enter_submits_without_a_shortcut_control ... ok
+[?1049h[?1049h[?1007h[?1007h[1;1H[K[1;1H[K[2;1H[2K[3;1H[2K[4;1H[2K[5;1H[2K[6;1H[2K[7;1H[2K[8;1H[2K[[9;1H[2K[10;1H[2K[11;1H[2K2;1H[2K[3;1H[2K[4;1H[2K[5;1H[2K[6;1H[2K[7;1H[2K[8;1H[2K[9;1H[2K[10;1H[2K[11;1H[2K[12;1H[2K[13;1H[2K[14;1H[2K[15;1H[2K[16;1H[2K[17;1H[2K[18[12;1H[2K[19;1H[2K[20;1H[2K[21;1H[2K[22;1H[2K[23;1H[2K[24;1H[2K[1;1H;1H[2K[13;1H[2K[14;1H[2K[15;1H[2K[16;1H[2K[17;1H[2K[18;1H[2K[19;1H[2K[20;1H[2K[21;1H[2K[22;1H[2K[23;1H[2K[24;1H[2K[1;1H[0 qtest app::tests::held_enter_shortcuts::ctrl_t_with_ordinary_draft_leaves_it_unchanged ... ok
+[0 q[0 qtest app::tests::held_enter_shortcuts::ctrl_t_transcript_cancels_held_enter_and_keeps_the_draft ... FAILED
+test app::tests::held_enter_shortcuts::ctrl_g_editor_seeds_from_held_burst_and_cancels_its_enter ... FAILED
+
+failures:
+
+---- app::tests::held_enter_shortcuts::ctrl_t_transcript_cancels_held_enter_and_keeps_the_draft stdout ----
+
+thread 'app::tests::held_enter_shortcuts::ctrl_t_transcript_cancels_held_enter_and_keeps_the_draft' (1181523) panicked at tui/src/app/tests/held_enter_shortcuts.rs:54:5:
+no submission may stay armed behind the overlay
+
+---- app::tests::held_enter_shortcuts::ctrl_g_editor_seeds_from_held_burst_and_cancels_its_enter stdout ----
+
+thread 'app::tests::held_enter_shortcuts::ctrl_g_editor_seeds_from_held_burst_and_cancels_its_enter' (1181522) panicked at tui/src/app/tests/held_enter_shortcuts.rs:85:5:
+assertion failed: `(left == right)`
+
+[1mDiff[0m [31m< left[0m / [32mright >[0m :
+[32m>0123456789abcdef ask about the transcript[0m
+
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    app::tests::held_enter_shortcuts::ctrl_g_editor_seeds_from_held_burst_and_cancels_its_enter
+    app::tests::held_enter_shortcuts::ctrl_t_transcript_cancels_held_enter_and_keeps_the_draft
+
+test result: FAILED. 2 passed; 2 failed; 0 ignored; 0 measured; 4805 filtered out; finished in 0.33s
+
+error: test failed, to rerun pass `-p codex-tui --lib`
+exit status: 101

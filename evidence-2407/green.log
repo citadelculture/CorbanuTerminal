@@ -1,0 +1,23 @@
+$ cargo test -p codex-tui --lib held_enter_shortcuts  (head)
+   Compiling codex-tui v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/tui)
+   Compiling codex-cloud-tasks v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/cloud-tasks)
+   Compiling codex-cli v0.1.49 (/Users/dom/pft-work/wt_2407/codex-rs/cli)
+warning: linker stderr: ld: __eh_frame section too large (max 16MB) to encode dwarf unwind offsets in compact unwind table, performance of exception handling might be affected
+  |
+  = note: `#[warn(linker_messages)]` on by default
+
+warning: `codex-tui` (lib test) generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 53s
+warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+     Running unittests src/lib.rs (/Users/dom/pft-work/target_zsh1573/debug/deps/codex_tui-487631f2eafdc48b)
+
+running 4 tests
+test app::tests::held_enter_shortcuts::held_burst_enter_submits_without_a_shortcut_control ... ok
+[?1049h[?1049h[0 q[?1007h[?1007htest app::tests::held_enter_shortcuts::ctrl_g_editor_seeds_from_held_burst_and_cancels_its_enter ... ok
+[1;1H[K[2;1H[2K[3;1H[2K[4;1H[2K[5;1H[2K[6;1H[2K[7;1H[2K[8;1H[2K[9;1H[2K[10;1H[2K[11;1H[2K[12;1H[2K[13;1H[2K[14;1H[2K[15;1H[2K[16;1H[2K[17;1H[2K[18;1H[2K[19;1H[2K[20;1H[2K[21;1H[2K[22;1H[2K[23;1H[2K[24;1H[2K[1;1H[1;1H[K[2;1H[2K[3;1H[2K[4;1H[2K[5;1H[2K[6;1H[2K[7;1H[2K[8;1H[2K[9;1H[2K[10;1H[2K[11;1H[2K[12;1H[2K[13;1H[2K[14;1H[2K[15;1H[2K[16;1H[2K[17;1H[2K[18;1H[2K[19;1H[2K[20;1H[2K[21;1H[2K[22;1H[2K[23;1H[2K[24;1H[2K[1;1H[0 q[0 qtest app::tests::held_enter_shortcuts::ctrl_t_transcript_cancels_held_enter_and_keeps_the_draft ... ok
+test app::tests::held_enter_shortcuts::ctrl_t_with_ordinary_draft_leaves_it_unchanged ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 4805 filtered out; finished in 0.24s
+
+exit status: 0

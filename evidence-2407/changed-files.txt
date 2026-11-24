@@ -1,0 +1,7 @@
+ codex-rs/tui/src/app/input.rs                      |   7 ++
+ codex-rs/tui/src/app/tests.rs                      |   1 +
+ codex-rs/tui/src/app/tests/held_enter_shortcuts.rs | 113 +++++++++++++++++++++
+ .../bottom_pane/chat_composer/burst_submission.rs  |  29 ++++++
+ codex-rs/tui/src/bottom_pane/mod.rs                |  10 ++
+ codex-rs/tui/src/chatwidget/interaction.rs         |  25 +++++
+ 6 files changed, 185 insertions(+)

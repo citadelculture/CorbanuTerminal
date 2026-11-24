@@ -1,0 +1,253 @@
+diff --git a/codex-rs/tui/src/app/input.rs b/codex-rs/tui/src/app/input.rs
+index dcd88dfb82..6b098e9062 100644
+--- a/codex-rs/tui/src/app/input.rs
++++ b/codex-rs/tui/src/app/input.rs
+@@ -176,6 +176,10 @@ impl App {
+         }
+ 
+         if app_keymap_shortcuts_available && self.keymap.app.open_transcript.is_pressed(key_event) {
++            // #2407: app-level shortcuts never reach ChatWidget, which cancels a
++            // held burst Enter for every other Ctrl/Alt key. Do the same here so
++            // the overlay cannot leave a submission armed behind it.
++            self.chat_widget.cancel_pending_burst_submission();
+             // Enter alternate screen and set viewport to full size.
+             let _ = tui.enter_alt_screen();
+             self.overlay = Some(Overlay::new_transcript(
+@@ -189,6 +193,9 @@ impl App {
+         if app_keymap_shortcuts_available
+             && self.keymap.app.open_external_editor.is_pressed(key_event)
+         {
++            // #2407: materialize a held burst before the editor seeds from the
++            // draft, and never leave its Enter armed (the key is consumed either way).
++            self.chat_widget.cancel_pending_burst_submission();
+             // Only launch the external editor if there is no overlay and the bottom pane is not in use.
+             // Note that it can be launched while a task is running to enable editing while the previous turn is ongoing.
+             if self.overlay.is_none()
+diff --git a/codex-rs/tui/src/app/tests.rs b/codex-rs/tui/src/app/tests.rs
+index b0e80efcdf..815f4328f1 100644
+--- a/codex-rs/tui/src/app/tests.rs
++++ b/codex-rs/tui/src/app/tests.rs
+@@ -439,6 +439,7 @@ async fn accounting_inspect_app_off_and_old_usage_routes() -> anyhow::Result<()>
+ #[path = "tests/advanced_reasoning_tests.rs"]
+ mod advanced_reasoning_tests;
+ mod dispatch_integration;
++mod held_enter_shortcuts;
+ mod issue_613;
+ mod issue_646;
+ mod issue_660;
+diff --git a/codex-rs/tui/src/app/tests/held_enter_shortcuts.rs b/codex-rs/tui/src/app/tests/held_enter_shortcuts.rs
+new file mode 100644
+index 0000000000..074ef4afda
+--- /dev/null
++++ b/codex-rs/tui/src/app/tests/held_enter_shortcuts.rs
+@@ -0,0 +1,113 @@
++//! #2407 item 2: Ctrl+T (transcript) and Ctrl+G (external editor) are handled
++//! above ChatWidget, so they skipped the held-Enter cancellation every other
++//! Ctrl/Alt key gets. Each case arms a held burst Enter on a controlled clock,
++//! presses the real shortcut through `App::handle_key_event`, then asks the
++//! composer whether a submission would still fire after the lookahead.
++
++use super::*;
++use crate::bottom_pane::InputResult;
++use pretty_assertions::assert_eq;
++use std::time::Duration;
++use std::time::Instant;
++
++/// Long enough to count as a single-line burst whose Enter is held.
++const BURST: &str = "0123456789abcdef ask about the transcript";
++
++fn ctrl(c: char) -> KeyEvent {
++    KeyEvent::new(KeyCode::Char(c), KeyModifiers::CONTROL)
++}
++
++/// Well past any held Enter's deadline.
++fn after_lookahead(now: Instant) -> Instant {
++    now + Duration::from_secs(1)
++}
++
++#[tokio::test]
++async fn held_burst_enter_submits_without_a_shortcut_control() {
++    let mut app = make_test_app().await;
++    let now = Instant::now();
++    app.chat_widget.arm_burst_enter_for_tests(BURST, now);
++    assert_eq!(
++        app.chat_widget
++            .take_burst_submission_for_tests(after_lookahead(now)),
++        Some(InputResult::Submitted {
++            text: BURST.to_string(),
++            text_elements: Vec::new(),
++        }),
++        "control: an untouched held Enter submits at its deadline"
++    );
++}
++
++#[tokio::test]
++async fn ctrl_t_transcript_cancels_held_enter_and_keeps_the_draft() -> Result<()> {
++    let mut app = make_test_app().await;
++    let config = app.chat_widget.config_ref().clone();
++    let mut app_server = Box::pin(crate::start_embedded_app_server_for_picker(&config)).await?;
++    let mut tui = crate::tui::test_support::make_test_tui()?;
++    assert!(app.keymap.app.open_transcript.is_pressed(ctrl('t')));
++
++    let now = Instant::now();
++    app.chat_widget.arm_burst_enter_for_tests(BURST, now);
++    Box::pin(app.handle_key_event(&mut tui, &mut app_server, ctrl('t'))).await;
++
++    assert!(app.overlay.is_some(), "Ctrl+T opened the transcript");
++    assert!(
++        !app.chat_widget.has_pending_burst_enter_for_tests(),
++        "no submission may stay armed behind the overlay"
++    );
++    assert_eq!(app.chat_widget.composer_text_with_pending(), BURST);
++    assert_eq!(
++        app.chat_widget
++            .take_burst_submission_for_tests(after_lookahead(now)),
++        None,
++        "closing the overlay later must not submit the draft"
++    );
++    Ok(())
++}
++
++#[tokio::test]
++async fn ctrl_g_editor_seeds_from_held_burst_and_cancels_its_enter() -> Result<()> {
++    let mut app = make_test_app().await;
++    let config = app.chat_widget.config_ref().clone();
++    let mut app_server = Box::pin(crate::start_embedded_app_server_for_picker(&config)).await?;
++    let mut tui = crate::tui::test_support::make_test_tui()?;
++    assert!(app.keymap.app.open_external_editor.is_pressed(ctrl('g')));
++
++    let now = Instant::now();
++    app.chat_widget.arm_burst_enter_for_tests(BURST, now);
++    Box::pin(app.handle_key_event(&mut tui, &mut app_server, ctrl('g'))).await;
++
++    assert_eq!(
++        app.chat_widget.external_editor_state(),
++        ExternalEditorState::Requested
++    );
++    // `launch_external_editor` seeds the editor from exactly this text.
++    assert_eq!(app.chat_widget.composer_text_with_pending(), BURST);
++    assert!(!app.chat_widget.has_pending_burst_enter_for_tests());
++    assert_eq!(
++        app.chat_widget
++            .take_burst_submission_for_tests(after_lookahead(now)),
++        None,
++        "the editor round-trip must not race a delayed submission"
++    );
++    Ok(())
++}
++
++#[tokio::test]
++async fn ctrl_t_with_ordinary_draft_leaves_it_unchanged() -> Result<()> {
++    let mut app = make_test_app().await;
++    let config = app.chat_widget.config_ref().clone();
++    let mut app_server = Box::pin(crate::start_embedded_app_server_for_picker(&config)).await?;
++    let mut tui = crate::tui::test_support::make_test_tui()?;
++
++    app.chat_widget.insert_str("typed by hand");
++    Box::pin(app.handle_key_event(&mut tui, &mut app_server, ctrl('t'))).await;
++
++    assert!(app.overlay.is_some());
++    assert_eq!(
++        app.chat_widget.composer_text_with_pending(),
++        "typed by hand"
++    );
++    assert!(!app.chat_widget.has_pending_burst_enter_for_tests());
++    Ok(())
++}
+diff --git a/codex-rs/tui/src/bottom_pane/chat_composer/burst_submission.rs b/codex-rs/tui/src/bottom_pane/chat_composer/burst_submission.rs
+index 75760f1ff9..e60bd97895 100644
+--- a/codex-rs/tui/src/bottom_pane/chat_composer/burst_submission.rs
++++ b/codex-rs/tui/src/bottom_pane/chat_composer/burst_submission.rs
+@@ -38,6 +38,35 @@ impl ChatComposer {
+         Some(result)
+     }
+ 
++    /// Types `text` as a 1 ms-spaced burst starting at `now`, then presses Enter
++    /// at the burst's last instant, leaving that Enter held for the lookahead.
++    #[cfg(test)]
++    pub(crate) fn arm_burst_enter_for_tests(&mut self, text: &str, now: Instant) {
++        let mut at = now;
++        for ch in text.chars() {
++            self.handle_input_basic_with_time(
++                KeyEvent::new(KeyCode::Char(ch), KeyModifiers::NONE),
++                at,
++            );
++            at += std::time::Duration::from_millis(1);
++        }
++        let (result, _) = self.handle_submission_with_time(/*should_queue*/ false, at);
++        assert_eq!(
++            result,
++            InputResult::None,
++            "the burst Enter must be held, not submitted"
++        );
++        assert!(
++            self.draft.paste_burst.has_pending_enter(),
++            "the burst Enter must be held"
++        );
++    }
++
++    #[cfg(test)]
++    pub(crate) fn has_pending_burst_enter_for_tests(&self) -> bool {
++        self.draft.paste_burst.has_pending_enter()
++    }
++
+     pub(crate) fn cancel_pending_burst_submission(&mut self) {
+         if self.draft.paste_burst.cancel_pending_enter()
+             && let Some(pasted) = self.draft.paste_burst.flush_before_modified_input()
+diff --git a/codex-rs/tui/src/bottom_pane/mod.rs b/codex-rs/tui/src/bottom_pane/mod.rs
+index 8cfc757d99..ade996cd83 100644
+--- a/codex-rs/tui/src/bottom_pane/mod.rs
++++ b/codex-rs/tui/src/bottom_pane/mod.rs
+@@ -2022,6 +2022,16 @@ impl BottomPane {
+         self.composer.cancel_pending_burst_submission();
+     }
+ 
++    #[cfg(test)]
++    pub(crate) fn arm_burst_enter_for_tests(&mut self, text: &str, now: Instant) {
++        self.composer.arm_burst_enter_for_tests(text, now);
++    }
++
++    #[cfg(test)]
++    pub(crate) fn has_pending_burst_enter_for_tests(&self) -> bool {
++        self.composer.has_pending_burst_enter_for_tests()
++    }
++
+     pub(crate) fn take_burst_submission(&mut self, now: Instant) -> Option<InputResult> {
+         if self.has_active_view() {
+             self.composer.cancel_pending_burst_submission();
+diff --git a/codex-rs/tui/src/chatwidget/interaction.rs b/codex-rs/tui/src/chatwidget/interaction.rs
+index 717ac028a5..501e984bf7 100644
+--- a/codex-rs/tui/src/chatwidget/interaction.rs
++++ b/codex-rs/tui/src/chatwidget/interaction.rs
+@@ -3,6 +3,31 @@
+ use super::*;
+ 
+ impl ChatWidget {
++    /// Cancels a held burst Enter and materializes its text into the draft, as a
++    /// Ctrl/Alt key routed here would. For app-level shortcuts that never reach
++    /// `handle_key_event` (#2407).
++    pub(crate) fn cancel_pending_burst_submission(&mut self) {
++        self.bottom_pane.cancel_pending_burst_submission();
++    }
++
++    #[cfg(test)]
++    pub(crate) fn arm_burst_enter_for_tests(&mut self, text: &str, now: Instant) {
++        self.bottom_pane.arm_burst_enter_for_tests(text, now);
++    }
++
++    #[cfg(test)]
++    pub(crate) fn has_pending_burst_enter_for_tests(&self) -> bool {
++        self.bottom_pane.has_pending_burst_enter_for_tests()
++    }
++
++    #[cfg(test)]
++    pub(crate) fn take_burst_submission_for_tests(
++        &mut self,
++        now: Instant,
++    ) -> Option<crate::bottom_pane::InputResult> {
++        self.bottom_pane.take_burst_submission(now)
++    }
++
+     pub(crate) fn handle_key_event(&mut self, key_event: KeyEvent) {
+         if let Some(result) = self.bottom_pane.take_burst_submission(Instant::now()) {
+             self.handle_composer_input_result(result, /*had_modal_or_popup*/ false);
